@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hebrew with MotiVation</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui, sans-serif;
+  background:#111;
+  color:#fff;
+}
+
+/* ---------- SCREENS ---------- */
+.screen{
+  display:none;
+  padding:18px;
+  max-width:420px;
+  margin:auto;
+  min-height:100vh;
+  box-sizing:border-box;
+}
+.screen.active{display:block}
+
+/* ---------- HOME ---------- */
+.welcome{
+  font-size:30px;
+  font-weight:800;
+  text-align:center;
+  margin-top:18px;
+}
+.instructions{
+  text-align:center;
+  font-size:16px;
+  margin:16px 0 26px;
+  color:#ddd;
+}
+.title-bottom{
+  text-align:center;
+  font-size:20px;
+  margin-top:28px;
+  opacity:0.85;
+}
+
+/* ---------- BUTTONS (PASTEL) ---------- */
+button{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  font-size:16px;
+  font-weight:600;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  background:linear-gradient(180deg,#f1f4f8,#dfe7f1);
+  color:#222;
+  box-shadow:0 4px 8px rgba(0,0,0,0.25);
+  transition:transform .1s, box-shadow .1s, background .2s;
+}
+button:hover{
+  background:linear-gradient(180deg,#ffffff,#e6eef8);
+}
+button:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 4px rgba(0,0,0,0.35);
+}
+
+.good{
+  background:linear-gradient(180deg,#b7e4c7,#95d5b2);
+}
+.bad{
+  background:linear-gradient(180deg,#f7b2ad,#ee938c);
+}
+.back{
+  background:linear-gradient(180deg,#e0e0e0,#cfcfcf);
+}
+.delete{
+  background:linear-gradient(180deg,#ff9aa2,#ff6f6f);
+  color:#300;
+}
+
+/* ---------- FORM ---------- */
+select,input,textarea{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  font-size:16px;
+  border-radius:10px;
+  border:none;
+  box-sizing:border-box;
+}
+
+/* ---------- SESSION ---------- */
+.card{
+  background:#222;
+  min-height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  text-align:center;
+  border-radius:16px;
+  margin-bottom:16px;
+}
+.row{
+  display:flex;
+  gap:10px;
+}
+.row button{width:50%}
+
+/* ---------- LIST ---------- */
+.list-item{
+  background:#222;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+}
+.actions{
+  display:flex;
+  gap:8px;
+}
+.actions button{width:50%}
+
+.hidden{display:none}
+
+/* ---------- CONTACT ---------- */
+.contact button{
+  background:linear-gradient(180deg,#e6e6e6,#cfcfcf);
+  color:#222;
+  font-weight:700;
+}
+.stat-block{
+  background:#1c1c1c;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="home">
+  <div class="welcome">WELCOME</div>
+
+  <div id="instructions" class="instructions">
+    To start, add words in the Word Bank
+  </div>
+
+  <select id="topicSelect"></select>
+  <button onclick="startSession()">Start</button>
+  <button onclick="showBank()">Word Bank</button>
+  <button onclick="showStats()">Statistics</button>
+  <button onclick="showContact()">Contact</button>
+  <button onclick="exitApp()" class="back">Exit</button>
+
+  <div class="title-bottom">Hebrew with MotiVation</div>
+</div>
+
+<!-- BANK -->
+<div class="screen" id="bank">
+  <h2>Word Bank</h2>
+  <select id="bankTopicSelect"></select>
+  <button onclick="showAdd()">Add words / topic</button>
+  <button onclick="triggerImport()">Import word file</button>
+  <button onclick="showHome()" class="back">Back</button>
+</div>
+
+<!-- BANK LIST -->
+<div class="screen" id="bankList">
+  <button onclick="showBank()" class="back">Back</button>
+  <button onclick="exportCurrentTopic()">Export word file</button>
+  <button id="deleteTopicBtn" class="delete hidden" onclick="deleteCurrentTopic()">Delete topic</button>
+
+  <input id="searchInput" placeholder="Search..." oninput="renderWordList()">
+  <select id="sortSelect" onchange="renderWordList()">
+    <option value="">No sorting</option>
+    <option value="learn">By learning language</option>
+    <option value="tr">By translation</option>
+  </select>
+
+  <div id="wordList"></div>
+
+  <button onclick="showBank()" class="back">Back</button>
+</div>
+
+<!-- ADD -->
+<div class="screen" id="add">
+  <h2>Add word</h2>
+  <select id="addTopicSelect" onchange="onAddTopicChange()"></select>
+  <input id="newTopicInput" class="hidden" placeholder="New topic name">
+  <textarea id="learnInput" placeholder="Learning language"></textarea>
+  <textarea id="translationInput" placeholder="Translation"></textarea>
+  <button onclick="saveWord()">Save</button>
+  <button onclick="showBank()" class="back">Done</button>
+</div>
+
+<!-- SESSION -->
+<div class="screen" id="session">
+  <div class="card" id="card" onclick="flipCard()"></div>
+  <div class="row">
+    <button class="good" onclick="markKnown()">I knew it</button>
+    <button class="bad" onclick="markUnknown()">Ooooopsi</button>
+  </div>
+  <button id="shuffleBtn" onclick="shuffleSession()">Shuffle</button>
+  <button onclick="flipDirection()">Flip direction</button>
+  <button onclick="showHome()" class="back">Exit</button>
+</div>
+
+<!-- STATS -->
+<div class="screen" id="stats">
+  <h2>Statistics</h2>
+  <div id="statsContent"></div>
+  <button onclick="resetStats()">Reset statistics</button>
+  <button onclick="showHome()" class="back">Back</button>
+</div>
+
+<!-- CONTACT -->
+<div class="screen contact" id="contact">
+  <h2>Contact</h2>
+  <button onclick="openLink('mailto:mottex@gmail.com')">Email: mottex@gmail.com</button>
+  <button onclick="openLink('https://wa.me/48604726360')">WhatsApp: +48 604 726 360</button>
+  <button onclick="openLink('https://www.facebook.com/share/1D6uJLL5nK/')">Facebook</button>
+  <button onclick="openLink('https://www.instagram.com/hebrew_with_motivation')">Instagram</button>
+  <button onclick="showHome()" class="back">Back</button>
+</div>
+
+<input type="file" id="importFile" accept=".csv" class="hidden">
+
+<script>
+/* ===== DATA ===== */
+let data = JSON.parse(localStorage.getItem("flashData_v76")) || { topics:{} };
+let stats = JSON.parse(localStorage.getItem("stats_v76")) || {
+  sessions:0, history:[], perTopic:{}, hardWords:{}
+};
+
+let session=[], current=null;
+let sessionDefaultDirection="A";
+let cardFlipped=false;
+let shuffleUsed=false;
+let currentTopic=null;
+let lastAddTopic="";
+
+/* ===== UTIL ===== */
+function save(){
+  localStorage.setItem("flashData_v76",JSON.stringify(data));
+  localStorage.setItem("stats_v76",JSON.stringify(stats));
+}
+function allWords(){
+  let a=[];
+  Object.keys(data.topics).forEach(t=>{
+    if(t!=="All words") a.push(...data.topics[t]);
+  });
+  return a;
+}
+
+/* ===== NAV ===== */
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function showHome(){ loadTopics(); updateInstructions(); show("home"); }
+function showBank(){ loadTopics(); show("bank"); }
+function showStats(){ renderStats(); show("stats"); }
+function showContact(){ show("contact"); }
+
+/* ===== HOME LOGIC ===== */
+function updateInstructions(){
+  document.getElementById("instructions")
+    .classList.toggle("hidden", allWords().length>0);
+}
+
+/* ===== TOPICS ===== */
+function loadTopics(){
+  data.topics["All words"]=allWords();
+
+  topicSelect.innerHTML='<option value="">Select topic</option>';
+  bankTopicSelect.innerHTML='<option value="">Select topic</option>';
+  addTopicSelect.innerHTML='<option value="">Select topic</option><option value="_new">Create new topic</option>';
+
+  Object.keys(data.topics).forEach(t=>{
+    topicSelect.innerHTML+=`<option>${t}</option>`;
+    bankTopicSelect.innerHTML+=`<option>${t}</option>`;
+    if(t!=="All words") addTopicSelect.innerHTML+=`<option>${t}</option>`;
+  });
+
+  if(lastAddTopic) addTopicSelect.value=lastAddTopic;
+}
+
+/* ===== BANK ===== */
+bankTopicSelect.onchange=()=>{
+  if(!bankTopicSelect.value) return;
+  currentTopic=bankTopicSelect.value;
+  deleteTopicBtn.classList.toggle("hidden",currentTopic==="All words");
+  renderWordList();
+  show("bankList");
+};
+
+function renderWordList(){
+  let q=searchInput.value.toLowerCase();
+  let sort=sortSelect.value;
+  wordList.innerHTML="";
+
+  let arr=[...data.topics[currentTopic]];
+  if(q) arr=arr.filter(w=>w.learn.toLowerCase().includes(q)||w.tr.toLowerCase().includes(q));
+  if(sort==="learn") arr.sort((a,b)=>a.learn.localeCompare(b.learn));
+  if(sort==="tr") arr.sort((a,b)=>a.tr.localeCompare(b.tr));
+
+  arr.forEach(w=>{
+    wordList.innerHTML+=`
+      <div class="list-item">
+        ${w.learn} – ${w.tr}
+        <div class="actions">
+          <button onclick="editWord(${w.id})">Edit</button>
+          <button onclick="deleteWord(${w.id})">Delete</button>
+        </div>
+      </div>`;
+  });
+}
+
+function exportCurrentTopic(){
+  let rows=["Learning language,Translation"];
+  data.topics[currentTopic].forEach(w=>rows.push(`"${w.learn}","${w.tr}"`));
+  let blob=new Blob([rows.join("\n")],{type:"text/csv"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`${currentTopic}.csv`;
+  a.click();
+}
+
+function deleteCurrentTopic(){
+  if(confirm("Delete this topic and all its words?")){
+    delete data.topics[currentTopic];
+    save();
+    showBank();
+  }
+}
+
+function deleteWord(id){
+  data.topics[currentTopic]=data.topics[currentTopic].filter(w=>w.id!==id);
+  save();
+  renderWordList();
+}
+
+function editWord(id){
+  const w=data.topics[currentTopic].find(x=>x.id===id);
+  deleteWord(id);
+  showAdd();
+  addTopicSelect.value=currentTopic;
+  onAddTopicChange();
+  learnInput.value=w.learn;
+  translationInput.value=w.tr;
+}
+
+/* ===== ADD WORD ===== */
+function showAdd(){
+  learnInput.value="";
+  translationInput.value="";
+  newTopicInput.value="";
+  show("add");
+}
+function onAddTopicChange(){
+  newTopicInput.classList.toggle("hidden",addTopicSelect.value!=="_new");
+}
+function saveWord(){
+  let topic = addTopicSelect.value==="_new" ? newTopicInput.value.trim() : addTopicSelect.value;
+  if(!topic||!learnInput.value||!translationInput.value) return;
+
+  if(!data.topics[topic]) data.topics[topic]=[];
+  data.topics[topic].push({id:Date.now(),learn:learnInput.value,tr:translationInput.value});
+
+  lastAddTopic=topic;
+  addTopicSelect.value=topic;
+  onAddTopicChange();
+
+  save();
+  learnInput.value="";
+  translationInput.value="";
+  loadTopics();
+  updateInstructions();
+}
+
+/* ===== IMPORT (FIXED) ===== */
+function triggerImport(){ importFile.click(); }
+importFile.onchange = e => {
+  let f=e.target.files[0];
+  if(!f){ importFile.value=""; return; }
+
+  let topic=prompt("Import into which topic?");
+  if(!topic){ importFile.value=""; return; }
+
+  if(!data.topics[topic]) data.topics[topic]=[];
+
+  let r=new FileReader();
+  r.onload=ev=>{
+    ev.target.result.split(/\r?\n/).forEach((l,i)=>{
+      if(i===0) return;
+      let p=l.split(",");
+      if(p.length>=2){
+        data.topics[topic].push({
+          id:Date.now()+Math.random(),
+          learn:p[0].replace(/"/g,""),
+          tr:p.slice(1).join(",").replace(/"/g,"")
+        });
+      }
+    });
+    save();
+    loadTopics();
+    updateInstructions();
+    importFile.value="";
+  };
+  r.readAsText(f,"UTF-8");
+};
+
+/* ===== SESSION ===== */
+function startSession(){
+  currentTopic=topicSelect.value;
+  if(!currentTopic) return;
+
+  session=[...data.topics[currentTopic]];
+  sessionDefaultDirection="A";
+  cardFlipped=false;
+  shuffleUsed=false;
+  shuffleBtn.classList.remove("hidden");
+
+  stats.sessions++;
+  stats.current={topic:currentTopic,correct:0,wrong:0};
+  nextCard();
+}
+function nextCard(){
+  if(session.length===0){
+    stats.history.push(stats.current);
+    stats.history=stats.history.slice(-10);
+
+    let t=stats.current.topic;
+    if(!stats.perTopic[t]) stats.perTopic[t]={correct:0,wrong:0};
+    stats.perTopic[t].correct+=stats.current.correct;
+    stats.perTopic[t].wrong+=stats.current.wrong;
+
+    save();
+    showHome();
+    return;
+  }
+  current=session[0];
+  cardFlipped=false;
+  renderCard();
+  show("session");
+}
+function renderCard(){
+  let side=cardFlipped?(sessionDefaultDirection==="A"?"B":"A"):sessionDefaultDirection;
+  card.textContent=side==="A"?current.learn:current.tr;
+}
+function flipCard(){ cardFlipped=!cardFlipped; renderCard(); }
+function flipDirection(){ sessionDefaultDirection=sessionDefaultDirection==="A"?"B":"A"; cardFlipped=false; renderCard(); }
+function shuffleSession(){ if(shuffleUsed) return; session.sort(()=>Math.random()-0.5); shuffleUsed=true; shuffleBtn.classList.add("hidden"); }
+function markKnown(){ stats.current.correct++; session.shift(); nextCard(); }
+function markUnknown(){
+  stats.current.wrong++;
+  let key=current.learn+"||"+current.tr;
+  stats.hardWords[key]=(stats.hardWords[key]||0)+1;
+  session.push(session.shift());
+  nextCard();
+}
+
+/* ===== STATS ===== */
+function renderStats(){
+  let topics=Object.keys(data.topics).length-1;
+  let words=allWords().length;
+
+  let topicStats="";
+  Object.keys(stats.perTopic).forEach(t=>{
+    let c=stats.perTopic[t].correct;
+    let w=stats.perTopic[t].wrong;
+    let acc=c+w>0?Math.round(c/(c+w)*100):0;
+    topicStats+=`
+      <div class="stat-block">
+        <strong>Topic: ${t}</strong><br>
+        Correct: ${c}<br>
+        Wrong: ${w}<br>
+        Accuracy: ${acc}%
+      </div>`;
+  });
+
+  let hard=Object.entries(stats.hardWords)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,10)
+    .map(e=>`
+      <div class="stat-block">
+        ${e[0].replace("||"," – ")}<br>
+        WRONG: ${e[1]}
+      </div>`)
+    .join("");
+
+  statsContent.innerHTML=`
+    <p>Topics: ${topics}</p>
+    <p>Words: ${words}</p>
+    <p>Sessions started: ${stats.sessions}</p>
+    <hr>
+    <h3>By topic</h3>
+    ${topicStats||"<p>No data</p>"}
+    <hr>
+    <h3>Hard words</h3>
+    ${hard||"<p>No data</p>"}
+  `;
+}
+function resetStats(){
+  if(!confirm("Reset statistics?"))return;
+  stats={sessions:0,history:[],perTopic:{},hardWords:{}};
+  save();
+  renderStats();
+}
+
+/* ===== MISC ===== */
+function openLink(u){ window.open(u,"_blank"); }
+function exitApp(){ window.close(); }
+
+/* INIT */
+loadTopics();
+updateInstructions();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>
