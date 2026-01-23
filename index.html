@@ -1013,9 +1013,16 @@ updateInstructions();
 
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.update(); // בדיקת עדכון בכל פתיחה
+  });
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    window.location.reload(); // טעינת גרסה חדשה אוטומטית
+  });
 }
 </script>
+
 
 </body>
 </html>
