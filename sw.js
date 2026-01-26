@@ -1,4 +1,4 @@
-const CACHE_NAME = "moti-v260126"; // ⬅️ שינוי גרסה = טריגר לעדכון
+const CACHE_NAME = "moti-v260126";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -9,7 +9,7 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
   );
-  self.skipWaiting(); // ⬅️ מפעיל מייד גרסה חדשה
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
@@ -20,7 +20,7 @@ self.addEventListener("activate", event => {
       )
     )
   );
-  self.clients.claim(); // ⬅️ משתלט מייד על האפליקציה
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
@@ -29,3 +29,8 @@ self.addEventListener("fetch", event => {
   );
 });
 
+self.addEventListener("message", event => {
+  if (event.data === "GET_CACHE_NAME") {
+    event.ports[0].postMessage(CACHE_NAME);
+  }
+});
