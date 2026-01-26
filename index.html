@@ -19,6 +19,11 @@ body{
   font-family:system-ui, sans-serif;
   background:#111;
   color:#fff;
+
+  font-size:17px;
+  line-height:1.55;
+  letter-spacing:0.3px;
+
 }
 
 /* ---------- SCREENS ---------- */
@@ -34,20 +39,20 @@ body{
 
 /* ---------- HOME ---------- */
 .welcome{
-  font-size:30px;
+  font-size:40px;
   font-weight:800;
   text-align:center;
-  margin-top:18px;
+  margin-top:35px;
 }
 .instructions{
   text-align:center;
-  font-size:16px;
-  margin:16px 0 26px;
-  color:#ddd;
+  font-size:25px;
+  margin:20px 0 30px;
+  color:#bbb;
 }
 .title-bottom{
   text-align:center;
-  font-size:20px;
+  font-size:30px;
   margin-top:28px;
   opacity:0.85;
 }
@@ -57,8 +62,9 @@ button{
   width:100%;
   padding:14px;
   margin:8px 0;
-  font-size:16px;
-  font-weight:600;
+  font-size:17px;
+font-weight:600;
+letter-spacing:0.3px;
   border:none;
   border-radius:14px;
   cursor:pointer;
@@ -88,24 +94,62 @@ button:active{
   color:#300;
 }
 
+.button-primary{
+  background:linear-gradient(180deg,#9fc5ff,#6fa8ff);
+  color:#002b5c;
+}
+
+.button-success{
+  background:linear-gradient(180deg,#b7e4c7,#95d5b2);
+  color:#103b24;
+}
+
+.button-danger{
+  background:linear-gradient(180deg,#ff9aa2,#ff6f6f);
+  color:#300;
+}
+.button-bank{
+  background:linear-gradient(180deg,#b7e4c7,#95d5b2);
+  color:#103b24;
+}
+
+.peach{
+  background:linear-gradient(180deg,#ffe5d9,#ffb4a2);
+  color:#5a1f14;
+}
+.sunset{
+  background:linear-gradient(180deg,#ffedd5,#fb923c);
+  color:#4a1d00;
+}
+.forest{
+  background:linear-gradient(180deg,#bbf7d0,#22c55e);
+  color:#052e16;
+}
+.lavender{
+  background:linear-gradient(180deg,#ede9fe,#c4b5fd);
+  color:#2e1065;
+}
+
+
+
 /* ---------- FORM ---------- */
 select,input,textarea{
   width:100%;
-  padding:12px;
+  padding:13px;
   margin:8px 0;
-  font-size:16px;
+  font-size:17px;
   border-radius:10px;
   border:none;
   box-sizing:border-box;
 }
 
-/* ---------- SESSION – COSMETIC ONLY ---------- */
+/* ---------- SESSION ---------- */
 
 .flip-hint{
   text-align:center;
   font-family:"Comic Sans MS","Trebuchet MS",cursive;
-  font-size:18px;
-  margin-bottom:8px;
+  font-size:30px;
+  margin-bottom:10px;
   color:#ffd966;
 }
 
@@ -154,6 +198,111 @@ select,input,textarea{
 }
 .row button{width:50%}
 
+
+
+/* ---------- BANK ---------- */
+
+.word-files-invite{
+  border:2px solid #ffd966;
+  border-radius:18px;
+  padding:16px;
+  margin:16px 0;
+  background:linear-gradient(180deg,#1f1f1f,#151515);
+  box-shadow:0 0 18px rgba(255,217,102,0.25);
+}
+.word-files-invite h3{
+  text-align:center;
+  font-size:22px;
+  color:#ffe599;
+  margin-bottom:6px;
+}
+.invite-main{
+  text-align:center;
+  font-size:15px;
+  margin-bottom:10px;
+}
+.invite-cta{
+  text-align:center;
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:0.3px;
+  padding:12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#9fc5ff,#6fa8ff);
+  color:#002b5c;
+  cursor:pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.invite-cta:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 14px rgba(0,0,0,0.25);
+  opacity:0.95;
+}
+
+.invite-cta:active{
+  transform:translateY(1px);
+  box-shadow:0 3px 6px rgba(0,0,0,0.35);
+}
+
+
+/* ---------- ACCORDION ---------- */
+.accordion{
+  border-radius:14px;
+  background:#1c1c1c;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.accordion-header{
+  padding:14px;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.accordion.open .accordion-header{
+  background:#222;
+}
+
+.accordion-header span{
+  transition:transform .3s ease;
+}
+.accordion.open .accordion-header span{
+  transform:rotate(90deg);
+}
+
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(-4px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.accordion.open .accordion-content{
+  max-height:1000px;
+  opacity:1;
+  padding-bottom:14px;
+}
+.accordion-content ul{
+  margin:0;
+  padding-left:18px;
+  font-size:14px;
+  line-height:1.45;
+}
+
+
+
+
 /* ---------- LIST ---------- */
 
 
@@ -172,10 +321,17 @@ select,input,textarea{
 
 .list-item{
   background:#222;
-  padding:10px;
+  padding:17px;
   margin:8px 0;
   border-radius:10px;
 }
+
+.word-line{
+  font-size:33px;
+  font-weight:600;
+  line-height:1.3;
+}
+
 
 .actions{
   display:flex;
@@ -191,12 +347,85 @@ select,input,textarea{
   color:#222;
   font-weight:700;
 }
+
+.about-box{
+  border:2px solid #6fa8dc;
+  border-radius:18px;
+  padding:16px;
+  margin-top:20px;
+  background:#1c1c1c;
+  text-align:center;
+}
+
+.about-title{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:10px;
+  color:#9fc5ff;
+}
+
+.about-box p{
+  margin:10px 0;
+  font-size:15px;
+  line-height:1.4;
+}
+
+
+
 .stat-block{
   background:#1c1c1c;
   padding:10px;
   margin:8px 0;
   border-radius:10px;
 }
+
+/* ---------- CONTACT LINKS ---------- */
+.contact-links{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin:16px 0;
+}
+
+.contact-links a{
+  display:block;
+  text-align:center;
+  padding:14px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 4px 8px rgba(0,0,0,0.25);
+  transition:opacity .2s, transform .1s;
+}
+
+.contact-links a:hover{
+  opacity:0.9;
+}
+
+.contact-links a:active{
+  transform:translateY(2px);
+}
+
+/* Colors */
+.contact-links a.facebook{
+  background:#1877f2;
+}
+
+.contact-links a.instagram{
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
+}
+
+.contact-links a.whatsapp{
+  background:#25d366;
+}
+
+.contact-links a.email{
+  background:#6b7280;
+}
+
+
 
 /* --- HARD WORDS TABLE --- */
 .hard-table{
@@ -236,6 +465,29 @@ select,input,textarea{
   opacity:1;
 }
 
+#sessionEnd{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.session-end-box{
+  text-align:center;
+  max-width:320px;
+}
+
+.session-end-box h1{
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.session-end-sub{
+  font-size:18px;
+  opacity:0.85;
+  margin-bottom:24px;
+}
+
+
 </style>
 </head>
 
@@ -250,10 +502,10 @@ select,input,textarea{
   </div>
 
   <select id="topicSelect"></select>
-  <button onclick="startSession()">Start</button>
-  <button onclick="showBank()">Word Bank</button>
-  <button onclick="showStats()">Statistics</button>
-  <button onclick="showContact()">Contact</button>
+  <button class="button-primary" onclick="startSession()">Start</button>
+  <button class="peach" onclick="showBank()">Word Bank</button>
+  <button class="lavender" onclick="showStats()">Statistics</button>
+  <button class="forest" onclick="showContact()">Contact</button>
   <button onclick="exitApp()" class="back">Exit</button>
 
   <div class="title-bottom">Hebrew with MotiVation</div>
@@ -263,10 +515,119 @@ select,input,textarea{
 <div class="screen" id="bank">
   <h2>Word Bank</h2>
   <select id="bankTopicSelect"></select>
-  <button onclick="showAdd()">Add words / topic</button>
-  <button onclick="triggerImport()">Import word file</button>
-  <button onclick="showHome()" class="back">Back</button>
+  <button class="sunset" onclick="showAdd()">Add words / topic</button>
+  <button class="peach" onclick="triggerImport()">Import word file</button>
+
+<div class="word-files-invite">
+  <h3>Get Custom Word Files</h3>
+  <p class="invite-main">
+    Word files from <b>any language</b> to <b>any language</b><br>
+  </p>
+  <div class="invite-cta">
+    Contact me to recieve wor files
+  </div>
 </div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Grammar & Structure <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Verb infinitives</li>
+      <li>Verb conjugations / בניינים</li>
+      <li>Past / Present / Future</li>
+      <li>Nouns</li>
+      <li>Adjectives</li>
+      <li>Adverbs</li>
+      <li>Pronouns</li>
+      <li>Prepositions</li>
+      <li>Connectors</li>
+      <li>Singular / Plural</li>
+      <li>Masculine / Feminine</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Vocabulary & Meaning <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Opposites</li>
+      <li>Confusing words</li>
+      <li>False friends</li>
+      <li>Collocations</li>
+      <li>Idioms</li>
+      <li>Slang</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Daily Life <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Daily use</li>
+      <li>Food & Shopping</li>
+      <li>Home & Family</li>
+      <li>Work & Professions</li>
+      <li>Transport & Navigation</li>
+      <li>Studies</li>
+      <li>Time & Dates</li>
+      <li>Emotions</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Communication <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Sentences</li>
+      <li>Questions & Answers</li>
+      <li>Requests & Politeness</li>
+      <li>Phone calls & Messages</li>
+      <li>Short conversations</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Advanced & Fluency <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Advanced control</li>
+      <li>Functional language</li>
+      <li>Phrasal verbs</li>
+    </ul>
+  </div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">
+    Others <span>▶</span>
+  </div>
+  <div class="accordion-content">
+    <ul>
+      <li>Emergency situations</li>
+      <li>Custom topics by request</li>
+    </ul>
+  </div>
+</div>
+
+
+
+<button onclick="showHome()" class="back">Back</button>
+</div>
+
 
 <!-- BANK LIST -->
 
@@ -274,34 +635,22 @@ select,input,textarea{
 <select id="bankListTopicSelect" onchange="switchBankListTopic()"></select>
 
 
-<button onclick="addWordToCurrentTopic()" class="good">
-  + Add word
-</button>
+<button onclick="addWordToCurrentTopic()" class="good">+ Add word</button>
 
-<button onclick="exportCurrentTopic()">Export word file</button>
+<button class="lavender" onclick="exportCurrentTopic()">Export word file</button>
 
 <div style="display:flex; gap:8px;">
   <button onclick="renameCurrentTopic()" style="
     flex:1;
-    background:linear-gradient(180deg,#9fc5ff,#6fa8ff);
-    color:#002b5c;
-  ">
-    Rename
-  </button>
+    background:linear-gradient(180deg,#9fc5ff,#6fa8ff); color:#002b5c; "> Rename </button>
 
-  <button id="deleteTopicBtn" class="delete hidden" style="flex:1;"
-    onclick="deleteCurrentTopic()">
-    Delete
-  </button>
+  <button id="deleteTopicBtn" class="delete hidden" 
+                     style="flex:1;"onclick="deleteCurrentTopic()">Delete</button>
 </div>
 
-<button onclick="showHome()" style="
-  background:linear-gradient(180deg,#ffe599,#f1c232);
-  color:#5c3b00;
-  font-weight:700;
-">
-  Back to Home
-</button>
+<button onclick="showHome()" 
+style="background:linear-gradient(180deg,#ffe599,#f1c232);
+color:#5c3b00;font-weight:700;">Back</button>
 
 
   <input id="searchInput" placeholder="Search..." oninput="renderWordList()">
@@ -323,7 +672,7 @@ select,input,textarea{
   <input id="newTopicInput" class="hidden" placeholder="New topic name">
   <textarea id="learnInput" placeholder="Learning language"></textarea>
   <textarea id="translationInput" placeholder="Translation"></textarea>
-  <button onclick="saveWord()">Save</button>
+  <button class="forest" onclick="saveWord()">Save</button>
   <button onclick="goHome()" class="back">Back</button>
 
 </div>
@@ -331,7 +680,7 @@ select,input,textarea{
 <!-- SESSION -->
 <div class="screen" id="session">
 
-  <div class="flip-hint">Click to flip</div>
+  <div class="flip-hint">CLICK TO FLIP</div>
 
   <div class="card-frame">
     <div class="card" id="card" onclick="flipCard()"></div>
@@ -352,9 +701,27 @@ select,input,textarea{
   <button id="shuffleBtn" onclick="shuffleSession()">Shuffle</button>
   <button onclick="flipDirection()">Flip direction</button>
   <button onclick="goHome()" class="back">Exit</button>
+</div>
 
+<!-- SESSION END -->
+<!-- SESSION END -->
+<div class="screen" id="sessionEnd">
+
+  <div class="session-end-box">
+    <h1>🎉 Well done 🎉</h1>
+    <p class="session-end-sub">You’ve completed the session</p>
+
+    <button class="forest" id="restartSessionBtn">
+      Start again
+    </button>
+
+    <button class="back" id="backHomeBtn">
+      Back to Home
+    </button>
+  </div>
 
 </div>
+
 
 <!-- STATS -->
 
@@ -373,11 +740,48 @@ select,input,textarea{
 <!-- CONTACT -->
 <div class="screen contact" id="contact">
   <h2>Contact</h2>
-  <button onclick="openLink('mailto:mottex@gmail.com')">Email: mottex@gmail.com</button>
-  <button onclick="openLink('https://wa.me/48604726360')">WhatsApp: +48 604 726 360</button>
-  <button onclick="openLink('https://www.facebook.com/share/1D6uJLL5nK/')">Facebook</button>
-  <button onclick="openLink('https://www.instagram.com/hebrew_with_motivation')">Instagram</button>
-  <button onclick="showHome()" class="back">Back</button>
+
+
+
+<div class="about-box">
+  <div class="about-title">Hebrew with Moti Vation</div>
+
+  <p>I'm here – No Fear<br>
+  Hebrew will become so clear</p>
+
+  <p>Online sessions from the comfort of your home<br>
+  Beginners / Advanced / Individuals / Groups</p>
+
+  <p>Fun & Interesting lessons<br>
+  I love languages and I love teaching</p>
+
+  <p>Lets go on adventure..<br>
+  Cake Eat Easy<br>
+  Take care – Take air</p>
+</div>
+
+
+<div class="contact-links">
+  <a class="facebook" href="https://www.facebook.com/share/1D6uJLL5nK/" target="_blank">
+    Facebook
+  </a>
+
+  <a class="instagram" href="https://www.instagram.com/hebrew_with_motivation" target="_blank">
+    Instagram
+  </a>
+
+  <a class="email" href="mailto:mottex@gmail.com">
+    Email
+  </a>
+
+  <a class="whatsapp" href="https://wa.me/48604726360" target="_blank">
+    WhatsApp
+  </a>
+</div>
+
+
+
+ <button onclick="showHome()" class="back">Back</button>
 </div>
 
 <input type="file" id="importFile" accept=".csv" class="hidden">
@@ -420,6 +824,8 @@ let cardFlipped=false;
 let shuffleUsed=false;
 let currentTopic=null;
 let lastAddTopic="";
+let returnToBankListAfterSave = false;
+
 
 /* ===== UTIL ===== */
 function save(){
@@ -559,7 +965,7 @@ function renderWordList(){
   arr.forEach((w,i)=>{
   wordList.innerHTML += `
     <div class="list-item">
-      <div style="font-size:20px;font-weight:600;">
+      <div class="word-line">
         ${i+1}. ${w.learn} – ${w.tr}
       </div>
 
@@ -601,6 +1007,7 @@ function deleteWord(id){
 }
 
 function editWord(id){
+returnToBankListAfterSave = true;
   const w=data.topics[currentTopic].find(x=>x.id===id);
   deleteWord(id);
   showAdd();
@@ -691,10 +1098,15 @@ function saveWord(){
   onAddTopicChange();
 
   updateInstructions();
+
+if(returnToBankListAfterSave){
+  returnToBankListAfterSave = false;
+  show("bankList");
+  renderWordList();
+  return;
 }
 
-
-
+}
 
 
 /* ===== IMPORT ===== */
@@ -797,7 +1209,7 @@ function nextCard(){
     stats.perTopic[t].wrong += stats.current.wrong;
 
     save();
-    showHome();
+    show("sessionEnd");
     return;
   }
   current = session[0];
@@ -814,9 +1226,6 @@ function renderCard(){
   const text = side === "A" ? current.learn : current.tr;
   card.textContent = text;
 
-  if(shuffleUsed){
-    shuffleBtn.classList.add("hidden");
-  }
 
   requestAnimationFrame(() => {
     autoFitCardText();
@@ -1006,6 +1415,22 @@ function resetStats(){
 function openLink(u){ window.open(u,"_blank"); }
 function exitApp(){ window.close(); }
 
+
+function toggleAccordion(header){
+  const acc = header.parentElement;
+  acc.classList.toggle("open");
+}
+
+document.getElementById("restartSessionBtn").onclick = () => {
+  // התחלה מחדש של אותו נושא
+  shuffleUsed = false;
+  startSession();
+};
+
+document.getElementById("backHomeBtn").onclick = () => {
+  showHome();
+};
+
 /* INIT */
 loadTopics();
 updateInstructions();
@@ -1022,7 +1447,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-
 
 </body>
 </html>
