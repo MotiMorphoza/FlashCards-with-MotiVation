@@ -511,6 +511,15 @@ select,input,textarea{
   <button onclick="exitApp()" class="back">Exit</button>
 
   <div class="title-bottom">Hebrew with MotiVation</div>
+
+  <div id="cacheVersion" style="
+  text-align:center;
+  font-size:13px;
+  opacity:0.5;
+  margin-top:20px;
+">
+</div>
+
 </div>
 
 <!-- BANK -->
@@ -1436,10 +1445,9 @@ document.getElementById("backHomeBtn").onclick = () => {
 /* INIT */
 loadTopics();
 updateInstructions();
-</script>
-
-<script>
+</script><script>
 if ("serviceWorker" in navigator) {
+
   navigator.serviceWorker.register("sw.js").then(reg => {
     reg.update(); // בדיקת עדכון בכל פתיחה
   });
@@ -1447,8 +1455,26 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     window.location.reload(); // טעינת גרסה חדשה אוטומטית
   });
+
+  navigator.serviceWorker.ready.then(reg => {
+    if (reg.active) {
+      const channel = new MessageChannel();
+
+      channel.port1.onmessage = e => {
+        const el = document.getElementById("cacheVersion");
+        if (el) {
+          el.textContent = "Cache: " + e.data;
+        }
+      };
+
+      reg.active.postMessage("GET_CACHE_NAME", [channel.port2]);
+    }
+  });
+
 }
 </script>
 
+
 </body>
 </html>
+
