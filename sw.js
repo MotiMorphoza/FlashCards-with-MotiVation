@@ -1,4 +1,4 @@
-const CACHE_NAME = "moti-v260126";
+const CACHE_NAME = "FC with Moti Vation V260126";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -34,3 +34,4 @@ self.addEventListener("message", event => {
     event.ports[0].postMessage(CACHE_NAME);
   }
 });
+
