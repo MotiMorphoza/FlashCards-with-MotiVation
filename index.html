@@ -465,11 +465,12 @@ select,input,textarea{
   opacity:1;
 }
 
-#sessionEnd{
+#sessionEnd.active{
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
 
 .session-end-box{
   text-align:center;
@@ -495,14 +496,15 @@ select,input,textarea{
 
 <!-- HOME -->
 <div class="screen active" id="home">
-  <div class="welcome">WELCOME</div>
+  <div class="welcome">WELCOME</div><br>
+
 
   <div id="instructions" class="instructions">
     To start, add words OR load a file in the Word Bank
   </div>
 
   <select id="topicSelect"></select>
-  <button class="button-primary" onclick="startSession()">Start</button>
+  <button class="button-primary" onclick="startSession()">Start A sessioN</button>
   <button class="peach" onclick="showBank()">Word Bank</button>
   <button class="lavender" onclick="showStats()">Statistics</button>
   <button class="forest" onclick="showContact()">Contact</button>
@@ -698,8 +700,8 @@ color:#5c3b00;font-weight:700;">Back</button>
     <button class="bad" onclick="markUnknown()">Ooooopsi</button>
   </div>
 
-  <button id="shuffleBtn" onclick="shuffleSession()">Shuffle</button>
-  <button onclick="flipDirection()">Flip direction</button>
+  <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">Shuffle</button>
+  <button class="sunset" onclick="flipDirection()">Flip Direction</button>
   <button onclick="goHome()" class="back">Exit</button>
 </div>
 
