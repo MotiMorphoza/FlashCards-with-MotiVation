@@ -1,4 +1,4 @@
-const CACHE_NAME = "moti-v2"; // ⬅️ שינוי גרסה = טריגר לעדכון
+const CACHE_NAME = "moti-v260126"; // ⬅️ שינוי גרסה = טריגר לעדכון
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -28,3 +28,4 @@ self.addEventListener("fetch", event => {
     caches.match(event.request).then(r => r || fetch(event.request))
   );
 });
+
