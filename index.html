@@ -80,16 +80,18 @@ button:active{
   transform:translateY(2px);
   box-shadow:0 2px 4px rgba(0,0,0,0.35);
 }
-.good{
-  background:linear-gradient(180deg,#b7e4c7,#95d5b2);
+
+.forest{
+  background:linear-gradient(180deg,#bbf7d0,#22c55e);
+  color:#052e16;
 }
-.bad{
-  background:linear-gradient(180deg,#f7b2ad,#ee938c);
-}
+
+
+
 .back{
   background:linear-gradient(180deg,#e0e0e0,#cfcfcf);
 }
-.delete{
+.button-danger{
   background:linear-gradient(180deg,#ff9aa2,#ff6f6f);
   color:#300;
 }
@@ -104,10 +106,7 @@ button:active{
   color:#103b24;
 }
 
-.button-danger{
-  background:linear-gradient(180deg,#ff9aa2,#ff6f6f);
-  color:#300;
-}
+
 .button-bank{
   background:linear-gradient(180deg,#b7e4c7,#95d5b2);
   color:#103b24;
@@ -121,16 +120,11 @@ button:active{
   background:linear-gradient(180deg,#ffedd5,#fb923c);
   color:#4a1d00;
 }
-.forest{
-  background:linear-gradient(180deg,#bbf7d0,#22c55e);
-  color:#052e16;
-}
+
 .lavender{
   background:linear-gradient(180deg,#ede9fe,#c4b5fd);
   color:#2e1065;
 }
-
-
 
 /* ---------- FORM ---------- */
 select,input,textarea{
@@ -250,13 +244,124 @@ select,input,textarea{
 }
 
 
+/* ---------- DOWNLOAD ---------- */
+
+#download select{
+  margin-bottom:14px;
+  background:#1c1c1c;
+  color:#fff;
+}
+
+#download h2{
+  text-align:center;
+  margin-bottom:14px;
+}
+
+#downloadAccordions li{
+  cursor:pointer;
+  padding:8px 6px;
+  border-radius:8px;
+  transition:background .15s, color .15s;
+}
+
+#downloadAccordions li:hover{
+  background:#2a2a2a;
+  color:#ffe5d9; /* peach tone */
+}
+
+#downloadAccordions li:active{
+  background:#333;
+}
+
+/* --- Download language visual state --- */
+
+#downloadLangSelect{
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+/* סימון עדין לפי שפה */
+#downloadLangSelect.lang-he-en{
+  box-shadow: 0 0 0 2px rgba(187,247,208,0.5); /* forest */
+}
+#downloadLangSelect.lang-pl-en{
+  box-shadow: 0 0 0 2px rgba(255,229,217,0.55); /* peach */
+}
+#downloadLangSelect.lang-ar-he{
+  box-shadow: 0 0 0 2px rgba(255,237,213,0.55); /* sunset */
+}
+#downloadLangSelect.lang-es-he{
+  box-shadow: 0 0 0 2px rgba(187,247,208,0.35); /* forest soft */
+}
+.li-available{
+  background:linear-gradient(180deg,#bbf7d0,#22c55e);
+  color:#052e16;
+  font-weight:700;
+}
+
+.li-locked{
+  opacity:0.35;
+  cursor:not-allowed;
+}
+
+/* ---------- DOWNLOAD STRUCTURE ---------- */
+
+.download-lang-box{
+  background:linear-gradient(180deg,#1f2933,#161c22);
+  border:2px solid #6fa8dc;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:16px;
+  box-shadow:0 6px 14px rgba(0,0,0,0.35);
+}
+
+.download-lang-title{
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.4px;
+  margin-bottom:8px;
+  color:#9fc5ff;
+  text-align:center;
+}
+
+.download-divider{
+  height:1px;
+  background:linear-gradient(
+    to right,
+    transparent,
+    #6fa8dc,
+    transparent
+  );
+  margin:10px 0 14px;
+  opacity:0.8;
+}
+
+.download-topics-title{
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.4px;
+  margin-bottom:8px;
+  color:#ffd966;
+  text-align:center;
+}
+
+
+
+
 /* ---------- ACCORDION ---------- */
+
+#downloadAccordions.lang-not-selected{
+  opacity:0.4;
+  pointer-events:none;
+}
+
+
 .accordion{
   border-radius:14px;
   background:#1c1c1c;
   margin-bottom:10px;
   overflow:hidden;
 }
+
 .accordion-header{
   padding:14px;
   font-size:18px;
@@ -266,13 +371,11 @@ select,input,textarea{
   justify-content:space-between;
   align-items:center;
 }
-.accordion.open .accordion-header{
-  background:#222;
-}
 
 .accordion-header span{
-  transition:transform .3s ease;
+  transition:transform .25s ease;
 }
+
 .accordion.open .accordion-header span{
   transform:rotate(90deg);
 }
@@ -291,8 +394,10 @@ select,input,textarea{
 .accordion.open .accordion-content{
   max-height:1000px;
   opacity:1;
-  padding-bottom:14px;
+  transform:translateY(0);
+  padding-bottom:12px;
 }
+
 .accordion-content ul{
   margin:0;
   padding-left:18px;
@@ -300,7 +405,10 @@ select,input,textarea{
   line-height:1.45;
 }
 
-
+.accordion-has-files > .accordion-header{
+  background:linear-gradient(180deg,#bbf7d0,#22c55e);
+  color:#052e16;
+}
 
 
 /* ---------- LIST ---------- */
@@ -379,7 +487,7 @@ select,input,textarea{
   border-radius:10px;
 }
 
-/* ---------- CONTACT LINKS ---------- */
+/* ---------- CONTACT   LINKS ---------- */
 .contact-links{
   display:flex;
   flex-direction:column;
@@ -527,119 +635,48 @@ select,input,textarea{
   <h2>Word Bank</h2>
   <select id="bankTopicSelect"></select>
   <button class="sunset" onclick="showAdd()">Add words / topic</button>
-  <button class="peach" onclick="triggerImport()">Import word file</button>
 
 <div class="word-files-invite">
-  <h3>Get Custom Word Files</h3>
-  <p class="invite-main">
-    Word files from <b>any language</b> to <b>any language</b><br>
-  </p>
-<button class="invite-cta" onclick="showContact()">
-  Contact me to receive word files
+<button class="invite-cta" onclick="showDownload()">
+  Word Library
 </button>
 
 </div>
 
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Grammar & Structure <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Verb infinitives</li>
-      <li>Verb conjugations / בניינים</li>
-      <li>Past / Present / Future</li>
-      <li>Nouns</li>
-      <li>Adjectives</li>
-      <li>Adverbs</li>
-      <li>Pronouns</li>
-      <li>Prepositions</li>
-      <li>Connectors</li>
-      <li>Singular / Plural</li>
-      <li>Masculine / Feminine</li>
-    </ul>
-  </div>
-</div>
+  <button class="peach" onclick="triggerImport()">Import word file</button>
 
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Vocabulary & Meaning <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Opposites</li>
-      <li>Confusing words</li>
-      <li>False friends</li>
-      <li>Collocations</li>
-      <li>Idioms</li>
-      <li>Slang</li>
-    </ul>
-  </div>
-</div>
-
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Daily Life <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Daily use</li>
-      <li>Food & Shopping</li>
-      <li>Home & Family</li>
-      <li>Work & Professions</li>
-      <li>Transport & Navigation</li>
-      <li>Studies</li>
-      <li>Time & Dates</li>
-      <li>Emotions</li>
-    </ul>
-  </div>
-</div>
-
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Communication <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Sentences</li>
-      <li>Questions & Answers</li>
-      <li>Requests & Politeness</li>
-      <li>Phone calls & Messages</li>
-      <li>Short conversations</li>
-    </ul>
-  </div>
-</div>
-
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Advanced & Fluency <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Advanced control</li>
-      <li>Functional language</li>
-      <li>Phrasal verbs</li>
-    </ul>
-  </div>
-</div>
-
-<div class="accordion">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    Others <span>▶</span>
-  </div>
-  <div class="accordion-content">
-    <ul>
-      <li>Emergency situations</li>
-      <li>Custom topics by request</li>
-    </ul>
-  </div>
+<button onclick="goHome()" class="back">Back</button>
 </div>
 
 
+  <!-- ACCORDIONS  -->
+<div class="screen" id="download">
 
-<button onclick="showHome()" class="back">Back</button>
+  <h2>WORD LIBRARY</h2>
+
+<div class="download-lang-box">
+  <div class="download-lang-title">Choose language</div>
+
+  <select id="downloadLangSelect">
+    <option value="" hidden>Choose language pair</option>
+    <option value="he-en">Hebrew → English</option>
+    <option value="pl-en">Polish → English</option>
+    <option value="ar-he">Arabic → Hebrew</option>
+    <option value="es-he">Spanish → Hebrew</option>
+  </select>
 </div>
 
+<div class="download-divider"></div>
+
+<div class="download-topics-title">Choose topic</div>
+
+  <div id="downloadAccordions"></div>
+
+  <button class="back" onclick="goHome()">Back</button>
+
+</div>
+
+    
 
 <!-- BANK LIST -->
 
@@ -647,25 +684,18 @@ select,input,textarea{
 <select id="bankListTopicSelect" onchange="switchBankListTopic()"></select>
 
 
-<button onclick="addWordToCurrentTopic()" class="good">+ Add word</button>
+<button onclick="addWordToCurrentTopic()" class="forest">+ Add word</button>
 
 <button class="lavender" onclick="exportCurrentTopic()">Export word file</button>
 
 <div style="display:flex; gap:8px;">
-  <button onclick="renameCurrentTopic()" style="
-    flex:1;
-    background:linear-gradient(180deg,#9fc5ff,#6fa8ff); color:#002b5c; "> Rename </button>
-
-  <button id="deleteTopicBtn" class="delete hidden" 
-                     style="flex:1;"onclick="deleteCurrentTopic()">Delete</button>
+  <button class="peach" style="flex:1;" onclick="renameCurrentTopic()">Rename</button>
+  <button id="deleteTopicBtn" class="button-danger" style="flex:1;" onclick="deleteCurrentTopic()">Delete</button>
 </div>
 
-<button onclick="showHome()" 
-style="background:linear-gradient(180deg,#ffe599,#f1c232);
-color:#5c3b00;font-weight:700;">Back</button>
+<button class="back" style="font-weight:700;" onclick="goHome()">Back</button>
 
-
-  <input id="searchInput" placeholder="Search..." oninput="renderWordList()">
+<input id="searchInput" placeholder="Search..." oninput="renderWordList()">
   <select id="sortSelect" onchange="renderWordList()">
     <option value="">No sorting</option>
     <option value="learn">By learning language</option>
@@ -692,7 +722,7 @@ color:#5c3b00;font-weight:700;">Back</button>
 <!-- SESSION -->
 <div class="screen" id="session">
 
-  <div class="flip-hint">CLICK TO FLIP</div>
+  <div class="flip-hint">CLICK  TO  FLIP</div>
 
   <div class="card-frame">
     <div class="card" id="card" onclick="flipCard()"></div>
@@ -704,10 +734,9 @@ color:#5c3b00;font-weight:700;">Back</button>
 
   <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
-
   <div class="row">
-    <button class="good" onclick="markKnown()">I knew it</button>
-    <button class="bad" onclick="markUnknown()">Ooooopsi</button>
+    <button class="forest" onclick="markKnown()">I knew it</button>
+    <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
   </div>
 
   <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">Shuffle</button>
@@ -715,7 +744,6 @@ color:#5c3b00;font-weight:700;">Back</button>
   <button onclick="goHome()" class="back">Exit</button>
 </div>
 
-<!-- SESSION END -->
 <!-- SESSION END -->
 <div class="screen" id="sessionEnd">
 
@@ -736,16 +764,11 @@ color:#5c3b00;font-weight:700;">Back</button>
 
 
 <!-- STATS -->
-
 <div class="screen" id="stats">
   <h2>Statistics</h2>
-
-  <button onclick="resetStats()" class="delete">Reset statistics</button>
-
+  <button onclick="resetStats()" class="button-danger">Reset statistics</button>
   <div id="statsContent"></div>
-
-  <button onclick="showHome()" class="back">Back</button>
-
+  <button onclick="goHome()" class="back">Back</button>
 </div>
 
 
@@ -753,9 +776,7 @@ color:#5c3b00;font-weight:700;">Back</button>
 <div class="screen contact" id="contact">
   <h2>Contact</h2>
 
-
-
-<div class="about-box">
+  <div class="about-box">
   <div class="about-title">Hebrew with Moti Vation</div>
 
   <p>I'm here – No Fear<br>
@@ -793,10 +814,12 @@ color:#5c3b00;font-weight:700;">Back</button>
 
 
 
- <button onclick="showHome()" class="back">Back</button>
+ <button onclick="goHome()" class="back">Back</button>
 </div>
 
 <input type="file" id="importFile" accept=".csv" class="hidden">
+
+<script src="localFiles.js"></script>
 
 <script>
 
@@ -830,6 +853,33 @@ let stats = JSON.parse(localStorage.getItem("stats_v76")) || {
   sessions:0, history:[], perTopic:{}, hardWords:{}
 };
 
+
+const topicSelect = document.getElementById("topicSelect");
+const bankTopicSelect = document.getElementById("bankTopicSelect");
+const bankListTopicSelect = document.getElementById("bankListTopicSelect");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+const wordList = document.getElementById("wordList");
+const addTopicSelect = document.getElementById("addTopicSelect");
+const learnInput = document.getElementById("learnInput");
+const translationInput = document.getElementById("translationInput");
+const newTopicInput = document.getElementById("newTopicInput");
+const importFile = document.getElementById("importFile");
+const shuffleBtn = document.getElementById("shuffleBtn");
+const card = document.getElementById("card");
+
+
+/* ===== HUB INDEX ===== */
+let hubIndex = null;
+
+async function loadHubIndex(){
+  const res = await fetch(`${window.location.origin}/index.json`);
+  if(!res.ok) throw new Error("index.json not found");
+  hubIndex = await res.json();
+}
+
+
+
 let session=[], current=null;
 let sessionDefaultDirection="A";
 let cardFlipped=false;
@@ -840,10 +890,63 @@ let returnToBankListAfterSave = false;
 
 
 /* ===== UTIL ===== */
+
+
 function save(){
   localStorage.setItem("flashData_v76",JSON.stringify(data));
   localStorage.setItem("stats_v76",JSON.stringify(stats));
 }
+
+
+
+/* ===== TOPIC NAME GATE ===== */
+
+
+function normalizeTopicName(name){
+  return name
+    .trim()
+    .replace(/\s+/g, " ")   // רווחים כפולים → רווח אחד
+    .toLowerCase();         // בלי הבדל אותיות
+}
+
+
+/*
+mode:
+- "create"  → יצירת טופיק חדש (ADD / IMPORT / DOWNLOAD)
+- "rename"  → שינוי שם טופיק
+*/
+function validateTopicName(name, mode, currentName = null){
+  const n = normalizeTopicName(name);
+
+  if(!n){
+    alert("Topic name is empty");
+    return null;
+  }
+
+  // יצירת טופיק חדש
+  if(mode === "create"){
+    if(data.topics[n]){
+      alert(`Topic "${n}" already exists`);
+      return null;
+    }
+    return n;
+  }
+
+  // שינוי שם
+  if(mode === "rename"){
+    if(n === currentName) return n; // אותו שם – מותר
+    if(data.topics[n]){
+      alert(`Topic "${n}" already exists`);
+      return null;
+    }
+    return n;
+  }
+
+  console.error("Unknown topic name validation mode:", mode);
+  return null;
+}
+
+
 function allWords(){
   let a=[];
   Object.keys(data.topics).forEach(t=>{
@@ -852,26 +955,104 @@ function allWords(){
   return a;
 }
 
+
+/* ===== LIBRARY → FC TOPIC ===== */
+function saveCSVAsTopic(csvText, topicName){
+
+  // 🔒 חסימה מיידית – שם טופיק כבר קיים
+const checked = validateTopicName(topicName, "create");
+if(!checked){
+  alert("This file was already loaded");
+  return false;
+}
+
+
+
+
+  const rows = csvText.split(/\r?\n/).slice(1);
+  const words = [];
+
+  rows.forEach(line => {
+    const p = line.split(",");
+    if(p.length >= 2){
+      words.push({
+        id: Date.now() + Math.random(),
+        learn: p[0].replace(/"/g,""),
+        tr: p.slice(1).join(",").replace(/"/g,"")
+      });
+    }
+  });
+
+  if(words.length === 0){
+    alert("File contains no valid words");
+    return false;
+  }
+
+  if(data.topics[topicName]){
+  alert("Topic already exists. File not loaded.");
+  return false;
+}
+
+data.topics[topicName] = words;
+
+
+  save();
+  loadTopics();
+
+  return true;
+}
+
+
 /* ===== NAV ===== */
 function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
-function showHome(){ loadTopics(); updateInstructions(); show("home"); }
+
 function showBank(){ loadTopics(); show("bank"); }
 function showStats(){ renderStats(); show("stats"); }
 function showContact(){ show("contact"); }
+
+function showDownload(){
+  // איפוס שפה
+  currentDownloadLang = null;
+
+  // איפוס בחירה וסטייל של השפה
+  if(downloadLangSelect){
+    downloadLangSelect.value = "";
+  }
+
+  // בניית UI של האקורדיונים
+  buildDownloadUI();
+
+
+
+
+  // מצב אפור – נושאים נעולים עד בחירת שפה
+  const acc = document.getElementById("downloadAccordions");
+  if(acc){
+    acc.classList.add("lang-not-selected");
+  }
+
+  // עדכון סטייל של select (מוריד כל סימון קודם)
+  markActiveDownloadLang();
+
+  // סגירת כל האקורדיונים
+  closeAllAccordions();
+
+  // הצגת המסך
+  show("download");
+}
 
 function goHome(){
   if(stats.current){
     finishSessionIfActive();
   }
 
-  importFile.value = "";
-
-  showHome();
+  loadTopics();
+  updateInstructions();
+  show("home");
 }
-
 
 
 /* ===== HOME LOGIC ===== */
@@ -929,24 +1110,43 @@ function switchBankListTopic(){
 function renameCurrentTopic(){
   if(!currentTopic || currentTopic === "All words") return;
 
-  let newName = prompt("New topic name:", currentTopic);
-  if(!newName || newName === currentTopic) return;
+  const oldKey = normalizeTopicName(currentTopic);
+  const input = prompt("New topic name:", currentTopic);
+  if(!input) return;
 
-  if(data.topics[newName]){
-    alert("Topic already exists");
+  const newKey = normalizeTopicName(input);
+
+  // אותו מפתח בפועל
+  if(newKey === oldKey) return;
+
+  // קיים כבר
+  if(data.topics[newKey]){
+    alert("Topic name already exists. Rename cancelled.");
     return;
   }
 
-  data.topics[newName] = data.topics[currentTopic];
-  delete data.topics[currentTopic];
+  // העברה
+  data.topics[newKey] = data.topics[oldKey];
+  delete data.topics[oldKey];
 
-  currentTopic = newName;
-  lastAddTopic = newName;
+  // עדכון state
+  currentTopic = newKey;
+  lastAddTopic = newKey;
+
+  // סטטיסטיקה
+  if(stats.perTopic[oldKey]){
+    stats.perTopic[newKey] = stats.perTopic[oldKey];
+    delete stats.perTopic[oldKey];
+  }
+  if(stats.current && stats.current.topic === oldKey){
+    stats.current.topic = newKey;
+  }
 
   save();
   loadTopics();
   renderWordList();
 }
+
 
 
 function addWordToCurrentTopic(){
@@ -956,48 +1156,43 @@ function addWordToCurrentTopic(){
   showAdd();
 }
 
-bankTopicSelect.onchange=()=>{
-  if(!bankTopicSelect.value) return;
-  currentTopic=bankTopicSelect.value;
-  deleteTopicBtn.classList.toggle("hidden",currentTopic==="All words");
+bankTopicSelect.onchange = () => {
+  if (!bankTopicSelect.value) return;
+  currentTopic = bankTopicSelect.value;
+  deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
   show("bankList");
 };
 
 function renderWordList(){
-  let q=searchInput.value.toLowerCase();
-  let sort=sortSelect.value;
-  wordList.innerHTML="";
+  let q = searchInput.value.toLowerCase();
+  let sort = sortSelect.value;
+  wordList.innerHTML = "";
 
-  let arr=[...data.topics[currentTopic]];
-  if(q) arr=arr.filter(w=>w.learn.toLowerCase().includes(q)||w.tr.toLowerCase().includes(q));
-  if(sort==="learn") arr.sort((a,b)=>a.learn.localeCompare(b.learn));
-  if(sort==="tr") arr.sort((a,b)=>a.tr.localeCompare(b.tr));
+  let arr = [...data.topics[currentTopic]];
+  if (q) arr = arr.filter(w => w.learn.toLowerCase().includes(q) || w.tr.toLowerCase().includes(q));
+  if (sort === "learn") arr.sort((a, b) => a.learn.localeCompare(b.learn));
+  if (sort === "tr") arr.sort((a, b) => a.tr.localeCompare(b.tr));
 
-  arr.forEach((w,i)=>{
-  wordList.innerHTML += `
-    <div class="list-item">
-      <div class="word-line">
-        ${i+1}. ${w.learn} – ${w.tr}
-      </div>
-
-      <div class="actions">
-        <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">
-          Edit
-        </button>
-        <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">
-          Delete
-        </button>
-      </div>
-    </div>`;
-});
+  arr.forEach((w, i) => {
+    wordList.innerHTML += `
+      <div class="list-item">
+        <div class="word-line">
+          ${i + 1}. ${w.learn} – ${w.tr}
+        </div>
+        <div class="actions">
+          <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
+          <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
+        </div>
+      </div>`;
+  });
 
 }
 
 function exportCurrentTopic(){
-  let rows=["Learning language,Translation"];
-  data.topics[currentTopic].forEach(w=>rows.push(`"${w.learn}","${w.tr}"`));
-  let blob=new Blob([rows.join("\n")],{type:"text/csv"});
+  let rows = ["Learning language,Translation"];
+  data.topics[currentTopic].forEach(w => rows.push(`"${w.learn}","${w.tr}"`));
+  let blob = new Blob([rows.join("\n")], {type: "text/csv"});
   let a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
   a.download=`${currentTopic}.csv`;
@@ -1082,9 +1277,15 @@ function saveWord(){
 
   if(!topic || !learnInput.value || !translationInput.value) return;
 
-  if(!data.topics[topic]){
-    data.topics[topic] = [];
-  }
+  // 🔥 חסימת יצירת Topic אם השם כפול
+if(isNew){
+  const checked = validateTopicName(topic, "create");
+  if(!checked) return;
+}
+
+
+
+  if(!data.topics[topic]){data.topics[topic] = [];}
 
   data.topics[topic].push({
     id: Date.now(),
@@ -1138,8 +1339,24 @@ importFile.onchange = e => {
   // 🔥 שם הנושא = שם הקובץ בלי סיומת
   const topic = file.name.replace(/\.[^/.]+$/, "");
 
-  // יצירת נושא חדש (או ניקוי קיים)
-  data.topics[topic] = [];
+  // יצירת נושא חדש (או ניקוי קיים) חסימת שם כפול
+const checked = validateTopicName(topic, "create");
+if(!checked){
+  importFile.value = "";
+  return;
+}
+
+
+
+if(data.topics[topic]){
+  alert("Topic already exists. Import cancelled.");
+  importFile.value = "";
+  return;
+}
+
+data.topics[topic] = [];
+
+
 
   const reader = new FileReader();
   reader.onload = ev => {
@@ -1198,6 +1415,14 @@ function startSession(){
       session.sort((a,b)=>a.tr.localeCompare(b.tr));
     }
   }
+
+  if(session.length === 0){
+    stats.current = null;
+    showBank();
+    return;
+  }
+
+
 
   sessionDefaultDirection = "A";
   cardFlipped = false;
@@ -1341,12 +1566,33 @@ function finishSessionIfActive(){
   save();
 }
 
-function exitSession(){
-  finishSessionIfActive();
-  showHome();
+
+function loadCSVToSession(csvText, topicTitle){
+  session = [];
+
+  csvText.split(/\r?\n/).forEach((line,i)=>{
+    if(i===0) return;
+    const p = line.split(",");
+    if(p.length>=2){
+      session.push({
+        learn: p[0].replace(/"/g,""),
+        tr: p.slice(1).join(",").replace(/"/g,"")
+      });
+    }
+  });
+
+  if(session.length === 0) return;
+
+  currentTopic = topicTitle;
+  sessionDefaultDirection = "A";
+  cardFlipped = false;
+  shuffleUsed = false;
+
+  stats.sessions++;
+  stats.current = { topic: currentTopic, correct: 0, wrong: 0 };
+
+  nextCard();
 }
-
-
 
 
 /* ===== STATS ===== */
@@ -1424,14 +1670,35 @@ function resetStats(){
 
 
 /* ===== MISC ===== */
-function openLink(u){ window.open(u,"_blank"); }
-function exitApp(){ window.close(); }
 
+function resetEverything(){
+  if(!confirm("This will DELETE all topics, stats and cached data.\nAre you sure?")) return;
+
+  // FC data
+  localStorage.removeItem("flashData_v76");
+  localStorage.removeItem("stats_v76");
+
+  // Sound pref
+  localStorage.removeItem("soundOn");
+
+  // Reload app state
+  location.reload();
+}
 
 function toggleAccordion(header){
   const acc = header.parentElement;
+  const container = acc.parentElement; // #downloadAccordions או #bank (אם בעתיד)
+
+  // סגירת כל האקורדיונים באותו מסך
+  container.querySelectorAll(".accordion.open")
+    .forEach(a => {
+      if (a !== acc) a.classList.remove("open");
+    });
+
+  // toggle רק של הנוכחי
   acc.classList.toggle("open");
 }
+
 
 document.getElementById("restartSessionBtn").onclick = () => {
   // התחלה מחדש של אותו נושא
@@ -1439,40 +1706,169 @@ document.getElementById("restartSessionBtn").onclick = () => {
   startSession();
 };
 
-document.getElementById("backHomeBtn").onclick = () => {
-  showHome();
-};
+document.getElementById("backHomeBtn").onclick = () => {goHome();};
 
-/* INIT */
-loadTopics();
-updateInstructions();
-</script><script>
-if ("serviceWorker" in navigator) {
 
-  navigator.serviceWorker.register("sw.js").then(reg => {
-    reg.update(); // בדיקת עדכון בכל פתיחה
-  });
 
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    window.location.reload(); // טעינת גרסה חדשה אוטומטית
-  });
+/* ===== DOWNLOAD ===== */
 
-  navigator.serviceWorker.ready.then(reg => {
-    if (reg.active) {
-      const channel = new MessageChannel();
 
-      channel.port1.onmessage = e => {
-        const el = document.getElementById("cacheVersion");
-        if (el) {
-          el.textContent = e.data;
+async function buildDownloadUI(){
+  if(!hubIndex || !currentDownloadLang) return;
+
+  const container = document.getElementById("downloadAccordions");
+  container.innerHTML = "";
+
+  const { groups, topics } = hubIndex;
+
+  for(const group of groups){
+    const acc = document.createElement("div");
+    acc.className = "accordion";
+
+    acc.innerHTML = `
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        ${group.title} <span>▶</span>
+      </div>
+      <div class="accordion-content">
+        <ul></ul>
+      </div>
+    `;
+
+    const ul = acc.querySelector("ul");
+    let hasAnyFiles = false;
+
+    topics
+      .filter(t => t.group === group.id)
+      .forEach(topic => {
+        const files = topic.files?.[currentDownloadLang];
+
+        const li = document.createElement("li");
+        li.textContent = topic.title;
+
+        if(files && files.length){
+          hasAnyFiles = true;
+          li.classList.add("li-available");
+
+          li.onclick = () => {
+            const fileName = files[0]; // כרגע הראשון
+            const path =
+              `${window.location.origin}/hub/${currentDownloadLang}/${topic.id}/${fileName}`;
+            onDownloadFile(path, topic.title, fileName);
+          };
+        } else {
+          li.classList.add("li-locked");
         }
-      };
 
-      reg.active.postMessage("GET_CACHE_NAME", [channel.port2]);
+        ul.appendChild(li);
+      });
+
+    // 🔥 צבע כותרת רק אם יש קבצים בקבוצה
+    if(hasAnyFiles){
+      acc.classList.add("accordion-has-files");
     }
-  });
+
+    container.appendChild(acc);
+  }
+}
+
+
+async function onDownloadFile(path, topicTitle, fileName){
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  try {
+    const res = await fetch(path, { signal: controller.signal });
+    if(!res.ok){
+      alert("File not found");
+      return;
+    }
+
+    const text = await res.text();
+
+    const appTopicName =
+      `${topicTitle} – ${fileName.replace(/\.csv$/i,"")}`;
+
+    const ok = saveCSVAsTopic(text, appTopicName);
+    if(!ok) return;
+
+    currentTopic = appTopicName;
+    topicSelect.value = appTopicName;
+
+    loadCSVToSession(text, appTopicName);
+
+  } catch(e){
+    alert("Download timeout. Try again.");
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+
+/* ===== DOWNLOAD LANGUAGE SELECTION ===== */
+
+let currentDownloadLang = null;
+const downloadLangSelect = document.getElementById("downloadLangSelect");
+
+if (downloadLangSelect) {
+  downloadLangSelect.addEventListener("change", () => {
+  currentDownloadLang = downloadLangSelect.value || null;
+  markActiveDownloadLang();
+  buildDownloadUI();      // 🔥 חובה
+  closeAllAccordions();   // ניקוי מצב קודם
+});
 
 }
+
+
+function markActiveDownloadLang(){
+  downloadLangSelect.classList.remove(
+    "lang-he-en",
+    "lang-pl-en",
+    "lang-ar-he",
+    "lang-es-he"
+  );
+
+  const acc = document.getElementById("downloadAccordions");
+
+  if(currentDownloadLang){
+    downloadLangSelect.classList.add("lang-" + currentDownloadLang);
+    if(acc) acc.classList.remove("lang-not-selected");
+  }else{
+    if(acc) acc.classList.add("lang-not-selected");
+  }
+}
+
+
+
+function closeAllAccordions(){
+  document.querySelectorAll("#download .accordion.open")
+    .forEach(acc => acc.classList.remove("open"));
+}
+
+function exitApp(){
+  // PWA / Mobile
+  if (navigator.userAgent.includes("Android")) {
+    navigator.app?.exitApp?.();
+  }
+
+  // דפדפן רגיל – חזרה אחורה
+  window.history.back();
+}
+
+
+
+/* ===== INIT ===== */
+(async () => {
+  try {
+    await loadHubIndex();
+    console.log("Hub index loaded", hubIndex);
+  } catch (e) {
+    console.error("Failed to load index.json", e);
+  }
+
+  loadTopics();
+  updateInstructions();
+})();
 </script>
 
 

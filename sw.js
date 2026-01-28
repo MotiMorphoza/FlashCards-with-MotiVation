@@ -35,3 +35,40 @@ self.addEventListener("message", event => {
   }
 });
 
+/* ===== HUB CSV CACHE ===== */
+
+const HUB_CACHE = "hub-csv-v1";
+
+self.addEventListener("fetch", event => {
+  const url = new URL(event.request.url);
+
+  // רק קבצי CSV מה-HUB
+  if (
+    url.pathname.startsWith("/hub/") &&
+    url.pathname.endsWith(".csv")
+  ) {
+    event.respondWith(
+      networkFirstCsv(event.request)
+    );
+  }
+});
+
+async function networkFirstCsv(request){
+  const cache = await caches.open(HUB_CACHE);
+
+  try{
+    const fresh = await fetch(request);
+    if(fresh && fresh.ok){
+      cache.put(request, fresh.clone());
+      return fresh;
+    }
+    throw new Error("Network response not ok");
+  }catch(e){
+    const cached = await cache.match(request);
+    if(cached){
+      return cached;
+    }
+    // אין רשת ואין cache
+    return new Response("", { status: 504 });
+  }
+}
