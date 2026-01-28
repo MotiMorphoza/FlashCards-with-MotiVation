@@ -21,9 +21,9 @@ window.HUB_INDEX = {
       title: "Verb infinitives",
       group: "grammar",
       files: {
-        "he-en": ["Style.csv"],
-        "pl-en": ["pl-en_verb_infinitives_999.csv"],
-        "ar-he": ["Dogi.csv"]
+        "he-en": ["Style.csv.csv"],
+        "pl-en": ["pl-en_verb_infinitives_999.csv.csv"],
+        "ar-he": ["Dogi.csv.csv"]
       }
     }
   ]
