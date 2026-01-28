@@ -1745,12 +1745,11 @@ rows.forEach((line) => {
 li.onclick = () => {
   const fileName = files[0];
   const path =
-    `${window.location.origin}/hub/${currentDownloadLang}/${topic.id}/${fileName}`;
-
-  console.log("DOWNLOAD PATH =", path);
+    `hub/${currentDownloadLang}/${topic.id}/${fileName}`;
 
   onDownloadFile(path, topic.title, fileName);
 };
+
               } else {
                 li.classList.add("li-locked");
               }
