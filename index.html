@@ -966,19 +966,21 @@ mode:
           return false;
         }
 
-        const rows = csvText.split(/\r?\n/).slice(1);
-        const words = [];
+        const rows = csvText.split(/\r?\n/);
+const words = [];
 
-        rows.forEach((line) => {
-          const p = line.split(",");
-          if (p.length >= 2) {
-            words.push({
-              id: Date.now() + Math.random(),
-              learn: p[0].replace(/"/g, ""),
-              tr: p.slice(1).join(",").replace(/"/g, ""),
-            });
-          }
-        });
+rows.forEach((line) => {
+  if (!line.trim()) return;
+
+  const p = line.split(",");
+  if (p.length >= 2) {
+    words.push({
+      id: Date.now() + Math.random(),
+      learn: p[0].replace(/"/g, "").trim(),
+      tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+    });
+  }
+});
 
         if (words.length === 0) {
           alert("File contains no valid words");
