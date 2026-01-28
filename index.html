@@ -820,8 +820,8 @@ select,input,textarea{
 <input type="file" id="importFile" accept=".csv" class="hidden">
 
 
-  <script src="hubIndex.js"></script>
 
+<script src="hubIndex.js"></script>
 <script src="localFiles.js"></script>
 
 <script>
@@ -875,21 +875,6 @@ const card = document.getElementById("card");
 /* ===== HUB INDEX ===== */
 let hubIndex = null;
 
-async function loadHubIndex(){
-  const res = await fetch(`${window.location.origin}/index.json`);
-  if(!res.ok) throw new Error("index.json not found");
-  hubIndex = await res.json();
-}
-
-
-
-let session=[], current=null;
-let sessionDefaultDirection="A";
-let cardFlipped=false;
-let shuffleUsed=false;
-let currentTopic=null;
-let lastAddTopic="";
-let returnToBankListAfterSave = false;
 
 
 /* ===== UTIL ===== */
@@ -1861,20 +1846,16 @@ function exitApp(){
 
 
 /* ===== INIT ===== */
-(async () => {
-  try {
-    await loadHubIndex();
-    console.log("Hub index loaded", hubIndex);
-  } catch (e) {
-    console.error("Failed to load index.json", e);
-  }
+(() => {
+  hubIndex = window.HUB_INDEX;
+  console.log("HUB_INDEX =", hubIndex);
 
   loadTopics();
   updateInstructions();
 })();
+
 </script>
 
 
 </body>
-
 </html>
