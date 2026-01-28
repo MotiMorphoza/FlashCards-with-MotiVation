@@ -1,4 +1,4 @@
-const CACHE_NAME = "FC with Moti Vation V260126";
+const CACHE_NAME = "FC with Moti Vation V280126";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
@@ -72,3 +72,4 @@ async function networkFirstCsv(request){
     return new Response("", { status: 504 });
   }
 }
+
