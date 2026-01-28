@@ -416,6 +416,7 @@
         padding: 12px;
         margin-bottom: 10px;
         font-size: 16px;
+
         border-radius: 10px;
         border: none;
         box-sizing: border-box;
@@ -807,7 +808,8 @@
           class="facebook"
           href="https://www.facebook.com/share/1D6uJLL5nK/"
           target="_blank"
-        >
+  
+      >
           Facebook
         </a>
 
@@ -889,8 +891,9 @@
       const card = document.getElementById("card");
 
       /* ===== HUB INDEX ===== */
-      let hubIndex = null;
 
+
+      let hubIndex = null;
       let currentTopic = null;
 
 
@@ -1167,7 +1170,8 @@ mode:
         if (q)
           arr = arr.filter(
             (w) =>
-              w.learn.toLowerCase().includes(q) ||
+      
+        w.learn.toLowerCase().includes(q) ||
               w.tr.toLowerCase().includes(q),
           );
         if (sort === "learn")
@@ -1534,6 +1538,7 @@ mode:
         if (!stats.current) return;
 
         stats.history.push(stats.current);
+
         stats.history = stats.history.slice(-10);
 
         const t = stats.current.topic;
@@ -1734,11 +1739,16 @@ mode:
                 hasAnyFiles = true;
                 li.classList.add("li-available");
 
-                li.onclick = () => {
-                  const fileName = files[0]; // כרגע הראשון
-                  const path = `${window.location.origin}/hub/${currentDownloadLang}/${topic.id}/${fileName}`;
-                  onDownloadFile(path, topic.title, fileName);
-                };
+                
+li.onclick = () => {
+  const fileName = files[0];
+  const path =
+    `${window.location.origin}/hub/${currentDownloadLang}/${topic.id}/${fileName}`;
+
+  console.log("DOWNLOAD PATH =", path);
+
+  onDownloadFile(path, topic.title, fileName);
+};
               } else {
                 li.classList.add("li-locked");
               }
