@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        connect-src 'self';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data:;
-      ">
-
-
-
-
-
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
 
@@ -833,32 +819,7 @@ select,input,textarea{
 
 <input type="file" id="importFile" accept=".csv" class="hidden">
 
-
-
-
-
-
-<script src="hubIndex.js"></script>
 <script src="localFiles.js"></script>
-
-<script>
-  let hubIndex = null;
-
-  (() => {
-    hubIndex = window.HUB_INDEX;
-
-    console.log("HUB_INDEX =", hubIndex);
-
-    if (!hubIndex) {
-      alert("HUB_INDEX not loaded");
-      return;
-    }
-
-    loadTopics();
-    updateInstructions();
-  })();
-</script>
-
 
 <script>
 
@@ -910,6 +871,22 @@ const card = document.getElementById("card");
 
 /* ===== HUB INDEX ===== */
 let hubIndex = null;
+
+async function loadHubIndex(){
+  const res = await fetch(`${window.location.origin}/index.json`);
+  if(!res.ok) throw new Error("index.json not found");
+  hubIndex = await res.json();
+}
+
+
+
+let session=[], current=null;
+let sessionDefaultDirection="A";
+let cardFlipped=false;
+let shuffleUsed=false;
+let currentTopic=null;
+let lastAddTopic="";
+let returnToBankListAfterSave = false;
 
 
 /* ===== UTIL ===== */
@@ -1881,21 +1858,17 @@ function exitApp(){
 
 
 /* ===== INIT ===== */
-(() => {
-  hubIndex = window.HUB_INDEX;
-
-  if(!hubIndex){
-    console.error("HUB_INDEX not loaded");
-    return;
+(async () => {
+  try {
+    await loadHubIndex();
+    console.log("Hub index loaded", hubIndex);
+  } catch (e) {
+    console.error("Failed to load index.json", e);
   }
-
-  console.log("Hub index loaded from JS", hubIndex);
 
   loadTopics();
   updateInstructions();
 })();
-
-
 </script>
 
 
