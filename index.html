@@ -732,18 +732,18 @@
     <div class="screen" id="session">
       <div class="flip-hint">CLICK TO FLIP</div>
 
+<div class="remaining">Remaining: <span id="remainingCount"></span></div>
+
       <div class="card-frame">
         <div class="card" id="card" onclick="flipCard()"></div>
       </div>
-
-      <div class="remaining">Remaining: <span id="remainingCount"></span></div>
-
-      <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
       <div class="row">
         <button class="forest" onclick="markKnown()">I knew it</button>
         <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
       </div>
+
+       <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
       <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">
         Shuffle
@@ -756,11 +756,11 @@
     <div class="screen" id="sessionEnd">
       <div class="session-end-box">
         <h1>🎉 Well done 🎉</h1>
-        <p class="session-end-sub">You’ve completed the session</p>
+        <p class="session-end-sub">Session completed</p>
 
         <button class="forest" id="restartSessionBtn">Start again</button>
 
-        <button class="back" id="backHomeBtn">Back to Home</button>
+        <button class="back" id="backHomeBtn">Back</button>
       </div>
     </div>
 
@@ -770,8 +770,8 @@
       <button onclick="resetStats()" class="button-danger">
         Reset statistics
       </button>
-      <div id="statsContent"></div>
       <button onclick="goHome()" class="back">Back</button>
+      <div id="statsContent"></div>
     </div>
 
     <!-- CONTACT -->
@@ -1640,7 +1640,7 @@ rows.forEach((line) => {
     <h3>By topic</h3>
     ${topicStats || "<p>No data</p>"}
     <hr>
-    <h3>Hard Words</h3>
+
     ${hardTable}
   `;
       }
@@ -1851,6 +1851,11 @@ li.onclick = () => {
         loadTopics();
         updateInstructions();
       })();
+
+const v = "v77";
+const el = document.getElementById("cacheVersion");
+if (el) el.textContent = v;
+
     </script>
   </body>
 </html>
