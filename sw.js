@@ -31,9 +31,13 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener("message", event => {
   if (event.data === "GET_CACHE_NAME") {
-    event.ports[0].postMessage(CACHE_NAME);
+    event.source.postMessage({
+      type: "CACHE_NAME",
+      value: CACHE_NAME
+    });
   }
 });
+
 
 /* ===== HUB CSV CACHE ===== */
 
@@ -72,6 +76,7 @@ async function networkFirstCsv(request){
     return new Response("", { status: 504 });
   }
 }
+
 
 
 
