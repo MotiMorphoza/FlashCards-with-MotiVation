@@ -1850,10 +1850,18 @@ li.onclick = () => {
         updateInstructions();
       })();
 
-const v = "v77";
-const el = document.getElementById("cacheVersion");
-if (el) el.textContent = v;
+if (navigator.serviceWorker?.controller) {
+  navigator.serviceWorker.controller.postMessage("GET_CACHE_NAME");
+
+  navigator.serviceWorker.addEventListener("message", event => {
+    if (event.data?.type === "CACHE_NAME") {
+      const el = document.getElementById("cacheVersion");
+      if (el) el.textContent = event.data.value;
+    }
+  });
+}
 
     </script>
+<div id="cacheVersion"></div>
   </body>
 </html>
