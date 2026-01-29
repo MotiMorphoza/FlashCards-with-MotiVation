@@ -1844,19 +1844,11 @@ li.onclick = () => {
       /* ===== INIT ===== */
       (() => {
         hubIndex = window.HUB_INDEX;
-        console.log("HUB_INDEX =", hubIndex);
 
         loadTopics();
         updateInstructions();
       })();
 
-  navigator.serviceWorker.addEventListener("message", event => {
-    if (event.data?.type === "CACHE_NAME") {
-      const el = document.getElementById("cacheVersion");
-      if (el) el.textContent = event.data.value;
-    }
-  });
-}
 
 /* ===== SHOW CACHE NAME ===== */
 if ("serviceWorker" in navigator) {
