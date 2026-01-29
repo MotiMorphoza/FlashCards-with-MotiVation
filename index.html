@@ -588,49 +588,6 @@
         opacity: 0.85;
         margin-bottom: 24px;
       }
-
-
-/* ===== SESSION FIX: MOBILE ===== */
-
-html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden; /* אין גלילה כלל */
-}
-
-/* מסך סשן */
-#session {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* אזור הכרטיס */
-#card {
-  flex: 0 0 auto;
-  width: 92vw;
-  height: 42vh;              /* גובה קבוע */
-  max-height: 360px;         /* תקרה לדסקטופ */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  overflow: hidden;          /* הטקסט לא דוחף מסך */
-  line-height: 1.2;
-  padding: 12px;
-}
-
-/* אזור כפתורים בסשן */
-.session-controls {
-  flex: 0 0 auto;
-  margin-top: 8px;
-}
-
-
     </style>
   </head>
 
@@ -654,6 +611,17 @@ html, body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
+
+      <div
+        id="cacheVersion"
+        style="
+          text-align: center;
+          font-size: 13px;
+          opacity: 0.5;
+          margin-top: 20px;
+        "
+      ></div>
+    </div>
 
     <!-- BANK -->
     <div class="screen" id="bank">
@@ -762,18 +730,18 @@ html, body {
     <div class="screen" id="session">
       <div class="flip-hint">CLICK TO FLIP</div>
 
-<div class="remaining">Remaining: <span id="remainingCount"></span></div>
-
       <div class="card-frame">
         <div class="card" id="card" onclick="flipCard()"></div>
       </div>
+
+      <div class="remaining">Remaining: <span id="remainingCount"></span></div>
+
+      <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
       <div class="row">
         <button class="forest" onclick="markKnown()">I knew it</button>
         <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
       </div>
-
-       <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
       <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">
         Shuffle
@@ -785,21 +753,21 @@ html, body {
     <!-- SESSION END -->
     <div class="screen" id="sessionEnd">
       <div class="session-end-box">
-        <h1>🎉 Well Done 🎉</h1>
-        <p class="session-end-sub">Session completed</p>
+        <h1>🎉 Well done 🎉</h1>
+        <p class="session-end-sub">You’ve completed the session</p>
 
         <button class="forest" id="restartSessionBtn">Start again</button>
 
-        <button class="back" id="backHomeBtn">Back</button>
+        <button class="back" id="backHomeBtn">Back to Home</button>
       </div>
     </div>
 
     <!-- STATS -->
     <div class="screen" id="stats">
+      <h2>Statistics</h2>
       <button onclick="resetStats()" class="button-danger">
         Reset statistics
       </button>
-      <button onclick="goHome()" class="back">Back</button>
       <div id="statsContent"></div>
       <button onclick="goHome()" class="back">Back</button>
     </div>
@@ -867,7 +835,6 @@ html, body {
     <script src="localFiles.js"></script>
 
     <script>
-      console.log("APP VERSION 2026-01-29-01");
       /* ===== SOUND ===== */
 
       let soundOn = JSON.parse(localStorage.getItem("soundOn") ?? "true");
@@ -895,10 +862,10 @@ html, body {
       }
 
       /* ===== DATA ===== */
-      let data = JSON.parse(localStorage.getItem("flashData_v76")) || {
+      let data = JSON.parse(localStorage.getItem("flashData_v333")) || {
         topics: {},
       };
-      let stats = JSON.parse(localStorage.getItem("stats_v76")) || {
+      let stats = JSON.parse(localStorage.getItem("stats_v333")) || {
         sessions: 0,
         history: [],
         perTopic: {},
@@ -931,8 +898,8 @@ html, body {
       /* ===== UTIL ===== */
 
       function save() {
-        localStorage.setItem("flashData_v33", JSON.stringify(data));
-        localStorage.setItem("stats_v33", JSON.stringify(stats));
+        localStorage.setItem("flashData_v333", JSON.stringify(data));
+        localStorage.setItem("stats_v333", JSON.stringify(stats));
       }
 
       /* ===== TOPIC NAME GATE ===== */
@@ -1499,26 +1466,27 @@ rows.forEach((line) => {
         document.getElementById("remainingCount").textContent = session.length;
       }
 
-    function autoFitCardText() {
-  const maxFont = 96;
-  const minFont = 18;
+      function autoFitCardText() {
+        const maxFont = 102; // פי 3
+        const minFont = 18;
 
-  let size = maxFont;
-  card.style.fontSize = size + "px";
+        let size = maxFont;
+        card.style.fontSize = size + "px";
 
-  while (size > minFont) {
-    card.style.fontSize = size + "px";
+        while (size > minFont) {
+          card.style.fontSize = size + "px";
 
-    if (
-      card.scrollHeight > card.clientHeight ||
-      card.scrollWidth > card.clientWidth
-    ) {
-      size -= 2;
-    } else {
-      break;
-    }
-  }
-}
+          // אם יש גלישה – מקטינים
+          if (
+            card.scrollHeight > card.clientHeight ||
+            card.scrollWidth > card.clientWidth
+          ) {
+            size -= 2;
+          } else {
+            break;
+          }
+        }
+      }
 
       function flipCard() {
         cardFlipped = !cardFlipped;
@@ -1637,6 +1605,7 @@ rows.forEach((line) => {
 
         let hardTable = hardEntries.length
           ? `
+    <button onclick="goHome()" class="back">Back</button>
 
     <table class="hard-table">
       <thead>
@@ -1666,9 +1635,10 @@ rows.forEach((line) => {
     <p>Words: ${words}</p>
     <p>Sessions started: ${stats.sessions}</p>
     <hr>
+    <h3>By topic</h3>
     ${topicStats || "<p>No data</p>"}
     <hr>
-
+    <h3>Hard Words</h3>
     ${hardTable}
   `;
       }
@@ -1683,7 +1653,7 @@ rows.forEach((line) => {
           hardWords: {},
         };
 
-        localStorage.setItem("stats_v76", JSON.stringify(stats));
+        localStorage.setItem("stats_v333", JSON.stringify(stats));
         renderStats();
       }
 
@@ -1874,20 +1844,12 @@ li.onclick = () => {
       /* ===== INIT ===== */
       (() => {
         hubIndex = window.HUB_INDEX;
+        console.log("HUB_INDEX =", hubIndex);
 
         loadTopics();
         updateInstructions();
       })();
-
-
     </script>
-
-      TEST
-      
+                           <div> T E S T </div>
   </body>
 </html>
-
-
-
-
-
