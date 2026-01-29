@@ -61,33 +61,6 @@ window.HUB_INDEX = {
       }
     },
     {
-      id: "tenses",
-      title: "Tenses",
-      group: "grammar",
-      files: {
-        "he-en": [
-          "he-en_tenses_past.csv.csv",
-          "he-en_tenses_present.csv.csv",
-          "he-en_tenses_future.csv.csv"
-        ],
-        "pl-en": [
-          "pl-en_tenses_past.csv.csv",
-          "pl-en_tenses_present.csv.csv",
-          "pl-en_tenses_future.csv.csv"
-        ],
-        "ar-he": [
-          "ar-he_tenses_past.csv.csv",
-          "ar-he_tenses_present.csv.csv",
-          "ar-he_tenses_future.csv.csv"
-        ],
-        "es-he": [
-          "es-he_tenses_past.csv.csv",
-          "es-he_tenses_present.csv.csv",
-          "es-he_tenses_future.csv.csv"
-        ]
-      }
-    },
-    {
       id: "sentences",
       title: "Sentences",
       group: "communication",
@@ -100,4 +73,5 @@ window.HUB_INDEX = {
     }
   ]
 };
+
 
