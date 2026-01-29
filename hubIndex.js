@@ -17,17 +17,6 @@ window.HUB_INDEX = {
 
   topics: [
     {
-      id: "opposites",
-      title: "Opposites",
-      group: "vocabulary",
-      files: {
-        "he-en": ["he-en_opposites.csv.csv"],
-        "pl-en": ["pl-en_opposites.csv.csv"],
-        "ar-he": ["ar-he_opposites.csv.csv"],
-        "es-he": ["es-he_opposites.csv.csv"]
-      }
-    },
-    {
       id: "verb_infinitives",
       title: "Verb Infinitives",
       group: "grammar",
@@ -111,3 +100,4 @@ window.HUB_INDEX = {
     }
   ]
 };
+
