@@ -755,7 +755,7 @@
     <!-- SESSION END -->
     <div class="screen" id="sessionEnd">
       <div class="session-end-box">
-        <h1>🎉 Well done 🎉</h1>
+        <h1>🎉 Well Done 🎉</h1>
         <p class="session-end-sub">Session completed</p>
 
         <button class="forest" id="restartSessionBtn">Start again</button>
@@ -766,12 +766,12 @@
 
     <!-- STATS -->
     <div class="screen" id="stats">
-      <h2>Statistics</h2>
       <button onclick="resetStats()" class="button-danger">
         Reset statistics
       </button>
       <button onclick="goHome()" class="back">Back</button>
       <div id="statsContent"></div>
+      <button onclick="goHome()" class="back">Back</button>
     </div>
 
     <!-- CONTACT -->
@@ -1607,7 +1607,6 @@ rows.forEach((line) => {
 
         let hardTable = hardEntries.length
           ? `
-    <button onclick="goHome()" class="back">Back</button>
 
     <table class="hard-table">
       <thead>
@@ -1637,7 +1636,6 @@ rows.forEach((line) => {
     <p>Words: ${words}</p>
     <p>Sessions started: ${stats.sessions}</p>
     <hr>
-    <h3>By topic</h3>
     ${topicStats || "<p>No data</p>"}
     <hr>
 
@@ -1859,4 +1857,3 @@ if (el) el.textContent = v;
     </script>
   </body>
 </html>
-
