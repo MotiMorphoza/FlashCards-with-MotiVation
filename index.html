@@ -1850,9 +1850,6 @@ li.onclick = () => {
         updateInstructions();
       })();
 
-if (navigator.serviceWorker?.controller) {
-  navigator.serviceWorker.controller.postMessage("GET_CACHE_NAME");
-
   navigator.serviceWorker.addEventListener("message", event => {
     if (event.data?.type === "CACHE_NAME") {
       const el = document.getElementById("cacheVersion");
