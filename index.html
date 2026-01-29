@@ -590,6 +590,49 @@
         opacity: 0.85;
         margin-bottom: 24px;
       }
+
+
+/* ===== SESSION FIX: MOBILE ===== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* אין גלילה כלל */
+}
+
+/* מסך סשן */
+#session {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* אזור הכרטיס */
+#card {
+  flex: 0 0 auto;
+  width: 92vw;
+  height: 42vh;              /* גובה קבוע */
+  max-height: 360px;         /* תקרה לדסקטופ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  overflow: hidden;          /* הטקסט לא דוחף מסך */
+  line-height: 1.2;
+  padding: 12px;
+}
+
+/* אזור כפתורים בסשן */
+.session-controls {
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+
+
     </style>
   </head>
 
@@ -1468,27 +1511,26 @@ rows.forEach((line) => {
         document.getElementById("remainingCount").textContent = session.length;
       }
 
-      function autoFitCardText() {
-        const maxFont = 102; // פי 3
-        const minFont = 18;
+    function autoFitCardText() {
+  const maxFont = 96;
+  const minFont = 18;
 
-        let size = maxFont;
-        card.style.fontSize = size + "px";
+  let size = maxFont;
+  card.style.fontSize = size + "px";
 
-        while (size > minFont) {
-          card.style.fontSize = size + "px";
+  while (size > minFont) {
+    card.style.fontSize = size + "px";
 
-          // אם יש גלישה – מקטינים
-          if (
-            card.scrollHeight > card.clientHeight ||
-            card.scrollWidth > card.clientWidth
-          ) {
-            size -= 2;
-          } else {
-            break;
-          }
-        }
-      }
+    if (
+      card.scrollHeight > card.clientHeight ||
+      card.scrollWidth > card.clientWidth
+    ) {
+      size -= 2;
+    } else {
+      break;
+    }
+  }
+}
 
       function flipCard() {
         cardFlipped = !cardFlipped;
