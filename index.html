@@ -1108,38 +1108,49 @@ function goHome() {
       /* ===== TOPICS ===== */
 
       function loadTopics() {
-      
-        const hardLabel = "Hard Words";
+  const hardLabel = "Hard Words";
 
-const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
+  const baseTopics = Object.keys(data.topics).filter(
+    (t) => t !== "All words",
+  );
 
+  const isBankEmpty = baseTopics.length === 0;
 
-        const topics = Object.keys(data.topics);
+  /* ---------- HOME ---------- */
+  topicSelect.innerHTML = '<option value="">Select topic</option>';
+  topicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  baseTopics.forEach((t) => {
+    topicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- HOME ---------- */
-        topicSelect.innerHTML = '<option value="">Select topic</option>';
-        topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        baseTopics.forEach((t) => {
-          topicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK ---------- */
+  bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
+  bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  baseTopics.forEach((t) => {
+    bankTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- BANK ---------- */
-        bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-        bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        baseTopics.forEach((t) => {
-          bankTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK LIST ---------- */
+  bankListTopicSelect.innerHTML = "";
+  baseTopics.forEach((t) => {
+    bankListTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- BANK LIST ---------- */
-        bankListTopicSelect.innerHTML = "";
-        baseTopics.forEach((t) => {
-          bankListTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  if (currentTopic && baseTopics.includes(currentTopic)) {
+    bankListTopicSelect.value = currentTopic;
+  }
 
-        if (currentTopic) {
-          bankListTopicSelect.value = currentTopic;
-        }
-      }
+  /* ---------- EMPTY BANK GUARD ---------- */
+  if (isBankEmpty) {
+    topicSelect.disabled = true;
+    bankTopicSelect.disabled = true;
+    bankListTopicSelect.innerHTML = "";
+  } else {
+    topicSelect.disabled = false;
+    bankTopicSelect.disabled = false;
+  }
+}
+
 
       /* ===== BANK ===== */
 
@@ -1978,6 +1989,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 10 </div>
+                           <div> T E S T - 11 </div>
   </body>
 </html>
