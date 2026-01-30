@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 30</div>
+<div style="text-align:center;opacity:.4">TEST - 31</div>
 
       <div
         id="cacheVersion"
@@ -950,6 +950,16 @@ localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 
       }
 
+function setCurrentTopic(topicName) {
+  currentTopic = topicName || null;
+
+  // סנכרון UI
+  if (topicSelect) topicSelect.value = topicName || "";
+  if (bankTopicSelect) bankTopicSelect.value = topicName || "";
+  if (bankListTopicSelect) bankListTopicSelect.value = topicName || "";
+}
+
+
       /* ===== TOPIC NAME GATE ===== */
 
       function normalizeTopicName(name) {
@@ -1245,7 +1255,7 @@ function resetBankSearch() {
 
       bankTopicSelect.onchange = () => {
         if (!bankTopicSelect.value) return;
-        currentTopic = bankTopicSelect.value;
+        setCurrentTopic(bankTopicSelect.value);
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
      
 resetBankSearch();
@@ -1412,7 +1422,7 @@ show("bankList");
     tr: translationInput.value,
   });
 
-  currentTopic = topicName;
+setCurrentTopic(topicName);
   lastAddTopic = topicName;
 
   save();
@@ -1483,7 +1493,7 @@ renderWordList();
           updateInstructions();
 
           // 🔥 בחירת הנושא ופתיחת סשן אוטומטית
-          currentTopic = topic;
+          setCurrentTopic(topic);
           topicSelect.value = topic;
 
           importFile.value = "";
@@ -1519,8 +1529,8 @@ function startSessionSafe(topicName) {
   }
 
   // בחירת נושא בצורה מבוקרת
-  currentTopic = topicName;
-  topicSelect.value = topicName;
+setCurrentTopic(topicName);
+
 
   // reset flags
   cardFlipped = false;
