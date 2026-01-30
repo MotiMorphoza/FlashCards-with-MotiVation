@@ -1769,15 +1769,21 @@ async function hardReset() {
         acc.classList.toggle("open");
       }
 
-      document.getElementById("restartSessionBtn").onclick = () => {
-        // התחלה מחדש של אותו נושא
-        shuffleUsed = false;
-        startSession();
-      };
+      const restartBtn = document.getElementById("restartSessionBtn");
+if (restartBtn) {
+  restartBtn.onclick = () => {
+    shuffleUsed = false;
+    startSession();
+  };
+}
 
-      document.getElementById("backHomeBtn").onclick = () => {
-        goHome();
-      };
+const backBtn = document.getElementById("backHomeBtn");
+if (backBtn) {
+  backBtn.onclick = () => {
+    goHome();
+  };
+}
+
 
       /* ===== DOWNLOAD ===== */
 
@@ -1950,6 +1956,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 04 </div>
+                           <div> T E S T - 05 </div>
   </body>
 </html>
