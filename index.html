@@ -609,7 +609,7 @@
 
       <select id="topicSelect"></select>
       <button class="button-primary" onclick="startSession()">
-        Start A sessioN
+        Start Session
       </button>
       <button class="peach" onclick="showBank()">Word Bank</button>
       <button class="lavender" onclick="showStats()">Statistics</button>
@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 33</div>
+<div style="text-align:center;opacity:.4">TEST - 34</div>
 
       <div
         id="cacheVersion"
@@ -1505,6 +1505,14 @@ renderWordList();
 
       /* ===== SESSION ===== */
 
+// session state (single source of truth)
+let session = [];
+let current = null;
+let cardFlipped = false;
+let shuffleUsed = false;
+let sessionDefaultDirection = "A";
+
+
 
 function exitSessionSafe(nextScreen) {
   if (stats.current) {
@@ -1531,15 +1539,20 @@ function startSessionSafe(topicName) {
 setCurrentTopic(topicName);
 
 
-  // reset flags
-  cardFlipped = false;
-  shuffleUsed = false;
-
   startSession();
 }
 
       function startSession() {
   if (!currentTopic) return;
+
+
+  // 🔒 reset session state
+  session = [];
+  current = null;
+  cardFlipped = false;
+  shuffleUsed = false;
+  sessionDefaultDirection = "A";
+
 
   if (currentTopic === "Hard Words") {
     session = Object.entries(stats.hardWords)
