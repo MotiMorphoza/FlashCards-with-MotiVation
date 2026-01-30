@@ -1143,12 +1143,19 @@ const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
       /* ===== BANK ===== */
 
       function switchBankListTopic() {
-        const t = bankListTopicSelect.value;
-        if (!t) return;
-        currentTopic = t;
-        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-        renderWordList();
-      }
+  const t = bankListTopicSelect.value;
+  if (!t) return;
+
+  if (t === "Hard Words") {
+    alert("Hard Words cannot be edited in Bank.");
+    return;
+  }
+
+  currentTopic = t;
+  deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+  renderWordList();
+}
+
 
       function renameCurrentTopic() {
         if (!currentTopic || currentTopic === "All words") return;
@@ -1206,24 +1213,36 @@ const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
       };
 
       function renderWordList() {
-        let q = searchInput.value.toLowerCase();
-        let sort = sortSelect.value;
-        wordList.innerHTML = "";
+  // 🔒 חסימה מוחלטת של Hard Words דרך הבנק
+  if (currentTopic === "Hard Words") {
+    wordList.innerHTML =
+      "<p>Hard Words are managed via Statistics.</p>";
+    return;
+  }
 
-        let arr = [...data.topics[currentTopic]];
-        if (q)
-          arr = arr.filter(
-            (w) =>
-      
+  let q = searchInput.value.toLowerCase();
+  let sort = sortSelect.value;
+  wordList.innerHTML = "";
+
+  let arr = [...data.topics[currentTopic]];
+
+  if (q) {
+    arr = arr.filter(
+      (w) =>
         w.learn.toLowerCase().includes(q) ||
-              w.tr.toLowerCase().includes(q),
-          );
-        if (sort === "learn")
-          arr.sort((a, b) => a.learn.localeCompare(b.learn));
-        if (sort === "tr") arr.sort((a, b) => a.tr.localeCompare(b.tr));
+        w.tr.toLowerCase().includes(q)
+    );
+  }
 
-        arr.forEach((w, i) => {
-          wordList.innerHTML += `
+  if (sort === "learn") {
+    arr.sort((a, b) => a.learn.localeCompare(b.learn));
+  }
+  if (sort === "tr") {
+    arr.sort((a, b) => a.tr.localeCompare(b.tr));
+  }
+
+  arr.forEach((w, i) => {
+    wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${w.learn} – ${w.tr}
@@ -1233,8 +1252,8 @@ const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
           <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
         </div>
       </div>`;
-        });
-      }
+  });
+}
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -1958,6 +1977,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 06 </div>
+                           <div> T E S T - 07 </div>
   </body>
 </html>
