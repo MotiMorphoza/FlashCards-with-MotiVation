@@ -855,6 +855,9 @@ const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
 const STATS_KEY = `stats_${STORAGE_VERSION}`;
 const RESET_FLAG = "APP_RESET_DONE_v333";
 
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
 
 
       /* ===== SOUND ===== */
@@ -2026,6 +2029,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 24 </div>
+                           <div> T E S T - 25 </div>
   </body>
 </html>
