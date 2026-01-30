@@ -1094,6 +1094,7 @@ if (stats.current) {
       }
 
 function goHome() {
+  resetBankSearch();
   exitSessionSafe("home");
   loadTopics();
   updateInstructions();
@@ -1155,6 +1156,13 @@ function goHome() {
 
 
       /* ===== BANK ===== */
+
+
+function resetBankSearch() {
+  searchInput.value = "";
+}
+
+
 
       function switchBankListTopic() {
   const t = bankListTopicSelect.value;
@@ -1322,15 +1330,18 @@ document.getElementById("bankList").scrollTop = 0;
       /* ===== ADD WORD ===== */
 
       function showAdd() {
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
-        newTopicInput.disabled = true;
-        newTopicInput.classList.add("hidden");
+  resetBankSearch();
 
-        loadAddTopics();
-        show("add");
-      }
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
+  newTopicInput.disabled = true;
+  newTopicInput.classList.add("hidden");
+
+  loadAddTopics();
+  show("add");
+}
+
 
       function loadAddTopics() {
         addTopicSelect.innerHTML = "";
@@ -1999,6 +2010,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 16 </div>
+                           <div> T E S T - 17 </div>
   </body>
 </html>
