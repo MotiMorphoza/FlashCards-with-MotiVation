@@ -1270,7 +1270,7 @@ document.getElementById("bankList").scrollTop = 0;
     arr.sort((a, b) => a.tr.localeCompare(b.tr));
   }
 
-  arr.forEach((w, i) => {
+    arr.forEach((w, i) => {
     wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
@@ -1283,8 +1283,10 @@ document.getElementById("bankList").scrollTop = 0;
       </div>`;
   });
 
-  // 🔧 איפוס גלילה – אחרי שכל ה־DOM נבנה
   requestAnimationFrame(() => {
+    wordList.scrollTop = 0;
+  });
+}
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -2007,6 +2009,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 20 </div>
+                           <div> T E S T - 21 </div>
   </body>
 </html>
