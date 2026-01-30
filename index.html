@@ -1255,7 +1255,6 @@ document.getElementById("bankList").scrollTop = 0;
       };
 
       function renderWordList() {
-  // 🔒 חסימה מוחלטת של Hard Words דרך הבנק
   if (currentTopic === "Hard Words") {
     wordList.innerHTML =
       "<p>Hard Words are managed via Statistics.</p>";
@@ -1283,7 +1282,7 @@ document.getElementById("bankList").scrollTop = 0;
     arr.sort((a, b) => a.tr.localeCompare(b.tr));
   }
 
-    arr.forEach((w, i) => {
+  arr.forEach((w, i) => {
     wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
@@ -1295,6 +1294,7 @@ document.getElementById("bankList").scrollTop = 0;
         </div>
       </div>`;
   });
+}
 
 
       function exportCurrentTopic() {
@@ -2023,6 +2023,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 22 </div>
+                           <div> T E S T - 23 </div>
   </body>
 </html>
