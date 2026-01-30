@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 36</div>
+<div style="text-align:center;opacity:.4">TEST - 37</div>
 
       <div
         id="cacheVersion"
@@ -907,6 +907,11 @@ let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
 
 
       const topicSelect = document.getElementById("topicSelect");
+
+topicSelect.onchange = function () {
+  setCurrentTopic(this.value);
+};
+
       const bankTopicSelect = document.getElementById("bankTopicSelect");
       const bankListTopicSelect = document.getElementById(
         "bankListTopicSelect",
