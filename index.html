@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 31</div>
+<div style="text-align:center;opacity:.4">TEST - 32</div>
 
       <div
         id="cacheVersion"
@@ -937,7 +937,7 @@ function ensureHubLoaded() {
 
 // state
 let hubIndex = null;
-let currentTopic = null;
+let setCurrentTopic(null);
 let lastAddTopic = null;
 
 
@@ -951,7 +951,7 @@ localStorage.setItem(STATS_KEY, JSON.stringify(stats));
       }
 
 function setCurrentTopic(topicName) {
-  currentTopic = topicName || null;
+  setCurrentTopic(topicName || null);
 
   // סנכרון UI
   if (topicSelect) topicSelect.value = topicName || "";
@@ -1195,7 +1195,7 @@ function resetBankSearch() {
     return;
   }
 
-  currentTopic = t;
+  setCurrentTopic(t);
   deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
 }
@@ -1229,7 +1229,7 @@ function resetBankSearch() {
         delete data.topics[oldKey];
 
         // עדכון state
-        currentTopic = newKey;
+        setCurrentTopic(newKey);
         lastAddTopic = newKey;
 
         // סטטיסטיקה
@@ -1717,7 +1717,7 @@ setCurrentTopic(topicName);
 
         if (session.length === 0) return;
 
-        currentTopic = topicTitle;
+        setCurrentTopic(topicTitle);
         sessionDefaultDirection = "A";
         cardFlipped = false;
         shuffleUsed = false;
@@ -1938,7 +1938,7 @@ li.onclick = () => {
           const ok = saveCSVAsTopic(text, appTopicName);
           if (!ok) return;
 
-          currentTopic = appTopicName;
+          setCurrentTopic(appTopicName);
           topicSelect.value = appTopicName;
 
           startSessionSafe(appTopicName);
