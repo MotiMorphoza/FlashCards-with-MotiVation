@@ -27,12 +27,14 @@
 
       /* ---------- SCREENS ---------- */
       .screen {
-        display: none;
-        padding: 18px;
-        max-width: 420px;
-        margin: auto;
-        min-height: 100vh;
-        box-sizing: border-box;
+  display: none;
+  padding: 18px;
+  max-width: 420px;
+  margin: auto;
+  height: 100vh;  
+  overflow-y: auto; 
+  box-sizing: border-box;
+
       }
       .screen.active {
         display: block;
@@ -448,11 +450,7 @@
         width: 50%;
       }
 
-       #bankList {
-  overflow-y: auto;
-  height: 100vh;
-}
-      }
+ 
 
       /* ---------- CONTACT ---------- */
       .contact button {
@@ -620,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 28</div>
+<div style="text-align:center;opacity:.4">TEST - 29</div>
 
       <div
         id="cacheVersion"
@@ -797,7 +795,6 @@
 
     <!-- CONTACT -->
     <div class="screen contact" id="contact">
-      <h2>Contact</h2>
 
       <div class="about-box">
         <div class="about-title">Hebrew with Moti Vation</div>
@@ -1262,7 +1259,7 @@ show("bankList");
       function renderWordList() {
   if (currentTopic === "Hard Words") {
     wordList.innerHTML =
-      "<p>Hard Words are managed via Statistics.</p>";
+      "<p>Hard Words can't be managed now.</p>";
     return;
   }
 
