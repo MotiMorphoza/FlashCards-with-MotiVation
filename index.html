@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#111111" />
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,25 +12,29 @@
       }
 
       body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: #111;
-        color: #fff;
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: 0.3px;
+  overflow-y: auto;
+  overscroll-behavior: none;
+}
 
-        font-size: 17px;
-        line-height: 1.55;
-        letter-spacing: 0.3px;
-      }
+
 
       /* ---------- SCREENS ---------- */
-      .screen {
-        display: none;
-        padding: 18px;
-        max-width: 420px;
-        margin: auto;
-        min-height: 100vh;
-        box-sizing: border-box;
-      }
+      
+.screen {
+  display: none;
+  padding: 18px;
+  max-width: 420px;
+  margin: auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
       .screen.active {
         display: block;
       }
@@ -447,6 +449,8 @@
         width: 50%;
       }
 
+ 
+
       /* ---------- CONTACT ---------- */
       .contact button {
         background: linear-gradient(180deg, #e6e6e6, #cfcfcf);
@@ -590,49 +594,6 @@
         opacity: 0.85;
         margin-bottom: 24px;
       }
-
-
-/* ===== SESSION FIX: MOBILE ===== */
-
-html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden; /* אין גלילה כלל */
-}
-
-/* מסך סשן */
-#session {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* אזור הכרטיס */
-#card {
-  flex: 0 0 auto;
-  width: 92vw;
-  height: 42vh;              /* גובה קבוע */
-  max-height: 360px;         /* תקרה לדסקטופ */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  overflow: hidden;          /* הטקסט לא דוחף מסך */
-  line-height: 1.2;
-  padding: 12px;
-}
-
-/* אזור כפתורים בסשן */
-.session-controls {
-  flex: 0 0 auto;
-  margin-top: 8px;
-}
-
-
     </style>
   </head>
 
@@ -648,7 +609,7 @@ html, body {
 
       <select id="topicSelect"></select>
       <button class="button-primary" onclick="startSession()">
-        Start A sessioN
+        Start Session
       </button>
       <button class="peach" onclick="showBank()">Word Bank</button>
       <button class="lavender" onclick="showStats()">Statistics</button>
@@ -656,6 +617,29 @@ html, body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
+<div style="text-align:center;opacity:.4">TEST - 40</div>
+
+      <div
+        id="cacheVersion"
+        style="
+          text-align: center;
+          font-size: 13px;
+          opacity: 0.5;
+          margin-top: 20px;
+        "
+      ></div>
+    </div>
+
+
+<!-- RESET -->
+<div class="screen" id="resetGate">
+  <h2>Update</h2>
+
+  <button class="SUNSET" onclick="hardReset()">
+    Reset App
+  </button>
+</div>
+
 
     <!-- BANK -->
     <div class="screen" id="bank">
@@ -764,51 +748,52 @@ html, body {
     <div class="screen" id="session">
       <div class="flip-hint">CLICK TO FLIP</div>
 
-<div class="remaining">Remaining: <span id="remainingCount"></span></div>
-
       <div class="card-frame">
         <div class="card" id="card" onclick="flipCard()"></div>
       </div>
+
+      <div class="remaining">Remaining: <span id="remainingCount"></span></div>
+
+      <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
 
       <div class="row">
         <button class="forest" onclick="markKnown()">I knew it</button>
         <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
       </div>
 
-       <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
-
       <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">
         Shuffle
       </button>
       <button class="sunset" onclick="flipDirection()">Flip Direction</button>
-      <button onclick="goHome()" class="back">Exit</button>
+      <button onclick="exitSessionSafe('home')" class="back">Exit</button>
+
     </div>
 
     <!-- SESSION END -->
     <div class="screen" id="sessionEnd">
       <div class="session-end-box">
-        <h1>🎉 Well Done 🎉</h1>
-        <p class="session-end-sub">Session completed</p>
+        <h1>🎉 Well done 🎉</h1>
+        <p class="session-end-sub">You’ve completed the session</p>
 
         <button class="forest" id="restartSessionBtn">Start again</button>
 
-        <button class="back" id="backHomeBtn">Back</button>
+        <button onclick="exitSessionSafe('home')" class="back">Exit</button>
+
       </div>
     </div>
 
     <!-- STATS -->
     <div class="screen" id="stats">
+      <h2>Statistics</h2>
       <button onclick="resetStats()" class="button-danger">
         Reset statistics
       </button>
-      <button onclick="goHome()" class="back">Back</button>
       <div id="statsContent"></div>
       <button onclick="goHome()" class="back">Back</button>
     </div>
 
     <!-- CONTACT -->
     <div class="screen contact" id="contact">
-      <h2>Contact</h2>
 
       <div class="about-box">
         <div class="about-title">Hebrew with Moti Vation</div>
@@ -866,10 +851,21 @@ html, body {
     <input type="file" id="importFile" accept=".csv" class="hidden" />
 
     <script src="hubIndex.js"></script>
-    <script src="localFiles.js"></script>
+    
 
     <script>
-      console.log("APP VERSION 2026-01-29-01");
+
+ /* ===== STORAGE CONSTANTS ===== */
+const STORAGE_VERSION = "v333";
+const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
+const STATS_KEY = `stats_${STORAGE_VERSION}`;
+const RESET_FLAG = "APP_RESET_DONE_v333";
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+
       /* ===== SOUND ===== */
 
       let soundOn = JSON.parse(localStorage.getItem("soundOn") ?? "true");
@@ -897,17 +893,25 @@ html, body {
       }
 
       /* ===== DATA ===== */
-      let data = JSON.parse(localStorage.getItem("flashData_v76")) || {
-        topics: {},
-      };
-      let stats = JSON.parse(localStorage.getItem("stats_v76")) || {
-        sessions: 0,
-        history: [],
-        perTopic: {},
-        hardWords: {},
-      };
+
+
+let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
+  topics: {},
+};
+let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
+  sessions: 0,
+  history: [],
+  perTopic: {},
+  hardWords: {},
+};
+
 
       const topicSelect = document.getElementById("topicSelect");
+
+topicSelect.onchange = function () {
+  setCurrentTopic(this.value);
+};
+
       const bankTopicSelect = document.getElementById("bankTopicSelect");
       const bankListTopicSelect = document.getElementById(
         "bankListTopicSelect",
@@ -923,19 +927,43 @@ html, body {
       const shuffleBtn = document.getElementById("shuffleBtn");
       const card = document.getElementById("card");
 
-      /* ===== HUB INDEX ===== */
+/* ===== HUB INDEX ===== */
+
+// guard – בדיקה שהספרייה נטענה
 
 
-      let hubIndex = null;
-      let currentTopic = null;
+function ensureHubLoaded() {
+  if (!window.HUB_INDEX) {
+    alert("Word Library is not available right now.");
+    return false;
+  }
+  return true;
+}
+
+// state
+let hubIndex = null;
+let currentTopic = null;
+let lastAddTopic = null;
+
 
 
       /* ===== UTIL ===== */
 
       function save() {
-        localStorage.setItem("flashData_v33", JSON.stringify(data));
-        localStorage.setItem("stats_v33", JSON.stringify(stats));
+        localStorage.setItem(FLASH_KEY, JSON.stringify(data));
+localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
       }
+
+function setCurrentTopic(topicName) {
+   currentTopic = topicName || null;
+
+  // סנכרון UI
+  if (topicSelect) topicSelect.value = topicName || "";
+  if (bankTopicSelect) bankTopicSelect.value = topicName || "";
+  if (bankListTopicSelect) bankListTopicSelect.value = topicName || "";
+}
+
 
       /* ===== TOPIC NAME GATE ===== */
 
@@ -1041,10 +1069,13 @@ rows.forEach((line) => {
         document.getElementById(id).classList.add("active");
       }
 
-      function showBank() {
-        loadTopics();
-        show("bank");
-      }
+function showBank() {
+  resetBankSearch();
+  loadTopics();
+  show("bank");
+}
+
+
       function showStats() {
         renderStats();
         show("stats");
@@ -1054,6 +1085,14 @@ rows.forEach((line) => {
       }
 
       function showDownload() {
+
+if (stats.current) {
+  exitSessionSafe("download");
+  return;
+}
+
+  if (!ensureHubLoaded()) return;
+
         // איפוס שפה
         currentDownloadLang = null;
 
@@ -1081,15 +1120,13 @@ rows.forEach((line) => {
         show("download");
       }
 
-      function goHome() {
-        if (stats.current) {
-          finishSessionIfActive();
-        }
+function goHome() {
+  resetBankSearch();
+  exitSessionSafe("home");
+  loadTopics();
+  updateInstructions();
+}
 
-        loadTopics();
-        updateInstructions();
-        show("home");
-      }
 
       /* ===== HOME LOGIC ===== */
       function updateInstructions() {
@@ -1101,47 +1138,122 @@ rows.forEach((line) => {
       /* ===== TOPICS ===== */
 
       function loadTopics() {
-        data.topics["All words"] = allWords();
+  const hardLabel = "Hard Words";
 
-        const hardLabel = "Hard Words";
-        const topics = Object.keys(data.topics);
+  const baseTopics = Object.keys(data.topics).filter(
+    (t) => t !== "All words",
+  );
 
-        /* ---------- HOME ---------- */
-        topicSelect.innerHTML = '<option value="">Select topic</option>';
-        topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        topics.forEach((t) => {
-          topicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  const isBankEmpty = baseTopics.length === 0;
 
-        /* ---------- BANK ---------- */
-        bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-        bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        topics.forEach((t) => {
-          bankTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- HOME ---------- */
+  topicSelect.innerHTML = '<option value="">Select topic</option>';
+  topicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  baseTopics.forEach((t) => {
+    topicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- BANK LIST ---------- */
-        bankListTopicSelect.innerHTML = "";
-        topics.forEach((t) => {
-          bankListTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK ---------- */
+  bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
+  baseTopics.forEach((t) => {
+    bankTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        if (currentTopic) {
-          bankListTopicSelect.value = currentTopic;
-        }
-      }
+  /* ---------- BANK LIST ---------- */
+  bankListTopicSelect.innerHTML = "";
+  baseTopics.forEach((t) => {
+    bankListTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
+
+  if (currentTopic && baseTopics.includes(currentTopic)) {
+    bankListTopicSelect.value = currentTopic;
+  }
+
+  /* ---------- EMPTY BANK GUARD ---------- */
+  if (isBankEmpty) {
+    topicSelect.disabled = true;
+    bankTopicSelect.disabled = true;
+    bankListTopicSelect.innerHTML = "";
+  } else {
+    topicSelect.disabled = false;
+    bankTopicSelect.disabled = false;
+  }
+}
+
 
       /* ===== BANK ===== */
 
-      function switchBankListTopic() {
-        const t = bankListTopicSelect.value;
-        if (!t) return;
-        currentTopic = t;
-        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-        renderWordList();
-      }
+function resetBankSearch() {
+  if (searchInput) searchInput.value = "";
+  if (sortSelect) sortSelect.value = "";
+}
+
+
+
+function switchBankListTopic() {
+  const t = bankListTopicSelect.value;
+  if (!t) return;
+
+  setCurrentTopic(t);
+
+  // 🔒 הגבלות על Hard Words
+  if (t === "Hard Words") {
+    deleteTopicBtn.classList.add("hidden");
+    renderHardWordsList();
+    show("bankList");
+    return;
+  }
+
+
+function renderHardWordsList() {
+  wordList.innerHTML = "";
+
+  const entries = Object.entries(stats.hardWords)
+    .filter(e => e[1] >= 2)
+    .sort((a, b) => b[1] - a[1]);
+
+  if (!entries.length) {
+    wordList.innerHTML = "<p>No hard words.</p>";
+    return;
+  }
+
+  entries.forEach(([key, count], i) => {
+    const [learn, tr] = key.split("||");
+
+    wordList.innerHTML += `
+      <div class="list-item">
+        <div class="word-line">
+          ${i + 1}. ${learn} – ${tr}
+        </div>
+        <div class="actions">
+          <button style="font-size:12px;padding:6px;"
+            onclick="removeHardWord('${key.replace(/'/g, "\\'")}')">
+            Remove
+          </button>
+          <span style="opacity:.6;font-size:12px;">${count}×</span>
+        </div>
+      </div>`;
+  });
+}
+
+
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+  renderHardWordsList();
+}
+
+  deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+  renderWordList();
+  show("bankList");
+}
+
+
 
       function renameCurrentTopic() {
+
         if (!currentTopic || currentTopic === "All words") return;
 
         const oldKey = normalizeTopicName(currentTopic);
@@ -1164,7 +1276,7 @@ rows.forEach((line) => {
         delete data.topics[oldKey];
 
         // עדכון state
-        currentTopic = newKey;
+        setCurrentTopic(newKey);
         lastAddTopic = newKey;
 
         // סטטיסטיקה
@@ -1190,31 +1302,41 @@ rows.forEach((line) => {
 
       bankTopicSelect.onchange = () => {
         if (!bankTopicSelect.value) return;
-        currentTopic = bankTopicSelect.value;
+        setCurrentTopic(bankTopicSelect.value);
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-        renderWordList();
-        show("bankList");
+     
+resetBankSearch();
+renderWordList();
+show("bankList");
+
+
       };
 
       function renderWordList() {
-        let q = searchInput.value.toLowerCase();
-        let sort = sortSelect.value;
-        wordList.innerHTML = "";
 
-        let arr = [...data.topics[currentTopic]];
-        if (q)
-          arr = arr.filter(
-            (w) =>
-      
+  let q = searchInput.value.toLowerCase();
+  let sort = sortSelect.value;
+  wordList.innerHTML = "";
+
+  let arr = [...data.topics[currentTopic]];
+
+  if (q) {
+    arr = arr.filter(
+      (w) =>
         w.learn.toLowerCase().includes(q) ||
-              w.tr.toLowerCase().includes(q),
-          );
-        if (sort === "learn")
-          arr.sort((a, b) => a.learn.localeCompare(b.learn));
-        if (sort === "tr") arr.sort((a, b) => a.tr.localeCompare(b.tr));
+        w.tr.toLowerCase().includes(q)
+    );
+  }
 
-        arr.forEach((w, i) => {
-          wordList.innerHTML += `
+  if (sort === "learn") {
+    arr.sort((a, b) => a.learn.localeCompare(b.learn));
+  }
+  if (sort === "tr") {
+    arr.sort((a, b) => a.tr.localeCompare(b.tr));
+  }
+
+  arr.forEach((w, i) => {
+    wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${w.learn} – ${w.tr}
@@ -1224,8 +1346,9 @@ rows.forEach((line) => {
           <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
         </div>
       </div>`;
-        });
-      }
+  });
+}
+
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -1268,15 +1391,18 @@ rows.forEach((line) => {
       /* ===== ADD WORD ===== */
 
       function showAdd() {
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
-        newTopicInput.disabled = true;
-        newTopicInput.classList.add("hidden");
+  resetBankSearch();
 
-        loadAddTopics();
-        show("add");
-      }
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
+  newTopicInput.disabled = true;
+  newTopicInput.classList.add("hidden");
+
+  loadAddTopics();
+  show("add");
+}
+
 
       function loadAddTopics() {
         addTopicSelect.innerHTML = "";
@@ -1311,54 +1437,51 @@ rows.forEach((line) => {
       }
 
       function saveWord() {
-        const isNew = addTopicSelect.value === "_new";
+  const isNew = addTopicSelect.value === "_new";
+  const topicName = isNew
+    ? newTopicInput.value.trim()
+    : addTopicSelect.value;
 
-        const topic = isNew ? newTopicInput.value.trim() : addTopicSelect.value;
+  if (!topicName) {
+    alert("Enter topic name");
+    return;
+  }
 
-        if (!topic || !learnInput.value || !translationInput.value) return;
+  if (!learnInput.value || !translationInput.value) return;
 
-        // 🔥 חסימת יצירת Topic אם השם כפול
-        if (isNew) {
-          const checked = validateTopicName(topic, "create");
-          if (!checked) return;
-        }
+  if (isNew) {
+    const checked = validateTopicName(topicName, "create");
+    if (!checked) return;
+  }
 
-        if (!data.topics[topic]) {
-          data.topics[topic] = [];
-        }
+  if (!data.topics[topicName]) {
+    data.topics[topicName] = [];
+  }
 
-        data.topics[topic].push({
-          id: Date.now(),
-          learn: learnInput.value,
-          tr: translationInput.value,
-        });
+  data.topics[topicName].push({
+    id: Date.now() + Math.random(),
+    learn: learnInput.value,
+    tr: translationInput.value,
+  });
 
-        lastAddTopic = topic;
-        currentTopic = topic;
+setCurrentTopic(topicName);
+  lastAddTopic = topicName;
 
-        save();
+  save();
+  loadTopics();
+  updateInstructions();
 
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
-        newTopicInput.disabled = true;
-        newTopicInput.classList.add("hidden");
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
 
-        loadTopics();
-        loadAddTopics();
+resetBankSearch();
+show("bankList");
+renderWordList();
 
-        addTopicSelect.value = topic;
-        onAddTopicChange();
 
-        updateInstructions();
+}
 
-        if (returnToBankListAfterSave) {
-          returnToBankListAfterSave = false;
-          show("bankList");
-          renderWordList();
-          return;
-        }
-      }
 
       /* ===== IMPORT ===== */
 
@@ -1412,57 +1535,117 @@ rows.forEach((line) => {
           updateInstructions();
 
           // 🔥 בחירת הנושא ופתיחת סשן אוטומטית
-          currentTopic = topic;
-          topicSelect.value = topic;
+          setCurrentTopic(topic);
 
           importFile.value = "";
 
-          startSession(); // 🔥 פותח סשן מייד
+          startSessionSafe(topic);    // 🔥 פותח סשן מייד
         };
 
         reader.readAsText(file, "UTF-8");
       };
 
       /* ===== SESSION ===== */
+
+// session state (single source of truth)
+let session = [];
+let current = null;
+let cardFlipped = false;
+let shuffleUsed = false;
+let sessionDefaultDirection = "A";
+
+
+
+function exitSessionSafe(nextScreen) {
+  if (stats.current) {
+    finishSessionIfActive();
+  }
+
+  if (nextScreen) {
+    show(nextScreen);
+  } else {
+    show("home");
+  }
+}
+
+
+
+
+function startSessionSafe(topicName) {
+  // סגירת סשן קודם אם קיים
+  if (stats.current) {
+    finishSessionIfActive();
+  }
+
+  // בחירת נושא בצורה מבוקרת
+setCurrentTopic(topicName);
+
+
+  startSession();
+}
+
       function startSession() {
-        currentTopic = topicSelect.value;
-        if (!currentTopic) return;
+  if (!currentTopic) return;
 
-        if (currentTopic === "Hard Words") {
-          session = Object.entries(stats.hardWords)
-            .filter((e) => e[1] >= 2)
-            .map((e) => {
-              let [learn, tr] = e[0].split("||");
-              return { learn, tr };
-            });
-        } else {
-          session = [...data.topics[currentTopic]];
+  // reset session state
+  session = [];
+  current = null;
+  cardFlipped = false;
+  shuffleUsed = false;
+  sessionDefaultDirection = "A";
 
-          // 🔥 החלת מיון הרשימה גם על הסשן
-          const sort = sortSelect.value;
-          if (sort === "learn") {
-            session.sort((a, b) => a.learn.localeCompare(b.learn));
-          }
-          if (sort === "tr") {
-            session.sort((a, b) => a.tr.localeCompare(b.tr));
-          }
-        }
+  // ----- HARD WORDS -----
+  if (currentTopic === "Hard Words") {
+    session = Object.entries(stats.hardWords)
+      .filter(e => e[1] >= 2)
+      .map(e => {
+        const [learn, tr] = e[0].split("||");
+        return { learn, tr };
+      });
 
-        if (session.length === 0) {
-          stats.current = null;
-          showBank();
-          return;
-        }
+    if (session.length === 0) {
+      alert("No hard words to practice yet.");
+      show("home");
+      return;
+    }
+  }
+  // ----- NORMAL TOPIC -----
+  else {
+    if (!data.topics[currentTopic]) {
+      alert("Topic not found.");
+      return;
+    }
 
-        sessionDefaultDirection = "A";
-        cardFlipped = false;
-        shuffleUsed = false;
-        shuffleBtn.classList.remove("hidden");
+    session = [...data.topics[currentTopic]];
 
-        stats.sessions++;
-        stats.current = { topic: currentTopic, correct: 0, wrong: 0 };
-        nextCard();
-      }
+    const sort = sortSelect.value;
+    if (sort === "learn") {
+      session.sort((a, b) => a.learn.localeCompare(b.learn));
+    }
+    if (sort === "tr") {
+      session.sort((a, b) => a.tr.localeCompare(b.tr));
+    }
+
+    if (session.length === 0) {
+      alert("This topic has no words.");
+      show("bank");
+      return;
+    }
+  }
+
+  // ----- START SESSION -----
+  shuffleBtn.classList.remove("hidden");
+
+  stats.sessions++;
+  stats.current = {
+    topic: currentTopic,
+    correct: 0,
+    wrong: 0
+  };
+
+  nextCard();
+}
+
 
       function nextCard() {
         if (session.length === 0) {
@@ -1501,26 +1684,27 @@ rows.forEach((line) => {
         document.getElementById("remainingCount").textContent = session.length;
       }
 
-    function autoFitCardText() {
-  const maxFont = 96;
-  const minFont = 18;
+      function autoFitCardText() {
+        const maxFont = 102; // פי 3
+        const minFont = 18;
 
-  let size = maxFont;
-  card.style.fontSize = size + "px";
+        let size = maxFont;
+        card.style.fontSize = size + "px";
 
-  while (size > minFont) {
-    card.style.fontSize = size + "px";
+        while (size > minFont) {
+          card.style.fontSize = size + "px";
 
-    if (
-      card.scrollHeight > card.clientHeight ||
-      card.scrollWidth > card.clientWidth
-    ) {
-      size -= 2;
-    } else {
-      break;
-    }
-  }
-}
+          // אם יש גלישה – מקטינים
+          if (
+            card.scrollHeight > card.clientHeight ||
+            card.scrollWidth > card.clientWidth
+          ) {
+            size -= 2;
+          } else {
+            break;
+          }
+        }
+      }
 
       function flipCard() {
         cardFlipped = !cardFlipped;
@@ -1603,7 +1787,7 @@ rows.forEach((line) => {
 
         if (session.length === 0) return;
 
-        currentTopic = topicTitle;
+        setCurrentTopic(topicTitle);
         sessionDefaultDirection = "A";
         cardFlipped = false;
         shuffleUsed = false;
@@ -1616,64 +1800,81 @@ rows.forEach((line) => {
 
       /* ===== STATS ===== */
       function renderStats() {
-        let topics = Object.keys(data.topics).length - 1;
-        let words = allWords().length;
+  let topics = Object.keys(data.topics).length;
+  let words = allWords().length;
 
-        let topicStats = "";
-        Object.keys(stats.perTopic).forEach((t) => {
-          let c = stats.perTopic[t].correct;
-          let w = stats.perTopic[t].wrong;
-          let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
-          topicStats += `
+  let topicStats = "";
+  Object.keys(stats.perTopic).forEach((t) => {
+    let c = stats.perTopic[t].correct;
+    let w = stats.perTopic[t].wrong;
+    let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
+    topicStats += `
       <div class="stat-block">
         <strong>Topic: ${t}</strong><br>
         Correct: ${c}<br>
         Wrong: ${w}<br>
         Accuracy: ${acc}%
       </div>`;
-        });
+  });
 
-        let hardEntries = Object.entries(stats.hardWords)
-          .filter((e) => e[1] >= 2)
-          .sort((a, b) => b[1] - a[1]);
+  const hardEntries = Object.entries(stats.hardWords)
+    .filter((e) => e[1] >= 2)
+    .sort((a, b) => b[1] - a[1]);
 
-        let hardTable = hardEntries.length
-          ? `
+  const hardTable = hardEntries.length
+    ? `
+      <h3>Hard Words</h3>
+      <table class="hard-table">
+        <thead>
+          <tr>
+            <th>Word</th>
+            <th>Times Wrong</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${hardEntries
+            .map(([key, count]) => {
+              const [learn, tr] = key.split("||");
+              const safeKey = key.replace(/'/g, "\\'");
+              return `
+                <tr>
+                  <td class="hard-word">${learn} – ${tr}</td>
+                  <td class="hard-count">${count}</td>
+                  <td style="text-align:right">
+                    <button
+                      class="button-danger"
+                      style="padding:6px 10px;font-size:14px"
+                      onclick="removeHardWord('${safeKey}')">
+                      Remove
+                    </button>
+                  </td>
+                </tr>`;
+            })
+            .join("")}
+        </tbody>
+      </table>`
+    : `<h3>Hard Words</h3><p>No hard words</p>`;
 
-    <table class="hard-table">
-      <thead>
-        <tr>
-          <th>Hard Words</th>
-          <th>Times Wrong</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${hardEntries
-          .map((e) => {
-            let [learn, tr] = e[0].split("||");
-            return `
-            <tr>
-              <td class="hard-word">${learn} – ${tr}</td>
-              <td class="hard-count">${e[1]}</td>
-            </tr>`;
-          })
-          .join("")}
-      </tbody>
-    </table>
-  `
-          : "<p>No hard words yet</p>";
-
-        statsContent.innerHTML = `
+  statsContent.innerHTML = `
     <p>Topics: ${topics}</p>
     <p>Words: ${words}</p>
     <p>Sessions started: ${stats.sessions}</p>
     <hr>
+    <h3>By topic</h3>
     ${topicStats || "<p>No data</p>"}
     <hr>
-
     ${hardTable}
   `;
-      }
+}
+
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+  renderStats();
+}
 
       function resetStats() {
         if (!confirm("Reset ALL statistics?")) return;
@@ -1685,30 +1886,32 @@ rows.forEach((line) => {
           hardWords: {},
         };
 
-        localStorage.setItem("stats_v76", JSON.stringify(stats));
+        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
         renderStats();
       }
 
       /* ===== MISC ===== */
 
-      function resetEverything() {
-        if (
-          !confirm(
-            "This will DELETE all topics, stats and cached data.\nAre you sure?",
-          )
-        )
-          return;
 
-        // FC data
-        localStorage.removeItem("flashData_v76");
-        localStorage.removeItem("stats_v76");
+      /* == reset == */
+async function hardReset() {
+  localStorage.clear();
 
-        // Sound pref
-        localStorage.removeItem("soundOn");
+  if ("caches" in window) {
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+  }
 
-        // Reload app state
-        location.reload();
-      }
+  if ("serviceWorker" in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map(r => r.unregister()));
+  }
+
+  localStorage.setItem(RESET_FLAG, "1");
+  location.reload();
+}
+
 
       function toggleAccordion(header) {
         const acc = header.parentElement;
@@ -1723,15 +1926,21 @@ rows.forEach((line) => {
         acc.classList.toggle("open");
       }
 
-      document.getElementById("restartSessionBtn").onclick = () => {
-        // התחלה מחדש של אותו נושא
-        shuffleUsed = false;
-        startSession();
-      };
+      const restartBtn = document.getElementById("restartSessionBtn");
+if (restartBtn) {
+  restartBtn.onclick = () => {
+    shuffleUsed = false;
+    startSession();
+  };
+}
 
-      document.getElementById("backHomeBtn").onclick = () => {
-        goHome();
-      };
+const backBtn = document.getElementById("backHomeBtn");
+if (backBtn) {
+  backBtn.onclick = () => {
+    goHome();
+  };
+}
+
 
       /* ===== DOWNLOAD ===== */
 
@@ -1814,10 +2023,10 @@ li.onclick = () => {
           const ok = saveCSVAsTopic(text, appTopicName);
           if (!ok) return;
 
-          currentTopic = appTopicName;
+          setCurrentTopic(appTopicName);
           topicSelect.value = appTopicName;
 
-          loadCSVToSession(text, appTopicName);
+          startSessionSafe(appTopicName);
         } catch (e) {
           alert("Download timeout. Try again.");
         } finally {
@@ -1873,18 +2082,36 @@ li.onclick = () => {
         window.history.back();
       }
 
+
+
+       function gateUntilReset() {
+  if (localStorage.getItem(RESET_FLAG)) return;
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s => s.classList.remove("active"));
+
+  document.getElementById("resetGate").classList.add("active");
+}
+
+
+
+
       /* ===== INIT ===== */
       (() => {
-        hubIndex = window.HUB_INDEX;
+
+gateUntilReset();
+
+
+        hubIndex = window.HUB_INDEX || null;
 
         loadTopics();
         updateInstructions();
       })();
 
 
+
+
     </script>
   </body>
 </html>
-
-
-
