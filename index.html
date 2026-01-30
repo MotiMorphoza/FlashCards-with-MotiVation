@@ -1046,9 +1046,16 @@ rows.forEach((line) => {
       }
 
       function showBank() {
-        loadTopics();
-        show("bank");
-      }
+  loadTopics();
+  show("bank");
+
+  requestAnimationFrame(() => {
+    const screen = document.getElementById("bank");
+    if (screen) screen.scrollTop = 0;
+  });
+}
+
+
       function showStats() {
         renderStats();
         show("stats");
@@ -1237,6 +1244,12 @@ function resetBankSearch() {
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
         renderWordList();
         show("bankList");
+
+requestAnimationFrame(() => {
+  const screen = document.getElementById("bankList");
+  if (screen) screen.scrollTop = 0;
+});
+
 document.getElementById("bankList").scrollTop = 0;
 
       };
@@ -1283,10 +1296,6 @@ document.getElementById("bankList").scrollTop = 0;
       </div>`;
   });
 
-  requestAnimationFrame(() => {
-    wordList.scrollTop = 0;
-  });
-}
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -1414,6 +1423,11 @@ document.getElementById("bankList").scrollTop = 0;
   newTopicInput.value = "";
 
   show("bankList");
+requestAnimationFrame(() => {
+  const screen = document.getElementById("bankList");
+  if (screen) screen.scrollTop = 0;
+});
+
 document.getElementById("bankList").scrollTop = 0;
 
   renderWordList();
@@ -2009,6 +2023,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 21 </div>
+                           <div> T E S T - 22 </div>
   </body>
 </html>
