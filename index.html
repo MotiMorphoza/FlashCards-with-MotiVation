@@ -1170,6 +1170,11 @@ function goHome() {
 
 
       function renameCurrentTopic() {
+        if (currentTopic === "Hard Words") {
+  alert("Hard Words cannot be renamed.");
+  return;
+}
+
         if (!currentTopic || currentTopic === "All words") return;
 
         const oldKey = normalizeTopicName(currentTopic);
@@ -1351,54 +1356,46 @@ function goHome() {
       }
 
       function saveWord() {
-        const isNew = addTopicSelect.value === "_new";
+  if (!currentTopic || currentTopic === "Hard Words") {
+    alert("Select a valid topic first.");
+    return;
+  }
 
-        const topic = isNew ? newTopicInput.value.trim() : addTopicSelect.value;
+  const isNew = addTopicSelect.value === "_new";
+  const topic = isNew ? newTopicInput.value.trim() : addTopicSelect.value;
 
-        if (!topic || !learnInput.value || !translationInput.value) return;
+  if (!topic || !learnInput.value || !translationInput.value) return;
 
-        // 🔥 חסימת יצירת Topic אם השם כפול
-        if (isNew) {
-          const checked = validateTopicName(topic, "create");
-          if (!checked) return;
-        }
+  if (isNew) {
+    const checked = validateTopicName(topic, "create");
+    if (!checked) return;
+  }
 
-        if (!data.topics[topic]) {
-          data.topics[topic] = [];
-        }
+  if (!data.topics[topic]) {
+    data.topics[topic] = [];
+  }
 
-        data.topics[topic].push({
-          id: Date.now(),
-          learn: learnInput.value,
-          tr: translationInput.value,
-        });
+  data.topics[topic].push({
+    id: Date.now(),
+    learn: learnInput.value,
+    tr: translationInput.value,
+  });
 
-        lastAddTopic = topic;
-        currentTopic = topic;
+  lastAddTopic = topic;
+  currentTopic = topic;
 
-        save();
+  save();
+  loadTopics();
+  loadAddTopics();
+  updateInstructions();
 
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
-        newTopicInput.disabled = true;
-        newTopicInput.classList.add("hidden");
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
 
-        loadTopics();
-        loadAddTopics();
-
-        addTopicSelect.value = topic;
-        onAddTopicChange();
-
-        updateInstructions();
-
-        if (returnToBankListAfterSave) {
-          returnToBankListAfterSave = false;
-          show("bankList");
-          renderWordList();
-          return;
-        }
-      }
+  show("bankList");
+  renderWordList();
+}
 
       /* ===== IMPORT ===== */
 
@@ -1989,6 +1986,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 11 </div>
+                           <div> T E S T - 12 </div>
   </body>
 </html>
