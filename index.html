@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 35</div>
+<div style="text-align:center;opacity:.4">TEST - 36</div>
 
       <div
         id="cacheVersion"
@@ -1150,7 +1150,6 @@ function goHome() {
 
   /* ---------- BANK ---------- */
   bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-  bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
   baseTopics.forEach((t) => {
     bankTopicSelect.innerHTML += `<option>${t}</option>`;
   });
@@ -1249,10 +1248,6 @@ function removeHardWord(key) {
 
 
       function renameCurrentTopic() {
-        if (currentTopic === "Hard Words") {
-  alert("Hard Words cannot be renamed.");
-  return;
-}
 
         if (!currentTopic || currentTopic === "All words") return;
 
@@ -1313,11 +1308,6 @@ show("bankList");
       };
 
       function renderWordList() {
-  if (currentTopic === "Hard Words") {
-    wordList.innerHTML =
-      "<p>Hard Words can't be managed now.</p>";
-    return;
-  }
 
   let q = searchInput.value.toLowerCase();
   let sort = sortSelect.value;
@@ -1835,7 +1825,7 @@ setCurrentTopic(topicName);
       </tbody>
     </table>
   `
-          : "<p>No hard words yet</p>";
+          : "<p>No hard words</p>";
 
         statsContent.innerHTML = `
     <p>Topics: ${topics}</p>
@@ -1845,7 +1835,6 @@ setCurrentTopic(topicName);
     <h3>By topic</h3>
     ${topicStats || "<p>No data</p>"}
     <hr>
-    <h3>Hard Words</h3>
     ${hardTable}
   `;
       }
