@@ -12,15 +12,18 @@
       }
 
       body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: #111;
-        color: #fff;
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: #fff;
 
-        font-size: 17px;
-        line-height: 1.55;
-        letter-spacing: 0.3px;
-      }
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: 0.3px;
+
+  overflow: hidden;
+}
+
 
       /* ---------- SCREENS ---------- */
       .screen {
@@ -443,6 +446,12 @@
 
       .actions button {
         width: 50%;
+      }
+
+       #bankList {
+  overflow-y: auto;
+  height: 100vh;
+}
       }
 
       /* ---------- CONTACT ---------- */
@@ -1052,10 +1061,6 @@ rows.forEach((line) => {
   loadTopics();
   show("bank");
 
-  requestAnimationFrame(() => {
-    const screen = document.getElementById("bank");
-    if (screen) screen.scrollTop = 0;
-  });
 }
 
 
@@ -1248,13 +1253,8 @@ function resetBankSearch() {
       
         show("bankList");
 
-requestAnimationFrame(() => {
-  const screen = document.getElementById("bankList");
-  if (screen) screen.scrollTop = 0;
-});
 
   renderWordList();
-document.getElementById("bankList").scrollTop = 0;
 
       };
 
@@ -1427,15 +1427,8 @@ document.getElementById("bankList").scrollTop = 0;
   newTopicInput.value = "";
 
   show("bankList");
-requestAnimationFrame(() => {
-  const screen = document.getElementById("bankList");
-  if (screen) screen.scrollTop = 0;
-});
 
-  renderWordList();
-
-document.getElementById("bankList").scrollTop = 0;
-
+  renderWordList()
 
 }
 
@@ -2029,6 +2022,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 25 </div>
+                           <div> T E S T - 26 </div>
   </body>
 </html>
