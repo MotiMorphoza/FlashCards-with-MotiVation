@@ -1274,11 +1274,18 @@ document.getElementById("bankList").scrollTop = 0;
   }
 
   arr.forEach((w, i) => {
+
     wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${w.learn} – ${w.tr}
         </div>
+
+// 🔧 איפוס גלילה
+requestAnimationFrame(() => {
+  wordList.scrollTop = 0;
+});
+
         <div class="actions">
           <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
           <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
@@ -2010,6 +2017,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 17 </div>
+                           <div> T E S T - 18 </div>
   </body>
 </html>
