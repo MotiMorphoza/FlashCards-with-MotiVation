@@ -1044,12 +1044,19 @@ rows.forEach((line) => {
       }
 
       function showBank() {
-        loadTopics();
-        show("bank");
-      }
-      function showStats() {
-        renderStats();
-        show("stats");
+  loadTopics();
+
+  const hasTopics =
+    Object.keys(data.topics).filter(t => t !== "All words").length > 0;
+
+  if (!hasTopics) {
+    alert("No topics yet. Add or download a topic first.");
+    return;
+  }
+
+  show("bank");
+}
+
       }
       function showContact() {
         show("contact");
@@ -1108,37 +1115,50 @@ function goHome() {
       /* ===== TOPICS ===== */
 
       function loadTopics() {
-      
-        const hardLabel = "Hard Words";
+  const hardLabel = "Hard Words";
 
-const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
+  const baseTopics = Object.keys(data.topics).filter(
+    (t) => t !== "All words",
+  );
 
-        const topics = Object.keys(data.topics);
+  const isBankEmpty = baseTopics.length === 0;
 
-        /* ---------- HOME ---------- */
-        topicSelect.innerHTML = '<option value="">Select topic</option>';
-        topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        baseTopics.forEach((t) => {
-          topicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- HOME ---------- */
+  topicSelect.innerHTML = '<option value="">Select topic</option>';
+  topicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  baseTopics.forEach((t) => {
+    topicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- BANK ---------- */
-        bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-        bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        baseTopics.forEach((t) => {
-          bankTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK ---------- */
+  bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
+  bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  baseTopics.forEach((t) => {
+    bankTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        /* ---------- BANK LIST ---------- */
-        bankListTopicSelect.innerHTML = "";
-        baseTopics.forEach((t) => {
-          bankListTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK LIST ---------- */
+  bankListTopicSelect.innerHTML = "";
+  baseTopics.forEach((t) => {
+    bankListTopicSelect.innerHTML += `<option>${t}</option>`;
+  });
 
-        if (currentTopic) {
-          bankListTopicSelect.value = currentTopic;
-        }
-      }
+  if (currentTopic) {
+    bankListTopicSelect.value = currentTopic;
+  }
+
+  /* ---------- EMPTY BANK GUARD ---------- */
+  if (isBankEmpty) {
+    topicSelect.disabled = true;
+    bankTopicSelect.disabled = true;
+    bankListTopicSelect.innerHTML = "";
+  } else {
+    topicSelect.disabled = false;
+    bankTopicSelect.disabled = false;
+  }
+}
+
+
 
       /* ===== BANK ===== */
 
@@ -1198,19 +1218,40 @@ const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
       }
 
       function addWordToCurrentTopic() {
-        if (!currentTopic) return;
+  if (!currentTopic) {
+    alert("Select or create a topic first.");
+    return;
+  }
 
-        lastAddTopic = currentTopic;
-        showAdd();
-      }
+  // חסימה מוחלטת של Hard Words
+  if (currentTopic === "Hard Words") {
+    alert("Hard Words cannot be edited here.");
+    return;
+  }
 
-      bankTopicSelect.onchange = () => {
-        if (!bankTopicSelect.value) return;
-        currentTopic = bankTopicSelect.value;
-        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-        renderWordList();
-        show("bankList");
-      };
+  lastAddTopic = currentTopic;
+  showAdd();
+}
+
+bankTopicSelect.onchange = () => {
+  const t = bankTopicSelect.value;
+  if (!t) return;
+
+  // חסימה מוחלטת של Hard Words דרך הבנק
+  if (t === "Hard Words") {
+    alert("Hard Words are managed via Statistics.");
+    return;
+  }
+
+  currentTopic = t;
+  deleteTopicBtn.classList.toggle(
+    "hidden",
+    currentTopic === "All words",
+  );
+  renderWordList();
+  show("bankList");
+};
+
 
       function renderWordList() {
   // 🔒 חסימה מוחלטת של Hard Words דרך הבנק
@@ -1977,6 +2018,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 08 </div>
+                           <div> T E S T - 09 </div>
   </body>
 </html>
