@@ -884,15 +884,18 @@ const RESET_FLAG = "APP_RESET_DONE_v333";
       }
 
       /* ===== DATA ===== */
-      let data = JSON.parse(localStorage.getItem("FLASH_KEY")) || {
-        topics: {},
-      };
-      let stats = JSON.parse(localStorage.getItem("STATS_KEY")) || {
-        sessions: 0,
-        history: [],
-        perTopic: {},
-        hardWords: {},
-      };
+
+
+let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
+  topics: {},
+};
+let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
+  sessions: 0,
+  history: [],
+  perTopic: {},
+  hardWords: {},
+};
+
 
       const topicSelect = document.getElementById("topicSelect");
       const bankTopicSelect = document.getElementById("bankTopicSelect");
@@ -931,8 +934,9 @@ let currentTopic = null;
       /* ===== UTIL ===== */
 
       function save() {
-        localStorage.setItem("FLASH_KEY", JSON.stringify(data));
-        localStorage.setItem("STATS_KEY", JSON.stringify(stats));
+        localStorage.setItem(FLASH_KEY, JSON.stringify(data));
+localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
       }
 
       /* ===== TOPIC NAME GATE ===== */
@@ -1725,7 +1729,8 @@ function startSessionSafe(topicName) {
           hardWords: {},
         };
 
-        localStorage.setItem("STATS_KEY", JSON.stringify(stats));
+        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
         renderStats();
       }
 
