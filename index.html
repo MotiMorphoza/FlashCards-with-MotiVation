@@ -1118,20 +1118,20 @@ const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
         /* ---------- HOME ---------- */
         topicSelect.innerHTML = '<option value="">Select topic</option>';
         topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        basetopics.forEach((t) => {
+        baseTopics.forEach((t) => {
           topicSelect.innerHTML += `<option>${t}</option>`;
         });
 
         /* ---------- BANK ---------- */
         bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
         bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        basetopics.forEach((t) => {
+        baseTopics.forEach((t) => {
           bankTopicSelect.innerHTML += `<option>${t}</option>`;
         });
 
         /* ---------- BANK LIST ---------- */
         bankListTopicSelect.innerHTML = "";
-        basetopics.forEach((t) => {
+        baseTopics.forEach((t) => {
           bankListTopicSelect.innerHTML += `<option>${t}</option>`;
         });
 
@@ -1977,6 +1977,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 07 </div>
+                           <div> T E S T - 08 </div>
   </body>
 </html>
