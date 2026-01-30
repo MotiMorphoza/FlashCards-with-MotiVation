@@ -1108,28 +1108,30 @@ function goHome() {
       /* ===== TOPICS ===== */
 
       function loadTopics() {
-        data.topics["All words"] = allWords();
-
+      
         const hardLabel = "Hard Words";
+
+const baseTopics = Object.keys(data.topics).filter(t => t !== "All words");
+
         const topics = Object.keys(data.topics);
 
         /* ---------- HOME ---------- */
         topicSelect.innerHTML = '<option value="">Select topic</option>';
         topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        topics.forEach((t) => {
+        basetopics.forEach((t) => {
           topicSelect.innerHTML += `<option>${t}</option>`;
         });
 
         /* ---------- BANK ---------- */
         bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
         bankTopicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        topics.forEach((t) => {
+        basetopics.forEach((t) => {
           bankTopicSelect.innerHTML += `<option>${t}</option>`;
         });
 
         /* ---------- BANK LIST ---------- */
         bankListTopicSelect.innerHTML = "";
-        topics.forEach((t) => {
+        basetopics.forEach((t) => {
           bankListTopicSelect.innerHTML += `<option>${t}</option>`;
         });
 
@@ -1956,6 +1958,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 05 </div>
+                           <div> T E S T - 06 </div>
   </body>
 </html>
