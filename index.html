@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 27</div>
+<div style="text-align:center;opacity:.4">TEST - 28</div>
 
       <div
         id="cacheVersion"
@@ -1534,44 +1534,42 @@ function startSessionSafe(topicName) {
 }
 
       function startSession() {
-        currentTopic = topicSelect.value;
-        if (!currentTopic) return;
+  if (!currentTopic) return;
 
-        if (currentTopic === "Hard Words") {
-          session = Object.entries(stats.hardWords)
-            .filter((e) => e[1] >= 2)
-            .map((e) => {
-              let [learn, tr] = e[0].split("||");
-              return { learn, tr };
-            });
-        } else {
-          session = [...data.topics[currentTopic]];
+  if (currentTopic === "Hard Words") {
+    session = Object.entries(stats.hardWords)
+      .filter((e) => e[1] >= 2)
+      .map((e) => {
+        let [learn, tr] = e[0].split("||");
+        return { learn, tr };
+      });
+  } else {
+    session = [...data.topics[currentTopic]];
 
-          // 🔥 החלת מיון הרשימה גם על הסשן
-          const sort = sortSelect.value;
-          if (sort === "learn") {
-            session.sort((a, b) => a.learn.localeCompare(b.learn));
-          }
-          if (sort === "tr") {
-            session.sort((a, b) => a.tr.localeCompare(b.tr));
-          }
-        }
+    const sort = sortSelect.value;
+    if (sort === "learn") {
+      session.sort((a, b) => a.learn.localeCompare(b.learn));
+    }
+    if (sort === "tr") {
+      session.sort((a, b) => a.tr.localeCompare(b.tr));
+    }
+  }
 
-        if (session.length === 0) {
-          stats.current = null;
-          showBank();
-          return;
-        }
+  if (session.length === 0) {
+    stats.current = null;
+    showBank();
+    return;
+  }
 
-        sessionDefaultDirection = "A";
-        cardFlipped = false;
-        shuffleUsed = false;
-        shuffleBtn.classList.remove("hidden");
+  sessionDefaultDirection = "A";
+  cardFlipped = false;
+  shuffleUsed = false;
+  shuffleBtn.classList.remove("hidden");
 
-        stats.sessions++;
-        stats.current = { topic: currentTopic, correct: 0, wrong: 0 };
-        nextCard();
-      }
+  stats.sessions++;
+  stats.current = { topic: currentTopic, correct: 0, wrong: 0 };
+  nextCard();
+}
 
       function nextCard() {
         if (session.length === 0) {
