@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 37</div>
+<div style="text-align:center;opacity:.4">TEST - 38</div>
 
       <div
         id="cacheVersion"
@@ -1597,13 +1597,21 @@ setCurrentTopic(topicName);
 
 
   if (currentTopic === "Hard Words") {
-    session = Object.entries(stats.hardWords)
-      .filter((e) => e[1] >= 2)
-      .map((e) => {
-        let [learn, tr] = e[0].split("||");
-        return { learn, tr };
-      });
-  } else {
+  session = Object.entries(stats.hardWords)
+    .filter((e) => e[1] >= 2)
+    .map((e) => {
+      let [learn, tr] = e[0].split("||");
+      return { learn, tr };
+    });
+
+  if (session.length === 0) {
+    alert("No hard words to practice yet.");
+    show("home");
+    return;
+  }
+}
+
+ else {
     session = [...data.topics[currentTopic]];
 
     const sort = sortSelect.value;
@@ -1784,53 +1792,81 @@ setCurrentTopic(topicName);
 
       /* ===== STATS ===== */
       function renderStats() {
-        let topics = Object.keys(data.topics).length - 1;
-        let words = allWords().length;
+  let topics = Object.keys(data.topics).length;
+  let words = allWords().length;
 
-        let topicStats = "";
-        Object.keys(stats.perTopic).forEach((t) => {
-          let c = stats.perTopic[t].correct;
-          let w = stats.perTopic[t].wrong;
-          let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
-          topicStats += `
+  let topicStats = "";
+  Object.keys(stats.perTopic).forEach((t) => {
+    let c = stats.perTopic[t].correct;
+    let w = stats.perTopic[t].wrong;
+    let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
+    topicStats += `
       <div class="stat-block">
         <strong>Topic: ${t}</strong><br>
         Correct: ${c}<br>
         Wrong: ${w}<br>
         Accuracy: ${acc}%
       </div>`;
-        });
+  });
 
-        let hardEntries = Object.entries(stats.hardWords)
-          .filter((e) => e[1] >= 2)
-          .sort((a, b) => b[1] - a[1]);
+  const hardEntries = Object.entries(stats.hardWords)
+    .filter((e) => e[1] >= 2)
+    .sort((a, b) => b[1] - a[1]);
 
-        let hardTable = hardEntries.length
-          ? `
-    <button onclick="goHome()" class="back">Back</button>
+  const hardTable = hardEntries.length
+    ? `
+      <h3>Hard Words</h3>
+      <table class="hard-table">
+        <thead>
+          <tr>
+            <th>Word</th>
+            <th>Times Wrong</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${hardEntries
+            .map(([key, count]) => {
+              const [learn, tr] = key.split("||");
+              const safeKey = key.replace(/'/g, "\\'");
+              return `
+                <tr>
+                  <td class="hard-word">${learn} – ${tr}</td>
+                  <td class="hard-count">${count}</td>
+                  <td style="text-align:right">
+                    <button
+                      class="button-danger"
+                      style="padding:6px 10px;font-size:14px"
+                      onclick="removeHardWord('${safeKey}')">
+                      Remove
+                    </button>
+                  </td>
+                </tr>`;
+            })
+            .join("")}
+        </tbody>
+      </table>`
+    : `<h3>Hard Words</h3><p>No hard words</p>`;
 
-    <table class="hard-table">
-      <thead>
-        <tr>
-          <th>Hard Words</th>
-          <th>Times Wrong</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${hardEntries
-          .map((e) => {
-            let [learn, tr] = e[0].split("||");
-            return `
-            <tr>
-              <td class="hard-word">${learn} – ${tr}</td>
-              <td class="hard-count">${e[1]}</td>
-            </tr>`;
-          })
-          .join("")}
-      </tbody>
-    </table>
-  `
-          : "<p>No hard words</p>";
+  statsContent.innerHTML = `
+    <p>Topics: ${topics}</p>
+    <p>Words: ${words}</p>
+    <p>Sessions started: ${stats.sessions}</p>
+    <hr>
+    <h3>By topic</h3>
+    ${topicStats || "<p>No data</p>"}
+    <hr>
+    ${hardTable}
+  `;
+}
+
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+  renderStats();
+}
 
         statsContent.innerHTML = `
     <p>Topics: ${topics}</p>
