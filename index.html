@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 45</div>
+<div style="text-align:center;opacity:.4">TEST - 46</div>
 
       <div
         id="cacheVersion"
@@ -1441,8 +1441,7 @@ function onAddTopicChange() {
   }
 }
 
-
-  function saveWord() {
+function saveWord() {
   const isNew = addTopicSelect.value === "_new";
   const topicName = isNew
     ? newTopicInput.value.trim()
@@ -1455,17 +1454,18 @@ function onAddTopicChange() {
 
   if (!learnInput.value || !translationInput.value) return;
 
+  // 🔒 חסימת שם כפול (כולל רווחים / אותיות גדולות)
   if (isNew) {
     const checked = validateTopicName(topicName, "create");
     if (!checked) return;
   }
 
-  // יצירת הטופיק אם צריך
+  // יצירת טופיק אם לא קיים
   if (!data.topics[topicName]) {
     data.topics[topicName] = [];
   }
 
-  // הוספת המילה
+  // הוספת מילה
   data.topics[topicName].push({
     id: Date.now() + Math.random(),
     learn: learnInput.value,
@@ -1475,26 +1475,25 @@ function onAddTopicChange() {
   // שמירה
   save();
 
-  // 🔑 בנייה מחדש של ה-select עם הטופיק החדש
+  // 🔑 בנייה מחדש של ה-select (כדי שהטופיק החדש יופיע בו)
   loadAddTopics();
 
-  // 🔑 בחירה מפורשת של הטופיק שנוצר
+  // 🔑 בחירה מפורשת של הטופיק החדש + סגירת שדה השם
   addTopicSelect.value = topicName;
-  onAddTopicChange(); // מסתיר את שדה השם
+  onAddTopicChange();
 
   // ניקוי שדות
   learnInput.value = "";
   translationInput.value = "";
   newTopicInput.value = "";
 
-  // state
+  // עדכון state כללי
   setCurrentTopic(topicName);
   lastAddTopic = topicName;
 
   loadTopics();
   updateInstructions();
 }
-
 
   // ---- RESET ADD STATE ----
   setCurrentTopic(topicName);
