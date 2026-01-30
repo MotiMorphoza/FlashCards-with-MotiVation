@@ -627,9 +627,8 @@
 <!-- RESET -->
 <div class="screen" id="resetGate">
   <h2>Update</h2>
-  <p>This version requires a clean reset.</p>
 
-  <button class="button-danger" onclick="hardReset()">
+  <button class="SUNSET" onclick="hardReset()">
     Reset App
   </button>
 </div>
@@ -759,7 +758,8 @@
         Shuffle
       </button>
       <button class="sunset" onclick="flipDirection()">Flip Direction</button>
-      <button onclick="goHome()" class="back">Exit</button>
+      <button onclick="exitSessionSafe('home')" class="back">Exit</button>
+
     </div>
 
     <!-- SESSION END -->
@@ -770,7 +770,8 @@
 
         <button class="forest" id="restartSessionBtn">Start again</button>
 
-        <button class="back" id="backHomeBtn">Back to Home</button>
+        <button onclick="exitSessionSafe('home')" class="back">Exit</button>
+
       </div>
     </div>
 
@@ -1052,6 +1053,11 @@ rows.forEach((line) => {
 
       function showDownload() {
 
+if (stats.current) {
+  exitSessionSafe("download");
+  return;
+}
+
   if (!ensureHubLoaded()) return;
 
         // איפוס שפה
@@ -1081,15 +1087,12 @@ rows.forEach((line) => {
         show("download");
       }
 
-      function goHome() {
-        if (stats.current) {
-          finishSessionIfActive();
-        }
+function goHome() {
+  exitSessionSafe("home");
+  loadTopics();
+  updateInstructions();
+}
 
-        loadTopics();
-        updateInstructions();
-        show("home");
-      }
 
       /* ===== HOME LOGIC ===== */
       function updateInstructions() {
@@ -1424,6 +1427,22 @@ rows.forEach((line) => {
       };
 
       /* ===== SESSION ===== */
+
+
+function exitSessionSafe(nextScreen) {
+  if (stats.current) {
+    finishSessionIfActive();
+  }
+
+  if (nextScreen) {
+    show(nextScreen);
+  } else {
+    show("home");
+  }
+}
+
+
+
 
 function startSessionSafe(topicName) {
   // סגירת סשן קודם אם קיים
@@ -1926,6 +1945,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 02 </div>
+                           <div> T E S T - 03 </div>
   </body>
 </html>
