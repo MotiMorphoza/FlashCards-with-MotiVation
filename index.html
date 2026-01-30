@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 32</div>
+<div style="text-align:center;opacity:.4">TEST - 33</div>
 
       <div
         id="cacheVersion"
@@ -937,7 +937,7 @@ function ensureHubLoaded() {
 
 // state
 let hubIndex = null;
-let setCurrentTopic(null);
+let currentTopic = null;
 let lastAddTopic = null;
 
 
@@ -951,7 +951,7 @@ localStorage.setItem(STATS_KEY, JSON.stringify(stats));
       }
 
 function setCurrentTopic(topicName) {
-  setCurrentTopic(topicName || null);
+   currentTopic = topicName || null;
 
   // סנכרון UI
   if (topicSelect) topicSelect.value = topicName || "";
@@ -1494,7 +1494,6 @@ renderWordList();
 
           // 🔥 בחירת הנושא ופתיחת סשן אוטומטית
           setCurrentTopic(topic);
-          topicSelect.value = topic;
 
           importFile.value = "";
 
