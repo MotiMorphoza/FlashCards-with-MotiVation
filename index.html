@@ -617,7 +617,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 34</div>
+<div style="text-align:center;opacity:.4">TEST - 35</div>
 
       <div
         id="cacheVersion"
@@ -1186,19 +1186,66 @@ function resetBankSearch() {
 
 
 
-      function switchBankListTopic() {
+function switchBankListTopic() {
   const t = bankListTopicSelect.value;
   if (!t) return;
 
+  setCurrentTopic(t);
+
+  // 🔒 הגבלות על Hard Words
   if (t === "Hard Words") {
-    alert("Hard Words cannot be edited in Bank.");
+    deleteTopicBtn.classList.add("hidden");
+    renderHardWordsList();
+    show("bankList");
     return;
   }
 
-  setCurrentTopic(t);
+
+function renderHardWordsList() {
+  wordList.innerHTML = "";
+
+  const entries = Object.entries(stats.hardWords)
+    .filter(e => e[1] >= 2)
+    .sort((a, b) => b[1] - a[1]);
+
+  if (!entries.length) {
+    wordList.innerHTML = "<p>No hard words.</p>";
+    return;
+  }
+
+  entries.forEach(([key, count], i) => {
+    const [learn, tr] = key.split("||");
+
+    wordList.innerHTML += `
+      <div class="list-item">
+        <div class="word-line">
+          ${i + 1}. ${learn} – ${tr}
+        </div>
+        <div class="actions">
+          <button style="font-size:12px;padding:6px;"
+            onclick="removeHardWord('${key.replace(/'/g, "\\'")}')">
+            Remove
+          </button>
+          <span style="opacity:.6;font-size:12px;">${count}×</span>
+        </div>
+      </div>`;
+  });
+}
+
+
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+  renderHardWordsList();
+}
+
   deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
+  show("bankList");
 }
+
 
 
       function renameCurrentTopic() {
