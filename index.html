@@ -608,16 +608,17 @@
       </div>
 
       <select id="topicSelect"></select>
-      <button class="button-primary" onclick="startSession()">
-        Start Session
-      </button>
+      <button class="button-primary" onclick="startSessionSafe(topicSelect.value)">
+  Start Session
+</button>
+
       <button class="peach" onclick="showBank()">Word Bank</button>
       <button class="lavender" onclick="showStats()">Statistics</button>
       <button class="forest" onclick="showContact()">Contact</button>
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 40</div>
+<div style="text-align:center;opacity:.4">TEST - 41</div>
 
       <div
         id="cacheVersion"
