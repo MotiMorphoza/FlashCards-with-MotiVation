@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 42</div>
+<div style="text-align:center;opacity:.4">TEST - 43</div>
 
       <div
         id="cacheVersion"
@@ -1426,16 +1426,21 @@ show("bankList");
         onAddTopicChange();
       }
 
-      function onAddTopicChange() {
-        const isNew = addTopicSelect.value === "_new";
 
-        newTopicInput.disabled = !isNew;
-        newTopicInput.classList.toggle("hidden", !isNew);
+function onAddTopicChange() {
+  const isNew = addTopicSelect.value === "_new";
 
-        if (!isNew) {
-          newTopicInput.value = "";
-        }
-      }
+  if (isNew) {
+    newTopicInput.disabled = false;
+    newTopicInput.classList.remove("hidden");
+    newTopicInput.value = "";
+  } else {
+    newTopicInput.disabled = true;
+    newTopicInput.classList.add("hidden");
+    newTopicInput.value = "";
+  }
+}
+
 
       function saveWord() {
   const isNew = addTopicSelect.value === "_new";
