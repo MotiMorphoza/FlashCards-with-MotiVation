@@ -1242,7 +1242,7 @@ function resetBankSearch() {
         if (!bankTopicSelect.value) return;
         currentTopic = bankTopicSelect.value;
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-        renderWordList();
+      
         show("bankList");
 
 requestAnimationFrame(() => {
@@ -1250,6 +1250,7 @@ requestAnimationFrame(() => {
   if (screen) screen.scrollTop = 0;
 });
 
+  renderWordList();
 document.getElementById("bankList").scrollTop = 0;
 
       };
@@ -1428,9 +1429,11 @@ requestAnimationFrame(() => {
   if (screen) screen.scrollTop = 0;
 });
 
+  renderWordList();
+
 document.getElementById("bankList").scrollTop = 0;
 
-  renderWordList();
+
 }
 
 
@@ -2023,6 +2026,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 23 </div>
+                           <div> T E S T - 24 </div>
   </body>
 </html>
