@@ -1229,6 +1229,8 @@ function goHome() {
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
         renderWordList();
         show("bankList");
+document.getElementById("bankList").scrollTop = 0;
+
       };
 
       function renderWordList() {
@@ -1238,6 +1240,9 @@ function goHome() {
       "<p>Hard Words are managed via Statistics.</p>";
     return;
   }
+
+  // 🔧 איפוס גלילה לראש
+  wordList.scrollTop = 0;
 
   let q = searchInput.value.toLowerCase();
   let sort = sortSelect.value;
@@ -1273,6 +1278,8 @@ function goHome() {
       </div>`;
   });
 }
+
+
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -1397,6 +1404,8 @@ function goHome() {
   newTopicInput.value = "";
 
   show("bankList");
+document.getElementById("bankList").scrollTop = 0;
+
   renderWordList();
 }
 
@@ -1990,6 +1999,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 15 </div>
+                           <div> T E S T - 16 </div>
   </body>
 </html>
