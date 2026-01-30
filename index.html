@@ -1417,13 +1417,31 @@ rows.forEach((line) => {
 
           importFile.value = "";
 
-          startSession(); // 🔥 פותח סשן מייד
+          startSessionSafe(topic);    // 🔥 פותח סשן מייד
         };
 
         reader.readAsText(file, "UTF-8");
       };
 
       /* ===== SESSION ===== */
+
+function startSessionSafe(topicName) {
+  // סגירת סשן קודם אם קיים
+  if (stats.current) {
+    finishSessionIfActive();
+  }
+
+  // בחירת נושא בצורה מבוקרת
+  currentTopic = topicName;
+  topicSelect.value = topicName;
+
+  // reset flags
+  cardFlipped = false;
+  shuffleUsed = false;
+
+  startSession();
+}
+
       function startSession() {
         currentTopic = topicSelect.value;
         if (!currentTopic) return;
@@ -1821,7 +1839,7 @@ li.onclick = () => {
           currentTopic = appTopicName;
           topicSelect.value = appTopicName;
 
-          loadCSVToSession(text, appTopicName);
+          startSessionSafe(appTopicName);
         } catch (e) {
           alert("Download timeout. Try again.");
         } finally {
@@ -1908,6 +1926,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 01 </div>
+                           <div> T E S T - 02 </div>
   </body>
 </html>
