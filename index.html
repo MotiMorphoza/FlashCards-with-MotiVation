@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 44</div>
+<div style="text-align:center;opacity:.4">TEST - 45</div>
 
       <div
         id="cacheVersion"
@@ -1460,22 +1460,41 @@ function onAddTopicChange() {
     if (!checked) return;
   }
 
+  // יצירת הטופיק אם צריך
   if (!data.topics[topicName]) {
     data.topics[topicName] = [];
   }
 
-// 🔒 אם זה היה טופיק חדש – יוצאים ממצב _new
-if (isNew) {
-  addTopicSelect.value = topicName;
-  onAddTopicChange(); // מסתיר את שדה השם
-}
-
-
+  // הוספת המילה
   data.topics[topicName].push({
     id: Date.now() + Math.random(),
     learn: learnInput.value,
     tr: translationInput.value,
   });
+
+  // שמירה
+  save();
+
+  // 🔑 בנייה מחדש של ה-select עם הטופיק החדש
+  loadAddTopics();
+
+  // 🔑 בחירה מפורשת של הטופיק שנוצר
+  addTopicSelect.value = topicName;
+  onAddTopicChange(); // מסתיר את שדה השם
+
+  // ניקוי שדות
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
+
+  // state
+  setCurrentTopic(topicName);
+  lastAddTopic = topicName;
+
+  loadTopics();
+  updateInstructions();
+}
+
 
   // ---- RESET ADD STATE ----
   setCurrentTopic(topicName);
