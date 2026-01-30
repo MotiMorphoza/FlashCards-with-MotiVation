@@ -1358,37 +1358,38 @@ function goHome() {
       }
 
       function saveWord() {
-  if (!currentTopic || currentTopic === "Hard Words") {
-    alert("Select a valid topic first.");
+  const isNew = addTopicSelect.value === "_new";
+  const topicName = isNew
+    ? newTopicInput.value.trim()
+    : addTopicSelect.value;
+
+  if (!topicName) {
+    alert("Enter topic name");
     return;
   }
 
-  const isNew = addTopicSelect.value === "_new";
-  const topic = isNew ? newTopicInput.value.trim() : addTopicSelect.value;
-
-  if (!topic || !learnInput.value || !translationInput.value) return;
+  if (!learnInput.value || !translationInput.value) return;
 
   if (isNew) {
-    const checked = validateTopicName(topic, "create");
+    const checked = validateTopicName(topicName, "create");
     if (!checked) return;
   }
 
-  if (!data.topics[topic]) {
-    data.topics[topic] = [];
+  if (!data.topics[topicName]) {
+    data.topics[topicName] = [];
   }
 
-  data.topics[topic].push({
-    id: Date.now(),
+  data.topics[topicName].push({
+    id: Date.now() + Math.random(),
     learn: learnInput.value,
     tr: translationInput.value,
   });
 
-  lastAddTopic = topic;
-  currentTopic = topic;
+  currentTopic = topicName;
+  lastAddTopic = topicName;
 
   save();
   loadTopics();
-  loadAddTopics();
   updateInstructions();
 
   learnInput.value = "";
@@ -1398,6 +1399,7 @@ function goHome() {
   show("bankList");
   renderWordList();
 }
+
 
       /* ===== IMPORT ===== */
 
@@ -1988,6 +1990,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 13 </div>
+                           <div> T E S T - 15 </div>
   </body>
 </html>
