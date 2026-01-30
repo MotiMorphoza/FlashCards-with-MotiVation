@@ -1274,25 +1274,22 @@ document.getElementById("bankList").scrollTop = 0;
   }
 
   arr.forEach((w, i) => {
+  wordList.innerHTML += `
+    <div class="list-item">
+      <div class="word-line">
+        ${i + 1}. ${w.learn} – ${w.tr}
+      </div>
+      <div class="actions">
+        <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
+        <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
+      </div>
+    </div>`;
+});
 
-    wordList.innerHTML += `
-      <div class="list-item">
-        <div class="word-line">
-          ${i + 1}. ${w.learn} – ${w.tr}
-        </div>
-
-// 🔧 איפוס גלילה
+// 🔧 איפוס גלילה – אחרי שכל ה־ DOM נבנה
 requestAnimationFrame(() => {
   wordList.scrollTop = 0;
 });
-
-        <div class="actions">
-          <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
-          <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
-        </div>
-      </div>`;
-  });
-}
 
 
 
@@ -2017,6 +2014,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 18 </div>
+                           <div> T E S T - 19 </div>
   </body>
 </html>
