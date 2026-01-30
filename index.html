@@ -1057,10 +1057,10 @@ rows.forEach((line) => {
         document.getElementById(id).classList.add("active");
       }
 
-      function showBank() {
+function showBank() {
+  resetBankSearch();
   loadTopics();
   show("bank");
-
 }
 
 
@@ -1172,6 +1172,12 @@ function goHome() {
 
       /* ===== BANK ===== */
 
+function resetBankSearch() {
+  if (searchInput) searchInput.value = "";
+  if (sortSelect) sortSelect.value = "";
+}
+
+
 
 function resetBankSearch() {
   searchInput.value = "";
@@ -1250,11 +1256,11 @@ function resetBankSearch() {
         if (!bankTopicSelect.value) return;
         currentTopic = bankTopicSelect.value;
         deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
-      
-        show("bankList");
+     
+resetBankSearch();
+renderWordList();
+show("bankList");
 
-
-  renderWordList();
 
       };
 
@@ -1426,9 +1432,10 @@ function resetBankSearch() {
   translationInput.value = "";
   newTopicInput.value = "";
 
-  show("bankList");
+resetBankSearch();
+show("bankList");
+renderWordList();
 
-  renderWordList()
 
 }
 
@@ -2022,6 +2029,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 26 </div>
+                           <div> T E S T - 27 </div>
   </body>
 </html>
