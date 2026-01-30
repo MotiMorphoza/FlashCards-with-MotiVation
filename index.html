@@ -909,11 +909,22 @@ const RESET_FLAG = "APP_RESET_DONE_v333";
       const shuffleBtn = document.getElementById("shuffleBtn");
       const card = document.getElementById("card");
 
-      /* ===== HUB INDEX ===== */
+/* ===== HUB INDEX ===== */
+
+// guard – בדיקה שהספרייה נטענה
 
 
-      let hubIndex = null;
-      let currentTopic = null;
+function ensureHubLoaded() {
+  if (!window.HUB_INDEX) {
+    alert("Word Library is not available right now.");
+    return false;
+  }
+  return true;
+}
+
+// state
+let hubIndex = null;
+let currentTopic = null;
 
 
       /* ===== UTIL ===== */
@@ -1040,6 +1051,9 @@ rows.forEach((line) => {
       }
 
       function showDownload() {
+
+  if (!ensureHubLoaded()) return;
+
         // איפוס שפה
         currentDownloadLang = null;
 
@@ -1884,8 +1898,7 @@ li.onclick = () => {
 gateUntilReset();
 
 
-        hubIndex = window.HUB_INDEX;
-        console.log("HUB_INDEX =", hubIndex);
+        hubIndex = window.HUB_INDEX || null;
 
         loadTopics();
         updateInstructions();
@@ -1895,6 +1908,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 00 </div>
+                           <div> T E S T - 01 </div>
   </body>
 </html>
