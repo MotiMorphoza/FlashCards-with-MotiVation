@@ -1249,9 +1249,6 @@ document.getElementById("bankList").scrollTop = 0;
     return;
   }
 
-  // 🔧 איפוס גלילה לראש
-  wordList.scrollTop = 0;
-
   let q = searchInput.value.toLowerCase();
   let sort = sortSelect.value;
   wordList.innerHTML = "";
@@ -1274,24 +1271,20 @@ document.getElementById("bankList").scrollTop = 0;
   }
 
   arr.forEach((w, i) => {
-  wordList.innerHTML += `
-    <div class="list-item">
-      <div class="word-line">
-        ${i + 1}. ${w.learn} – ${w.tr}
-      </div>
-      <div class="actions">
-        <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
-        <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
-      </div>
-    </div>`;
-});
+    wordList.innerHTML += `
+      <div class="list-item">
+        <div class="word-line">
+          ${i + 1}. ${w.learn} – ${w.tr}
+        </div>
+        <div class="actions">
+          <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
+          <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
+        </div>
+      </div>`;
+  });
 
-// 🔧 איפוס גלילה – אחרי שכל ה־ DOM נבנה
-requestAnimationFrame(() => {
-  wordList.scrollTop = 0;
-});
-
-
+  // 🔧 איפוס גלילה – אחרי שכל ה־DOM נבנה
+  requestAnimationFrame(() => {
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -2014,6 +2007,6 @@ gateUntilReset();
 
 
     </script>
-                           <div> T E S T - 19 </div>
+                           <div> T E S T - 20 </div>
   </body>
 </html>
