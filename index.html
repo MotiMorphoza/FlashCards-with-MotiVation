@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 50</div>
+<div style="text-align:center;opacity:.4">TEST - 51</div>
 
       <div
         id="cacheVersion"
@@ -857,7 +857,7 @@
     <script>
 
  /* ===== STORAGE CONSTANTS ===== */
-const STORAGE_VERSION = "v333";
+const STORAGE_VERSION = "v444";
 const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
 const STATS_KEY = `stats_${STORAGE_VERSION}`;
 const RESET_FLAG = "APP_RESET_DONE_v333";
@@ -916,11 +916,9 @@ topicSelect.onchange = function () {
       const bankTopicSelect = document.getElementById("bankTopicSelect");
       const bankListTopicSelect = document.getElementById(
         "bankListTopicSelect",
-
-bankListTopicSelect.onchange = switchBankListTopic;
       );
 
-
+bankListTopicSelect.onchange = switchBankListTopic;
 
       const searchInput = document.getElementById("searchInput");
       const sortSelect = document.getElementById("sortSelect");
@@ -1194,6 +1192,25 @@ function resetBankSearch() {
   if (sortSelect) sortSelect.value = "";
 }
 
+/* ---- בחירה בבנק (המסך הראשון) ---- */
+bankTopicSelect.onchange = () => {
+  const t = bankTopicSelect.value;
+  if (!t) return;
+
+  setCurrentTopic(t);
+
+  // Hard Words – טיפול ייעודי
+  if (t === "Hard Words") {
+    renderHardWordsList();
+    show("bankList");
+    return;
+  }
+
+  renderWordList();
+  show("bankList");
+};
+
+/* ---- בחירה בתוך רשימת הבנק ---- */
 function switchBankListTopic() {
   const t = bankListTopicSelect.value;
   if (!t) return;
@@ -1201,18 +1218,16 @@ function switchBankListTopic() {
   setCurrentTopic(t);
 
   if (t === "Hard Words") {
-    deleteTopicBtn.classList.add("hidden");
     renderHardWordsList();
     show("bankList");
     return;
   }
 
-  deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
   show("bankList");
 }
 
-
+/* ---- רינדור מילים קשות ---- */
 function renderHardWordsList() {
   wordList.innerHTML = "";
 
@@ -1235,11 +1250,11 @@ function renderHardWordsList() {
           ${i + 1}. ${learn} – ${tr}
         </div>
         <div class="actions">
-          <button style="font-size:12px;padding:6px;"
+          <button style="font-size:12px;padding:6px"
             onclick="removeHardWord('${safeKey}')">
             Remove
           </button>
-          <span style="opacity:.6;font-size:12px;">${count}×</span>
+          <span style="opacity:.6;font-size:12px">${count}×</span>
         </div>
       </div>`;
   });
