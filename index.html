@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 48</div>
+<div style="text-align:center;opacity:.4">TEST - 49</div>
 
       <div
         id="cacheVersion"
@@ -1940,135 +1940,126 @@ if (backBtn) {
 }
 
 
-      /* ===== DOWNLOAD ===== */
+    /* ===== DOWNLOAD ===== */
 
-      async function buildDownloadUI() {
-        if (!hubIndex || !currentDownloadLang) return;
+async function buildDownloadUI() {
+  if (!hubIndex || !currentDownloadLang) return;
 
-        const container = document.getElementById("downloadAccordions");
-        container.innerHTML = "";
+  const container = document.getElementById("downloadAccordions");
+  container.innerHTML = "";
 
-        const { branches, topics } = hubIndex;
+  const { branches, topics } = hubIndex;
 
-        for (const branch of branches) {
-          const acc = document.createElement("div");
-          acc.className = "accordion";
+  for (const branch of branches) {
+    const acc = document.createElement("div");
+    acc.className = "accordion";
 
-          acc.innerHTML = `
+    acc.innerHTML = `
       <div class="accordion-header" onclick="toggleAccordion(this)">
-        ${group.title} <span>▶</span>
+        ${branch.title} <span>▶</span>
       </div>
       <div class="accordion-content">
         <ul></ul>
       </div>
     `;
 
-          const ul = acc.querySelector("ul");
-          let hasAnyFiles = false;
+    const ul = acc.querySelector("ul");
+    let hasAnyFiles = false;
 
-          topics
-            .filter(t => t.branch === branch.id)
-            .forEach((topic) => {
-              const files = topic.files?.[currentDownloadLang];
+    topics
+      .filter(t => t.branch === branch.id)
+      .forEach(topic => {
+        const files = topic.files?.[currentDownloadLang];
 
-              const li = document.createElement("li");
-              li.textContent = topic.title;
+        if (!files || !files.length) return;
 
-              if (files && files.length) {
-                hasAnyFiles = true;
-                li.classList.add("li-available");
+        hasAnyFiles = true;
 
-                
-li.onclick = () => {
-  const fileName = files[0];
-  const path =
-    `hub/${currentDownloadLang}/${topic.id}/${fileName}`;
+        const li = document.createElement("li");
+        li.classList.add("li-available");
+        li.textContent = topic.id;
 
-  onDownloadFile(path, topic.title, fileName);
-};
+        li.onclick = () => {
+          const fileName = files[0];
+          const path = `hub/${currentDownloadLang}/${topic.id}/${currentDownloadLang}_${fileName}`;
+          onDownloadFile(path, topic.id, fileName);
+        };
 
-              } else {
-                li.classList.add("li-locked");
-              }
+        ul.appendChild(li);
+      });
 
-              ul.appendChild(li);
-            });
+    if (!hasAnyFiles) continue;
 
-          // 🔥 צבע כותרת רק אם יש קבצים בקבוצה
-          if (hasAnyFiles) {
-            acc.classList.add("accordion-has-files");
-          }
+    acc.classList.add("accordion-has-files");
+    container.appendChild(acc);
+  }
+}
 
-          container.appendChild(acc);
-        }
-      }
+async function onDownloadFile(path, topicId, fileName) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      async function onDownloadFile(path, topicTitle, fileName) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(path, { signal: controller.signal });
+    if (!res.ok) {
+      alert("File not found");
+      return;
+    }
 
-        try {
-          const res = await fetch(path, { signal: controller.signal });
-          if (!res.ok) {
-            alert("File not found");
-            return;
-          }
+    const text = await res.text();
+    const appTopicName = `${topicId} – ${fileName.replace(/\.csv$/i, "")}`;
 
-          const text = await res.text();
+    const ok = saveCSVAsTopic(text, appTopicName);
+    if (!ok) return;
 
-          const appTopicName = `${topicTitle} – ${fileName.replace(/\.csv$/i, "")}`;
+    setCurrentTopic(appTopicName);
+    topicSelect.value = appTopicName;
 
-          const ok = saveCSVAsTopic(text, appTopicName);
-          if (!ok) return;
+    startSessionSafe(appTopicName);
+  } catch (e) {
+    alert("Download timeout. Try again.");
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
 
-          setCurrentTopic(appTopicName);
-          topicSelect.value = appTopicName;
+/* ===== DOWNLOAD LANGUAGE SELECTION ===== */
 
-          startSessionSafe(appTopicName);
-        } catch (e) {
-          alert("Download timeout. Try again.");
-        } finally {
-          clearTimeout(timeoutId);
-        }
-      }
+let currentDownloadLang = null;
+const downloadLangSelect = document.getElementById("downloadLangSelect");
 
-      /* ===== DOWNLOAD LANGUAGE SELECTION ===== */
+if (downloadLangSelect) {
+  downloadLangSelect.addEventListener("change", () => {
+    currentDownloadLang = downloadLangSelect.value || null;
+    markActiveDownloadLang();
+    buildDownloadUI();
+    closeAllAccordions();
+  });
+}
 
-      let currentDownloadLang = null;
-      const downloadLangSelect = document.getElementById("downloadLangSelect");
+function markActiveDownloadLang() {
+  downloadLangSelect.classList.remove(
+    "lang-he-en",
+    "lang-pl-en",
+    "lang-ar-he",
+    "lang-es-he"
+  );
 
-      if (downloadLangSelect) {
-        downloadLangSelect.addEventListener("change", () => {
-          currentDownloadLang = downloadLangSelect.value || null;
-          markActiveDownloadLang();
-          buildDownloadUI(); // 🔥 חובה
-          closeAllAccordions(); // ניקוי מצב קודם
-        });
-      }
+  const acc = document.getElementById("downloadAccordions");
 
-      function markActiveDownloadLang() {
-        downloadLangSelect.classList.remove(
-          "lang-he-en",
-          "lang-pl-en",
-          "lang-ar-he",
-          "lang-es-he",
-        );
+  if (currentDownloadLang) {
+    downloadLangSelect.classList.add("lang-" + currentDownloadLang);
+    if (acc) acc.classList.remove("lang-not-selected");
+  } else {
+    if (acc) acc.classList.add("lang-not-selected");
+  }
+}
 
-        const acc = document.getElementById("downloadAccordions");
-
-        if (currentDownloadLang) {
-          downloadLangSelect.classList.add("lang-" + currentDownloadLang);
-          if (acc) acc.classList.remove("lang-not-selected");
-        } else {
-          if (acc) acc.classList.add("lang-not-selected");
-        }
-      }
-
-      function closeAllAccordions() {
-        document
-          .querySelectorAll("#download .accordion.open")
-          .forEach((acc) => acc.classList.remove("open"));
-      }
+function closeAllAccordions() {
+  document
+    .querySelectorAll("#download .accordion.open")
+    .forEach(acc => acc.classList.remove("open"));
+}
 
       function exitApp() {
         // PWA / Mobile
