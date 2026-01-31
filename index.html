@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 45</div>
+<div style="text-align:center;opacity:.4">TEST - 43</div>
 
       <div
         id="cacheVersion"
@@ -691,6 +691,7 @@
     <div class="screen" id="bankList">
       <select
         id="bankListTopicSelect"
+        onchange="switchBankListTopic()"
       ></select>
 
       <button onclick="addWordToCurrentTopic()" class="forest">
@@ -1243,6 +1244,18 @@ function renderHardWordsList() {
 }
 
 
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+
+  renderHardWordsList();
+}
+
+
+
+
       function renameCurrentTopic() {
 
         if (!currentTopic || currentTopic === "All words") return;
@@ -1284,13 +1297,24 @@ function renderHardWordsList() {
         renderWordList();
       }
 
-  function addWordToCurrentTopic() {
-  if (!currentTopic) return;
+      function addWordToCurrentTopic() {
+        if (!currentTopic) return;
 
-  lastAddTopic = currentTopic;
-  showAdd();
-}
+        lastAddTopic = currentTopic;
+        showAdd();
+      }
 
+      bankTopicSelect.onchange = () => {
+        if (!bankTopicSelect.value) return;
+        setCurrentTopic(bankTopicSelect.value);
+        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+     
+resetBankSearch();
+renderWordList();
+show("bankList");
+
+
+      };
 
       function renderWordList() {
 
