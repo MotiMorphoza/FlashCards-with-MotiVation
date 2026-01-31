@@ -35,14 +35,11 @@
   min-height: 100vh;
   box-sizing: border-box;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
-
-.screen.active {
-display: block;
-}
-
+      .screen.active {
+        display: block;
+      }
 
       /* ---------- HOME ---------- */
       .welcome {
@@ -623,7 +620,7 @@ display: block;
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 52</div>
+<div style="text-align:center;opacity:.4">TEST - 41</div>
 
       <div
         id="cacheVersion"
@@ -922,7 +919,6 @@ topicSelect.onchange = function () {
       const bankListTopicSelect = document.getElementById(
         "bankListTopicSelect",
       );
-
 bankListTopicSelect.onchange = switchBankListTopic;
 
       const searchInput = document.getElementById("searchInput");
@@ -1190,32 +1186,15 @@ function goHome() {
 }
 
 
-/* ===== BANK ===== */
+      /* ===== BANK ===== */
 
 function resetBankSearch() {
   if (searchInput) searchInput.value = "";
   if (sortSelect) sortSelect.value = "";
 }
 
-/* ---- בחירה בבנק (המסך הראשון) ---- */
-bankTopicSelect.onchange = () => {
-  const t = bankTopicSelect.value;
-  if (!t) return;
 
-  setCurrentTopic(t);
 
-  // Hard Words – טיפול ייעודי
-  if (t === "Hard Words") {
-    renderHardWordsList();
-    show("bankList");
-    return;
-  }
-
-  renderWordList();
-  show("bankList");
-};
-
-/* ---- בחירה בתוך רשימת הבנק ---- */
 function switchBankListTopic() {
   const t = bankListTopicSelect.value;
   if (!t) return;
@@ -1232,7 +1211,7 @@ function switchBankListTopic() {
   show("bankList");
 }
 
-/* ---- רינדור מילים קשות ---- */
+
 function renderHardWordsList() {
   wordList.innerHTML = "";
 
@@ -1247,7 +1226,6 @@ function renderHardWordsList() {
 
   entries.forEach(([key, count], i) => {
     const [learn, tr] = key.split("||");
-    const safeKey = key.replace(/'/g, "\\'");
 
     wordList.innerHTML += `
       <div class="list-item">
@@ -1255,26 +1233,171 @@ function renderHardWordsList() {
           ${i + 1}. ${learn} – ${tr}
         </div>
         <div class="actions">
-          <button style="font-size:12px;padding:6px"
-            onclick="removeHardWord('${safeKey}')">
+          <button style="font-size:12px;padding:6px;"
+            onclick="removeHardWord('${key.replace(/'/g, "\\'")}')">
             Remove
           </button>
-          <span style="opacity:.6;font-size:12px">${count}×</span>
+          <span style="opacity:.6;font-size:12px;">${count}×</span>
         </div>
       </div>`;
   });
 }
 
+
 function removeHardWord(key) {
   if (!stats.hardWords[key]) return;
+
   delete stats.hardWords[key];
   save();
   renderHardWordsList();
 }
 
-/* ===== ADD WORD ===== */
+  deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+  renderWordList();
+  show("bankList");
+}
 
-function showAdd() {
+
+
+      function renameCurrentTopic() {
+
+        if (!currentTopic || currentTopic === "All words") return;
+
+        const oldKey = normalizeTopicName(currentTopic);
+        const input = prompt("New topic name:", currentTopic);
+        if (!input) return;
+
+        const newKey = normalizeTopicName(input);
+
+        // אותו מפתח בפועל
+        if (newKey === oldKey) return;
+
+        // קיים כבר
+        if (data.topics[newKey]) {
+          alert("Topic name already exists. Rename cancelled.");
+          return;
+        }
+
+        // העברה
+        data.topics[newKey] = data.topics[oldKey];
+        delete data.topics[oldKey];
+
+        // עדכון state
+        setCurrentTopic(newKey);
+        lastAddTopic = newKey;
+
+        // סטטיסטיקה
+        if (stats.perTopic[oldKey]) {
+          stats.perTopic[newKey] = stats.perTopic[oldKey];
+          delete stats.perTopic[oldKey];
+        }
+        if (stats.current && stats.current.topic === oldKey) {
+          stats.current.topic = newKey;
+        }
+
+        save();
+        loadTopics();
+        renderWordList();
+      }
+
+      function addWordToCurrentTopic() {
+        if (!currentTopic) return;
+
+        lastAddTopic = currentTopic;
+        showAdd();
+      }
+
+      bankTopicSelect.onchange = () => {
+        if (!bankTopicSelect.value) return;
+        setCurrentTopic(bankTopicSelect.value);
+        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+     
+resetBankSearch();
+renderWordList();
+show("bankList");
+
+
+      };
+
+      function renderWordList() {
+
+  let q = searchInput.value.toLowerCase();
+  let sort = sortSelect.value;
+  wordList.innerHTML = "";
+
+  let arr = [...data.topics[currentTopic]];
+
+  if (q) {
+    arr = arr.filter(
+      (w) =>
+        w.learn.toLowerCase().includes(q) ||
+        w.tr.toLowerCase().includes(q)
+    );
+  }
+
+  if (sort === "learn") {
+    arr.sort((a, b) => a.learn.localeCompare(b.learn));
+  }
+  if (sort === "tr") {
+    arr.sort((a, b) => a.tr.localeCompare(b.tr));
+  }
+
+  arr.forEach((w, i) => {
+    wordList.innerHTML += `
+      <div class="list-item">
+        <div class="word-line">
+          ${i + 1}. ${w.learn} – ${w.tr}
+        </div>
+        <div class="actions">
+          <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
+          <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
+        </div>
+      </div>`;
+  });
+}
+
+
+      function exportCurrentTopic() {
+        let rows = ["Learning language,Translation"];
+        data.topics[currentTopic].forEach((w) =>
+          rows.push(`"${w.learn}","${w.tr}"`),
+        );
+        let blob = new Blob([rows.join("\n")], { type: "text/csv" });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `${currentTopic}.csv`;
+        a.click();
+      }
+
+      function deleteCurrentTopic() {
+        if (confirm("Delete this topic and all its words?")) {
+          delete data.topics[currentTopic];
+          save();
+          showBank();
+        }
+      }
+
+      function deleteWord(id) {
+        data.topics[currentTopic] = data.topics[currentTopic].filter(
+          (w) => w.id !== id,
+        );
+        save();
+        renderWordList();
+      }
+
+      function editWord(id) {
+        returnToBankListAfterSave = true;
+        const w = data.topics[currentTopic].find((x) => x.id === id);
+        deleteWord(id);
+        showAdd();
+        addTopicSelect.value = currentTopic;
+        onAddTopicChange();
+        learnInput.value = w.learn;
+        translationInput.value = w.tr;
+      }
+      /* ===== ADD WORD ===== */
+
+      function showAdd() {
   resetBankSearch();
 
   learnInput.value = "";
@@ -1287,40 +1410,44 @@ function showAdd() {
   show("add");
 }
 
-function loadAddTopics() {
-  addTopicSelect.innerHTML = "";
-  addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
-  addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
 
-  Object.keys(data.topics).forEach((t) => {
-    if (t === "All words" || t === "Hard Words") return;
-    addTopicSelect.innerHTML += `<option value="${t}">${t}</option>`;
-  });
+      function loadAddTopics() {
+        addTopicSelect.innerHTML = "";
 
-  if (lastAddTopic && data.topics[lastAddTopic]) {
-    addTopicSelect.value = lastAddTopic;
-  } else {
-    addTopicSelect.value = "";
-  }
+        addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
+        addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
 
-  onAddTopicChange();
-}
+        Object.keys(data.topics).forEach((t) => {
+          if (t !== "All words") {
+            addTopicSelect.innerHTML += `<option value="${t}">${t}</option>`;
+          }
+        });
 
-function onAddTopicChange() {
+        if (lastAddTopic && data.topics[lastAddTopic]) {
+          addTopicSelect.value = lastAddTopic;
+        } else {
+          addTopicSelect.value = "";
+        }
+
+        onAddTopicChange();
+      }
+
+      function onAddTopicChange() {
+        const isNew = addTopicSelect.value === "_new";
+
+        newTopicInput.disabled = !isNew;
+        newTopicInput.classList.toggle("hidden", !isNew);
+
+        if (!isNew) {
+          newTopicInput.value = "";
+        }
+      }
+
+      function saveWord() {
   const isNew = addTopicSelect.value === "_new";
-
-  newTopicInput.disabled = !isNew;
-  newTopicInput.classList.toggle("hidden", !isNew);
-
-  if (!isNew) {
-    newTopicInput.value = "";
-  }
-}
-
-function saveWord() {
-  const isNew = addTopicSelect.value === "_new";
-  const rawName = isNew ? newTopicInput.value : addTopicSelect.value;
-  const topicName = rawName.trim();
+  const topicName = isNew
+    ? newTopicInput.value.trim()
+    : addTopicSelect.value;
 
   if (!topicName) {
     alert("Enter topic name");
@@ -1331,42 +1458,40 @@ function saveWord() {
     return;
   }
 
-  // 🔒 חסימת שם כפול (רווחים / אותיות)
-  if (isNew) {
-    const checked = validateTopicName(topicName, "create");
-    if (!checked) return;
+  // חסימת שם כפול
+  if (isNew && data.topics[topicName]) {
+    alert("Topic already exists");
+    return;
   }
 
   if (!data.topics[topicName]) {
     data.topics[topicName] = [];
   }
 
-  // הוספת מילה
   data.topics[topicName].push({
     id: Date.now() + Math.random(),
     learn: learnInput.value,
     tr: translationInput.value,
   });
 
-  // ניקוי שדות קלט
+  setCurrentTopic(topicName);
+  lastAddTopic = topicName;
+
+  save();
+  loadTopics();
+  updateInstructions();
+
   learnInput.value = "";
   translationInput.value = "";
   newTopicInput.value = "";
 
-  // יציאה ממצב "_new" + בחירת הטופיק שנוצר
-  lastAddTopic = topicName;
-  loadAddTopics();
-  addTopicSelect.value = topicName;
-  onAddTopicChange();
-
-  setCurrentTopic(topicName);
-  save();
-  loadTopics();
-  updateInstructions();
+  resetBankSearch();
+  show("bankList");
+  renderWordList();
 }
 
-/* ===== IMPORT ===== */
 
+      /* ===== IMPORT ===== */
 
       function triggerImport() {
         importFile.click();
