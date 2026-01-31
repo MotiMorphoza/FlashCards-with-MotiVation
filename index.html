@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 50</div>
+<div style="text-align:center;opacity:.4">TEST - 51</div>
 
       <div
         id="cacheVersion"
@@ -1948,11 +1948,6 @@ async function buildDownloadUI() {
   const container = document.getElementById("downloadAccordions");
   container.innerHTML = "";
 
-  // הגנה: אם אין branches באינדקס – לא בונים כלום
-  if (!Array.isArray(hubIndex.branches) || !hubIndex.branches.length) {
-    return;
-  }
-
   const { branches, topics } = hubIndex;
 
   for (const branch of branches) {
@@ -1972,7 +1967,11 @@ async function buildDownloadUI() {
     let hasAnyFiles = false;
 
     topics
-      .filter(t => t.branch === branch.id)
+      .filter(t => {
+        // branch null → vocabulary (ברירת מחדל זמנית)
+        const effectiveBranch = t.branch ?? "vocabulary";
+        return effectiveBranch === branch.id;
+      })
       .forEach(topic => {
         const files = topic.files?.[currentDownloadLang];
         if (!files || !files.length) return;
@@ -1993,7 +1992,11 @@ async function buildDownloadUI() {
         });
       });
 
-    if (!hasAnyFiles) continue;
+    if (!hasAnyFiles) {
+      // עדיין מציגים את האקורדיון – פשוט ריק
+      container.appendChild(acc);
+      continue;
+    }
 
     acc.classList.add("accordion-has-files");
     container.appendChild(acc);
