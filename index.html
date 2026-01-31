@@ -691,6 +691,7 @@
     <div class="screen" id="bankList">
       <select
         id="bankListTopicSelect"
+        onchange="switchBankListTopic()"
       ></select>
 
       <button onclick="addWordToCurrentTopic()" class="forest">
@@ -786,11 +787,10 @@
 
     <!-- STATS -->
     <div class="screen" id="stats">
-      <h2>Statistics</h2>
       <button onclick="resetStats()" class="button-danger">
         Reset statistics
       </button>
-<button onclick="goHome()" class="back">Back</button>
+      <button onclick="goHome()" class="back">Back</button>
       <div id="statsContent"></div>
       <button onclick="goHome()" class="back">Back</button>
     </div>
@@ -859,7 +859,7 @@
     <script>
 
  /* ===== STORAGE CONSTANTS ===== */
-const STORAGE_VERSION = "v444";
+const STORAGE_VERSION = "v333";
 const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
 const STATS_KEY = `stats_${STORAGE_VERSION}`;
 const RESET_FLAG = "APP_RESET_DONE_v333";
@@ -1244,6 +1244,18 @@ function renderHardWordsList() {
 }
 
 
+function removeHardWord(key) {
+  if (!stats.hardWords[key]) return;
+
+  delete stats.hardWords[key];
+  save();
+
+  renderHardWordsList();
+}
+
+
+
+
       function renameCurrentTopic() {
 
         if (!currentTopic || currentTopic === "All words") return;
@@ -1285,13 +1297,24 @@ function renderHardWordsList() {
         renderWordList();
       }
 
-  function addWordToCurrentTopic() {
-  if (!currentTopic) return;
+      function addWordToCurrentTopic() {
+        if (!currentTopic) return;
 
-  lastAddTopic = currentTopic;
-  showAdd();
-}
+        lastAddTopic = currentTopic;
+        showAdd();
+      }
 
+      bankTopicSelect.onchange = () => {
+        if (!bankTopicSelect.value) return;
+        setCurrentTopic(bankTopicSelect.value);
+        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+     
+resetBankSearch();
+renderWordList();
+show("bankList");
+
+
+      };
 
       function renderWordList() {
 
