@@ -1205,7 +1205,8 @@ function switchBankListTopic() {
   deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
   show("bankList");
-}
+}  
+
 
 function renderHardWordsList() {
   wordList.innerHTML = "";
@@ -1250,17 +1251,20 @@ function removeHardWord(key) {
 
 function showAdd() {
   resetBankSearch();
+
   learnInput.value = "";
   translationInput.value = "";
   newTopicInput.value = "";
   newTopicInput.disabled = true;
   newTopicInput.classList.add("hidden");
+
   loadAddTopics();
   show("add");
 }
 
 function loadAddTopics() {
   addTopicSelect.innerHTML = "";
+
   addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
   addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
 
@@ -1278,10 +1282,18 @@ function loadAddTopics() {
 }
 
 function onAddTopicChange() {
-  const isNew = addTo
+  const isNew = addTopicSelect.value === "_new";
 
+  newTopicInput.disabled = !isNew;
+  newTopicInput.classList.toggle("hidden", !isNew);
 
-      /* ===== IMPORT ===== */
+  if (!isNew) {
+    newTopicInput.value = "";
+  }
+}
+
+/* ===== IMPORT ===== */
+
 
       function triggerImport() {
         importFile.click();
