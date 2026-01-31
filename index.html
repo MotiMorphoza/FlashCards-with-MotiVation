@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 47</div>
+<div style="text-align:center;opacity:.4">TEST - 48</div>
 
       <div
         id="cacheVersion"
@@ -1205,7 +1205,7 @@ function switchBankListTopic() {
   deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
   renderWordList();
   show("bankList");
-}  
+}
 
 
 function renderHardWordsList() {
@@ -1264,11 +1264,11 @@ function showAdd() {
 
 function loadAddTopics() {
   addTopicSelect.innerHTML = "";
-
   addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
   addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
 
   Object.keys(data.topics).forEach((t) => {
+    if (t === "All words" || t === "Hard Words") return;
     addTopicSelect.innerHTML += `<option value="${t}">${t}</option>`;
   });
 
@@ -1290,6 +1290,54 @@ function onAddTopicChange() {
   if (!isNew) {
     newTopicInput.value = "";
   }
+}
+
+function saveWord() {
+  const isNew = addTopicSelect.value === "_new";
+  const rawName = isNew ? newTopicInput.value : addTopicSelect.value;
+  const topicName = rawName.trim();
+
+  if (!topicName) {
+    alert("Enter topic name");
+    return;
+  }
+
+  if (!learnInput.value || !translationInput.value) {
+    return;
+  }
+
+  // 🔒 חסימת שם כפול (רווחים / אותיות)
+  if (isNew) {
+    const checked = validateTopicName(topicName, "create");
+    if (!checked) return;
+  }
+
+  if (!data.topics[topicName]) {
+    data.topics[topicName] = [];
+  }
+
+  // הוספת מילה
+  data.topics[topicName].push({
+    id: Date.now() + Math.random(),
+    learn: learnInput.value,
+    tr: translationInput.value,
+  });
+
+  // ניקוי שדות קלט
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
+
+  // יציאה ממצב "_new" + בחירת הטופיק שנוצר
+  lastAddTopic = topicName;
+  loadAddTopics();
+  addTopicSelect.value = topicName;
+  onAddTopicChange();
+
+  setCurrentTopic(topicName);
+  save();
+  loadTopics();
+  updateInstructions();
 }
 
 /* ===== IMPORT ===== */
