@@ -33,79 +33,20 @@ window.HUB_INDEX = {
   ],
   "topics": [
     {
-      "id": "adjectives",
-      "branch": null,
+      "id": "infinitives",
+      "branch": "grammar",
       "files": {
         "ar-he": [
-          "adjectives_test.csv"
-        ]
-      }
-    },
-    {
-      "id": "custom",
-      "branch": null,
-      "files": {
-        "es-he": [
-          "style.csv"
-        ]
-      }
-    },
-    {
-      "id": "opposites",
-      "branch": null,
-      "files": {
-        "he-en": [
-          "idioms.csv"
-        ]
-      }
-    },
-    {
-      "id": "verb_conjugations",
-      "branch": null,
-      "files": {
-        "pl-en": [
-          "gender.csv"
-        ]
-      }
-    },
-    {
-      "id": "food",
-      "branch": null,
-      "files": {
-        "ar-he": [
-          "in_the_bar.csv",
-          "in_the_kitchen.csv",
-          "in_the_restaurant.csv",
-          "_.csv",
-          "fruits.csv"
+          "001.csv"
         ],
         "es-he": [
-          "in_the_bar.csv",
-          "in_the_kitchen.csv",
-          "in_the_restaurant.csv"
+          "001.csv"
         ],
         "he-en": [
-          "in_the_bar.csv",
-          "in_the_kitchen.csv",
-          "in_the_restaurant.csv"
-        ]
-      }
-    },
-    {
-      "id": "test",
-      "branch": null,
-      "files": {
-        "ar-he": [
-          "first.csv"
-        ],
-        "es-he": [
-          "first.csv"
-        ],
-        "he-en": [
-          "first.csv"
+          "001.csv"
         ],
         "pl-en": [
-          "first.csv"
+          "001.csv"
         ]
       }
     },
@@ -114,8 +55,85 @@ window.HUB_INDEX = {
       "branch": "vocabulary",
       "files": {
         "ar-he": [
-          "exotic.csv",
-          "forest.csv"
+          "001.csv"
+        ],
+        "es-he": [
+          "001.csv"
+        ],
+        "he-en": [
+          "001.csv"
+        ],
+        "pl-en": [
+          "001.csv"
+        ]
+      }
+    },
+    {
+      "id": "idioms",
+      "branch": "advanced",
+      "files": {
+        "ar-he": [
+          "001.csv"
+        ],
+        "es-he": [
+          "001.csv"
+        ],
+        "he-en": [
+          "001.csv"
+        ],
+        "pl-en": [
+          "001.csv"
+        ]
+      }
+    },
+    {
+      "id": "games",
+      "branch": "advanced",
+      "files": {
+        "ar-he": [
+          "001.csv"
+        ],
+        "es-he": [
+          "001.csv"
+        ],
+        "he-en": [
+          "001.csv"
+        ],
+        "pl-en": [
+          "001.csv"
+        ]
+      }
+    },
+    {
+      "id": "lulu",
+      "branch": "advanced",
+      "files": {
+        "ar-he": [
+          "001.csv",
+          "002.csv",
+          "003.csv",
+          "004.csv"
+        ],
+        "es-he": [
+          "001.csv",
+          "002.csv",
+          "003.csv",
+          "004.csv"
+        ],
+        "he-en": [
+          "001.csv",
+          "002.csv",
+          "003.csv",
+          "004.csv",
+          "005.csv",
+          "006.csv",
+          "007.csv"
+        ],
+        "pl-en": [
+          "001.csv",
+          "002.csv",
+          "003.csv",
+          "004.csv"
         ]
       }
     }
