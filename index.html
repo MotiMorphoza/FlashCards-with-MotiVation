@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 47</div>
+<div style="text-align:center;opacity:.4">TEST - 48</div>
 
       <div
         id="cacheVersion"
@@ -1948,9 +1948,9 @@ if (backBtn) {
         const container = document.getElementById("downloadAccordions");
         container.innerHTML = "";
 
-        const { groups, topics } = hubIndex;
+        const { branches, topics } = hubIndex;
 
-        for (const group of groups) {
+        for (const branch of branches) {
           const acc = document.createElement("div");
           acc.className = "accordion";
 
@@ -1967,7 +1967,7 @@ if (backBtn) {
           let hasAnyFiles = false;
 
           topics
-            .filter((t) => t.group === group.id)
+            .filter(t => t.branch === branch.id)
             .forEach((topic) => {
               const files = topic.files?.[currentDownloadLang];
 
