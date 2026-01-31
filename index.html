@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 49</div>
+<div style="text-align:center;opacity:.4">TEST - 50</div>
 
       <div
         id="cacheVersion"
@@ -862,7 +862,7 @@
 const STORAGE_VERSION = "v444";
 const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
 const STATS_KEY = `stats_${STORAGE_VERSION}`;
-const RESET_FLAG = "APP_RESET_DONE_v333";
+const RESET_FLAG = "APP_RESET_DONE_v444";
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -1948,6 +1948,11 @@ async function buildDownloadUI() {
   const container = document.getElementById("downloadAccordions");
   container.innerHTML = "";
 
+  // הגנה: אם אין branches באינדקס – לא בונים כלום
+  if (!Array.isArray(hubIndex.branches) || !hubIndex.branches.length) {
+    return;
+  }
+
   const { branches, topics } = hubIndex;
 
   for (const branch of branches) {
@@ -1970,22 +1975,22 @@ async function buildDownloadUI() {
       .filter(t => t.branch === branch.id)
       .forEach(topic => {
         const files = topic.files?.[currentDownloadLang];
-
         if (!files || !files.length) return;
 
         hasAnyFiles = true;
 
-        const li = document.createElement("li");
-        li.classList.add("li-available");
-        li.textContent = topic.id;
+        files.forEach(fileName => {
+          const li = document.createElement("li");
+          li.classList.add("li-available");
+          li.textContent = `${topic.id} – ${fileName.replace(/\.csv$/i, "")}`;
 
-        li.onclick = () => {
-          const fileName = files[0];
-          const path = `hub/${currentDownloadLang}/${topic.id}/${currentDownloadLang}_${fileName}`;
-          onDownloadFile(path, topic.id, fileName);
-        };
+          li.onclick = () => {
+            const path = `hub/${currentDownloadLang}/${topic.id}/${currentDownloadLang}_${fileName}`;
+            onDownloadFile(path, topic.id, fileName);
+          };
 
-        ul.appendChild(li);
+          ul.appendChild(li);
+        });
       });
 
     if (!hasAnyFiles) continue;
@@ -2090,7 +2095,6 @@ function closeAllAccordions() {
       (() => {
 
 gateUntilReset();
-
 
         hubIndex = window.HUB_INDEX || null;
 
