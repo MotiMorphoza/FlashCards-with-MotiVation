@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 67</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 68</div>
 
       <div
         id="cacheVersion"
@@ -1407,11 +1407,10 @@ mode:
         addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
         addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
 
-        Object.keys(data.topics).forEach((t) => {
-          if (t !== "All words") {
-            addTopicSelect.innerHTML += `<option value="${t}">${t}</option>`;
-          }
-        });
+        Object.values(data.topics).forEach((t) => {
+  addTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+});
+
 
         if (lastAddTopic && data.topics[lastAddTopic]) {
           addTopicSelect.value = lastAddTopic;
@@ -1635,6 +1634,28 @@ mode:
 }
 
 
+function nextCard() {
+  if (session.length === 0) {
+    stats.history.push(stats.current);
+    stats.history = stats.history.slice(-10);
+
+    const t = stats.current.topic;
+    if (!stats.perTopic[t]) stats.perTopic[t] = { correct: 0, wrong: 0 };
+    stats.perTopic[t].correct += stats.current.correct;
+    stats.perTopic[t].wrong += stats.current.wrong;
+
+    save();
+    show("sessionEnd");
+    return;
+  }
+
+  current = session[0];
+  cardFlipped = false;
+  renderCard();
+  show("session");
+}
+
+
       function renderCard() {
         let side = cardFlipped
           ? sessionDefaultDirection === "A"
@@ -1768,7 +1789,7 @@ mode:
 
       /* ===== STATS ===== */
       function renderStats() {
-        let topics = Object.keys(data.topics).length;
+        let topics = Object.values(data.topics).length;
         let words = allWords().length;
 
         let topicStats = "";
