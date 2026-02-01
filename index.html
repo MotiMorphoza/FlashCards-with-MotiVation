@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 73</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 72</div>
 
       <div
         id="cacheVersion"
@@ -1811,11 +1811,6 @@ function nextCard() {
 
       /* ===== STATS ===== */
      
-function cleanupOrphanTopicStats() {
-  Object.keys(stats.perTopic).forEach((t) => {
-    if (!data.topics[t]) delete stats.perTopic[t];
-  });
-}
 
 
  function renderStats() {
