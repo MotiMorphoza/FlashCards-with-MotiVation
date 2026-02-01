@@ -1,18 +1,5 @@
 window.HUB_INDEX = {
-  "branches": [
-    {
-      "id": "grammar",
-      "title": "דקדוק"
-    },
-    {
-      "id": "vocabulary",
-      "title": "אוצר מילים"
-    },
-    {
-      "id": "advanced",
-      "title": "מתקדם"
-    }
-  ],
+  "version": 2,
   "languages": [
     {
       "id": "ar-he",
@@ -27,113 +14,79 @@ window.HUB_INDEX = {
       "title": "he-en"
     },
     {
+      "id": "he-pl",
+      "title": "he-pl"
+    },
+    {
       "id": "pl-en",
       "title": "pl-en"
     }
   ],
-  "topics": [
+  "branches": [
     {
-      "id": "infinitives",
-      "branch": "grammar",
+      "id": "DOGY",
+      "title": "DOGY"
+    },
+    {
+      "id": "Vocabulary",
+      "title": "Vocabulary"
+    },
+    {
+      "id": "grammer",
+      "title": "grammer"
+    },
+    {
+      "id": "test",
+      "title": "test"
+    }
+  ],
+  "entries": [
+    {
+      "branch": "grammer",
+      "group": "infinitives",
       "files": {
         "ar-he": [
-          "001.csv"
+          "000.csv"
         ],
         "es-he": [
-          "001.csv"
+          "000.csv"
         ],
         "he-en": [
-          "001.csv"
+          "000.csv"
+        ],
+        "he-pl": [
+          "000.csv"
         ],
         "pl-en": [
-          "001.csv"
+          "000.csv"
         ]
       }
     },
     {
-      "id": "fruits",
-      "branch": "vocabulary",
+      "branch": "Vocabulary",
+      "group": "Adjectives",
       "files": {
         "ar-he": [
-          "001.csv"
-        ],
-        "es-he": [
-          "001.csv"
-        ],
-        "he-en": [
-          "001.csv"
-        ],
-        "pl-en": [
-          "001.csv"
+          "T E S T.csv"
         ]
       }
     },
     {
-      "id": "idioms",
-      "branch": "advanced",
+      "branch": "DOGY",
+      "group": "STYLE",
       "files": {
-        "ar-he": [
-          "001.csv"
-        ],
-        "es-he": [
-          "001.csv"
-        ],
-        "he-en": [
-          "001.csv"
-        ],
-        "pl-en": [
-          "001.csv"
-        ]
+        "he-en": []
       }
     },
     {
-      "id": "games",
-      "branch": "advanced",
+      "branch": "test",
+      "group": "test",
       "files": {
-        "ar-he": [
-          "001.csv"
+        "he-pl": [
+          "test.csv"
         ],
         "es-he": [
-          "001.csv"
-        ],
-        "he-en": [
-          "001.csv"
-        ],
-        "pl-en": [
-          "001.csv"
-        ]
-      }
-    },
-    {
-      "id": "lulu",
-      "branch": "advanced",
-      "files": {
-        "ar-he": [
-          "001.csv",
-          "002.csv",
-          "003.csv",
-          "004.csv"
-        ],
-        "es-he": [
-          "001.csv",
-          "002.csv",
-          "003.csv",
-          "004.csv"
-        ],
-        "he-en": [
-          "001.csv",
-          "002.csv",
-          "003.csv",
-          "004.csv",
-          "005.csv",
-          "006.csv",
-          "007.csv"
-        ],
-        "pl-en": [
-          "001.csv",
-          "002.csv",
-          "003.csv",
-          "004.csv"
+          "_.csv"
         ]
       }
     }
