@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 72</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 73</div>
 
       <div
         id="cacheVersion"
@@ -1504,60 +1504,65 @@ function isTopicTitleTaken(title, excludeId = null) {
       }
 
       importFile.onchange = (e) => {
-        const file = e.target.files[0];
-        if (!file) {
-          importFile.value = "";
-          return;
-        }
+  const file = e.target.files[0];
+  if (!file) {
+    importFile.value = "";
+    return;
+  }
 
-        // 🔥 שם הנושא = שם הקובץ בלי סיומת
-        const topic = file.name.replace(/\.[^/.]+$/, "");
+  const baseTitle = file.name.replace(/\.[^/.]+$/, "").trim();
+  if (!baseTitle) {
+    alert("Invalid file name");
+    importFile.value = "";
+    return;
+  }
 
-        // יצירת נושא חדש (או ניקוי קיים) חסימת שם כפול
-        const checked = validateTopicName(topic, "create");
-        if (!checked) {
-          importFile.value = "";
-          return;
-        }
+  if (isTopicTitleTaken(baseTitle)) {
+    alert("Topic with this name already exists.");
+    importFile.value = "";
+    return;
+  }
 
-        if (data.topics[topic]) {
-          alert("Topic already exists. Import cancelled.");
-          importFile.value = "";
-          return;
-        }
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const csvText = ev.target.result;
 
-        data.topics[topic] = [];
+    const topic = createTopic(baseTitle, "local");
+    const rows = csvText.split(/\r?\n/);
 
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          ev.target.result.split(/\r?\n/).forEach((line, i) => {
-            if (i === 0) return;
+    rows.forEach((line, i) => {
+      if (!line.trim()) return;
 
-            const p = line.split(",");
-            if (p.length >= 2) {
-              data.topics[topic].push({
-                id: Date.now() + Math.random(),
-                learn: p[0].replace(/"/g, ""),
-                tr: p.slice(1).join(",").replace(/"/g, ""),
-              });
-            }
-          });
+      const p = line.split(",");
+      if (p.length >= 2) {
+        topic.words.push({
+          id: crypto.randomUUID(),
+          learn: p[0].replace(/"/g, "").trim(),
+          tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+        });
+      }
+    });
 
-          // 🔥 שמירה ועדכון
-          save();
-          loadTopics();
-          updateInstructions();
+    if (topic.words.length === 0) {
+      alert("File contains no valid words");
+      importFile.value = "";
+      return;
+    }
 
-          // 🔥 בחירת הנושא ופתיחת סשן אוטומטית
-          setCurrentTopic(topic);
+    data.topics[topic.id] = topic;
 
-          importFile.value = "";
+    save();
+    loadTopics();
+    updateInstructions();
 
-          startSessionSafe(topic); // 🔥 פותח סשן מייד
-        };
+    setCurrentTopic(topic.id);
+    importFile.value = "";
 
-        reader.readAsText(file, "UTF-8");
-      };
+    startSessionSafe(topic.id);
+  };
+
+  reader.readAsText(file, "UTF-8");
+};
 
       /* ===== SESSION ===== */
 
