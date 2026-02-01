@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 68</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 69</div>
 
       <div
         id="cacheVersion"
@@ -1270,12 +1270,22 @@ mode:
   const newTitle = input.trim();
   if (!newTitle) return;
 
+  // חסימת שם כפול
+  const exists = Object.values(data.topics).some(
+    (t) => t.id !== topic.id && t.title === newTitle
+  );
+  if (exists) {
+    alert("Topic with this name already exists.");
+    return;
+  }
+
   topic.title = newTitle;
 
   save();
   loadTopics();
   renderWordList();
 }
+
 
       function addWordToCurrentTopic() {
         if (!currentTopic) return;
@@ -1799,7 +1809,7 @@ function nextCard() {
           let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
           topicStats += `
       <div class="stat-block">
-        <strong>Topic: ${t}</strong><br>
+        <strong>Topic: ${data.topics[t]?.title || t}</strong><br>
         Correct: ${c}<br>
         Wrong: ${w}<br>
         Accuracy: ${acc}%
