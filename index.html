@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 57</div>
+<div style="text-align:center;opacity:.4">TEST - 58</div>
 
       <div
         id="cacheVersion"
@@ -1967,6 +1967,37 @@ if (backBtn) {
 }
 
 
+
+/* ===== HUB → DOWNLOAD ADAPTER ===== */
+
+// מחזיר branches עם groups וקבצים לפי שפה
+function getDownloadTree(lang) {
+  if (!hubIndex || !lang) return [];
+
+  const tree = {};
+
+  hubIndex.entries.forEach(entry => {
+    const { branch, group, files } = entry;
+    const langFiles = files?.[lang];
+    if (!langFiles || !langFiles.length) return;
+
+    if (!tree[branch]) {
+      tree[branch] = {};
+    }
+    if (!tree[branch][group]) {
+      tree[branch][group] = [];
+    }
+
+    langFiles.forEach(f => {
+      tree[branch][group].push(f);
+    });
+  });
+
+  return tree;
+}
+
+
+
     /* ===== DOWNLOAD ===== */
 
 async function buildDownloadUI() {
@@ -1975,7 +2006,7 @@ async function buildDownloadUI() {
   const container = document.getElementById("downloadAccordions");
   container.innerHTML = "";
 
-  const { branches, topics } = hubIndex;
+ const tree = getDownloadTree(currentDownloadLang);
 
   for (const branch of branches) {
     const acc = document.createElement("div");
