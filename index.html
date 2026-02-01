@@ -348,67 +348,103 @@
         text-align: center;
       }
 
-      /* ---------- ACCORDION ---------- */
+     /* === ACCORDION – refined === */
 
-      #downloadAccordions.lang-not-selected {
-        opacity: 0.4;
-        pointer-events: none;
-      }
+.accordion {
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
 
-      .accordion {
-        border-radius: 14px;
-        background: #1c1c1c;
-        margin-bottom: 10px;
-        overflow: hidden;
-      }
+/* header */
+.accordion-header {
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
 
-      .accordion-header {
-        padding: 14px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-      .accordion-header span {
-        transition: transform 0.25s ease;
-      }
+  background: linear-gradient(180deg, #1e1e1e, #181818);
+  color: #e5e7eb;
 
-      .accordion.open .accordion-header span {
-        transform: rotate(90deg);
-      }
+  transition: background 0.2s ease;
+}
 
-      .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(-4px);
-        transition:
-          max-height 0.35s ease,
-          opacity 0.25s ease,
-          transform 0.25s ease;
-      }
+.accordion-header:hover {
+  background: #222;
+}
 
-      .accordion.open .accordion-content {
-        max-height: 1000px;
-        opacity: 1;
-        transform: translateY(0);
-        padding-bottom: 12px;
-      }
+.accordion-header span {
+  font-size: 14px;
+  opacity: 0.6;
+  transition: transform 0.25s ease, opacity 0.2s;
+}
 
-      .accordion-content ul {
-        margin: 0;
-        padding-left: 18px;
-        font-size: 14px;
-        line-height: 1.45;
-      }
+.accordion.open .accordion-header span {
+  transform: rotate(90deg);
+  opacity: 1;
+}
 
-      .accordion-has-files > .accordion-header {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-      }
+/* content */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  background: #101010;
+
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease;
+}
+
+.accordion.open .accordion-content {
+  max-height: 800px;
+  opacity: 1;
+}
+
+/* group separation */
+.download-group {
+  padding: 10px 14px 4px;
+  border-top: 1px solid #222;
+}
+
+.download-group strong {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+  opacity: 0.75;
+}
+
+/* file list */
+.accordion-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accordion-content li {
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  font-size: 14px;
+
+  background: #1c1c1c;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.accordion-content li:hover {
+  background: #262626;
+}
+
+.accordion-content li:active {
+  transform: translateY(1px);
+}
 
       /* ---------- LIST ---------- */
 
@@ -618,7 +654,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 73</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 74</div>
 
       <div
         id="cacheVersion"
