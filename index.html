@@ -2003,63 +2003,12 @@ function getDownloadTree(lang) {
 async function buildDownloadUI() {
   if (!hubIndex || !currentDownloadLang) return;
 
-  const container = document.getElementById("downloadAccordions");
-  container.innerHTML = "";
-
- const tree = getDownloadTree(currentDownloadLang);
-
-  for (const branch of branches) {
-    const acc = document.createElement("div");
-    acc.className = "accordion";
-
-    acc.innerHTML = `
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        ${branch.title} <span>▶</span>
-      </div>
-      <div class="accordion-content">
-        <ul></ul>
-      </div>
-    `;
-
-    const ul = acc.querySelector("ul");
-    let hasAnyFiles = false;
-
-    topics
-      .filter(t => {
-        // branch null → vocabulary (ברירת מחדל זמנית)
-        const effectiveBranch = t.branch ?? "vocabulary";
-        return effectiveBranch === branch.id;
-      })
-      .forEach(topic => {
-        const files = topic.files?.[currentDownloadLang];
-        if (!files || !files.length) return;
-
-        hasAnyFiles = true;
-
-        files.forEach(fileName => {
-          const li = document.createElement("li");
-          li.classList.add("li-available");
-          li.textContent = `${topic.id} – ${fileName.replace(/\.csv$/i, "")}`;
-
-          li.onclick = () => {
-            const path = `hub/${currentDownloadLang}/${topic.id}/${currentDownloadLang}_${fileName}`;
-            onDownloadFile(path, topic.id, fileName);
-          };
-
-          ul.appendChild(li);
-        });
-      });
-
-    if (!hasAnyFiles) {
-      // עדיין מציגים את האקורדיון – פשוט ריק
-      container.appendChild(acc);
-      continue;
-    }
-
-    acc.classList.add("accordion-has-files");
-    container.appendChild(acc);
-  }
+  // שלב 3: עדיין לא בונים UI
+  // רק בדיקה שהנתונים קיימים ולא זורקים שגיאה
+  const tree = getDownloadTree(currentDownloadLang);
+  console.log("Download tree:", tree);
 }
+
 
 async function onDownloadFile(path, topicId, fileName) {
   const controller = new AbortController();
