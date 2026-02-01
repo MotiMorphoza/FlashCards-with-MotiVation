@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 71</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 72</div>
 
       <div
         id="cacheVersion"
@@ -1007,6 +1007,17 @@ mode:
 - "create"  → יצירת טופיק חדש (ADD / IMPORT / DOWNLOAD)
 - "rename"  → שינוי שם טופיק
 */
+
+
+function isTopicTitleTaken(title, excludeId = null) {
+  const norm = normalizeTopicName(title);
+
+  return Object.values(data.topics).some((t) => {
+    if (excludeId && t.id === excludeId) return false;
+    return normalizeTopicName(t.title) === norm;
+  });
+}
+
       function validateTopicName(name, mode, currentName = null) {
         const n = normalizeTopicName(name);
 
@@ -1270,17 +1281,7 @@ mode:
   const newTitle = input.trim();
   if (!newTitle) return;
 
-  const norm = newTitle.toLowerCase();
-
-  const exists = Object.values(data.topics).some((t) => {
-    return (
-      t.id !== topic.id &&
-      t.title &&
-      t.title.trim().toLowerCase() === norm
-    );
-  });
-
-  if (exists) {
+  if (isTopicTitleTaken(newTitle, topic.id)) {
     alert("Topic with this name already exists.");
     return;
   }
@@ -1460,8 +1461,13 @@ mode:
   let topicId;
 
   if (isNew) {
-    const topic = createTopic(topicTitle, "local");
-    data.topics[topic.id] = topic;
+  if (isTopicTitleTaken(topicTitle)) {
+    alert("Topic with this name already exists.");
+    return;
+  }
+
+  const topic = createTopic(topicTitle, "local");
+  data.topics[topic.id] = topic;
     topicId = topic.id;
   } else {
     topicId = addTopicSelect.value;
