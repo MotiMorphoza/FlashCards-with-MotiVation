@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 59</div>
+<div style="text-align:center;opacity:.4">TEST - 60</div>
 
       <div
         id="cacheVersion"
@@ -2049,7 +2049,7 @@ async function buildDownloadUI() {
 }
 
 
-async function onDownloadFile(path, topicId, fileName) {
+async function onDownloadFile(path, groupId, fileName) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -2060,22 +2060,28 @@ async function onDownloadFile(path, topicId, fileName) {
       return;
     }
 
-    const text = await res.text();
-    const appTopicName = `${topicId} – ${fileName.replace(/\.csv$/i, "")}`;
+    const csvText = await res.text();
 
-    const ok = saveCSVAsTopic(text, appTopicName);
+    // Topic name יציב וברור
+    const baseName = fileName.replace(/\.csv$/i, "");
+    const appTopicName = `${groupId} · ${baseName}`;
+
+    // ניסיון יצירה
+    const ok = saveCSVAsTopic(csvText, appTopicName);
     if (!ok) return;
 
+    // בחירה + פתיחת סשן
     setCurrentTopic(appTopicName);
-    topicSelect.value = appTopicName;
-
     startSessionSafe(appTopicName);
+
   } catch (e) {
-    alert("Download timeout. Try again.");
+    alert("Download failed or timed out.");
   } finally {
     clearTimeout(timeoutId);
   }
 }
+
+
 
 /* ===== DOWNLOAD LANGUAGE SELECTION ===== */
 
