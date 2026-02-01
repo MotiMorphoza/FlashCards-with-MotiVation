@@ -934,21 +934,47 @@ bankListTopicSelect.onchange = switchBankListTopic;
 
 /* ===== HUB INDEX ===== */
 
-// guard – בדיקה שהספרייה נטענה
+// state (HUB is read-only)
+let hubIndex = null;
 
+/*
+Expected structure:
+{
+  version: number,
+  languages: [{ id, title }],
+  branches: [{ id, title }],
+  entries: [
+    {
+      branch: string,
+      group: string,
+      files: { [lang]: string[] }
+    }
+  ]
+}
+*/
 
-function ensureHubLoaded() {
+function loadHubIndex() {
   if (!window.HUB_INDEX) {
     alert("Word Library is not available right now.");
     return false;
   }
+
+  const idx = window.HUB_INDEX;
+
+  // basic shape validation
+  if (
+    typeof idx !== "object" ||
+    !Array.isArray(idx.languages) ||
+    !Array.isArray(idx.branches) ||
+    !Array.isArray(idx.entries)
+  ) {
+    alert("Word Library is corrupted.");
+    return false;
+  }
+
+  hubIndex = idx;
   return true;
 }
-
-// state
-let hubIndex = null;
-let currentTopic = null;
-let lastAddTopic = null;
 
 
 
@@ -2099,11 +2125,12 @@ function closeAllAccordions() {
 
 gateUntilReset();
 
-        hubIndex = window.HUB_INDEX || null;
+        if (!loadHubIndex()) {
+}
 
-        loadTopics();
-        updateInstructions();
-      })();
+loadTopics();
+updateInstructions();
+
 
 
 
