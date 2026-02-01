@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 54</div>
+<div style="text-align:center;opacity:.4">TEST - 55</div>
 
       <div
         id="cacheVersion"
@@ -2120,7 +2120,6 @@ function closeAllAccordions() {
 
 /* ===== GLOBAL EXPORTS (for inline onclick) ===== */
 
-/* ===== GLOBAL EXPORTS (for inline onclick) ===== */
 
 window.startSessionSafe = startSessionSafe;
 window.showStats = showStats;
@@ -2140,15 +2139,17 @@ window.exitApp = exitApp;
 
 
       /* ===== INIT ===== */
-      (() => {
 
-gateUntilReset();
+(() => {
 
-        if (!loadHubIndex()) {
-}
+  gateUntilReset();
 
-loadTopics();
-updateInstructions();
+  loadHubIndex();
+
+  loadTopics();
+  updateInstructions();
+
+})();
 
 
 
