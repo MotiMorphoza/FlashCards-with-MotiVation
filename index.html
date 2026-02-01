@@ -620,7 +620,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-<div style="text-align:center;opacity:.4">TEST - 58</div>
+<div style="text-align:center;opacity:.4">TEST - 59</div>
 
       <div
         id="cacheVersion"
@@ -1970,7 +1970,7 @@ if (backBtn) {
 
 /* ===== HUB → DOWNLOAD ADAPTER ===== */
 
-// מחזיר branches עם groups וקבצים לפי שפה
+
 function getDownloadTree(lang) {
   if (!hubIndex || !lang) return [];
 
@@ -2003,10 +2003,49 @@ function getDownloadTree(lang) {
 async function buildDownloadUI() {
   if (!hubIndex || !currentDownloadLang) return;
 
-  // שלב 3: עדיין לא בונים UI
-  // רק בדיקה שהנתונים קיימים ולא זורקים שגיאה
   const tree = getDownloadTree(currentDownloadLang);
-  console.log("Download tree:", tree);
+  const container = document.getElementById("downloadAccordions");
+  container.innerHTML = "";
+
+  Object.keys(tree).forEach(branchId => {
+    const acc = document.createElement("div");
+    acc.className = "accordion";
+
+    acc.innerHTML = `
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        ${branchId} <span>▶</span>
+      </div>
+      <div class="accordion-content"></div>
+    `;
+
+    const content = acc.querySelector(".accordion-content");
+
+    Object.keys(tree[branchId]).forEach(groupId => {
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "download-group";
+      groupDiv.innerHTML = `<strong>${groupId}</strong>`;
+
+      const ul = document.createElement("ul");
+
+      tree[branchId][groupId].forEach(fileName => {
+        const li = document.createElement("li");
+        li.className = "li-available";
+        li.textContent = fileName.replace(/\.csv$/i, "");
+
+        li.onclick = () => {
+          const path = `hub/${currentDownloadLang}/${branchId}/${groupId}/${fileName}`;
+          onDownloadFile(path, `${groupId}`, fileName);
+        };
+
+        ul.appendChild(li);
+      });
+
+      groupDiv.appendChild(ul);
+      content.appendChild(groupDiv);
+    });
+
+    container.appendChild(acc);
+  });
 }
 
 
