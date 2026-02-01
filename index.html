@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 66</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 67</div>
 
       <div
         id="cacheVersion"
@@ -928,6 +928,9 @@ let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
       const importFile = document.getElementById("importFile");
       const shuffleBtn = document.getElementById("shuffleBtn");
       const card = document.getElementById("card");
+
+let lastAddTopic = null;
+
 
       /* ===== HUB INDEX ===== */
 
