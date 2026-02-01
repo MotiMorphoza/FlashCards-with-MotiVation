@@ -1,4 +1,4 @@
- <script>
+
       /* ===== STORAGE CONSTANTS ===== */
       const STORAGE_VERSION = "v444";
       const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
@@ -1266,5 +1266,4 @@ mode:
         loadTopics();
         updateInstructions();
       })();
-    </script>
   
