@@ -2107,44 +2107,19 @@ mode:
 
 const APP_VERSION = 555;
 const APP_VERSION_KEY = "app_version";
-const RESET_FLAG = "APP_RESET_DONE";
 
-/**
- * 1. Version bootstrap
- *    רץ תמיד, פעם אחת לכל גרסה
- */
 (function bootstrapVersionGate() {
   const stored = Number(localStorage.getItem(APP_VERSION_KEY));
 
   if (stored !== APP_VERSION) {
     localStorage.clear();
-
-    // סימון מפורש אחרי ניקוי
     localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
     localStorage.setItem(RESET_FLAG, "1");
   }
 })();
 
-/**
- * 2. Optional manual reset gate (UI)
- *    אם אין צורך – אפשר למחוק את כל הפונקציה
- */
-(function gateManualReset() {
-  // אם כבר עבר ריסט – ממשיכים רגיל
-  if (localStorage.getItem(RESET_FLAG)) return;
-
-  // חסימה חד-פעמית (לא לולאה)
-  document
-    .querySelectorAll(".screen")
-    .forEach((s) => s.classList.remove("active"));
-
-  document.getElementById("resetGate")?.classList.add("active");
-})();
-
-/**
- * 3. App start
- */
 (function startApp() {
+  gateUntilReset(); // אם החלטת להשאיר אותו
   loadHubIndex();
   loadTopics();
   updateInstructions();
