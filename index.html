@@ -618,7 +618,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 64</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 65</div>
 
       <div
         id="cacheVersion"
@@ -884,9 +884,21 @@
 
       /* ===== DATA ===== */
 
-      let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
-        topics: {},
-      };
+
+function createTopic(title, source = "local", hubMeta = null) {
+  return {
+    id: crypto.randomUUID(),
+    title,
+    source,
+    hubMeta,
+    words: []
+  };
+}
+
+let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
+  topics: {} // topicId -> { id, title, source, hubMeta, words }
+};
+
       let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
         sessions: 0,
         history: [],
@@ -969,14 +981,14 @@ Expected structure:
         localStorage.setItem(STATS_KEY, JSON.stringify(stats));
       }
 
-      function setCurrentTopic(topicName) {
-        currentTopic = topicName || null;
+      function setCurrentTopic(topicId) {
+  currentTopic = topicId || null;
 
-        // סנכרון UI
-        if (topicSelect) topicSelect.value = topicName || "";
-        if (bankTopicSelect) bankTopicSelect.value = topicName || "";
-        if (bankListTopicSelect) bankListTopicSelect.value = topicName || "";
-      }
+  if (topicSelect) topicSelect.value = topicId || "";
+  if (bankTopicSelect) bankTopicSelect.value = topicId || "";
+  if (bankListTopicSelect) bankListTopicSelect.value = topicId || "";
+}
+
 
       /* ===== TOPIC NAME GATE ===== */
 
@@ -1024,55 +1036,46 @@ mode:
       }
 
       function allWords() {
-        let a = [];
-        Object.keys(data.topics).forEach((t) => {
-          if (t !== "All words") a.push(...data.topics[t]);
-        });
-        return a;
-      }
+  let a = [];
+  Object.values(data.topics).forEach((topic) => {
+    a.push(...topic.words);
+  });
+  return a;
+}
+
 
       /* ===== LIBRARY → FC TOPIC ===== */
-      function saveCSVAsTopic(csvText, topicName) {
-        // 🔒 חסימה מיידית – שם טופיק כבר קיים
-        const checked = validateTopicName(topicName, "create");
-        if (!checked) {
-          alert("This file was already loaded");
-          return false;
-        }
+      function saveCSVAsTopic(csvText, topicTitle, source = "hub", hubMeta = null) {
+  // יצירת topic חדש
+  const topic = createTopic(topicTitle, source, hubMeta);
 
-        const rows = csvText.split(/\r?\n/);
-        const words = [];
+  const rows = csvText.split(/\r?\n/);
 
-        rows.forEach((line) => {
-          if (!line.trim()) return;
+  rows.forEach((line) => {
+    if (!line.trim()) return;
 
-          const p = line.split(",");
-          if (p.length >= 2) {
-            words.push({
-              id: Date.now() + Math.random(),
-              learn: p[0].replace(/"/g, "").trim(),
-              tr: p.slice(1).join(",").replace(/"/g, "").trim(),
-            });
-          }
-        });
+    const p = line.split(",");
+    if (p.length >= 2) {
+      topic.words.push({
+        id: crypto.randomUUID(),
+        learn: p[0].replace(/"/g, "").trim(),
+        tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+      });
+    }
+  });
 
-        if (words.length === 0) {
-          alert("File contains no valid words");
-          return false;
-        }
+  if (topic.words.length === 0) {
+    alert("File contains no valid words");
+    return false;
+  }
 
-        if (data.topics[topicName]) {
-          alert("Topic already exists. File not loaded.");
-          return false;
-        }
+  data.topics[topic.id] = topic;
 
-        data.topics[topicName] = words;
+  save();
+  loadTopics();
 
-        save();
-        loadTopics();
-
-        return true;
-      }
+  return topic.id;
+}
 
       /* ===== NAV ===== */
       function show(id) {
@@ -1148,49 +1151,45 @@ mode:
       /* ===== TOPICS ===== */
 
       function loadTopics() {
-        const hardLabel = "Hard Words";
+         const hardLabel = "Hard Words";
 
-        const baseTopics = Object.keys(data.topics).filter(
-          (t) => t !== "All words",
-        );
+  const topicList = Object.values(data.topics);
+  const isBankEmpty = topicList.length === 0;
 
-        const isBankEmpty = baseTopics.length === 0;
+  /* ---------- HOME ---------- */
+  topicSelect.innerHTML = '<option value="">Select topic</option>';
+  topicSelect.innerHTML += `<option>${hardLabel}</option>`;
+  topicList.forEach((t) => {
+    topicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+  });
 
-        /* ---------- HOME ---------- */
-        topicSelect.innerHTML = '<option value="">Select topic</option>';
-        topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        baseTopics.forEach((t) => {
-          topicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK ---------- */
+  bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
+  topicList.forEach((t) => {
+    bankTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+  });
 
-        /* ---------- BANK ---------- */
-        bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-        baseTopics.forEach((t) => {
-          bankTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  /* ---------- BANK LIST ---------- */
+  bankListTopicSelect.innerHTML = "";
+  topicList.forEach((t) => {
+    bankListTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+  });
 
-        /* ---------- BANK LIST ---------- */
-        bankListTopicSelect.innerHTML = "";
-        baseTopics.forEach((t) => {
-          bankListTopicSelect.innerHTML += `<option>${t}</option>`;
-        });
+  if (currentTopic && data.topics[currentTopic]) {
+    bankListTopicSelect.value = currentTopic;
+  }
 
-        if (currentTopic && baseTopics.includes(currentTopic)) {
-          bankListTopicSelect.value = currentTopic;
-        }
+  /* ---------- EMPTY BANK GUARD ---------- */
+  if (isBankEmpty) {
+    topicSelect.disabled = true;
+    bankTopicSelect.disabled = true;
+    bankListTopicSelect.innerHTML = "";
+  } else {
+    topicSelect.disabled = false;
+    bankTopicSelect.disabled = false;
+  }
 
-        /* ---------- EMPTY BANK GUARD ---------- */
-        if (isBankEmpty) {
-          topicSelect.disabled = true;
-          bankTopicSelect.disabled = true;
-          bankListTopicSelect.innerHTML = "";
-        } else {
-          topicSelect.disabled = false;
-          bankTopicSelect.disabled = false;
-        }
-      }
-
-      /* ===== BANK ===== */
+      /* ===== REAL BANK ===== */
 
       function resetBankSearch() {
         if (searchInput) searchInput.value = "";
@@ -1198,20 +1197,21 @@ mode:
       }
 
       function switchBankListTopic() {
-        const t = bankListTopicSelect.value;
-        if (!t) return;
+  const topicId = bankListTopicSelect.value;
+  if (!topicId) return;
 
-        setCurrentTopic(t);
+  setCurrentTopic(topicId);
 
-        if (t === "Hard Words") {
-          renderHardWordsList();
-          show("bankList");
-          return;
-        }
+  if (topicId === "Hard Words") {
+    renderHardWordsList();
+    show("bankList");
+    return;
+  }
 
-        renderWordList();
-        show("bankList");
-      }
+  renderWordList();
+  show("bankList");
+}
+
 
       function renderHardWordsList() {
         wordList.innerHTML = "";
@@ -1254,44 +1254,23 @@ mode:
       }
 
       function renameCurrentTopic() {
-        if (!currentTopic || currentTopic === "All words") return;
+  if (!currentTopic || currentTopic === "Hard Words") return;
 
-        const oldKey = normalizeTopicName(currentTopic);
-        const input = prompt("New topic name:", currentTopic);
-        if (!input) return;
+  const topic = data.topics[currentTopic];
+  if (!topic) return;
 
-        const newKey = normalizeTopicName(input);
+  const input = prompt("New topic name:", topic.title);
+  if (!input) return;
 
-        // אותו מפתח בפועל
-        if (newKey === oldKey) return;
+  const newTitle = input.trim();
+  if (!newTitle) return;
 
-        // קיים כבר
-        if (data.topics[newKey]) {
-          alert("Topic name already exists. Rename cancelled.");
-          return;
-        }
+  topic.title = newTitle;
 
-        // העברה
-        data.topics[newKey] = data.topics[oldKey];
-        delete data.topics[oldKey];
-
-        // עדכון state
-        setCurrentTopic(newKey);
-        lastAddTopic = newKey;
-
-        // סטטיסטיקה
-        if (stats.perTopic[oldKey]) {
-          stats.perTopic[newKey] = stats.perTopic[oldKey];
-          delete stats.perTopic[oldKey];
-        }
-        if (stats.current && stats.current.topic === oldKey) {
-          stats.current.topic = newKey;
-        }
-
-        save();
-        loadTopics();
-        renderWordList();
-      }
+  save();
+  loadTopics();
+  renderWordList();
+}
 
       function addWordToCurrentTopic() {
         if (!currentTopic) return;
@@ -1311,40 +1290,44 @@ mode:
       };
 
       function renderWordList() {
-        let q = searchInput.value.toLowerCase();
-        let sort = sortSelect.value;
-        wordList.innerHTML = "";
+  const topic = data.topics[currentTopic];
+  if (!topic) return;
 
-        let arr = [...data.topics[currentTopic]];
+  let q = searchInput.value.toLowerCase();
+  let sort = sortSelect.value;
 
-        if (q) {
-          arr = arr.filter(
-            (w) =>
-              w.learn.toLowerCase().includes(q) ||
-              w.tr.toLowerCase().includes(q),
-          );
-        }
+  wordList.innerHTML = "";
 
-        if (sort === "learn") {
-          arr.sort((a, b) => a.learn.localeCompare(b.learn));
-        }
-        if (sort === "tr") {
-          arr.sort((a, b) => a.tr.localeCompare(b.tr));
-        }
+  let arr = [...topic.words];
 
-        arr.forEach((w, i) => {
-          wordList.innerHTML += `
+  if (q) {
+    arr = arr.filter(
+      (w) =>
+        w.learn.toLowerCase().includes(q) ||
+        w.tr.toLowerCase().includes(q),
+    );
+  }
+
+  if (sort === "learn") {
+    arr.sort((a, b) => a.learn.localeCompare(b.learn));
+  }
+  if (sort === "tr") {
+    arr.sort((a, b) => a.tr.localeCompare(b.tr));
+  }
+
+  arr.forEach((w, i) => {
+    wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${w.learn} – ${w.tr}
         </div>
         <div class="actions">
-          <button style="font-size:12px;padding:6px;" onclick="editWord(${w.id})">Edit</button>
-          <button style="font-size:12px;padding:6px;" onclick="deleteWord(${w.id})">Delete</button>
+          <button style="font-size:12px;padding:6px;" onclick="editWord('${w.id}')">Edit</button>
+          <button style="font-size:12px;padding:6px;" onclick="deleteWord('${w.id}')">Delete</button>
         </div>
       </div>`;
-        });
-      }
+  });
+}
 
       function exportCurrentTopic() {
         let rows = ["Learning language,Translation"];
@@ -1367,24 +1350,38 @@ mode:
       }
 
       function deleteWord(id) {
-        data.topics[currentTopic] = data.topics[currentTopic].filter(
-          (w) => w.id !== id,
-        );
-        save();
-        renderWordList();
-      }
+  const topic = data.topics[currentTopic];
+  if (!topic) return;
 
-      function editWord(id) {
-        returnToBankListAfterSave = true;
-        const w = data.topics[currentTopic].find((x) => x.id === id);
-        deleteWord(id);
-        showAdd();
-        addTopicSelect.value = currentTopic;
-        onAddTopicChange();
-        learnInput.value = w.learn;
-        translationInput.value = w.tr;
-      }
-      /* ===== ADD WORD ===== */
+  topic.words = topic.words.filter((w) => w.id !== id);
+  save();
+  renderWordList();
+}
+
+
+    function editWord(id) {
+  const topic = data.topics[currentTopic];
+  if (!topic) return;
+
+  returnToBankListAfterSave = true;
+
+  const w = topic.words.find((x) => x.id === id);
+  if (!w) return;
+
+  topic.words = topic.words.filter((x) => x.id !== id);
+
+  showAdd();
+  addTopicSelect.value = currentTopic;
+  onAddTopicChange();
+
+  learnInput.value = w.learn;
+  translationInput.value = w.tr;
+
+  save();
+}
+
+
+  /* ===== ADD WORD ===== */
 
       function showAdd() {
         resetBankSearch();
@@ -1432,44 +1429,47 @@ mode:
       }
 
       function saveWord() {
-        const isNew = addTopicSelect.value === "_new";
-        const topicName = isNew
-          ? newTopicInput.value.trim()
-          : addTopicSelect.value;
+  const isNew = addTopicSelect.value === "_new";
+  const topicTitle = isNew
+    ? newTopicInput.value.trim()
+    : data.topics[addTopicSelect.value]?.title;
 
-        if (!topicName) return;
-        if (!learnInput.value || !translationInput.value) return;
+  if (!topicTitle) return;
+  if (!learnInput.value || !translationInput.value) return;
 
-        if (isNew && data.topics[topicName]) {
-          alert("Topic already exists");
-          return;
-        }
+  let topicId;
 
-        if (!data.topics[topicName]) {
-          data.topics[topicName] = [];
-        }
+  if (isNew) {
+    const topic = createTopic(topicTitle, "local");
+    data.topics[topic.id] = topic;
+    topicId = topic.id;
+  } else {
+    topicId = addTopicSelect.value;
+  }
 
-        data.topics[topicName].push({
-          id: Date.now() + Math.random(),
-          learn: learnInput.value,
-          tr: translationInput.value,
-        });
+  const topic = data.topics[topicId];
+  if (!topic) return;
 
-        lastAddTopic = topicName;
-        setCurrentTopic(topicName);
+  topic.words.push({
+    id: crypto.randomUUID(),
+    learn: learnInput.value,
+    tr: translationInput.value,
+  });
 
-        save();
-        loadTopics();
-        updateInstructions();
+  setCurrentTopic(topicId);
 
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
+  save();
+  loadTopics();
+  updateInstructions();
 
-        loadAddTopics();
-        addTopicSelect.value = topicName;
-        onAddTopicChange();
-      }
+  learnInput.value = "";
+  translationInput.value = "";
+  newTopicInput.value = "";
+
+  loadAddTopics();
+  addTopicSelect.value = topicId;
+  onAddTopicChange();
+}
 
       /* ===== IMPORT ===== */
 
@@ -1567,86 +1567,68 @@ mode:
       }
 
       function startSession() {
-        if (!currentTopic) return;
+  if (!currentTopic) return;
 
-        // reset session state
-        session = [];
-        current = null;
-        cardFlipped = false;
-        shuffleUsed = false;
-        sessionDefaultDirection = "A";
+  // reset session state
+  session = [];
+  current = null;
+  cardFlipped = false;
+  shuffleUsed = false;
+  sessionDefaultDirection = "A";
 
-        // ----- HARD WORDS -----
-        if (currentTopic === "Hard Words") {
-          session = Object.entries(stats.hardWords)
-            .filter((e) => e[1] >= 2)
-            .map((e) => {
-              const [learn, tr] = e[0].split("||");
-              return { learn, tr };
-            });
+  // ----- HARD WORDS -----
+  if (currentTopic === "Hard Words") {
+    session = Object.entries(stats.hardWords)
+      .filter((e) => e[1] >= 2)
+      .map((e) => {
+        const [learn, tr] = e[0].split("||");
+        return { learn, tr };
+      });
 
-          if (session.length === 0) {
-            alert("No hard words to practice yet.");
-            show("home");
-            return;
-          }
-        }
-        // ----- NORMAL TOPIC -----
-        else {
-          if (!data.topics[currentTopic]) {
-            alert("Topic not found.");
-            return;
-          }
+    if (session.length === 0) {
+      alert("No hard words to practice yet.");
+      show("home");
+      return;
+    }
+  }
+  // ----- NORMAL TOPIC -----
+  else {
+    const topic = data.topics[currentTopic];
+    if (!topic) {
+      alert("Topic not found.");
+      return;
+    }
 
-          session = [...data.topics[currentTopic]];
+    session = [...topic.words];
 
-          const sort = sortSelect.value;
-          if (sort === "learn") {
-            session.sort((a, b) => a.learn.localeCompare(b.learn));
-          }
-          if (sort === "tr") {
-            session.sort((a, b) => a.tr.localeCompare(b.tr));
-          }
+    const sort = sortSelect.value;
+    if (sort === "learn") {
+      session.sort((a, b) => a.learn.localeCompare(b.learn));
+    }
+    if (sort === "tr") {
+      session.sort((a, b) => a.tr.localeCompare(b.tr));
+    }
 
-          if (session.length === 0) {
-            alert("This topic has no words.");
-            show("bank");
-            return;
-          }
-        }
+    if (session.length === 0) {
+      alert("This topic has no words.");
+      show("bank");
+      return;
+    }
+  }
 
-        // ----- START SESSION -----
-        shuffleBtn.classList.remove("hidden");
+  // ----- START SESSION -----
+  shuffleBtn.classList.remove("hidden");
 
-        stats.sessions++;
-        stats.current = {
-          topic: currentTopic,
-          correct: 0,
-          wrong: 0,
-        };
+  stats.sessions++;
+  stats.current = {
+    topic: currentTopic,
+    correct: 0,
+    wrong: 0,
+  };
 
-        nextCard();
-      }
+  nextCard();
+}
 
-      function nextCard() {
-        if (session.length === 0) {
-          stats.history.push(stats.current);
-          stats.history = stats.history.slice(-10);
-
-          let t = stats.current.topic;
-          if (!stats.perTopic[t]) stats.perTopic[t] = { correct: 0, wrong: 0 };
-          stats.perTopic[t].correct += stats.current.correct;
-          stats.perTopic[t].wrong += stats.current.wrong;
-
-          save();
-          show("sessionEnd");
-          return;
-        }
-        current = session[0];
-        cardFlipped = false;
-        renderCard();
-        show("session");
-      }
 
       function renderCard() {
         let side = cardFlipped
@@ -1998,35 +1980,38 @@ mode:
       }
 
       async function onDownloadFile(path, groupId, fileName) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-        try {
-          const res = await fetch(path, { signal: controller.signal });
-          if (!res.ok) {
-            alert("File not found");
-            return;
-          }
+  try {
+    const res = await fetch(path, { signal: controller.signal });
+    if (!res.ok) {
+      alert("File not found");
+      return;
+    }
 
-          const csvText = await res.text();
+    const csvText = await res.text();
 
-          // Topic name יציב וברור
-          const baseName = fileName.replace(/\.csv$/i, "");
-          const appTopicName = `${groupId} · ${baseName}`;
+    const baseName = fileName.replace(/\.csv$/i, "");
+    const topicTitle = `${groupId} · ${baseName}`;
 
-          // ניסיון יצירה
-          const ok = saveCSVAsTopic(csvText, appTopicName);
-          if (!ok) return;
+    const topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
+      path,
+      groupId,
+      fileName,
+      lang: currentDownloadLang,
+    });
 
-          // בחירה + פתיחת סשן
-          setCurrentTopic(appTopicName);
-          startSessionSafe(appTopicName);
-        } catch (e) {
-          alert("Download failed or timed out.");
-        } finally {
-          clearTimeout(timeoutId);
-        }
-      }
+    if (!topicId) return;
+
+    setCurrentTopic(topicId);
+    startSessionSafe(topicId);
+  } catch (e) {
+    alert("Download failed or timed out.");
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
 
       /* ===== DOWNLOAD LANGUAGE SELECTION ===== */
 
