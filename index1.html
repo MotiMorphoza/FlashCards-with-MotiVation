@@ -655,6 +655,134 @@
         opacity: 0.85;
         margin-bottom: 24px;
       }
+
+/* ===== RESET / BASICS ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===== SESSION SCREEN ===== */
+#session {
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* ===== CARD ===== */
+#card {
+  aspect-ratio: 1 / 1;      /* תמיד ריבוע */
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  overflow: hidden;
+
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ===== CARD TEXT ===== */
+#card {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ===== SESSION BUTTONS ===== */
+.session-buttons button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.session-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+}
+
+.session-buttons button:active {
+  transform: scale(0.97);
+}
+
+/* ===== I KNEW IT — תמיד ירוק ===== */
+#knownBtn {
+  background: #22c55e; /* ירוק קבוע */
+  color: #ffffff;
+}
+
+#knownBtn:hover {
+  background: #16a34a;
+}
+
+#knownBtn:active {
+  background: #15803d;
+}
+
+#knownBtn:disabled {
+  background: #22c55e;
+  opacity: 0.6;
+}
+
+/* ===== I DIDN’T KNOW IT ===== */
+#unknownBtn {
+  background: #ef4444;
+}
+
+#unknownBtn:hover {
+  background: #dc2626;
+}
+
+#unknownBtn:active {
+  background: #b91c1c;
+}
+
+/* ===== HOME BUTTONS ===== */
+.home-btn {
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 17px;
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+.home-btn:active {
+  transform: scale(0.96);
+}
+
+/* צבעים חיים לדף הבית */
+.home-start {
+  background: linear-gradient(135deg, #
+
     </style>
   </head>
 
@@ -682,7 +810,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 78</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 79</div>
 
       <div
         id="cacheVersion"
