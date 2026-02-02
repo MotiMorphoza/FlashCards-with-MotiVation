@@ -121,23 +121,7 @@ class App(tk.Tk):
             col.grid(row=0, column=i, padx=6, sticky="nsew")
 
             ttk.Label(col, text=title).pack(anchor="w")
-            frame = ttk.Frame(col)
-frame.pack(fill="both", expand=True)
-
-scroll = ttk.Scrollbar(frame)
-scroll.pack(side="right", fill="y")
-
-txt = tk.Text(
-    frame,
-    width=28,
-    height=18,
-    wrap="none",
-    yscrollcommand=scroll.set
-)
-txt.pack(side="left", fill="both", expand=True)
-
-scroll.config(command=txt.yview)
-
+            txt = tk.Text(col, width=28, height=18)
             txt.pack()
 
             self.text_widgets[lid] = txt
