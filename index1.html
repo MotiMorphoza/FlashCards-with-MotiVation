@@ -6,162 +6,154 @@
     <title>Hebrew with MotiVation</title>
 
     <style>
-      .hidden {
-        display: none;
-      }
+/* =====================================================
+   RESET & BASE
+===================================================== */
+* {
+  box-sizing: border-box;
+}
 
-      body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: #111;
-        color: #fff;
-        font-size: 17px;
-        line-height: 1.55;
-        letter-spacing: 0.3px;
-        overflow-y: auto;
-        overscroll-behavior: none;
-      }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: 0.3px;
+}
 
-      /* ---------- SCREENS ---------- */
+.hidden {
+  display: none;
+}
 
-      .screen {
-        display: none;
-        padding: 18px;
-        max-width: 420px;
-        margin: auto;
-        min-height: 100vh;
-        box-sizing: border-box;
-        overflow-y: auto;
-      }
+/* =====================================================
+   SCREENS
+===================================================== */
+.screen {
+  display: none;
+  padding: 18px;
+  max-width: 420px;
+  margin: auto;
+  min-height: 100vh;
+}
 
-      .screen.active {
-        display: block;
-      }
+.screen.active {
+  display: block;
+}
 
-      /* ---------- HOME ---------- */
-      .welcome {
-        font-size: 40px;
-        font-weight: 800;
-        text-align: center;
-        margin-top: 35px;
-      }
-      .instructions {
-        text-align: center;
-        font-size: 25px;
-        margin: 20px 0 30px;
-        color: #bbb;
-      }
-      .title-bottom {
-        text-align: center;
-        font-size: 30px;
-        margin-top: 28px;
-        opacity: 0.85;
-      }
+/* =====================================================
+   HOME
+===================================================== */
+.welcome {
+  font-size: 40px;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 35px;
+}
 
-      /* ---------- BUTTONS ---------- */
-      button {
-        width: 100%;
-        padding: 14px;
-        margin: 8px 0;
-        font-size: 17px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
-        background: linear-gradient(180deg, #f1f4f8, #dfe7f1);
-        color: #222;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-        transition:
-          transform 0.1s,
-          box-shadow 0.1s,
-          background 0.2s;
-      }
-      button:hover {
-        background: linear-gradient(180deg, #ffffff, #e6eef8);
-      }
-      button:active {
-        transform: translateY(2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
-      }
+.instructions {
+  text-align: center;
+  font-size: 25px;
+  margin: 20px 0 30px;
+  color: #bbb;
+}
 
-      .forest {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-      }
+.title-bottom {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 28px;
+  opacity: 0.85;
+}
 
-      .back {
-        background: linear-gradient(180deg, #e0e0e0, #cfcfcf);
-      }
-      .button-danger {
-        background: linear-gradient(180deg, #ff9aa2, #ff6f6f);
-        color: #300;
-      }
+/* =====================================================
+   BUTTON SYSTEM
+===================================================== */
+button,
+.home-btn {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,.35);
+}
 
-      .button-primary {
-        background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
-        color: #002b5c;
-      }
+button:hover,
+.home-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.45);
+}
 
-      .button-success {
-        background: linear-gradient(180deg, #b7e4c7, #95d5b2);
-        color: #103b24;
-      }
+button:active,
+.home-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,.55);
+}
 
-      .button-bank {
-        background: linear-gradient(180deg, #b7e4c7, #95d5b2);
-        color: #103b24;
-      }
+/* Home button colors */
+.home-start {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #052e16;
+}
 
-      .peach {
-        background: linear-gradient(180deg, #ffe5d9, #ffb4a2);
-        color: #5a1f14;
-      }
-      .sunset {
-        background: linear-gradient(180deg, #ffedd5, #fb923c);
-        color: #4a1d00;
-      }
+.home-bank {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #04142e;
+}
 
-      .lavender {
-        background: linear-gradient(180deg, #ede9fe, #c4b5fd);
-        color: #2e1065;
-      }
+.home-stats {
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: #2e1065;
+}
 
-      /* ---------- FORM ---------- */
-      select,
-      input,
-      textarea {
-        width: 100%;
-        padding: 13px;
-        margin: 8px 0;
-        font-size: 17px;
-        border-radius: 10px;
-        border: none;
-        box-sizing: border-box;
-      }
+.home-library {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #4a1d00;
+}
 
-      /* ---------- SESSION ---------- */
+/* =====================================================
+   FORMS
+===================================================== */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  font-size: 17px;
+  border-radius: 10px;
+  border: none;
+  background: #eee;
+  color: #111;
+}
 
-      .flip-hint {
-        text-align: center;
-        font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-        font-size: 30px;
-        margin-bottom: 10px;
-        color: #ffd966;
-      }
+/* =====================================================
+   SESSION
+===================================================== */
+#session {
+  padding: 12px;
+}
 
-      .card-frame {
-        border: 5px solid #6fa8dc;
-        border-radius: 18px;
-        padding: 14px;
-        background: #2a2a2a;
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.6),
-          inset 0 0 0 2px rgba(255, 255, 255, 0.08);
-      }
+/* Card frame */
+.card-frame {
+  border: 5px solid #6fa8dc;
+  border-radius: 18px;
+  padding: 14px;
+  background: #2a2a2a;
+  box-shadow:
+    0 10px 18px rgba(0,0,0,.6),
+    inset 0 0 0 2px rgba(255,255,255,.08);
+}
 
-      .card {
-  aspect-ratio: 1 / 1;          /* ריבוע */
+/* Card */
+.card {
+  aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
@@ -178,581 +170,79 @@
   line-height: 1.25;
   text-align: center;
 
-  border-radius: 12px;
-  padding: 16px;
-  user-select: none;
-
-  overflow: hidden;
-  white-space: normal;
-  word-break: normal;
-  overflow-wrap: normal;
-}
-
-      .remaining {
-        text-align: center;
-        font-size: 20px;
-        margin-top: 10px;
-        color: #cfe2f3;
-      }
-
-      .row {
-        display: flex;
-        gap: 10px;
-        margin-top: 14px;
-      }
-      .row button {
-        width: 50%;
-      }
-
-
-      /* ---------- BANK ---------- */
-
-      .word-files-invite {
-        border: 2px solid #ffd966;
-        border-radius: 18px;
-        padding: 16px;
-        margin: 16px 0;
-        background: linear-gradient(180deg, #1f1f1f, #151515);
-        box-shadow: 0 0 18px rgba(255, 217, 102, 0.25);
-      }
-      .word-files-invite h3 {
-        text-align: center;
-        font-size: 22px;
-        color: #ffe599;
-        margin-bottom: 6px;
-      }
-      .invite-main {
-        text-align: center;
-        font-size: 15px;
-        margin-bottom: 10px;
-      }
-      .invite-cta {
-        text-align: center;
-        font-size: 17px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        padding: 12px;
-        border-radius: 14px;
-        background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
-        color: #002b5c;
-        cursor: pointer;
-
-        transition:
-          transform 0.15s ease,
-          box-shadow 0.15s ease,
-          opacity 0.15s ease;
-      }
-
-      .invite-cta:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-        opacity: 0.95;
-      }
-
-      .invite-cta:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
-      }
-
-      /* ---------- DOWNLOAD ---------- */
-
-      #download select {
-        margin-bottom: 14px;
-        background: #1c1c1c;
-        color: #fff;
-      }
-
-      #download h2 {
-        text-align: center;
-        margin-bottom: 14px;
-      }
-
-      #downloadAccordions li {
-        cursor: pointer;
-        padding: 8px 6px;
-        border-radius: 8px;
-        transition:
-          background 0.15s,
-          color 0.15s;
-      }
-
-      #downloadAccordions li:hover {
-        background: #2a2a2a;
-        color: #ffe5d9; /* peach tone */
-      }
-
-      #downloadAccordions li:active {
-        background: #333;
-      }
-
-      /* --- Download language visual state --- */
-
-      #downloadLangSelect {
-        transition:
-          box-shadow 0.15s ease,
-          border-color 0.15s ease;
-      }
-
-      /* סימון עדין לפי שפה */
-      #downloadLangSelect.lang-he-en {
-        box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.5); /* forest */
-      }
-      #downloadLangSelect.lang-pl-en {
-        box-shadow: 0 0 0 2px rgba(255, 229, 217, 0.55); /* peach */
-      }
-      #downloadLangSelect.lang-ar-he {
-        box-shadow: 0 0 0 2px rgba(255, 237, 213, 0.55); /* sunset */
-      }
-      #downloadLangSelect.lang-es-he {
-        box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.35); /* forest soft */
-      }
-      .li-available {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-        font-weight: 700;
-      }
-
-      .li-locked {
-        opacity: 0.35;
-        cursor: not-allowed;
-      }
-
-      /* ---------- DOWNLOAD STRUCTURE ---------- */
-
-      .download-lang-box {
-        background: linear-gradient(180deg, #1f2933, #161c22);
-        border: 2px solid #6fa8dc;
-        border-radius: 16px;
-        padding: 14px;
-        margin-bottom: 16px;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
-      }
-
-      .download-lang-title {
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        margin-bottom: 8px;
-        color: #9fc5ff;
-        text-align: center;
-      }
-
-      .download-divider {
-        height: 1px;
-        background: linear-gradient(
-          to right,
-          transparent,
-          #6fa8dc,
-          transparent
-        );
-        margin: 10px 0 14px;
-        opacity: 0.8;
-      }
-
-      .download-topics-title {
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        margin-bottom: 8px;
-        color: #ffd966;
-        text-align: center;
-      }
-
-    /* === ACCORDION – COLORFUL === */
-
-.accordion {
-  margin-bottom: 14px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 14px rgba(0,0,0,.45);
-}
-
-/* ===== HEADER / BRANCH ===== */
-.accordion-header {
-  padding: 14px 16px;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: .4px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  cursor: pointer;
-
-  background: linear-gradient(180deg, #60a5fa, #2563eb);
-  color: #04142e;
-
-  transition: filter .2s, box-shadow .2s;
-}
-
-.accordion-header:hover {
-  filter: brightness(1.05);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
-}
-
-.accordion-header span {
-  font-size: 15px;
-  opacity: .7;
-  transition: transform .25s ease, opacity .2s;
-}
-
-.accordion.open .accordion-header span {
-  transform: rotate(90deg);
-  opacity: 1;
-}
-
-/* ===== CONTENT ===== */
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  background: linear-gradient(180deg, #0f172a, #020617);
-
-  transition:
-    max-height .35s ease,
-    opacity .25s ease;
-}
-
-.accordion.open .accordion-content {
-  max-height: 900px;
-  opacity: 1;
-}
-
-/* ===== GROUP ===== */
-.download-group {
-  padding: 12px 16px 6px;
-  border-top: 1px solid rgba(255,255,255,.08);
-}
-
-.download-group strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
-  color: #fde68a; /* warm yellow */
-  letter-spacing: .3px;
-}
-
-/* ===== FILE LIST ===== */
-.accordion-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.accordion-content li {
-  padding: 10px 12px;
-  margin-bottom: 6px;
-  border-radius: 10px;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  background: linear-gradient(180deg, #ecfeff, #cffafe);
-  color: #083344;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-  cursor: pointer;
-
-  transition:
-    transform .1s,
-    box-shadow .15s,
-    filter .15s;
-}
-
-.accordion-content li:hover {
-  filter: brightness(1.05);
-  box-shadow: 0 6px 14px rgba(0,0,0,.35);
-}
-
-.accordion-content li:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 6px rgba(0,0,0,.4);
-}
-
-      /* ---------- LIST ---------- */
-
-      #bankListTopicSelect {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 10px;
-        font-size: 16px;
-
-        border-radius: 10px;
-        border: none;
-        box-sizing: border-box;
-
-        position: relative;
-        z-index: 10; /* 🔥 קריטי */
-      }
-
-      .list-item {
-        background: #222;
-        padding: 17px;
-        margin: 8px 0;
-        border-radius: 10px;
-      }
-
-      .word-line {
-        font-size: 33px;
-        font-weight: 600;
-        line-height: 1.3;
-      }
-
-      .actions {
-        display: flex;
-        gap: 8px;
-      }
-
-      .actions button {
-        width: 50%;
-      }
-
-      /* ---------- CONTACT ---------- */
-      .contact button {
-        background: linear-gradient(180deg, #e6e6e6, #efcfcf);
-        color: #222;
-        font-weight: 700;
-      }
-
-      .about-box {
-        border: 2px solid #9fa8dc;
-        border-radius: 18px;
-        padding: 16px;
-        margin-top: 20px;
-        background: #1c1c1c;
-        text-align: center;
-      }
-
-      .about-title {
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: #9fc5ff;
-      }
-
-      .about-box p {
-        margin: 10px 0;
-        font-size: 15px;
-        line-height: 1.4;
-      }
-
-      .stat-block {
-        background: #1c1c1c;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 10px;
-      }
-
-      /* ---------- CONTACT   LINKS ---------- */
-      .contact-links {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin: 16px 0;
-      }
-
-      .contact-links a {
-        display: block;
-        text-align: center;
-        padding: 14px;
-        border-radius: 14px;
-        font-size: 16px;
-        font-weight: 700;
-        color: #fff;
-        text-decoration: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-        transition:
-          opacity 0.2s,
-          transform 0.1s;
-      }
-
-      .contact-links a:hover {
-        opacity: 0.9;
-      }
-
-      .contact-links a:active {
-        transform: translateY(2px);
-      }
-
-      /* Colors */
-      .contact-links a.facebook {
-        background: #1877f2;
-      }
-
-      .contact-links a.instagram {
-        background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-      }
-
-      .contact-links a.whatsapp {
-        background: #25d366;
-      }
-
-      .contact-links a.email {
-        background: #6b7280;
-      }
-
-      /* --- HARD WORDS TABLE --- */
-      .hard-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-      }
-      .hard-table th {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 2px solid #555;
-        font-size: 16px;
-      }
-      .hard-table td {
-        padding: 10px 8px;
-        border-bottom: 1px solid #333;
-        vertical-align: top;
-      }
-      .hard-word {
-        font-size: 20px;
-        font-weight: 600;
-      }
-      .hard-count {
-        text-align: center;
-        font-size: 18px;
-      }
-
-      .sound-toggle {
-        text-align: center;
-        font-size: 22px;
-        margin: 10px 0 6px;
-        cursor: pointer;
-        user-select: none;
-        opacity: 0.85;
-      }
-      .sound-toggle:hover {
-        opacity: 1;
-      }
-
-      #sessionEnd.active {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .session-end-box {
-        text-align: center;
-        max-width: 320px;
-      }
-
-      .session-end-box h1 {
-        font-size: 36px;
-        margin-bottom: 10px;
-      }
-
-      .session-end-sub {
-        font-size: 18px;
-        opacity: 0.85;
-        margin-bottom: 24px;
-      }
-
-/* ===== RESET / BASICS ===== */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* ===== SESSION SCREEN ===== */
-#session {
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-
-/* ===== SESSION BUTTONS ===== */
-.session-buttons button {
-  border: none;
   border-radius: 14px;
-  padding: 14px 18px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  cursor: pointer;
+  padding: 16px;
 
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+  overflow: hidden;
 }
 
-.session-buttons button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+/* Session buttons */
+.session-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
 }
 
-.session-buttons button:active {
-  transform: scale(0.97);
+.session-buttons button {
+  width: 50%;
 }
 
-/* ===== I KNEW IT — תמיד ירוק ===== */
+/* Known / Unknown */
 #knownBtn {
-  background: #22c55e; /* ירוק קבוע */
-  color: #ffffff;
-}
-
-#knownBtn:hover {
-  background: #16a34a;
-}
-
-#knownBtn:active {
-  background: #15803d;
-}
-
-#knownBtn:disabled {
   background: #22c55e;
-  opacity: 0.6;
+  color: #fff;
 }
 
-/* ===== I DIDN’T KNOW IT ===== */
 #unknownBtn {
   background: #ef4444;
+  color: #fff;
 }
 
-#unknownBtn:hover {
-  background: #dc2626;
+/* =====================================================
+   LIST / BANK
+===================================================== */
+.list-item {
+  background: #222;
+  padding: 16px;
+  margin: 8px 0;
+  border-radius: 12px;
 }
 
-#unknownBtn:active {
-  background: #b91c1c;
-}
-
-/* ===== HOME BUTTONS ===== */
-.home-btn {
-  border: none;
-  color: #ffffff;
+.word-line {
+  font-size: 32px;
   font-weight: 600;
-  padding: 14px 18px;
-  border-radius: 16px;
-  font-size: 17px;
-  cursor: pointer;
-
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  line-height: 1.3;
 }
 
-.home-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+.actions {
+  display: flex;
+  gap: 8px;
 }
 
-.home-btn:active {
-  transform: scale(0.96);
+.actions button {
+  width: 50%;
 }
 
-/* צבעים חיים לדף הבית */
-.home-start {
-  background: linear-gradient(135deg, #
+/* =====================================================
+   STATS
+===================================================== */
+.stat-block {
+  background: #1c1c1c;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+}
 
-    </style>
+/* =====================================================
+   MOBILE
+===================================================== */
+@media (max-width: 480px) {
+  .card {
+    max-width: 100%;
+  }
+}
+</style>
   </head>
 
   <body>
@@ -779,7 +269,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 80</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 81</div>
 
       <div
         id="cacheVersion"
