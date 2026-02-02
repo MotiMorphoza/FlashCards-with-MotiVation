@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hebrew with MotiVation</title>
-<style>
+ <style>
       .hidden {
         display: none;
       }
@@ -194,6 +194,7 @@
         width: 50%;
       }
 
+
       /* ---------- BANK ---------- */
 
       .word-files-invite {
@@ -347,67 +348,117 @@
         text-align: center;
       }
 
-      /* ---------- ACCORDION ---------- */
+    /* === ACCORDION – COLORFUL === */
 
-      #downloadAccordions.lang-not-selected {
-        opacity: 0.4;
-        pointer-events: none;
-      }
+.accordion {
+  margin-bottom: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,.45);
+}
 
-      .accordion {
-        border-radius: 14px;
-        background: #1c1c1c;
-        margin-bottom: 10px;
-        overflow: hidden;
-      }
+/* ===== HEADER / BRANCH ===== */
+.accordion-header {
+  padding: 14px 16px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .4px;
 
-      .accordion-header {
-        padding: 14px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-      .accordion-header span {
-        transition: transform 0.25s ease;
-      }
+  cursor: pointer;
 
-      .accordion.open .accordion-header span {
-        transform: rotate(90deg);
-      }
+  background: linear-gradient(180deg, #60a5fa, #2563eb);
+  color: #04142e;
 
-      .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(-4px);
-        transition:
-          max-height 0.35s ease,
-          opacity 0.25s ease,
-          transform 0.25s ease;
-      }
+  transition: filter .2s, box-shadow .2s;
+}
 
-      .accordion.open .accordion-content {
-        max-height: 1000px;
-        opacity: 1;
-        transform: translateY(0);
-        padding-bottom: 12px;
-      }
+.accordion-header:hover {
+  filter: brightness(1.05);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+}
 
-      .accordion-content ul {
-        margin: 0;
-        padding-left: 18px;
-        font-size: 14px;
-        line-height: 1.45;
-      }
+.accordion-header span {
+  font-size: 15px;
+  opacity: .7;
+  transition: transform .25s ease, opacity .2s;
+}
 
-      .accordion-has-files > .accordion-header {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-      }
+.accordion.open .accordion-header span {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* ===== CONTENT ===== */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  background: linear-gradient(180deg, #0f172a, #020617);
+
+  transition:
+    max-height .35s ease,
+    opacity .25s ease;
+}
+
+.accordion.open .accordion-content {
+  max-height: 900px;
+  opacity: 1;
+}
+
+/* ===== GROUP ===== */
+.download-group {
+  padding: 12px 16px 6px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.download-group strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #fde68a; /* warm yellow */
+  letter-spacing: .3px;
+}
+
+/* ===== FILE LIST ===== */
+.accordion-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accordion-content li {
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  background: linear-gradient(180deg, #ecfeff, #cffafe);
+  color: #083344;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  cursor: pointer;
+
+  transition:
+    transform .1s,
+    box-shadow .15s,
+    filter .15s;
+}
+
+.accordion-content li:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+}
+
+.accordion-content li:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,.4);
+}
 
       /* ---------- LIST ---------- */
 
@@ -449,13 +500,13 @@
 
       /* ---------- CONTACT ---------- */
       .contact button {
-        background: linear-gradient(180deg, #e6e6e6, #cfcfcf);
+        background: linear-gradient(180deg, #e6e6e6, #efcfcf);
         color: #222;
         font-weight: 700;
       }
 
       .about-box {
-        border: 2px solid #6fa8dc;
+        border: 2px solid #9fa8dc;
         border-radius: 18px;
         padding: 16px;
         margin-top: 20px;
@@ -590,8 +641,108 @@
         opacity: 0.85;
         margin-bottom: 24px;
       }
-    </style>
 
+/* ===== RESET / BASICS ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===== SESSION SCREEN ===== */
+#session {
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+
+/* ===== SESSION BUTTONS ===== */
+.session-buttons button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.session-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+}
+
+.session-buttons button:active {
+  transform: scale(0.97);
+}
+
+/* ===== I KNEW IT — תמיד ירוק ===== */
+#knownBtn {
+  background: #22c55e; /* ירוק קבוע */
+  color: #ffffff;
+}
+
+#knownBtn:hover {
+  background: #16a34a;
+}
+
+#knownBtn:active {
+  background: #15803d;
+}
+
+#knownBtn:disabled {
+  background: #22c55e;
+  opacity: 0.6;
+}
+
+/* ===== I DIDN’T KNOW IT ===== */
+#unknownBtn {
+  background: #ef4444;
+}
+
+#unknownBtn:hover {
+  background: #dc2626;
+}
+
+#unknownBtn:active {
+  background: #b91c1c;
+}
+
+/* ===== HOME BUTTONS ===== */
+.home-btn {
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 17px;
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+.home-btn:active {
+  transform: scale(0.96);
+}
+
+/* צבעים חיים לדף הבית */
+.home-start {
+  background: linear-gradient(135deg, #
+
+    </style>
 
   </head>
 
@@ -619,7 +770,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 79</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 82</div>
 
       <div
         id="cacheVersion"
