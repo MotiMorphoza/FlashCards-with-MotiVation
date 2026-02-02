@@ -668,7 +668,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 75</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 76</div>
 
       <div
         id="cacheVersion"
@@ -934,6 +934,7 @@
 
       /* ===== DATA ===== */
 
+let returnToTopicAfterSave = null;
 
 function createTopic(title, source = "local", hubMeta = null) {
   return {
@@ -1431,15 +1432,17 @@ function isTopicTitleTaken(title, excludeId = null) {
 }
 
 
-    function editWord(id) {
+   function editWord(id) {
   const topic = data.topics[currentTopic];
   if (!topic) return;
 
-  returnToBankListAfterSave = true;
+  // זוכרים לאן לחזור
+  returnToTopicAfterSave = currentTopic;
 
   const w = topic.words.find((x) => x.id === id);
   if (!w) return;
 
+  // מסירים זמנית
   topic.words = topic.words.filter((x) => x.id !== id);
 
   showAdd();
@@ -1451,6 +1454,7 @@ function isTopicTitleTaken(title, excludeId = null) {
 
   save();
 }
+
 
 
   /* ===== ADD WORD ===== */
@@ -1542,10 +1546,15 @@ function isTopicTitleTaken(title, excludeId = null) {
   translationInput.value = "";
   newTopicInput.value = "";
 
-  loadAddTopics();
-  addTopicSelect.value = topicId;
-  onAddTopicChange();
+ // חזרה לרשימה אם הגענו מעריכה
+if (returnToTopicAfterSave) {
+  setCurrentTopic(returnToTopicAfterSave);
+  returnToTopicAfterSave = null;
+  show("bankList");
+  renderWordList();
+  return;
 }
+
 
       /* ===== IMPORT ===== */
 
