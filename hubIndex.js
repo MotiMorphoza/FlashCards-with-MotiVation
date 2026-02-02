@@ -20,6 +20,10 @@ window.HUB_INDEX = {
   ],
   "branches": [
     {
+      "id": "misc",
+      "title": "misc"
+    },
+    {
       "id": "vocabulary",
       "title": "vocabulary"
     }
@@ -40,6 +44,15 @@ window.HUB_INDEX = {
         ],
         "pl-en": [
           "sentences 000.csv"
+        ]
+      }
+    },
+    {
+      "branch": "misc",
+      "group": "important_words",
+      "files": {
+        "he-en": [
+          "more-less-too-very-most.csv"
         ]
       }
     }
