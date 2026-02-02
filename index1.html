@@ -668,7 +668,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 76</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 77</div>
 
       <div
         id="cacheVersion"
@@ -1503,9 +1503,10 @@ function isTopicTitleTaken(title, excludeId = null) {
         }
       }
 
-      function saveWord() {
-  const isNew = addTopicSelect.value === "_new";
-  const topicTitle = isNew
+  function saveWord() {
+  const isNewTopic = addTopicSelect.value === "_new";
+
+  const topicTitle = isNewTopic
     ? newTopicInput.value.trim()
     : data.topics[addTopicSelect.value]?.title;
 
@@ -1514,46 +1515,57 @@ function isTopicTitleTaken(title, excludeId = null) {
 
   let topicId;
 
-  if (isNew) {
-  if (isTopicTitleTaken(topicTitle)) {
-    alert("Topic with this name already exists.");
-    return;
-  }
+  // ----- יצירת Topic חדש -----
+  if (isNewTopic) {
+    if (isTopicTitleTaken(topicTitle)) {
+      alert("Topic with this name already exists.");
+      return;
+    }
 
-  const topic = createTopic(topicTitle, "local");
-  data.topics[topic.id] = topic;
+    const topic = createTopic(topicTitle, "local");
+    data.topics[topic.id] = topic;
     topicId = topic.id;
-  } else {
+  } 
+  // ----- Topic קיים -----
+  else {
     topicId = addTopicSelect.value;
   }
 
   const topic = data.topics[topicId];
   if (!topic) return;
 
+  // הוספת מילה
   topic.words.push({
     id: crypto.randomUUID(),
     learn: learnInput.value,
     tr: translationInput.value,
   });
 
-  setCurrentTopic(topicId);
-
   save();
   loadTopics();
   updateInstructions();
 
+  // ניקוי שדות
   learnInput.value = "";
   translationInput.value = "";
   newTopicInput.value = "";
 
- // חזרה לרשימה אם הגענו מעריכה
-if (returnToTopicAfterSave) {
-  setCurrentTopic(returnToTopicAfterSave);
-  returnToTopicAfterSave = null;
-  show("bankList");
-  renderWordList();
-  return;
+  // ----- חזרה לרשימה אחרי עריכה -----
+  if (returnToTopicAfterSave) {
+    setCurrentTopic(returnToTopicAfterSave);
+    returnToTopicAfterSave = null;
+    show("bankList");
+    renderWordList();
+    return;
+  }
+
+  // ----- מצב רגיל: נשארים ב-ADD -----
+  setCurrentTopic(topicId);
+  loadAddTopics();
+  addTopicSelect.value = topicId;
+  onAddTopicChange();
 }
+
 
 
       /* ===== IMPORT ===== */
