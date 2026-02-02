@@ -194,6 +194,20 @@
       .row button {
         width: 50%;
       }
+#card {
+  aspect-ratio: 1 / 1;
+  width: 90%;
+  max-width: 420px;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  text-align: center;
+}
+
 
       /* ---------- BANK ---------- */
 
@@ -668,7 +682,7 @@
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 77</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 78</div>
 
       <div
         id="cacheVersion"
@@ -1772,26 +1786,25 @@ function nextCard() {
       }
 
       function autoFitCardText() {
-        const maxFont = 102; // פי 3
-        const minFont = 18;
+  const maxFont = 72;   // תקרה סבירה
+  const minFont = 16;
 
-        let size = maxFont;
-        card.style.fontSize = size + "px";
+  let size = maxFont;
+  card.style.fontSize = size + "px";
 
-        while (size > minFont) {
-          card.style.fontSize = size + "px";
+  while (size > minFont) {
+    card.style.fontSize = size + "px";
 
-          // אם יש גלישה – מקטינים
-          if (
-            card.scrollHeight > card.clientHeight ||
-            card.scrollWidth > card.clientWidth
-          ) {
-            size -= 2;
-          } else {
-            break;
-          }
-        }
-      }
+    if (
+      card.scrollHeight > card.clientHeight ||
+      card.scrollWidth > card.clientWidth
+    ) {
+      size -= 2;
+    } else {
+      break;
+    }
+  }
+}
 
       function flipCard() {
         cardFlipped = !cardFlipped;
