@@ -161,23 +161,32 @@
       }
 
       .card {
-        background: #111;
-        height: 220px; /* כרטיס קבוע */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 102px; /* פי 3 */
-        line-height: 1.15;
-        text-align: center;
-        border-radius: 12px;
-        padding: 20px;
-        user-select: none;
+  aspect-ratio: 1 / 1;          /* ריבוע */
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
 
-        overflow: hidden; /* הכרטיס לא גדל */
-        white-space: normal; /* מותר לשבור שורה */
-        word-break: normal; /* ❌ לא שוברים מילה */
-        overflow-wrap: normal; /* ❌ לא שוברים מילה */
-      }
+  background: #111;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 102px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+
+  border-radius: 12px;
+  padding: 16px;
+  user-select: none;
+
+  overflow: hidden;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+}
 
       .remaining {
         text-align: center;
@@ -194,19 +203,6 @@
       .row button {
         width: 50%;
       }
-#card {
-  aspect-ratio: 1 / 1;
-  width: 90%;
-  max-width: 420px;
-  height: auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-  text-align: center;
-}
 
 
       /* ---------- BANK ---------- */
@@ -673,33 +669,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ===== CARD ===== */
-#card {
-  aspect-ratio: 1 / 1;      /* תמיד ריבוע */
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-  overflow: hidden;
-
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-
-  padding: 16px;
-  box-sizing: border-box;
-}
-
-/* ===== CARD TEXT ===== */
-#card {
-  font-weight: 600;
-  line-height: 1.25;
-}
 
 /* ===== SESSION BUTTONS ===== */
 .session-buttons button {
@@ -810,7 +779,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 79</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 80</div>
 
       <div
         id="cacheVersion"
