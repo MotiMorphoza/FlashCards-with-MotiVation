@@ -53,6 +53,9 @@ window.HUB_INDEX = {
       "files": {
         "he-en": [
           "more-less-too-very-most.csv"
+        ],
+        "ar-he": [
+          "political.csv"
         ]
       }
     }
