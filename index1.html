@@ -770,7 +770,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 83</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 84</div>
 
       <div
         id="cacheVersion"
@@ -2222,7 +2222,8 @@ function nextCard() {
     const csvText = await res.text();
 
     const baseName = fileName.replace(/\.csv$/i, "");
-    const topicTitle = `${groupId} · ${baseName}`;
+const topicTitle = `${groupId} · ${baseName} (${fileName})`;
+
 
     const topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
       path,

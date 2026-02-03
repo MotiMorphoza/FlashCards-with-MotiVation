@@ -55,7 +55,9 @@ window.HUB_INDEX = {
           "more-less-too-very-most.csv"
         ],
         "ar-he": [
-          "political.csv"
+          "political.csv",
+          "full_house.csv",
+          "dogi.csv"
         ]
       }
     }
