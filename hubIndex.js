@@ -30,6 +30,19 @@ window.HUB_INDEX = {
   ],
   "entries": [
     {
+      "branch": "misc",
+      "group": "important_words",
+      "files": {
+        "ar-he": [
+          "full_house.csv",
+          "political.csv"
+        ],
+        "he-en": [
+          "more-less-too-very-most.csv"
+        ]
+      }
+    },
+    {
       "branch": "vocabulary",
       "group": "sentences",
       "files": {
@@ -44,20 +57,6 @@ window.HUB_INDEX = {
         ],
         "pl-en": [
           "sentences 000.csv"
-        ]
-      }
-    },
-    {
-      "branch": "misc",
-      "group": "important_words",
-      "files": {
-        "he-en": [
-          "more-less-too-very-most.csv"
-        ],
-        "ar-he": [
-          "political.csv",
-          "full_house.csv",
-          "dogi.csv"
         ]
       }
     }
