@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Match</title>
+
+<script src="hubIndex.js"></script>
+
+<style>
+/* ===== BASICS ===== */
+body {
+  margin: 0;
+  background: #111;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+}
+.hidden { display: none; }
+
+#app {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+/* ===== TITLES ===== */
+.main-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 900;
+  margin: 16px 0 6px;
+}
+.subtitle {
+  text-align: center;
+  font-size: 15px;
+  opacity: .65;
+  margin-bottom: 18px;
+}
+
+/* ===== SELECT ===== */
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+/* ===== ACCORDION ===== */
+.accordion {
+  margin-bottom: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,.45);
+}
+.accordion-header {
+  padding: 14px 16px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(180deg,#60a5fa,#2563eb);
+  color: #04142e;
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  background: #020617;
+  transition: max-height .35s ease;
+}
+.accordion.open .accordion-content {
+  max-height: 900px;
+}
+.group {
+  padding: 12px 16px 6px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.group-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fde68a;
+  margin-bottom: 8px;
+}
+.file {
+  padding: 12px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(180deg,#ffe5d9,#ffb4a2);
+  color: #5a1f14;
+  font-weight: 700;
+}
+.file.selected {
+  outline: 3px solid #60a5fa;
+}
+
+/* ===== BUTTONS ===== */
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  background: linear-gradient(180deg,#9fc5ff,#6fa8ff);
+  color: #002b5c;
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+button.secondary {
+  background: linear-gradient(180deg,#e0e0e0,#cfcfcf);
+  color: #222;
+}
+
+.btn-green {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 800;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+
+  background: linear-gradient(180deg, #bbf7d0, #22c55e);
+  color: #052e16;
+
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+  transition: transform .12s ease, box-shadow .12s ease, filter .15s ease;
+}
+
+.btn-green:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 26px rgba(0,0,0,.45);
+}
+
+.btn-green:active {
+  transform: translateY(2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.45);
+}
+
+
+/* ===== GAME ===== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+#soundBtn { cursor: pointer; }
+
+.title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(180deg,#ffe5d9,#ffb4a2);
+  color: #5a1f14;
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+  user-select: none;
+}
+.card.ltr { direction: ltr; }
+.card.rtl { direction: rtl; }
+
+.card span {
+  transition: color .15s;
+}
+.card.selected span {
+  color: #2563eb;
+}
+.card.flash-good {
+  box-shadow: 0 0 0 4px #22c55e;
+}
+.card.flash-bad {
+  box-shadow: 0 0 0 4px #ef4444;
+}
+
+/* ===== OVERLAY ===== */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#overlay.active {
+  display: flex;
+}
+.overlay-box {
+  text-align: center;
+}
+.overlay-box h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+.overlay-box p {
+  font-size: 18px;
+  margin: 6px 0;
+}
+
+.overlay-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<!-- ===== START SCREEN ===== -->
+<div id="startScreen">
+  <div class="main-title">WORD MATCH</div>
+  <div class="subtitle">Choose language · Pick a topic · Start</div>
+
+  <select id="langSelect">
+    <option value="">Select language…</option>
+  </select>
+
+  <div id="accordions"></div>
+
+  <button id="startBtn" class="btn-green hidden">Start Session ▶</button>
+
+</div>
+
+<!-- ===== GAME SCREEN ===== -->
+<div id="gameScreen" class="hidden">
+  <div class="top-bar">
+    <div id="timer">⏱ 0</div>
+    <div id="remaining">🔢 30</div>
+    <div id="soundBtn">🔊</div>
+  </div>
+
+  <div class="title">1 2 3 – Go Go Go</div>
+  <div id="board" class="board"></div>
+
+  <div style="margin-top:18px">
+    <button class="secondary" id="exitBtn">Exit Session</button>
+  </div>
+</div>
+
+</div>
+
+<!-- ===== END OVERLAY ===== -->
+<div id="overlay">
+  <div class="overlay-box">
+    <h2>Session Complete</h2>
+    <p id="finalTime"></p>
+    <p id="finalErrors"></p>
+    <p id="bestTime"></p>
+   <button onclick="restart()" class="btn-green">Restart</button>
+    <button class="secondary" onclick="exitSession()">Back to Start</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+const MAX_VISIBLE = 6;
+const BEST_KEY = "wm_best_time";
+
+let selectedSource = null;
+
+let queue = [];
+let activePairs = [];
+let remaining = 0;
+let errors = 0;
+
+let selL = null;
+let selR = null;
+let selLEl = null;
+let selREl = null;
+let lock = false;
+
+let soundOn = true;
+let startTime = 0;
+let timerInt = null;
+
+/* =========================================================
+   SOFT AUDIO ENGINE — FINAL
+   - רך
+   - לא צורם
+   - עם low-pass
+   - בטוח לדפדפנים
+========================================================= */
+
+let audioCtx = null;
+let soundEnabled = true;
+
+function ensureAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  ensureAudio();
+
+  const now = audioCtx.currentTime;
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+
+  /* ===== Wave type ===== */
+  osc.type = (type === "success") ? "triangle" : "sine";
+
+  /* ===== Frequencies ===== */
+  const freqMap = {
+    click: 420,
+    success: 720,
+    fail: 220,
+    end: 520,
+  };
+
+  const freq = freqMap[type] || 400;
+  osc.frequency.setValueAtTime(freq, now);
+
+  /* Subtle pitch slide for success */
+  if (type === "success") {
+    osc.frequency.linearRampToValueAtTime(freq * 1.08, now + 0.18);
+  }
+
+  /* ===== Low-pass filter (softness) ===== */
+  filter.type = "lowpass";
+  filter.frequency.value = 1200;
+
+  /* ===== Volume per sound ===== */
+  const volumeMap = {
+    click: 0.02,
+    success: 0.035,
+    fail: 0.025,
+    end: 0.045,
+  };
+
+  const vol = volumeMap[type] || 0.025;
+
+  /* ===== Envelope (fade in / out) ===== */
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(vol, now + 0.04);
+  gain.gain.linearRampToValueAtTime(0, now + 0.28);
+
+  /* ===== Wiring ===== */
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.3);
+}
+
+/* =========================================================
+   START SCREEN (HUB)
+========================================================= */
+const langSelect = document.getElementById("langSelect");
+const accordions = document.getElementById("accordions");
+const startBtn = document.getElementById("startBtn");
+startBtn.classList.add("hidden");
+
+HUB_INDEX.languages.forEach(l =>
+  langSelect.add(new Option(l.title, l.id))
+);
+
+langSelect.onchange = () => {
+  selectedSource = null;
+  startBtn.classList.add("hidden");   // ← חשוב
+  buildAccordions();
+};
+
+
+function buildAccordions(){
+  accordions.innerHTML = "";
+  const lang = langSelect.value;
+  if(!lang) return;
+
+  const byBranch = {};
+  HUB_INDEX.entries.forEach(e=>{
+    if(!e.files[lang]) return;
+    if(!byBranch[e.branch]) byBranch[e.branch] = {};
+    byBranch[e.branch][e.group] = e.files[lang];
+  });
+
+  Object.keys(byBranch).forEach(branch=>{
+    const acc = document.createElement("div");
+    acc.className = "accordion";
+    acc.innerHTML = `
+      <div class="accordion-header">${branch}</div>
+      <div class="accordion-content"></div>
+    `;
+    acc.querySelector(".accordion-header").onclick = () =>
+      acc.classList.toggle("open");
+
+    const content = acc.querySelector(".accordion-content");
+
+    Object.keys(byBranch[branch]).forEach(group=>{
+      const g = document.createElement("div");
+      g.className = "group";
+      g.innerHTML = `<div class="group-title">${group}</div>`;
+
+      byBranch[branch][group].forEach(file=>{
+        const f = document.createElement("div");
+        f.className = "file";
+        f.textContent = file.replace(/\.csv$/i,"");
+        f.onclick = () => selectFile(f, lang, branch, group, file);
+        g.appendChild(f);
+      });
+
+      content.appendChild(g);
+    });
+
+    accordions.appendChild(acc);
+  });
+}
+
+function selectFile(el, lang, branch, group, file){
+  document.querySelectorAll(".file").forEach(f=>f.classList.remove("selected"));
+  el.classList.add("selected");
+  selectedSource = `hub/${lang}/${branch}/${group}/${file}`;
+  startBtn.classList.remove("hidden");
+}
+
+startBtn.onclick = () => {
+  if(!selectedSource) return;
+  loadCSVAndStart(selectedSource);
+};
+
+/* =========================================================
+   GAME ENGINE
+========================================================= */
+function loadCSVAndStart(path){
+  const cacheBust = Date.now();
+fetch(`${path}?v=${cacheBust}`)
+
+    .then(r=>{
+      if(!r.ok) throw new Error("CSV load failed");
+      return r.text();
+    })
+    .then(text=>{
+      const pairs = text.split("\n")
+        .map(l=>l.trim())
+        .filter(Boolean)
+        .map(parseCsvLine)
+        .filter(Boolean)
+        .map(([a,b])=>({ left:a, right:b }));
+      startGame(pairs);
+    })
+    .catch(err=>alert(err.message));
+}
+
+function startGame(pairs){
+originalPairs = pairs.slice();
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+
+  queue = shuffle(pairs);
+  const visible = Math.min(MAX_VISIBLE, queue.length);
+  activePairs = queue.slice(0, visible);
+  queue = queue.slice(visible);
+
+  remaining = pairs.length;
+  errors = 0;
+  selL = selR = null;
+  selLEl = selREl = null;
+  lock = false;
+
+  startTime = Date.now();
+  document.getElementById("remaining").innerText = "🔢 " + remaining;
+
+  clearInterval(timerInt);
+  timerInt = setInterval(updateTimer, 1000);
+
+  render();
+}
+
+function render(){
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+
+  const L = shuffle(activePairs.map(p=>p.left));
+  const R = shuffle(activePairs.map(p=>p.right));
+
+  for(let i=0;i<activePairs.length;i++){
+    board.appendChild(card("left", L[i]));
+    board.appendChild(card("right", R[i]));
+  }
+}
+
+function card(side, text){
+  const d = document.createElement("div");
+  d.className = "card " + (isRTL(text) ? "rtl" : "ltr");
+  const span = document.createElement("span");
+  span.textContent = text;
+  d.appendChild(span);
+  d.onclick = ()=>click(d, side, text);
+  return d;
+}
+
+function click(el, side, text){
+  if(lock) return;
+
+  playSound("click");
+
+  if(side==="left"){
+    if(selL===text){
+      el.classList.remove("selected");
+      selL=null;
+      selLEl=null;
+      return;
+    }
+    if(selLEl) selLEl.classList.remove("selected");
+    selL=text;
+    selLEl=el;
+  } else {
+    if(selR===text){
+      el.classList.remove("selected");
+      selR=null;
+      selREl=null;
+      return;
+    }
+    if(selREl) selREl.classList.remove("selected");
+    selR=text;
+    selREl=el;
+  }
+
+  el.classList.add("selected");
+
+  if(selL && selR){
+    lock = true;
+    const m = activePairs.find(p=>p.left===selL && p.right===selR);
+    setTimeout(()=> m ? handleMatch(m) : handleFail(), 180);
+  }
+}
+
+function handleMatch(pair){
+playSound("success");
+  
+  flash("good");
+
+  remaining--;
+  document.getElementById("remaining").innerText = "🔢 " + remaining;
+
+  activePairs = activePairs.filter(p=>p!==pair);
+  if(remaining>MAX_VISIBLE && queue.length){
+    activePairs.push(queue.shift());
+  }
+
+  setTimeout(()=>{
+    resetSelection();
+    render();
+    if(remaining===0 || activePairs.length===0) endSession();
+  },220);
+}
+
+function handleFail(){
+playSound("fail");
+  errors++;
+  
+  flash("bad");
+  setTimeout(resetSelection,220);
+}
+
+function flash(type){
+  document.querySelectorAll(".card.selected").forEach(c=>{
+    c.classList.add(type==="good"?"flash-good":"flash-bad");
+  });
+}
+
+function resetSelection(){
+  document.querySelectorAll(".card").forEach(c=>{
+    c.classList.remove("selected","flash-good","flash-bad");
+  });
+  selL=selR=null;
+  selLEl=selREl=null;
+  lock=false;
+}
+
+/* =========================================================
+   END / EXIT
+========================================================= */
+function endSession(){
+playSound("end");
+  clearInterval(timerInt);
+  
+
+  document.getElementById("board").innerHTML = "";
+
+  const sec = Math.floor((Date.now()-startTime)/1000);
+  const storageKey = selectedSource ? `${BEST_KEY}:${selectedSource}` : BEST_KEY;
+  const best = Number(localStorage.getItem(storageKey)||0);
+  let isBest = false;
+  if(!best || sec<best){
+    localStorage.setItem(storageKey, sec);
+    isBest = true;
+  }
+
+  document.getElementById("finalTime").innerText = "Time: "+sec+"s";
+  document.getElementById("finalErrors").innerText = "Errors: "+errors;
+  document.getElementById("bestTime").innerText =
+    "Best Time: "+(localStorage.getItem(storageKey))+"s"+(isBest?" 🏆":"");
+
+  document.getElementById("overlay").classList.add("active");
+}
+
+function restart(){
+  document.getElementById("overlay").classList.remove("active");
+  startGame(originalPairs.slice());
+}
+
+
+function exitSession(){
+  clearInterval(timerInt);
+  queue=[]; activePairs=[];
+  document.getElementById("overlay").classList.remove("active");
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("startScreen").classList.remove("hidden");
+}
+
+/* =========================================================
+   UTILS
+========================================================= */
+function updateTimer(){
+  document.getElementById("timer").innerText =
+    "⏱ " + Math.floor((Date.now()-startTime)/1000);
+}
+function shuffle(a){
+  const arr = a.slice();
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function isRTL(text){
+  return /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(text);
+}
+
+function parseCsvLine(line){
+  const cells = [];
+  let current = "";
+  let inQuotes = false;
+  for(let i=0;i<line.length;i++){
+    const char = line[i];
+    if(char === "\""){
+      const next = line[i+1];
+      if(inQuotes && next === "\""){
+        current += "\"";
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if(char === "," && !inQuotes){
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  cells.push(current.trim());
+  if(cells.length < 2) return null;
+  return [cells[0], cells[1]];
+}
+
+soundBtn.onclick = () => {
+  ensureAudio();             
+  soundEnabled = !soundEnabled;
+  soundBtn.textContent = soundEnabled ? "🔊" : "🔇";
+};
+
+
+document.getElementById("exitBtn").onclick = exitSession;
+</script>
+
+</body>
+</html>
