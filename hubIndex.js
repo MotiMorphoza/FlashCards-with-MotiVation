@@ -3,19 +3,19 @@ window.HUB_INDEX = {
   "languages": [
     {
       "id": "ar-he",
-      "title": "ar-he"
+      "title": "Arbic-Hebrew"
     },
     {
       "id": "es-he",
-      "title": "es-he"
+      "title": "Spanish-Hebrew"
     },
     {
       "id": "he-en",
-      "title": "he-en"
+      "title": "Hebrew-English"
     },
     {
       "id": "pl-en",
-      "title": "pl-en"
+      "title": "Polish-English"
     }
   ],
   "branches": [
