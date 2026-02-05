@@ -1095,7 +1095,6 @@ let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
 
       // state (HUB is read-only)
       let hubIndex = null;
-      let hubIndexLoaded = false;
       let currentTopic = null;
 
       /*
@@ -1115,7 +1114,6 @@ Expected structure:
 */
 
       function loadHubIndex() {
-        if (hubIndexLoaded) return true; // guard: avoid reloading
         if (!window.HUB_INDEX) {
           console.warn("HUB_INDEX is missing.");
           alert("Word Library is not available right now.");
@@ -1137,7 +1135,6 @@ Expected structure:
         }
 
         hubIndex = idx;
-        hubIndexLoaded = true;
         return true;
       }
 
@@ -1858,7 +1855,7 @@ function finalizeSession(showEndScreen = false) {
 }
 
 
-ffunction nextCard() {
+function nextCard() {
   if (session.length === 0) {
     finalizeSession(true);
     return;
