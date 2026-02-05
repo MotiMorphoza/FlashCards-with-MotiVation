@@ -1184,12 +1184,56 @@ function exportCurrentTopic() {
 })();
 
 /* =========================================================
+   NAV / SCREENS (REQUIRED FOR inline onclick)
+========================================================= */
+function show(id) {
+  document
+    .querySelectorAll(".screen")
+    .forEach(s => s.classList.remove("active"));
+  document.getElementById(id)?.classList.add("active");
+}
+
+function showBank() {
+  loadTopics();
+  show("bank");
+}
+
+function showStats() {
+  renderStats();
+  show("stats");
+}
+
+function goHome() {
+  show("home");
+}
+
+
+function startSessionSafe(topicId) {
+  if (!topicId) return;
+  setCurrentTopic(topicId);
+  startSession(); // משתמש בלוגיקה הקיימת שלך
+}
+
+
+/* =========================================================
    INIT
 ========================================================= */
 (function startApp() {
   loadTopics();
   updateSoundIcon();
 })();
+
+
+
+/* =========================================================
+   GLOBAL EXPORTS (inline onclick support)
+========================================================= */
+window.startSessionSafe = startSessionSafe;
+window.showBank = showBank;
+window.showStats = showStats;
+window.goHome = goHome;
+window.toggleSound = toggleSound;
+
 </script>
 
   </body>
