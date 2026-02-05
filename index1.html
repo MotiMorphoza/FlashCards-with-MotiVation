@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 89</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 90</div>
 
       <div
         id="cacheVersion"
@@ -1679,7 +1679,6 @@ function isTopicTitleTaken(title, excludeId = null) {
   });
 
   saveData();
-  loadTopics();
   updateInstructions();
 
   // ניקוי שדות
@@ -2363,7 +2362,7 @@ const APP_VERSION_KEY = "app_version";
 })();
 
 (function startApp() {
-  gateUntilReset(); // אם החלטת להשאיר אותו
+  gateUntilReset(); 
   loadHubIndex();
   loadTopics();
   updateInstructions();
