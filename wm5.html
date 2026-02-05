@@ -260,7 +260,7 @@ html, body {
 <div id="startScreen">
   <div class="main-title">WORD MATCH</div>
   <div class="subtitle">Choose language · Pick a topic · Start</div>
-  <div style="text-align: center; opacity: 0.4">TEST - 87</div>
+  <div style="text-align: center; opacity: 0.4">TEST - 88</div>
 
   <select id="langSelect">
     <option value="">Select language…</option>
@@ -281,7 +281,6 @@ html, body {
   </div>
 
   <div class="title">1 2 3 – Go Go Go</div>
-<div style="text-align: center; opacity: 0.4">TEST - 87</div>
   <div id="board" class="board"></div>
 
   <div style="margin-top:18px">
@@ -726,6 +725,9 @@ document.getElementById("exitBtn").onclick = exitSession;
 
 // ===== INIT SAFETY =====
 document.getElementById("overlay").classList.remove("active");
+document.getElementById("gameScreen").classList.add("hidden");
+document.getElementById("startScreen").classList.remove("hidden");
+
 
 </script>
 
