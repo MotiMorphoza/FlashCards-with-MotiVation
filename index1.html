@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 92</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 90</div>
 
       <div
         id="cacheVersion"
@@ -1258,6 +1258,7 @@ function isTopicTitleTaken(title, excludeId = null) {
   data.topics[topic.id] = topic;
 
   saveData();
+  loadTopics();
 
   return topic.id;
 }
@@ -1678,6 +1679,7 @@ function isTopicTitleTaken(title, excludeId = null) {
   });
 
   saveData();
+  loadTopics();
   updateInstructions();
 
   // ניקוי שדות
@@ -1779,13 +1781,33 @@ function isTopicTitleTaken(title, excludeId = null) {
       let shuffleUsed = false;
       let sessionDefaultDirection = "A";
 
+
+function finalizeSession(showEndScreen = false) {
+  if (!stats.current) return;
+
+  stats.history.push(stats.current);
+  stats.history = stats.history.slice(-10);
+
+  const t = stats.current.topic;
+  if (!stats.perTopic[t]) {
+    stats.perTopic[t] = { correct: 0, wrong: 0 };
+  }
+
+  stats.perTopic[t].correct += stats.current.correct;
+  stats.perTopic[t].wrong += stats.current.wrong;
+
+  stats.current = null;
+  saveStats();
+
+  if (showEndScreen) show("sessionEnd");
+}
+
       function exitSessionSafe(nextScreen) {
         if (stats.current) {
           finishSessionIfActive();
         }
 
         if (nextScreen) {
-        loadTopics();
           show(nextScreen);
         } else {
           show("home");
@@ -1793,6 +1815,7 @@ function isTopicTitleTaken(title, excludeId = null) {
       }
 
       function startSessionSafe(topicName) {
+        // סגירת סשן קודם אם קיים
         if (stats.current) {
           finishSessionIfActive();
         }
@@ -1868,19 +1891,9 @@ function isTopicTitleTaken(title, excludeId = null) {
 
 
 function nextCard() {
-  if (session.length === 0) {
-    stats.history.push(stats.current);
-    stats.history = stats.history.slice(-10);
 
-    const t = stats.current.topic;
-    if (!stats.perTopic[t]) stats.perTopic[t] = { correct: 0, wrong: 0 };
-    stats.perTopic[t].correct += stats.current.correct;
-    stats.perTopic[t].wrong += stats.current.wrong;
-
-    saveStats();
-    show("sessionEnd");
-    return;
-  }
+  finalizeSession(true);
+  return;
 
   current = session[0];
   cardFlipped = false;
@@ -1976,21 +1989,8 @@ function nextCard() {
       function finishSessionIfActive() {
         if (!stats.current) return;
 
-        stats.history.push(stats.current);
+        finalizeSession(false);
 
-        stats.history = stats.history.slice(-10);
-
-        const t = stats.current.topic;
-        if (!stats.perTopic[t]) {
-          stats.perTopic[t] = { correct: 0, wrong: 0 };
-        }
-
-        stats.perTopic[t].correct += stats.current.correct;
-        stats.perTopic[t].wrong += stats.current.wrong;
-
-        stats.current = null;
-        saveStats();
-      }
 
       function loadCSVToSession(csvText, topicTitle) {
         session = [];
@@ -2361,7 +2361,7 @@ const APP_VERSION_KEY = "app_version";
 })();
 
 (function startApp() {
-  gateUntilReset(); 
+  gateUntilReset(); // אם החלטת להשאיר אותו
   loadHubIndex();
   loadTopics();
   updateInstructions();
