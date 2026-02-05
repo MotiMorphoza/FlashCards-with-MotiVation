@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 87</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 88</div>
 
       <div
         id="cacheVersion"
@@ -1434,13 +1434,18 @@ function isTopicTitleTaken(title, excludeId = null) {
       }
 
       function removeHardWord(key) {
-        if (!stats.hardWords[key]) return;
+  if (!stats.hardWords[key]) return;
 
-        delete stats.hardWords[key];
-        saveStats();
+  delete stats.hardWords[key];
+  saveStats();
 
-        renderHardWordsList();
-      }
+  if (document.getElementById("stats")?.classList.contains("active")) {
+    renderStats();
+  } else {
+    renderHardWordsList();
+  }
+}
+
 
       function renameCurrentTopic() {
   if (!currentTopic || currentTopic === "Hard Words") return;
@@ -2097,14 +2102,7 @@ function nextCard() {
   `;
       }
 
-      function removeHardWord(key) {
-        if (!stats.hardWords[key]) return;
-
-        delete stats.hardWords[key];
-        saveStats();
-        renderStats();
-      }
-
+    
       function resetStats() {
         if (!confirm("Reset ALL statistics?")) return;
 
@@ -2371,7 +2369,7 @@ const APP_VERSION_KEY = "app_version";
 })();
 
 (function startApp() {
-  gateUntilReset(); // אם החלטת להשאיר אותו
+  gateUntilReset(); 
   loadHubIndex();
   loadTopics();
   updateInstructions();
