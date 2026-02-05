@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 92</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 93</div>
 
       <div
         id="cacheVersion"
@@ -1742,7 +1742,6 @@ function isTopicTitleTaken(title, excludeId = null) {
       // session state (single source of truth)
       let session = [];
       let cardFlipped = false;
-      let shuffleUsed = false;
       let sessionDefaultDirection = "A";
 
 
@@ -1915,16 +1914,11 @@ function nextCard() {
       }
 
       function shuffleSession() {
-        if (shuffleUsed) return;
-
-        shuffleUsed = true;
-        shuffleBtn.classList.add("hidden");
-
-        session.sort(() => Math.random() - 0.5);
-
-        cardFlipped = false;
-        renderCard();
-      }
+  shuffleBtn.classList.add("hidden");
+  session.sort(() => Math.random() - 0.5);
+  cardFlipped = false;
+  renderCard();
+}
 
       function markKnown() {
         if (soundOn) {
