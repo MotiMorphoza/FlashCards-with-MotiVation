@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 91</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 92</div>
 
       <div
         id="cacheVersion"
@@ -1741,7 +1741,6 @@ function isTopicTitleTaken(title, excludeId = null) {
 
       // session state (single source of truth)
       let session = [];
-      let current = null;
       let cardFlipped = false;
       let shuffleUsed = false;
       let sessionDefaultDirection = "A";
@@ -1854,7 +1853,6 @@ function nextCard() {
     return;
   }
 
-  current = session[0];
   cardFlipped = false;
   renderCard();
   show("session");
@@ -1869,7 +1867,8 @@ function nextCard() {
             : "A"
           : sessionDefaultDirection;
 
-        const text = side === "A" ? current.learn : current.tr;
+        const text = side === "A" ? session[0].learn : session[0].tr;
+
         card.textContent = text;
 
         requestAnimationFrame(() => {
@@ -1923,7 +1922,6 @@ function nextCard() {
 
         session.sort(() => Math.random() - 0.5);
 
-        current = session[0];
         cardFlipped = false;
         renderCard();
       }
@@ -1940,7 +1938,7 @@ function nextCard() {
 
       function markUnknown() {
         stats.current.wrong++;
-        let key = current.learn + "||" + current.tr;
+        let key = session[0].learn + "||" + session[0].tr;
         stats.hardWords[key] = (stats.hardWords[key] || 0) + 1;
         session.push(session.shift());
         nextCard();
