@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 90</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 91</div>
 
       <div
         id="cacheVersion"
@@ -1767,29 +1767,22 @@ function finalizeSession(showEndScreen = false) {
   if (showEndScreen) show("sessionEnd");
 }
 
-      function exitSessionSafe(nextScreen) {
-        if (stats.current) {
-          finishSessionIfActive();
-        }
+     function exitSessionSafe(nextScreen) {
+  finishSessionIfActive();
 
-        if (nextScreen) {
-          show(nextScreen);
-        } else {
-          show("home");
-        }
-      }
+  if (nextScreen) {
+    show(nextScreen);
+  } else {
+    show("home");
+  }
+}
 
-      function startSessionSafe(topicName) {
-        // סגירת סשן קודם אם קיים
-        if (stats.current) {
-          finishSessionIfActive();
-        }
+function startSessionSafe(topicName) {
+  finishSessionIfActive();
+  setCurrentTopic(topicName);
+  startSession();
+}
 
-        // בחירת נושא בצורה מבוקרת
-        setCurrentTopic(topicName);
-
-        startSession();
-      }
 
       function startSession() {
   if (!currentTopic) return;
