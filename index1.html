@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 91</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 92</div>
 
       <div
         id="cacheVersion"
@@ -1758,7 +1758,7 @@ function isTopicTitleTaken(title, excludeId = null) {
     data.topics[topic.id] = topic;
 
     saveData();
-    
+    loadTopics();
     updateInstructions();
 
     setCurrentTopic(topic.id);
@@ -1785,6 +1785,7 @@ function isTopicTitleTaken(title, excludeId = null) {
         }
 
         if (nextScreen) {
+        loadTopics();
           show(nextScreen);
         } else {
           show("home");
@@ -1792,7 +1793,6 @@ function isTopicTitleTaken(title, excludeId = null) {
       }
 
       function startSessionSafe(topicName) {
-        // סגירת סשן קודם אם קיים
         if (stats.current) {
           finishSessionIfActive();
         }
