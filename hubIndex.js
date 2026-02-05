@@ -1,5 +1,5 @@
 window.HUB_INDEX = {
-  "version": 2,
+  "version": 666,
   "languages": [
     {
       "id": "ar-he",
