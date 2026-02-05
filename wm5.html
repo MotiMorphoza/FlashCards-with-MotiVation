@@ -43,9 +43,9 @@ body {
 
 #gameScreen {
   height: 100dvh;
-  display: flex;
   flex-direction: column;
 }
+
 
 
 /* ===== SELECT ===== */
@@ -181,7 +181,7 @@ button.secondary {
   align-items: center;
   justify-content: center;
 
-  padding: 8px;          /* קטן יותר */
+  padding: 8px; 
   border-radius: 16px;
   text-align: center;
 
@@ -264,7 +264,7 @@ html, body {
 <div id="startScreen">
   <div class="main-title">WORD MATCH</div>
   <div class="subtitle">Choose language · Pick a topic · Start</div>
-  <div style="text-align: center; opacity: 0.4">TEST - 89</div>
+  <div style="text-align: center; opacity: 0.4">TEST - 90</div>
 
   <select id="langSelect">
     <option value="">Select language…</option>
@@ -727,13 +727,7 @@ soundBtn.onclick = () => {
 
 document.getElementById("exitBtn").onclick = exitSession;
 
-// ===== INIT SAFETY =====
-document.getElementById("overlay").classList.remove("active");
-document.getElementById("gameScreen").classList.add("hidden");
-document.getElementById("startScreen").classList.remove("hidden");
-
 
 </script>
-
 </body>
 </html>
