@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 99</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 100</div>
 
       <div
         id="cacheVersion"
@@ -1502,12 +1502,23 @@ if (currentDownloadLang) {
       }
 
       function deleteCurrentTopic() {
-        if (confirm("Delete this topic and all its words?")) {
-          delete data.topics[currentTopic];
-          saveData();
-          showBank();
-        }
-      }
+  if (confirm("Delete this topic and all its words?")) {
+    const topicId = currentTopic;
+
+    // מחיקת הטופיק
+    delete data.topics[topicId];
+    saveData();
+
+    // מחיקת הסטטיסטיקה שלו
+    if (stats.perTopic[topicId]) {
+      delete stats.perTopic[topicId];
+      saveStats();
+    }
+
+    showBank();
+  }
+}
+
 
       function deleteWord(id) {
   const topic = data.topics[currentTopic];
@@ -1949,6 +1960,14 @@ function nextCard() {
      
 
  function renderStats() {
+
+// ניקוי סטטיסטיקות של טופיקים שלא קיימים יותר
+Object.keys(stats.perTopic).forEach((id) => {
+  if (!data.topics[id]) {
+    delete stats.perTopic[id];
+  }
+});
+saveStats();
 
         let topics = Object.values(data.topics).length;
         let words = allWords().length;
