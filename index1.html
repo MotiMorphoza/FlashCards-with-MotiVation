@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 96</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 98</div>
 
       <div
         id="cacheVersion"
@@ -815,9 +815,9 @@ body {
       <div class="download-lang-box">
         <div class="download-lang-title">Choose language</div>
 
-        <select id="downloadLangSelect">
-  <option value="" hidden>Choose language pair</option>
-</select>
+       <select id="downloadLangSelect"> 
+<option value="" hidden>Choose language pair</option> 
+</select> 
 </div>
 
       <div class="download-divider"></div>
@@ -1109,12 +1109,12 @@ Expected structure:
 }
 */
 
-      function loadHubIndex() {
-        if (!window.HUB_INDEX) {
-          console.warn("HUB_INDEX is missing.");
-          alert("Word Library is not available right now.");
-          return false;
-        }
+      
+    function loadHubIndex() {␊
+        if (!window.HUB_INDEX) {␊
+          alert("Word Library is not available right now.");␊
+          return false;␊
+        }␊
 
         const idx = window.HUB_INDEX;
 
@@ -1132,6 +1132,20 @@ Expected structure:
 
         hubIndex = idx;
         return true;
+      }
+
+      function buildDownloadLangSelect() {
+        const select = document.getElementById("downloadLangSelect");
+        if (!select || !hubIndex) return;
+
+        select.innerHTML = `<option value="" hidden>Choose language pair</option>`;
+
+        hubIndex.languages.forEach((lang) => {
+          const opt = document.createElement("option");
+          opt.value = lang.id;
+          opt.textContent = lang.title;
+          select.appendChild(opt);
+        });
       }
 
 function buildDownloadLangSelect() {
@@ -1264,18 +1278,12 @@ mode:
 
         if (!hubIndex) return;
 
-        // איפוס שפה
-        currentDownloadLang = null;
-
-        // איפוס בחירה וסטייל של השפה
         if (downloadLangSelect) {
           downloadLangSelect.value = "";
         }
 
-        // בניית UI של האקורדיונים
         buildDownloadUI();
 
-        // מצב אפור – נושאים נעולים עד בחירת שפה
         const acc = document.getElementById("downloadAccordions");
         if (acc) {
           acc.classList.add("lang-not-selected");
@@ -2161,28 +2169,42 @@ function nextCard() {
       }
 
       async function onDownloadFile(path, groupId, fileName) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-  try {
-    const res = await fetch(path, { signal: controller.signal });
-    if (!res.ok) {
-      alert("File not found");
-      return;
-    }
-
-    const csvText = await res.text();
-
-    const baseName = fileName.replace(/\.csv$/i, "");
+if (!currentDownloadLang) {
+    alert("Please choose language first");
+    return;
+  }
+  const baseName = fileName.replace(/\.csv$/i, "");
 const topicTitle = `${groupId} · ${baseName} (${fileName})`;
 
+// בדיקה אם כבר קיים topic מה-HUB עם אותו קובץ
+const existing = Object.values(data.topics).find(
+  (t) =>
+    t.source === "hub" &&
+    t.hubMeta &&
+    t.hubMeta.fileName === fileName &&
+    t.hubMeta.groupId === groupId &&
+    t.hubMeta.lang === currentDownloadLang
+);
 
-    const topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
-      path,
-      groupId,
-      fileName,
-      lang: currentDownloadLang,
-    });
+let topicId;
+
+if (existing) {
+  topicId = existing.id;
+} else {
+  topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
+    path,
+    groupId,
+    fileName,
+    lang: currentDownloadLang,
+  });
+}
+
+
+if (!topicId) return;
+
+setCurrentTopic(topicId);
+startSessionSafe(topicId);
+
 
     if (!topicId) return;
 
@@ -2208,7 +2230,12 @@ const topicTitle = `${groupId} · ${baseName} (${fileName})`;
         });
       }
 
+function markActiveDownloadLang() {
+        if (!downloadLangSelect) return;
 
+        [...downloadLangSelect.classList]
+          .filter((token) => token.startsWith("lang-"))
+          .forEach((token) => downloadLangSelect.classList.remove(token));
         const acc = document.getElementById("downloadAccordions");
 
         if (currentDownloadLang) {
@@ -2263,7 +2290,7 @@ const topicTitle = `${groupId} · ${baseName} (${fileName})`;
 
       /* ===== INIT (SAFE) ===== */
 
-const APP_VERSION = 555;
+const APP_VERSION = 666;
 const APP_VERSION_KEY = "app_version";
 
 (function bootstrapVersionGate() {
@@ -2277,9 +2304,10 @@ const APP_VERSION_KEY = "app_version";
 })();
 
 (function startApp() {
-  gateUntilReset();
+  gateUntilReset(); // אם החלטת להשאיר אותו
   loadHubIndex();
- buildDownloadLangSelect();
+  buildDownloadLangSelect();
+  markActiveDownloadLang();
   loadTopics();
   updateInstructions();
 })();
