@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 98</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 99</div>
 
       <div
         id="cacheVersion"
@@ -1264,19 +1264,22 @@ mode:
 
         if (!hubIndex) return;
 
-        // איפוס בחירה וסטייל של השפה
-        if (downloadLangSelect) {
-          downloadLangSelect.value = "";
-        }
+      if (downloadLangSelect && currentDownloadLang) {
+  downloadLangSelect.value = currentDownloadLang;
+}
 
-        // בניית UI של האקורדיונים
-        buildDownloadUI();
+      const acc = document.getElementById("downloadAccordions");
 
-        // מצב אפור – נושאים נעולים עד בחירת שפה
-        const acc = document.getElementById("downloadAccordions");
-        if (acc) {
-          acc.classList.add("lang-not-selected");
-        }
+if (currentDownloadLang) {
+  buildDownloadUI();
+  if (acc) acc.classList.remove("lang-not-selected");
+} else {
+  if (acc) {
+    acc.innerHTML = "";
+    acc.classList.add("lang-not-selected");
+  }
+}
+
 
         closeAllAccordions();
 
@@ -2111,6 +2114,7 @@ function nextCard() {
 
       async function buildDownloadUI() {
         if (!hubIndex || !currentDownloadLang) return;
+
 
         const tree = getDownloadTree(currentDownloadLang);
         const container = document.getElementById("downloadAccordions");
