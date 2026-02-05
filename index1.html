@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 93</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 94</div>
 
       <div
         id="cacheVersion"
@@ -1181,11 +1181,6 @@ mode:
 - "rename"  → שינוי שם טופיק
 */
 
-
-function isTopicTitleTaken(title, excludeId = null) {
-  return !isTopicTitleAvailable(title, excludeId);
-}
-
       function allWords() {
   let a = [];
   Object.values(data.topics).forEach((topic) => {
@@ -1275,13 +1270,8 @@ function isTopicTitleTaken(title, excludeId = null) {
           acc.classList.add("lang-not-selected");
         }
 
-        // עדכון סטייל של select (מוריד כל סימון קודם)
-        markActiveDownloadLang();
-
-        // סגירת כל האקורדיונים
         closeAllAccordions();
 
-        // הצגת המסך
         show("download");
       }
 
@@ -2202,19 +2192,11 @@ const topicTitle = `${groupId} · ${baseName} (${fileName})`;
       if (downloadLangSelect) {
         downloadLangSelect.addEventListener("change", () => {
           currentDownloadLang = downloadLangSelect.value || null;
-          markActiveDownloadLang();
           buildDownloadUI();
           closeAllAccordions();
         });
       }
 
-      function markActiveDownloadLang() {
-        downloadLangSelect.classList.remove(
-          "lang-he-en",
-          "lang-pl-en",
-          "lang-ar-he",
-          "lang-es-he",
-        );
 
         const acc = document.getElementById("downloadAccordions");
 
