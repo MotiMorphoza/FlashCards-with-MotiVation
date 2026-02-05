@@ -160,11 +160,17 @@
       }
 
       .card {
-  white-space: normal;
-  word-break: normal;
-  overflow-wrap: break-word;
-}
-
+        background: #111;
+        height: 220px; /* כרטיס קבוע */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 102px; /* פי 3 */
+        line-height: 1.15;
+        text-align: center;
+        border-radius: 12px;
+        padding: 20px;
+        user-select: none;
 
         overflow: hidden; /* הכרטיס לא גדל */
         white-space: normal; /* מותר לשבור שורה */
@@ -765,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 99</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 95</div>
 
       <div
         id="cacheVersion"
@@ -810,8 +816,13 @@ body {
         <div class="download-lang-title">Choose language</div>
 
         <select id="downloadLangSelect">
-  <option value="" hidden>Choose language pair</option>
-</select>
+          <option value="" hidden>Choose language pair</option>
+          <option value="he-en">Hebrew → English</option>
+          <option value="pl-en">Polish → English</option>
+          <option value="ar-he">Arabic → Hebrew</option>
+          <option value="es-he">Spanish → Hebrew</option>
+        </select>
+      </div>
 
       <div class="download-divider"></div>
 
@@ -1126,22 +1137,6 @@ Expected structure:
         hubIndex = idx;
         return true;
       }
-
-function buildDownloadLangSelect() {
-  const select = document.getElementById("downloadLangSelect");
-  if (!select || !hubIndex) return;
-
-  // שמירה על placeholder
-  select.innerHTML = `<option value="" hidden>Choose language pair</option>`;
-
-  hubIndex.languages.forEach((lang) => {
-    const opt = document.createElement("option");
-    opt.value = lang.id;
-    opt.textContent = lang.title;
-    select.appendChild(opt);
-  });
-}
-
 
       /* ===== UTIL ===== */
 
@@ -1782,7 +1777,9 @@ function startSessionSafe(topicName) {
 
   // reset session state
   session = [];
+  current = null;
   cardFlipped = false;
+  shuffleUsed = false;
   sessionDefaultDirection = "A";
 
   // ----- HARD WORDS -----
@@ -1846,9 +1843,8 @@ function nextCard() {
   }
 
   cardFlipped = false;
-
-  show("session"); 
-  renderCard();     
+  renderCard();
+  show("session");
 }
 
 
@@ -1862,24 +1858,18 @@ function nextCard() {
 
         const text = side === "A" ? session[0].learn : session[0].tr;
 
-        if (!card) return;
-card.textContent = text;
-
+        card.textContent = text;
 
         requestAnimationFrame(() => {
           autoFitCardText();
         });
 
-        const rc = document.getElementById("remainingCount");
-if (rc) rc.textContent = session.length;
-
+        document.getElementById("remainingCount").textContent = session.length;
       }
 
       function autoFitCardText() {
-  if (!card || !card.textContent) return;
-
-  const maxFont = 72;
-  const minFont = 28;
+  const maxFont = 72;   // תקרה סבירה
+  const minFont = 16;
 
   let size = maxFont;
   card.style.fontSize = size + "px";
@@ -1887,18 +1877,16 @@ if (rc) rc.textContent = session.length;
   while (size > minFont) {
     card.style.fontSize = size + "px";
 
-    // מדידה אמיתית
-    const tooTall = card.scrollHeight > card.clientHeight + 2;
-    const tooWide = card.scrollWidth > card.clientWidth + 2;
-
-    if (tooTall || tooWide) {
+    if (
+      card.scrollHeight > card.clientHeight ||
+      card.scrollWidth > card.clientWidth
+    ) {
       size -= 2;
     } else {
       break;
     }
   }
 }
-
 
       function flipCard() {
         cardFlipped = !cardFlipped;
@@ -2072,6 +2060,7 @@ if (rc) rc.textContent = session.length;
       const restartBtn = document.getElementById("restartSessionBtn");
       if (restartBtn) {
         restartBtn.onclick = () => {
+          shuffleUsed = false;
           startSession();
         };
       }
@@ -2279,7 +2268,6 @@ const APP_VERSION_KEY = "app_version";
 (function startApp() {
   gateUntilReset();
   loadHubIndex();
-buildDownloadLangSelect();
   loadTopics();
   updateInstructions();
 })();
