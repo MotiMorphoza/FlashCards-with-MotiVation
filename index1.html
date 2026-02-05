@@ -1890,16 +1890,18 @@ function finalizeSession(showEndScreen = false) {
 }
 
 
-function nextCard() {
-
-  finalizeSession(true);
-  return;}
+ffunction nextCard() {
+  if (session.length === 0) {
+    finalizeSession(true);
+    return;
+  }
 
   current = session[0];
   cardFlipped = false;
   renderCard();
   show("session");
 }
+
 
 
       function renderCard() {
