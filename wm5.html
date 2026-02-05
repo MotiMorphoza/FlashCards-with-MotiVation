@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Word Match</title>
 
 <script src="hubIndex.js"></script>
@@ -157,10 +157,12 @@ button.secondary {
 }
 
 .board {
+.board {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px;
 }
+
 
 .card {
   padding: 16px;
@@ -173,6 +175,11 @@ button.secondary {
   color: #5a1f14;
   box-shadow: 0 6px 14px rgba(0,0,0,.35);
   user-select: none;
+
+  /* 🛡 mobile safety */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 .card.ltr { direction: ltr; }
 .card.rtl { direction: rtl; }
@@ -219,6 +226,13 @@ button.secondary {
   flex-direction: column;
   gap: 12px;
 }
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 </style>
 </head>
 
