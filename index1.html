@@ -160,17 +160,11 @@
       }
 
       .card {
-        background: #111;
-        height: 220px; /* כרטיס קבוע */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 102px; /* פי 3 */
-        line-height: 1.15;
-        text-align: center;
-        border-radius: 12px;
-        padding: 20px;
-        user-select: none;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
 
         overflow: hidden; /* הכרטיס לא גדל */
         white-space: normal; /* מותר לשבור שורה */
@@ -771,7 +765,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 98</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 99</div>
 
       <div
         id="cacheVersion"
@@ -1882,8 +1876,10 @@ if (rc) rc.textContent = session.length;
       }
 
       function autoFitCardText() {
-  const maxFont = 72;   // תקרה סבירה
-  const minFont = 16;
+  if (!card || !card.textContent) return;
+
+  const maxFont = 72;
+  const minFont = 28;
 
   let size = maxFont;
   card.style.fontSize = size + "px";
@@ -1891,16 +1887,18 @@ if (rc) rc.textContent = session.length;
   while (size > minFont) {
     card.style.fontSize = size + "px";
 
-    if (
-      card.scrollHeight > card.clientHeight ||
-      card.scrollWidth > card.clientWidth
-    ) {
+    // מדידה אמיתית
+    const tooTall = card.scrollHeight > card.clientHeight + 2;
+    const tooWide = card.scrollWidth > card.clientWidth + 2;
+
+    if (tooTall || tooWide) {
       size -= 2;
     } else {
       break;
     }
   }
 }
+
 
       function flipCard() {
         cardFlipped = !cardFlipped;
