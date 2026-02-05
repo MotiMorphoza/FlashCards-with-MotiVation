@@ -37,6 +37,13 @@ body {
   margin-bottom: 18px;
 }
 
+#gameScreen {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+
 /* ===== SELECT ===== */
 select {
   width: 100%;
@@ -157,18 +164,23 @@ button.secondary {
 }
 
 .board {
-.board {
+  flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-auto-rows: 1fr;
   gap: 10px;
 }
 
 
 .card {
-  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;          /* קטן יותר */
   border-radius: 16px;
   text-align: center;
-  font-size: 20px;
+
   font-weight: 700;
   cursor: pointer;
   background: linear-gradient(180deg,#ffe5d9,#ffb4a2);
@@ -176,17 +188,21 @@ button.secondary {
   box-shadow: 0 6px 14px rgba(0,0,0,.35);
   user-select: none;
 
-  /* 🛡 mobile safety */
   max-width: 100%;
-  overflow-wrap: break-word;
-  word-break: keep-all;
+  overflow: hidden;
 }
+
+
+
 .card.ltr { direction: ltr; }
 .card.rtl { direction: rtl; }
 
 .card span {
-  transition: color .15s;
+  font-size: clamp(14px, 3.8vw, 20px);
+  line-height: 1.15;
+  word-break: keep-all;
 }
+
 .card.selected span {
   color: #2563eb;
 }
@@ -244,7 +260,7 @@ html, body {
 <div id="startScreen">
   <div class="main-title">WORD MATCH</div>
   <div class="subtitle">Choose language · Pick a topic · Start</div>
-<div style="text-align: center; opacity: 0.4">TEST - 86</div>
+  <div style="text-align: center; opacity: 0.4">TEST - 87</div>
 
   <select id="langSelect">
     <option value="">Select language…</option>
@@ -707,6 +723,10 @@ soundBtn.onclick = () => {
 
 
 document.getElementById("exitBtn").onclick = exitSession;
+
+// ===== INIT SAFETY =====
+document.getElementById("overlay").classList.remove("active");
+
 </script>
 
 </body>
