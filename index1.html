@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 95</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 96</div>
 
       <div
         id="cacheVersion"
@@ -1788,9 +1788,7 @@ function startSessionSafe(topicName) {
 
   // reset session state
   session = [];
-  current = null;
   cardFlipped = false;
-  shuffleUsed = false;
   sessionDefaultDirection = "A";
 
   // ----- HARD WORDS -----
@@ -2071,7 +2069,6 @@ function nextCard() {
       const restartBtn = document.getElementById("restartSessionBtn");
       if (restartBtn) {
         restartBtn.onclick = () => {
-          shuffleUsed = false;
           startSession();
         };
       }
