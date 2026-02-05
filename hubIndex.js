@@ -1,21 +1,25 @@
 window.HUB_INDEX = {
-  "version": 666,
+  "version": 2,
   "languages": [
     {
       "id": "ar-he",
-      "title": "Arbic-Hebrew"
+      "title": "ar-he"
     },
     {
       "id": "es-he",
-      "title": "Spanish-Hebrew"
+      "title": "es-he"
     },
     {
       "id": "he-en",
-      "title": "Hebrew-English"
+      "title": "he-en"
+    },
+    {
+      "id": "he-pl",
+      "title": "he-pl"
     },
     {
       "id": "pl-en",
-      "title": "Polish-English"
+      "title": "pl-en"
     }
   ],
   "branches": [
@@ -39,6 +43,24 @@ window.HUB_INDEX = {
         ],
         "he-en": [
           "more-less-too-very-most.csv"
+        ]
+      }
+    },
+    {
+      "branch": "vocabulary",
+      "group": "daily_use",
+      "files": {
+        "ar-he": [
+          "daily000.csv"
+        ],
+        "es-he": [
+          "daily000.csv"
+        ],
+        "he-en": [
+          "daily000.csv"
+        ],
+        "he-pl": [
+          "daily000.csv"
         ]
       }
     },
