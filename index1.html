@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 96</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 97</div>
 
       <div
         id="cacheVersion"
@@ -1867,13 +1867,17 @@ function nextCard() {
 
         const text = side === "A" ? session[0].learn : session[0].tr;
 
-        card.textContent = text;
+        if (!card) return;
+card.textContent = text;
+
 
         requestAnimationFrame(() => {
           autoFitCardText();
         });
 
-        document.getElementById("remainingCount").textContent = session.length;
+        const rc = document.getElementById("remainingCount");
+if (rc) rc.textContent = session.length;
+
       }
 
       function autoFitCardText() {
