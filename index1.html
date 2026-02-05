@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 88</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 90</div>
 
       <div
         id="cacheVersion"
@@ -1016,7 +1016,7 @@ body {
 
       const topicSelect = document.getElementById("topicSelect");
       const bankTopicSelect = document.getElementById("bankTopicSelect");
-      const bankListTopicSelect = document.getElementById("bankListTopicSelect", );
+      const bankListTopicSelect = document.getElementById("bankListTopicSelect");
       const searchInput = document.getElementById("searchInput");
       const sortSelect = document.getElementById("sortSelect");
       const wordList = document.getElementById("wordList");
@@ -1188,38 +1188,6 @@ mode:
 function isTopicTitleTaken(title, excludeId = null) {
   return !isTopicTitleAvailable(title, excludeId);
 }
-
-      function validateTopicName(name, mode, currentName = null) {
-        const n = normalizeTopicName(name);
-
-        if (!n) {
-          alert("Topic name is empty");
-          return null;
-        }
-
-        // יצירת טופיק חדש
-        if (mode === "create") {
-          if (data.topics[n]) {
-            alert(`Topic "${n}" already exists`);
-       
-     return null;
-          }
-          return n;
-        }
-
-        // שינוי שם
-        if (mode === "rename") {
-          if (n === currentName) return n; // אותו שם – מותר
-          if (data.topics[n]) {
-            alert(`Topic "${n}" already exists`);
-            return null;
-          }
-          return n;
-        }
-
-        console.error("Unknown topic name validation mode:", mode);
-        return null;
-      }
 
       function allWords() {
   let a = [];
@@ -1994,36 +1962,8 @@ ffunction nextCard() {
         finalizeSession(false);}
 
 
-      function loadCSVToSession(csvText, topicTitle) {
-        session = [];
-
-        csvText.split(/\r?\n/).forEach((line, i) => {
-          if (i === 0) return;
-          const p = line.split(",");
-          if (p.length >= 2) {
-            session.push({
-              learn: p[0].replace(/"/g, ""),
-              tr: p.slice(1).join(",").replace(/"/g, ""),
-            });
-          }
-        });
-
-        if (session.length === 0) return;
-
-        setCurrentTopic(topicTitle);
-        sessionDefaultDirection = "A";
-        cardFlipped = false;
-        shuffleUsed = false;
-
-        stats.sessions++;
-        stats.current = { topic: currentTopic, correct: 0, wrong: 0 };
-
-        nextCard();
-      }
-
       /* ===== STATS ===== */
      
-
 
  function renderStats() {
 
