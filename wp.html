@@ -322,6 +322,23 @@
   font-size: 14px;
 }
 
+.word {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  background: linear-gradient(180deg, #ffe5d9, #ffb4a2);
+  color: #5a1f14;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.word.moving {
+  transform: scale(0.92);
+  opacity: 0.7;
+}
+
+
 
     </style>
   </head>
@@ -330,7 +347,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 021</div>
+        <div class="main-title">TEST - 022</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -669,35 +686,45 @@ bankTokens = shuffle(
   const d = document.createElement("div");
   d.className = `word ${inSentence ? "in-sentence" : ""}`;
   d.textContent = tok.text;
+  d.dataset.id = tok.id;
   d.onclick = () => moveToken(tok.id, inSentence);
   return d;
 }
 
+
       function moveToken(id, fromSentence) {
-const now = Date.now();
-if (now - lastMoveTime < 60) return;
-lastMoveTime = now;
+  const now = Date.now();
+  if (now - lastMoveTime < 60) return;
+  lastMoveTime = now;
 
-if (!audioUnlocked) {
-  ensureAudio();
-  audioUnlocked = true;
+  if (!audioUnlocked) {
+    ensureAudio();
+    audioUnlocked = true;
+  }
+
+  const el = document.querySelector(`.word[data-id="${id}"]`);
+  if (el) el.classList.add("moving");
+
+  playSound("click");
+
+  if (fromSentence) {
+    const idx = builtTokens.findIndex((t) => t.id === id);
+    if (idx < 0) return;
+    bankTokens.push(builtTokens[idx]);
+    builtTokens.splice(idx, 1);
+  } else {
+    const idx = bankTokens.findIndex((t) => t.id === id);
+    if (idx < 0) return;
+    builtTokens.push(bankTokens[idx]);
+    bankTokens.splice(idx, 1);
+  }
+
+  allWrongCounted = false;
+
+  setTimeout(() => {
+    renderTokens();
+  }, 80);
 }
-
-        playSound("click");
-        if (fromSentence) {
-          const idx = builtTokens.findIndex((t) => t.id === id);
-          if (idx < 0) return;
-          bankTokens.push(builtTokens[idx]);
-          builtTokens.splice(idx, 1);
-        } else {
-          const idx = bankTokens.findIndex((t) => t.id === id);
-          if (idx < 0) return;
-          builtTokens.push(bankTokens[idx]);
-          bankTokens.splice(idx, 1);
-        }
-allWrongCounted = false;
-        renderTokens();
-      }
 
 function checkSentenceState() {
   const built = builtTokens.map((t) => t.text).join(" ");
