@@ -13,7 +13,7 @@ INDEX_FILE = Path("hubIndex.js")
 LANGUAGES = [
     ("ar-he", "Arabic → Hebrew"),
     ("he-en", "Hebrew → English"),
-    ("pl-en", "Polish → English"),
+    ("en-pl", "English → Polish"),
     ("es-he", "Spanish → Hebrew"),
     ("he-pl", "Hebrew → Polish"),
 ]
