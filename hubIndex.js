@@ -6,6 +6,10 @@ window.HUB_INDEX = {
       "title": "ar-he"
     },
     {
+      "id": "en-pl",
+      "title": "en-pl"
+    },
+    {
       "id": "es-he",
       "title": "es-he"
     },
@@ -16,10 +20,6 @@ window.HUB_INDEX = {
     {
       "id": "he-pl",
       "title": "he-pl"
-    },
-    {
-      "id": "pl-en",
-      "title": "pl-en"
     }
   ],
   "branches": [
@@ -73,13 +73,14 @@ window.HUB_INDEX = {
           "000.csv",
           "test.csv"
         ],
+        "en-pl": [
+          "sentences 000.csv"
+        ],
         "es-he": [
           "000.csv"
         ],
         "he-en": [
-          "sentences 000.csv"
-        ],
-        "pl-en": [
+          "sentences 000 - Copy.csv",
           "sentences 000.csv"
         ]
       }
