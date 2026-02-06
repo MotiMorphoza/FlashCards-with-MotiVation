@@ -330,7 +330,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 019</div>
+        <div class="main-title">TEST - 020</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -868,11 +868,25 @@ btn.textContent = "✕";
 }
 
       function speakCurrent() {
-        const utter = new SpeechSynthesisUtterance(currentTokens.join(" "));
-        utter.lang = speechLangFromPair(selectedMeta?.lang || "en");
-        speechSynthesis.cancel();
-        speechSynthesis.speak(utter);
-      }
+  const text = currentTokens.join(" ");
+  const langCode = speechLangFromPair(selectedMeta?.lang || "en");
+
+  const voices = speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith(langCode.split("-")[0]));
+
+  if (!voice) {
+    alert("No voice available for this language.");
+    return;
+  }
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = langCode;
+  utter.voice = voice;
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
+
 
       function speechLangFromPair(pair) {
         const first = pair.split("-")[0] || "en";
