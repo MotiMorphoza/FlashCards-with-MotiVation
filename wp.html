@@ -238,7 +238,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 003</div>
+        <div class="main-title">TEST - 004</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -510,7 +510,7 @@
         builtTokens = [];
         currentWrongAttempts = 0;
         allWrongCounted = false;
-        speaker.classList.add("hidden");
+        document.getElementById("speakerBox").classList.add("hidden");
         document.getElementById("nextBtn").disabled = true;
 
         renderTokens();
