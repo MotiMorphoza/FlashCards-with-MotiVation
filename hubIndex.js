@@ -51,7 +51,8 @@ window.HUB_INDEX = {
       "group": "daily_use",
       "files": {
         "ar-he": [
-          "daily000.csv"
+          "daily000.csv",
+          "test.csv"
         ],
         "es-he": [
           "daily000.csv"
@@ -69,7 +70,8 @@ window.HUB_INDEX = {
       "group": "sentences",
       "files": {
         "ar-he": [
-          "000.csv"
+          "000.csv",
+          "test.csv"
         ],
         "es-he": [
           "000.csv"
