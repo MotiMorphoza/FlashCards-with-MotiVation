@@ -231,6 +231,44 @@
   user-select: none;
 }
 
+.manager-row {
+  background: #0b1220;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.manager-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.manager-sentence {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.manager-translation {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.remove-btn {
+  width: auto;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fecaca, #ef4444);
+  color: #3f0000;
+  font-weight: 900;
+}
+
+
     </style>
   </head>
   <body>
@@ -238,7 +276,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 007</div>
+        <div class="main-title">TEST - 008</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -670,13 +708,22 @@ allWrongCounted = true;
         hard.forEach((item, i) => {
           const row = document.createElement("div");
           row.className = "manager-row";
-          row.innerHTML = `
-      <div class="manager-sentence" dir="${isRTL(item.source) ? "rtl" : "ltr"}">${escapeHtml(item.source)}</div>
-      <div class="manager-translation" dir="${isRTL(item.translation) ? "rtl" : "ltr"}">${escapeHtml(item.translation)}</div>
-    `;
-          const btn = document.createElement("button");
-          btn.className = "secondary";
-          btn.textContent = "Remove";
+
+row.innerHTML = `
+  <div class="manager-texts">
+    <div class="manager-sentence" dir="${isRTL(item.source) ? "rtl" : "ltr"}">
+      ${escapeHtml(item.source)}
+    </div>
+    <div class="manager-translation" dir="${isRTL(item.translation) ? "rtl" : "ltr"}">
+      ${escapeHtml(item.translation)}
+    </div>
+  </div>
+`;
+
+const btn = document.createElement("button");
+btn.className = "remove-btn";
+btn.textContent = "✕";
+
           btn.onclick = () => {
             const next = getHardSentences();
             next.splice(i, 1);
