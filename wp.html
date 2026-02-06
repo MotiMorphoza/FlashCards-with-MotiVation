@@ -320,7 +320,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 014</div>
+        <div class="main-title">TEST - 015</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -560,13 +560,19 @@
       }
 
       function startHardSession() {
-        const hard = getHardSentences();
-        if (!hard.length) return;
-        startSession(
-          hard.map((h) => ({ source: h.source, translation: h.translation })),
-          true,
-        );
-      }
+  const hard = getHardSentences();
+
+  if (!hard.length) {
+    alert("No hard sentences yet.");
+    return;
+  }
+
+  startSession(
+    hard.map((h) => ({ source: h.source, translation: h.translation })),
+    true,
+  );
+}
+
 
       function startSession(sentences, hardMode) {
         isHardMode = hardMode;
