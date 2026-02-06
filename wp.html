@@ -225,6 +225,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
+        <div class="main-title">TEST - 000</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -485,10 +486,10 @@
 
         const promptText = document.getElementById("promptText");
         const translationText = document.getElementById("translationText");
-        promptText.textContent = row.source;
+        promptText.textContent = "";
         translationText.textContent = row.translation;
-        promptText.dir = isRTL(row.source) ? "rtl" : "ltr";
-        translationText.dir = isRTL(row.translation) ? "rtl" : "ltr";
+         translationText.dir = isRTL(row.translation) ? "rtl" : "ltr";
+
 
         currentTokens = tokenizeSentence(row.source);
         bankTokens = shuffle(
@@ -532,7 +533,6 @@
         d.className = `word ${inSentence ? "in-sentence" : ""}`;
         d.textContent = tok.text;
         d.ondblclick = () => moveToken(tok.id, inSentence);
-        d.onclick = () => moveToken(tok.id, inSentence);
         return d;
       }
 
