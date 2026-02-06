@@ -304,6 +304,15 @@
   }
 }
 
+#listenText {
+  text-align: center;
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+
     </style>
   </head>
   <body>
@@ -311,7 +320,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 009</div>
+        <div class="main-title">TEST - 010</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -333,9 +342,11 @@
           <div id="progress">🔢 0/0</div>
         </div>
 
-        <div class="card-box">
-          <div id="translationText" class="translation-view"></div>
-        </div>
+       <div class="card-box" id="bankBox">
+  <div class="label">Word bank</div>
+  <div id="bankZone" class="word-zone"></div>
+</div>
+
 
         <div class="card-box">
           <div class="label">Build sentence</div>
@@ -345,6 +356,7 @@
 
 <div id="speakerBox" class="hidden">
   <div id="speaker">🔊</div>
+<div id="listenText">Listen</div>
 </div>
 
 
@@ -658,6 +670,10 @@ function checkSentenceState() {
   const wasDisabled = nextBtn.disabled;
 
   nextBtn.disabled = !isCorrect;
+document
+  .getElementById("bankBox")
+  .classList.toggle("hidden", isCorrect);
+
 
   if (isCorrect && wasDisabled) {
     playSound("success");
