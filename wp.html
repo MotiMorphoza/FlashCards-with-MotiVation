@@ -330,7 +330,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 018</div>
+        <div class="main-title">TEST - 019</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -829,37 +829,43 @@ btn.textContent = "✕";
 
 
       function playSound(type) {
-        if (!soundEnabled) return;
-        ensureAudio();
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        const filter = audioCtx.createBiquadFilter();
-        if (type === "success") {
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(720, now);
-} else if (type === "error") {
-  osc.type = "sawtooth";
-  osc.frequency.setValueAtTime(220, now);
-} else {
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(420, now);
-}
+  if (!soundEnabled) return;
+  ensureAudio();
 
-        filter.type = "lowpass";
-        filter.frequency.value = 1200;
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(
-          type === "success" ? 0.035 : 0.02,
-          now + 0.04,
-        );
-        gain.gain.linearRampToValueAtTime(0, now + 0.26);
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.3);
-      }
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+
+  // סוג הצליל
+  if (type === "success") {
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(560, now);
+  } else if (type === "error") {
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(240, now);
+  } else {
+    // click
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(380, now);
+  }
+
+  // פילטר לריכוך הצליל
+  filter.type = "lowpass";
+  filter.frequency.value = 900;
+
+  // עקומת עוצמה רכה
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(0.03, now + 0.03);
+  gain.gain.linearRampToValueAtTime(0, now + 0.18);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.2);
+}
 
       function speakCurrent() {
         const utter = new SpeechSynthesisUtterance(currentTokens.join(" "));
