@@ -320,7 +320,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 012</div>
+        <div class="main-title">TEST - 013</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -409,6 +409,8 @@
       let isHardMode = false;
       let soundEnabled = true;
       let audioCtx = null;
+      let audioUnlocked = false;
+
 
       const langSelect = document.getElementById("langSelect");
       const accordions = document.getElementById("accordions");
@@ -645,6 +647,11 @@ bankTokens = shuffle(
       }
 
       function moveToken(id, fromSentence) {
+if (!audioUnlocked) {
+  ensureAudio();
+  audioUnlocked = true;
+}
+
         playSound("click");
         if (fromSentence) {
           const idx = builtTokens.findIndex((t) => t.id === id);
@@ -784,9 +791,15 @@ btn.textContent = "✕";
       }
 
       function ensureAudio() {
-        if (!audioCtx)
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+}
+
 
       function playSound(type) {
         if (!soundEnabled) return;
