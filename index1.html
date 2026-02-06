@@ -1,1383 +1,1384 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hebrew with MotiVation</title>
- <style>
-      .hidden {
-        display: none;
-      }
 
-      body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: #111;
-        color: #fff;
-        font-size: 17px;
-        line-height: 1.55;
-        letter-spacing: 0.3px;
-        overflow-y: auto;
-        overscroll-behavior: none;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hebrew with MotiVation</title>
+  <style>
+    .hidden {
+      display: none;
+    }
 
-      /* ---------- SCREENS ---------- */
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #111;
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.55;
+      letter-spacing: 0.3px;
+      overflow-y: auto;
+      overscroll-behavior: none;
+    }
 
-      .screen {
-        display: none;
-        padding: 18px;
-        max-width: 420px;
-        margin: auto;
-        min-height: 100vh;
-        box-sizing: border-box;
-        overflow-y: auto;
-      }
+    /* ---------- SCREENS ---------- */
 
-      .screen.active {
-        display: block;
-      }
+    .screen {
+      display: none;
+      padding: 18px;
+      max-width: 420px;
+      margin: auto;
+      min-height: 100vh;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
 
-      /* ---------- HOME ---------- */
-      .welcome {
-        font-size: 40px;
-        font-weight: 800;
-        text-align: center;
-        margin-top: 35px;
-      }
-      .instructions {
-        text-align: center;
-        font-size: 25px;
-        margin: 20px 0 30px;
-        color: #bbb;
-      }
-      .title-bottom {
-        text-align: center;
-        font-size: 30px;
-        margin-top: 28px;
-        opacity: 0.85;
-      }
+    .screen.active {
+      display: block;
+    }
 
-      /* ---------- BUTTONS ---------- */
-      button {
-        width: 100%;
-        padding: 14px;
-        margin: 8px 0;
-        font-size: 17px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
-        background: linear-gradient(180deg, #f1f4f8, #dfe7f1);
-        color: #222;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-        transition:
-          transform 0.1s,
-          box-shadow 0.1s,
-          background 0.2s;
-      }
-      button:hover {
-        background: linear-gradient(180deg, #ffffff, #e6eef8);
-      }
-      button:active {
-        transform: translateY(2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
-      }
+    /* ---------- HOME ---------- */
+    .welcome {
+      font-size: 40px;
+      font-weight: 800;
+      text-align: center;
+      margin-top: 35px;
+    }
 
-      .forest {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-      }
+    .instructions {
+      text-align: center;
+      font-size: 25px;
+      margin: 20px 0 30px;
+      color: #bbb;
+    }
 
-      .back {
-        background: linear-gradient(180deg, #e0e0e0, #cfcfcf);
-      }
-      .button-danger {
-        background: linear-gradient(180deg, #ff9aa2, #ff6f6f);
-        color: #300;
-      }
+    .title-bottom {
+      text-align: center;
+      font-size: 30px;
+      margin-top: 28px;
+      opacity: 0.85;
+    }
 
-      .button-primary {
-        background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
-        color: #002b5c;
-      }
+    /* ---------- BUTTONS ---------- */
+    button {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      background: linear-gradient(180deg, #f1f4f8, #dfe7f1);
+      color: #222;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+      transition:
+        transform 0.1s,
+        box-shadow 0.1s,
+        background 0.2s;
+    }
 
-      .button-success {
-        background: linear-gradient(180deg, #b7e4c7, #95d5b2);
-        color: #103b24;
-      }
+    button:hover {
+      background: linear-gradient(180deg, #ffffff, #e6eef8);
+    }
 
-      .button-bank {
-        background: linear-gradient(180deg, #b7e4c7, #95d5b2);
-        color: #103b24;
-      }
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+    }
 
-      .peach {
-        background: linear-gradient(180deg, #ffe5d9, #ffb4a2);
-        color: #5a1f14;
-      }
-      .sunset {
-        background: linear-gradient(180deg, #ffedd5, #fb923c);
-        color: #4a1d00;
-      }
+    .forest {
+      background: linear-gradient(180deg, #bbf7d0, #22c55e);
+      color: #052e16;
+    }
 
-      .lavender {
-        background: linear-gradient(180deg, #ede9fe, #c4b5fd);
-        color: #2e1065;
-      }
+    .back {
+      background: linear-gradient(180deg, #e0e0e0, #cfcfcf);
+    }
 
-      /* ---------- FORM ---------- */
-      select,
-      input,
-      textarea {
-        width: 100%;
-        padding: 13px;
-        margin: 8px 0;
-        font-size: 17px;
-        border-radius: 10px;
-        border: none;
-        box-sizing: border-box;
-      }
+    .button-danger {
+      background: linear-gradient(180deg, #ff9aa2, #ff6f6f);
+      color: #300;
+    }
 
-      /* ---------- SESSION ---------- */
+    .button-primary {
+      background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
+      color: #002b5c;
+    }
 
-      .flip-hint {
-        text-align: center;
-        font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-        font-size: 30px;
-        margin-bottom: 10px;
-        color: #ffd966;
-      }
+    .button-success {
+      background: linear-gradient(180deg, #b7e4c7, #95d5b2);
+      color: #103b24;
+    }
 
-      .card-frame {
-        border: 5px solid #6fa8dc;
-        border-radius: 18px;
-        padding: 14px;
-        background: #2a2a2a;
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.6),
-          inset 0 0 0 2px rgba(255, 255, 255, 0.08);
-      }
+    .button-bank {
+      background: linear-gradient(180deg, #b7e4c7, #95d5b2);
+      color: #103b24;
+    }
 
-      .card {
-        background: #111;
-        height: 220px; /* כרטיס קבוע */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 102px; /* פי 3 */
-        line-height: 1.15;
-        text-align: center;
-        border-radius: 12px;
-        padding: 20px;
-        user-select: none;
+    .peach {
+      background: linear-gradient(180deg, #ffe5d9, #ffb4a2);
+      color: #5a1f14;
+    }
 
-        overflow: hidden; /* הכרטיס לא גדל */
-        white-space: normal; /* מותר לשבור שורה */
-        word-break: normal; /* ❌ לא שוברים מילה */
-        overflow-wrap: normal; /* ❌ לא שוברים מילה */
-      }
+    .sunset {
+      background: linear-gradient(180deg, #ffedd5, #fb923c);
+      color: #4a1d00;
+    }
 
-      .remaining {
-        text-align: center;
-        font-size: 20px;
-        margin-top: 10px;
-        color: #cfe2f3;
-      }
+    .lavender {
+      background: linear-gradient(180deg, #ede9fe, #c4b5fd);
+      color: #2e1065;
+    }
 
-      .row {
-        display: flex;
-        gap: 10px;
-        margin-top: 14px;
-      }
-      .row button {
-        width: 50%;
-      }
+    /* ---------- FORM ---------- */
+    select,
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      font-size: 17px;
+      border-radius: 10px;
+      border: none;
+      box-sizing: border-box;
+    }
+
+    /* ---------- SESSION ---------- */
+
+    .flip-hint {
+      text-align: center;
+      font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #ffd966;
+    }
+
+    .card-frame {
+      border: 5px solid #6fa8dc;
+      border-radius: 18px;
+      padding: 14px;
+      background: #2a2a2a;
+      box-shadow:
+        0 10px 18px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+
+    .card {
+      background: #111;
+      height: 220px;
+      /* כרטיס קבוע */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 102px;
+      /* פי 3 */
+      line-height: 1.15;
+      text-align: center;
+      border-radius: 12px;
+      padding: 20px;
+      user-select: none;
+
+      overflow: hidden;
+      /* הכרטיס לא גדל */
+      white-space: normal;
+      /* מותר לשבור שורה */
+      word-break: normal;
+      /* ❌ לא שוברים מילה */
+      overflow-wrap: normal;
+      /* ❌ לא שוברים מילה */
+    }
+
+    .remaining {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 10px;
+      color: #cfe2f3;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .row button {
+      width: 50%;
+    }
 
 
-      /* ---------- BANK ---------- */
+    /* ---------- BANK ---------- */
 
-      .word-files-invite {
-        border: 2px solid #ffd966;
-        border-radius: 18px;
-        padding: 16px;
-        margin: 16px 0;
-        background: linear-gradient(180deg, #1f1f1f, #151515);
-        box-shadow: 0 0 18px rgba(255, 217, 102, 0.25);
-      }
-      .word-files-invite h3 {
-        text-align: center;
-        font-size: 22px;
-        color: #ffe599;
-        margin-bottom: 6px;
-      }
-      .invite-main {
-        text-align: center;
-        font-size: 15px;
-        margin-bottom: 10px;
-      }
-      .invite-cta {
-        text-align: center;
-        font-size: 17px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        padding: 12px;
-        border-radius: 14px;
-        background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
-        color: #002b5c;
-        cursor: pointer;
+    .word-files-invite {
+      border: 2px solid #ffd966;
+      border-radius: 18px;
+      padding: 16px;
+      margin: 16px 0;
+      background: linear-gradient(180deg, #1f1f1f, #151515);
+      box-shadow: 0 0 18px rgba(255, 217, 102, 0.25);
+    }
 
-        transition:
-          transform 0.15s ease,
-          box-shadow 0.15s ease,
-          opacity 0.15s ease;
-      }
+    .word-files-invite h3 {
+      text-align: center;
+      font-size: 22px;
+      color: #ffe599;
+      margin-bottom: 6px;
+    }
 
-      .invite-cta:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-        opacity: 0.95;
-      }
+    .invite-main {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
 
-      .invite-cta:active {
-        transform: translateY(1px);
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
-      }
+    .invite-cta {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 12px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #9fc5ff, #6fa8ff);
+      color: #002b5c;
+      cursor: pointer;
 
-      /* ---------- DOWNLOAD ---------- */
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+    }
 
-      #download select {
-        margin-bottom: 14px;
-        background: #1c1c1c;
-        color: #fff;
-      }
+    .invite-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+      opacity: 0.95;
+    }
 
-      #download h2 {
-        text-align: center;
-        margin-bottom: 14px;
-      }
+    .invite-cta:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+    }
 
-      #downloadAccordions li {
-        cursor: pointer;
-        padding: 8px 6px;
-        border-radius: 8px;
-        transition:
-          background 0.15s,
-          color 0.15s;
-      }
+    /* ---------- DOWNLOAD ---------- */
 
-      #downloadAccordions li:hover {
-        background: #2a2a2a;
-        color: #ffe5d9; /* peach tone */
-      }
+    #download select {
+      margin-bottom: 14px;
+      background: #1c1c1c;
+      color: #fff;
+    }
 
-      #downloadAccordions li:active {
-        background: #333;
-      }
+    #download h2 {
+      text-align: center;
+      margin-bottom: 14px;
+    }
 
-      /* --- Download language visual state --- */
+    #downloadAccordions li {
+      cursor: pointer;
+      padding: 8px 6px;
+      border-radius: 8px;
+      transition:
+        background 0.15s,
+        color 0.15s;
+    }
 
-      #downloadLangSelect {
-        transition:
-          box-shadow 0.15s ease,
-          border-color 0.15s ease;
-      }
+    #downloadAccordions li:hover {
+      background: #2a2a2a;
+      color: #ffe5d9;
+      /* peach tone */
+    }
 
-      /* סימון עדין לפי שפה */
-      #downloadLangSelect.lang-he-en {
-        box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.5); /* forest */
-      }
-      #downloadLangSelect.lang-pl-en {
-        box-shadow: 0 0 0 2px rgba(255, 229, 217, 0.55); /* peach */
-      }
-      #downloadLangSelect.lang-ar-he {
-        box-shadow: 0 0 0 2px rgba(255, 237, 213, 0.55); /* sunset */
-      }
-      #downloadLangSelect.lang-es-he {
-        box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.35); /* forest soft */
-      }
-      .li-available {
-        background: linear-gradient(180deg, #bbf7d0, #22c55e);
-        color: #052e16;
-        font-weight: 700;
-      }
+    #downloadAccordions li:active {
+      background: #333;
+    }
 
-      .li-locked {
-        opacity: 0.35;
-        cursor: not-allowed;
-      }
+    /* --- Download language visual state --- */
 
-      /* ---------- DOWNLOAD STRUCTURE ---------- */
+    #downloadLangSelect {
+      transition:
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+    }
 
-      .download-lang-box {
-        background: linear-gradient(180deg, #1f2933, #161c22);
-        border: 2px solid #6fa8dc;
-        border-radius: 16px;
-        padding: 14px;
-        margin-bottom: 16px;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
-      }
+    /* סימון עדין לפי שפה */
+    #downloadLangSelect.lang-he-en {
+      box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.5);
+      /* forest */
+    }
 
-      .download-lang-title {
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        margin-bottom: 8px;
-        color: #9fc5ff;
-        text-align: center;
-      }
+    #downloadLangSelect.lang-pl-en {
+      box-shadow: 0 0 0 2px rgba(255, 229, 217, 0.55);
+      /* peach */
+    }
 
-      .download-divider {
-        height: 1px;
-        background: linear-gradient(
-          to right,
+    #downloadLangSelect.lang-ar-he {
+      box-shadow: 0 0 0 2px rgba(255, 237, 213, 0.55);
+      /* sunset */
+    }
+
+    #downloadLangSelect.lang-es-he {
+      box-shadow: 0 0 0 2px rgba(187, 247, 208, 0.35);
+      /* forest soft */
+    }
+
+    .li-available {
+      background: linear-gradient(180deg, #bbf7d0, #22c55e);
+      color: #052e16;
+      font-weight: 700;
+    }
+
+    .li-locked {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ---------- DOWNLOAD STRUCTURE ---------- */
+
+    .download-lang-box {
+      background: linear-gradient(180deg, #1f2933, #161c22);
+      border: 2px solid #6fa8dc;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .download-lang-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      margin-bottom: 8px;
+      color: #9fc5ff;
+      text-align: center;
+    }
+
+    .download-divider {
+      height: 1px;
+      background: linear-gradient(to right,
           transparent,
           #6fa8dc,
-          transparent
-        );
-        margin: 10px 0 14px;
-        opacity: 0.8;
-      }
+          transparent);
+      margin: 10px 0 14px;
+      opacity: 0.8;
+    }
 
-      .download-topics-title {
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.4px;
-        margin-bottom: 8px;
-        color: #ffd966;
-        text-align: center;
-      }
+    .download-topics-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      margin-bottom: 8px;
+      color: #ffd966;
+      text-align: center;
+    }
 
     /* === ACCORDION – COLORFUL === */
 
-.accordion {
-  margin-bottom: 14px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 14px rgba(0,0,0,.45);
-}
-
-/* ===== HEADER / BRANCH ===== */
-.accordion-header {
-  padding: 14px 16px;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: .4px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  cursor: pointer;
-
-  background: linear-gradient(180deg, #60a5fa, #2563eb);
-  color: #04142e;
-
-  transition: filter .2s, box-shadow .2s;
-}
-
-.accordion-header:hover {
-  filter: brightness(1.05);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
-}
-
-.accordion-header span {
-  font-size: 15px;
-  opacity: .7;
-  transition: transform .25s ease, opacity .2s;
-}
-
-.accordion.open .accordion-header span {
-  transform: rotate(90deg);
-  opacity: 1;
-}
-
-/* ===== CONTENT ===== */
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  background: linear-gradient(180deg, #0f172a, #020617);
-
-  transition:
-    max-height .35s ease,
-    opacity .25s ease;
-}
-
-.accordion.open .accordion-content {
-  max-height: 900px;
-  opacity: 1;
-}
-
-/* ===== GROUP ===== */
-.download-group {
-  padding: 12px 16px 6px;
-  border-top: 1px solid rgba(255,255,255,.08);
-}
-
-.download-group strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
-  color: #fde68a; /* warm yellow */
-  letter-spacing: .3px;
-}
-
-/* ===== FILE LIST ===== */
-.accordion-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.accordion-content li {
-  padding: 10px 12px;
-  margin-bottom: 6px;
-  border-radius:
- 10px;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  background: linear-gradient(180deg, #ecfeff, #cffafe);
-  color: #083344;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-  cursor: pointer;
-
-  transition:
-    transform .1s,
-    box-shadow .15s,
-    filter .15s;
-}
-
-.accordion-content li:hover {
-  filter: brightness(1.05);
-  box-shadow: 0 6px 14px rgba(0,0,0,.35);
-}
-
-.accordion-content li:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 6px rgba(0,0,0,.4);
-}
-
-      /* ---------- LIST ---------- */
-
-      #bankListTopicSelect {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 10px;
-        font-size: 16px;
-
-        border-radius: 10px;
-        border: none;
-        box-sizing: border-box;
-
-        position: relative;
-        z-index: 10; /* 🔥 קריטי */
-      }
-
-      .list-item {
-        background: #222;
-        padding: 17px;
-        margin: 8px 0;
-        border-radius: 10px;
-      }
-
-      .word-line {
-        font-size: 33px;
-        font-weight: 600;
-        line-height: 1.3;
-      }
-
-      .actions {
-        display: flex;
-        gap: 8px;
-      }
-
-      .actions button {
-        width: 50%;
-      }
-
-      /* ---------- CONTACT ---------- */
-      .contact button {
-        background: linear-gradient(180deg, #e6e6e6, #efcfcf);
-        color: #222;
-        font-weight: 700;
-      }
-
-      .about-box {
-        border: 2px solid #9fa8dc;
-        border-radius: 18px;
-        padding: 16px;
-        margin-top: 20px;
-        background: #1c1c1c;
-        text-align: center;
-      }
-
-      .about-title {
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: #9fc5ff;
-      }
-
-      .about-box p {
-        margin: 10px 0;
-        font-size: 15px;
-        line-height: 1.4;
-      }
-
-      .stat-block {
-        background: #1c1c1c;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 10px;
-      }
-
-      /* ---------- CONTACT   LINKS ---------- */
-      .contact-links {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin: 16px 0;
-      }
-
-      .contact-links a {
-        display: block;
-        text-align: center;
-        padding: 14px;
-        border-radius: 14px;
-        font-size: 16px;
-        font-weight: 700;
-        color: #fff;
-        text-decoration: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-        transition:
-          opacity 0.2s,
-          transform 0.1s;
-      }
-
-      .contact-links a:hover {
-        opacity: 0.9;
-      }
-
-      .contact-links a:active {
-        transform: translateY(2px);
-      }
-
-      /* Colors */
-      .contact-links a.facebook {
-        background: #1877f2;
-      }
-
-      .contact-links a.instagram {
-        background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-      }
-
-      .contact-links a.whatsapp {
-        background: #25d366;
-      }
-
-      .contact-links a.email {
-        background: #6b7280;
-      }
-
-      /* --- HARD WORDS TABLE --- */
-      .hard-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-      }
-      .hard-table th {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 2px solid #555;
-        font-size: 16px;
-      }
-      .hard-table td {
-        padding: 10px 8px;
-        border-bottom: 1px solid #333;
-        vertical-align: top;
-      }
-      .hard-word {
-        font-size: 20px;
-        font-weight: 600;
-      }
-      .hard-count {
-        text-align: center;
-        font-size: 18px;
-      }
-
-      .sound-toggle {
-        text-align: center;
-        font-size: 22px;
-        margin: 10px 0 6px;
-        cursor: pointer;
-        user-select: none;
-        opacity: 0.85;
-      }
-      .sound-toggle:hover {
-        opacity: 1;
-      }
-
-      #sessionEnd.active {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .session-end-box {
-        text-align: center;
-        max-width: 320px;
-      }
-
-      .session-end-box h1 {
-        font-size: 36px;
-        margin-bottom: 10px;
-      }
-
-      .session-end-sub {
-        font-size: 18px;
-        opacity: 0.85;
-        margin-bottom: 24px;
-      }
-
-/* ===== RESET / BASICS ===== */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* ===== SESSION SCREEN ===== */
-#session {
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-
-/* ===== SESSION BUTTONS ===== */
-.session-buttons button {
-  border: none;
-  border-radius: 14px;
-  padding: 14px 18px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #ffffff;
-  cursor: pointer;
-
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.session-buttons button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
-}
-
-.session-buttons button:active {
-  transform: scale(0.97);
-}
-
-/* ===== I KNEW IT — תמיד ירוק ===== */
-#knownBtn {
-  background: #22c55e; /* ירוק קבוע */
-  color: #ffffff;
-}
-
-#knownBtn:hover {
-  background: #16a34a;
-}
-
-#knownBtn:active {
-  background: #15803d;
-}
-
-#knownBtn:disabled {
-  background: #22c55e;
-  opacity: 0.6;
-}
-
-/* ===== I DIDN’T KNOW IT ===== */
-#unknownBtn {
-  background: #ef4444;
-}
-
-#unknownBtn:hover {
-  background: #dc2626;
-}
-
-#unknownBtn:active {
-  background: #b91c1c;
-}
-
-/* ===== HOME BUTTONS ===== */
-.home-btn {
-  border: none;
-  color: #ffffff;
-  font-weight: 600;
-  padding: 14px 18px;
-  border-radius: 16px;
-  font-size: 17px;
-  cursor: pointer;
-
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.home-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-}
-
-.home-btn:active {
-  transform: scale(0.96);
-}
-
-/* צבעים חיים לדף הבית */
-.home-start {
-  background: linear-gradient(180deg, #f1f4f8, #dfe7f1);
-
-    </style>
-
-  </head>
-
-  <body>
-    <!-- HOME -->
-    <div class="screen active" id="home">
-      <div class="welcome">WELCOME</div>
-      <br />
-
-      <div id="instructions" class="instructions">
-        To start, add words OR load a file in the Word Bank
-      </div>
-
-      <select id="topicSelect"></select>
-      <button
-        class="button-primary"
-        onclick="startSessionSafe(topicSelect.value)"
-      >
-        Start Session
-      </button>
-
-      <button class="peach" onclick="showBank()">Word Bank</button>
-      <button class="lavender" onclick="showStats()">Statistics</button>
-      <button class="forest" onclick="showContact()">Contact</button>
-      <button onclick="exitApp()" class="back">Exit</button>
-
-      <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 101</div>
-
-      <div
-        id="cacheVersion"
-        style="
+    .accordion {
+      margin-bottom: 14px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .45);
+    }
+
+    /* ===== HEADER / BRANCH ===== */
+    .accordion-header {
+      padding: 14px 16px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: .4px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      cursor: pointer;
+
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      color: #04142e;
+
+      transition: filter .2s, box-shadow .2s;
+    }
+
+    .accordion-header:hover {
+      filter: brightness(1.05);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35);
+    }
+
+    .accordion-header span {
+      font-size: 15px;
+      opacity: .7;
+      transition: transform .25s ease, opacity .2s;
+    }
+
+    .accordion.open .accordion-header span {
+      transform: rotate(90deg);
+      opacity: 1;
+    }
+
+    /* ===== CONTENT ===== */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      background: linear-gradient(180deg, #0f172a, #020617);
+
+      transition:
+        max-height .35s ease,
+        opacity .25s ease;
+    }
+
+    .accordion.open .accordion-content {
+      max-height: 900px;
+      opacity: 1;
+    }
+
+    /* ===== GROUP ===== */
+    .download-group {
+      padding: 12px 16px 6px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .download-group strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #fde68a;
+      /* warm yellow */
+      letter-spacing: .3px;
+    }
+
+    /* ===== FILE LIST ===== */
+    .accordion-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .accordion-content li {
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      border-radius:
+        10px;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      background: linear-gradient(180deg, #ecfeff, #cffafe);
+      color: #083344;
+
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+      cursor: pointer;
+
+      transition:
+        transform .1s,
+        box-shadow .15s,
+        filter .15s;
+    }
+
+    .accordion-content li:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+    }
+
+    .accordion-content li:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .4);
+    }
+
+    /* ---------- LIST ---------- */
+
+    #bankListTopicSelect {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 16px;
+
+      border-radius: 10px;
+      border: none;
+      box-sizing: border-box;
+
+      position: relative;
+      z-index: 10;
+      /* 🔥 קריטי */
+    }
+
+    .list-item {
+      background: #222;
+      padding: 17px;
+      margin: 8px 0;
+      border-radius: 10px;
+    }
+
+    .word-line {
+      font-size: 33px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .actions button {
+      width: 50%;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact button {
+      background: linear-gradient(180deg, #e6e6e6, #efcfcf);
+      color: #222;
+      font-weight: 700;
+    }
+
+    .about-box {
+      border: 2px solid #9fa8dc;
+      border-radius: 18px;
+      padding: 16px;
+      margin-top: 20px;
+      background: #1c1c1c;
+      text-align: center;
+    }
+
+    .about-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #9fc5ff;
+    }
+
+    .about-box p {
+      margin: 10px 0;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .stat-block {
+      background: #1c1c1c;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+    }
+
+    /* ---------- CONTACT   LINKS ---------- */
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .contact-links a {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+      transition:
+        opacity 0.2s,
+        transform 0.1s;
+    }
+
+    .contact-links a:hover {
+      opacity: 0.9;
+    }
+
+    .contact-links a:active {
+      transform: translateY(2px);
+    }
+
+    /* Colors */
+    .contact-links a.facebook {
+      background: #1877f2;
+    }
+
+    .contact-links a.instagram {
+      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+    }
+
+    .contact-links a.whatsapp {
+      background: #25d366;
+    }
+
+    .contact-links a.email {
+      background: #6b7280;
+    }
+
+    /* --- HARD WORDS TABLE --- */
+    .hard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .hard-table th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 2px solid #555;
+      font-size: 16px;
+    }
+
+    .hard-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #333;
+      vertical-align: top;
+    }
+
+    .hard-word {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .hard-count {
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .sound-toggle {
+      text-align: center;
+      font-size: 22px;
+      margin: 10px 0 6px;
+      cursor: pointer;
+      user-select: none;
+      opacity: 0.85;
+    }
+
+    .sound-toggle:hover {
+      opacity: 1;
+    }
+
+    #sessionEnd.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .session-end-box {
+      text-align: center;
+      max-width: 320px;
+    }
+
+    .session-end-box h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .session-end-sub {
+      font-size: 18px;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+
+    /* ===== RESET / BASICS ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* ===== SESSION SCREEN ===== */
+    #session {
+      padding: 12px;
+      box-sizing: border-box;
+    }
+
+
+    /* ===== SESSION BUTTONS ===== */
+    .session-buttons button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .session-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    .session-buttons button:active {
+      transform: scale(0.97);
+    }
+
+    /* ===== I KNEW IT — תמיד ירוק ===== */
+    #knownBtn {
+      background: #22c55e;
+      /* ירוק קבוע */
+      color: #ffffff;
+    }
+
+    #knownBtn:hover {
+      background: #16a34a;
+    }
+
+    #knownBtn:active {
+      background: #15803d;
+    }
+
+    #knownBtn:disabled {
+      background: #22c55e;
+      opacity: 0.6;
+    }
+
+    /* ===== I DIDN’T KNOW IT ===== */
+    #unknownBtn {
+      background: #ef4444;
+    }
+
+    #unknownBtn:hover {
+      background: #dc2626;
+    }
+
+    #unknownBtn:active {
+      background: #b91c1c;
+    }
+
+    /* ===== HOME BUTTONS ===== */
+    .home-btn {
+      border: none;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 17px;
+      cursor: pointer;
+
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .home-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .home-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* צבעים חיים לדף הבית */
+    .home-start {
+      background: linear-gradient(180deg, #f1f4f8, #dfe7f1);
+  </style>
+</head>
+
+<body>
+  <!-- HOME -->
+  <div class="screen active" id="home">
+    <div class="welcome">WELCOME</div>
+    <br />
+
+    <div id="instructions" class="instructions">
+      To start, add words OR load a file in the Word Bank
+    </div>
+
+    <select id="topicSelect"></select>
+    <button class="button-primary" onclick="startSessionSafe(topicSelect.value)">
+      Start Session
+    </button>
+
+    <button class="peach" onclick="showBank()">Word Bank</button>
+    <button class="lavender" onclick="showStats()">Statistics</button>
+    <button class="forest" onclick="showContact()">Contact</button>
+    <button onclick="exitApp()" class="back">Exit</button>
+
+    <div class="title-bottom">Hebrew with MotiVation</div>
+    <div style="text-align: center; opacity: 0.4">TEST - 101</div>
+
+    <div id="cacheVersion" style="
           text-align: center;
           font-size: 13px;
           opacity: 0.5;
           margin-top: 20px;
-        "
-      ></div>
-    </div>
+        "></div>
+  </div>
 
-    <!-- RESET -->
-    <div class="screen" id="resetGate">
-      <h2>Update</h2>
+  <!-- RESET -->
+  <div class="screen" id="resetGate">
+    <h2>Update</h2>
 
-      <button class="SUNSET" onclick="hardReset()">Reset App</button>
-    </div>
+    <button class="SUNSET" onclick="hardReset()">Reset App</button>
+  </div>
 
-    <!-- BANK -->
-    <div class="screen" id="bank">
-      <h2>Word Bank</h2>
-      <select id="bankTopicSelect"></select>
-      <button class="sunset" onclick="showAdd()">Add words / topic</button>
+  <!-- BANK -->
+  <div class="screen" id="bank">
+    <h2>Word Bank</h2>
+    <select id="bankTopicSelect"></select>
+    <button class="sunset" onclick="showAdd()">Add words / topic</button>
 
-      <div class="word-files-invite">
-        <button class="invite-cta" onclick="showDownload()">
-          Word Library
-        </button>
-      </div>
-
-      <button class="peach" onclick="triggerImport()">Import word file</button>
-
-      <button onclick="goHome()" class="back">Back</button>
-    </div>
-
-    <!-- ACCORDIONS  -->
-    <div class="screen" id="download">
-      <h2>WORD LIBRARY</h2>
-
-      <div class="download-lang-box">
-        <div class="download-lang-title">Choose language</div>
-
-        <select id="downloadLangSelect">
-  <option value="" hidden>Choose language pair</option>
-</select>
-</div>
-
-      <div class="download-divider"></div>
-
-      <div class="download-topics-title">Choose topic</div>
-
-      <div id="downloadAccordions"></div>
-
-      <button class="back" onclick="goHome()">Back</button>
-    </div>
-
-    <!-- BANK LIST -->
-
-    <div class="screen" id="bankList">
-      <select
-        id="bankListTopicSelect"
-        onchange="switchBankListTopic()"
-      ></select>
-
-      <button onclick="addWordToCurrentTopic()" class="forest">
-        + Add word
+    <div class="word-files-invite">
+      <button class="invite-cta" onclick="showDownload()">
+        Word Library
       </button>
+    </div>
 
-      <button class="lavender" onclick="exportCurrentTopic()">
-        Export word file
-      </button>
+    <button class="peach" onclick="triggerImport()">Import word file</button>
 
-      <div style="display: flex; gap: 8px">
-        <button class="peach" style="flex: 1" onclick="renameCurrentTopic()">
-          Rename
-        </button>
-        <button
-          id="deleteTopicBtn"
-          class="button-danger"
-          style="flex: 1"
-          onclick="deleteCurrentTopic()"
-        >
-          Delete
-        </button>
-      </div>
+    <button onclick="goHome()" class="back">Back</button>
+  </div>
 
-      <button class="back" style="font-weight: 700" onclick="goHome()">
-        Back
-      </button>
+  <!-- ACCORDIONS  -->
+  <div class="screen" id="download">
+    <h2>WORD LIBRARY</h2>
 
-      <input
-        id="searchInput"
-        placeholder="Search..."
-        oninput="renderWordList()"
-      />
-      <select id="sortSelect" onchange="renderWordList()">
-        <option value="">No sorting</option>
-        <option value="learn">By learning language</option>
-        <option value="tr">By translation</option>
+    <div class="download-lang-box">
+      <div class="download-lang-title">Choose language</div>
+
+      <select id="downloadLangSelect">
+        <option value="" hidden>Choose language pair</option>
       </select>
-
-      <div id="wordList"></div>
-
-      <button onclick="showBank()" class="back">Back</button>
     </div>
 
-    <!-- ADD -->
-    <div class="screen" id="add">
-      <h2>Add word</h2>
-      <select id="addTopicSelect" onchange="onAddTopicChange()"></select>
-      <input id="newTopicInput" class="hidden"
- placeholder="New topic name" />
-      <textarea id="learnInput" placeholder="Learning language"></textarea>
-      <textarea id="translationInput" placeholder="Translation"></textarea>
-      <button class="forest" onclick="saveWord()">Save</button>
-      <button onclick="goHome()" class="back">Back</button>
-    </div>
+    <div class="download-divider"></div>
 
-    <!-- SESSION -->
-    <div class="screen" id="session">
-      <div class="flip-hint">CLICK TO FLIP</div>
+    <div class="download-topics-title">Choose topic</div>
 
-      <div class="card-frame">
-        <div class="card" id="card" onclick="flipCard()"></div>
-      </div>
+    <div id="downloadAccordions"></div>
 
-      <div class="remaining">Remaining: <span id="remainingCount"></span></div>
+    <button class="back" onclick="goHome()">Back</button>
+  </div>
 
-      <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
+  <!-- BANK LIST -->
 
-      <div class="row">
-        <button class="forest" onclick="markKnown()">I knew it</button>
-        <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
-      </div>
+  <div class="screen" id="bankList">
+    <select id="bankListTopicSelect" onchange="switchBankListTopic()"></select>
 
-      <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">
-        Shuffle
+    <button onclick="addWordToCurrentTopic()" class="forest">
+      + Add word
+    </button>
+
+    <button class="lavender" onclick="exportCurrentTopic()">
+      Export word file
+    </button>
+
+    <div style="display: flex; gap: 8px">
+      <button class="peach" style="flex: 1" onclick="renameCurrentTopic()">
+        Rename
       </button>
-      <button class="sunset" onclick="flipDirection()">Flip Direction</button>
+      <button id="deleteTopicBtn" class="button-danger" style="flex: 1" onclick="deleteCurrentTopic()">
+        Delete
+      </button>
+    </div>
+
+    <button class="back" style="font-weight: 700" onclick="goHome()">
+      Back
+    </button>
+
+    <input id="searchInput" placeholder="Search..." oninput="renderWordList()" />
+    <select id="sortSelect" onchange="renderWordList()">
+      <option value="">No sorting</option>
+      <option value="learn">By learning language</option>
+      <option value="tr">By translation</option>
+    </select>
+
+    <div id="wordList"></div>
+
+    <button onclick="showBank()" class="back">Back</button>
+  </div>
+
+  <!-- ADD -->
+  <div class="screen" id="add">
+    <h2>Add word</h2>
+    <select id="addTopicSelect" onchange="onAddTopicChange()"></select>
+    <input id="newTopicInput" class="hidden" placeholder="New topic name" />
+    <textarea id="learnInput" placeholder="Learning language"></textarea>
+    <textarea id="translationInput" placeholder="Translation"></textarea>
+    <button class="forest" onclick="saveWord()">Save</button>
+    <button onclick="goHome()" class="back">Back</button>
+  </div>
+
+  <!-- SESSION -->
+  <div class="screen" id="session">
+    <div class="flip-hint">CLICK TO FLIP</div>
+
+    <div class="card-frame">
+      <div class="card" id="card" onclick="flipCard()"></div>
+    </div>
+
+    <div class="remaining">Remaining: <span id="remainingCount"></span></div>
+
+    <div class="sound-toggle" onclick="toggleSound()" id="soundIcon">🔊</div>
+
+    <div class="row">
+      <button class="forest" onclick="markKnown()">I knew it</button>
+      <button class="button-danger" onclick="markUnknown()">Ooooopsi</button>
+    </div>
+
+    <button class="lavender" id="shuffleBtn" onclick="shuffleSession()">
+      Shuffle
+    </button>
+    <button class="sunset" onclick="flipDirection()">Flip Direction</button>
+    <button onclick="exitSessionSafe('home')" class="back">Exit</button>
+  </div>
+
+  <!-- SESSION END -->
+  <div class="screen" id="sessionEnd">
+    <div class="session-end-box">
+      <h1>🎉 Well done 🎉</h1>
+      <p class="session-end-sub">You’ve completed the session</p>
+
+      <button class="forest" id="restartSessionBtn">Start again</button>
+
       <button onclick="exitSessionSafe('home')" class="back">Exit</button>
     </div>
+  </div>
 
-    <!-- SESSION END -->
-    <div class="screen" id="sessionEnd">
-      <div class="session-end-box">
-        <h1>🎉 Well done 🎉</h1>
-        <p class="session-end-sub">You’ve completed the session</p>
+  <!-- STATS -->
+  <div class="screen" id="stats">
+    <button onclick="resetStats()" class="button-danger">
+      Reset statistics
+    </button>
+    <button onclick="goHome()" class="back">Back</button>
+    <div id="statsContent"></div>
+    <button onclick="goHome()" class="back">Back</button>
+  </div>
 
-        <button class="forest" id="restartSessionBtn">Start again</button>
+  <!-- CONTACT -->
+  <div class="screen contact" id="contact">
+    <div class="about-box">
+      <div class="about-title">Hebrew with Moti Vation</div>
 
-        <button onclick="exitSessionSafe('home')" class="back">Exit</button>
-      </div>
+      <p>
+        I'm here – No Fear<br />
+        Hebrew will become so clear
+      </p>
+
+      <p>
+        Online sessions from the comfort of your home<br />
+        Beginners / Advanced / Individuals / Groups
+      </p>
+
+      <p>
+        Fun & Interesting lessons<br />
+        I love languages and I love teaching
+      </p>
+
+      <p>
+        Lets go on adventure..<br />
+        Cake Eat Easy<br />
+        Take care – Take air
+      </p>
     </div>
 
-    <!-- STATS -->
-    <div class="screen" id="stats">
-      <button onclick="resetStats()" class="button-danger">
-        Reset statistics
-      </button>
-      <button onclick="goHome()" class="back">Back</button>
-      <div id="statsContent"></div>
-      <button onclick="goHome()" class="back">Back</button>
+    <div class="contact-links">
+      <a class="facebook" href="https://www.facebook.com/share/1D6uJLL5nK/" target="_blank">
+        Facebook
+      </a>
+
+      <a class="instagram" href="https://www.instagram.com/hebrew_with_motivation" target="_blank">
+        Instagram
+      </a>
+
+      <a class="email" href="mailto:mottex@gmail.com"> Email </a>
+
+      <a class="whatsapp" href="https://wa.me/48604726360" target="_blank">
+        WhatsApp
+      </a>
     </div>
 
-    <!-- CONTACT -->
-    <div class="screen contact" id="contact">
-      <div class="about-box">
-        <div class="about-title">Hebrew with Moti Vation</div>
+    <button onclick="goHome()" class="back">Back</button>
+  </div>
 
-        <p>
-          I'm here – No Fear<br />
-          Hebrew will become so clear
-        </p>
+  <input type="file" id="importFile" accept=".csv" class="hidden" />
 
-        <p>
-          Online sessions from the comfort of your home<br />
-          Beginners / Advanced / Individuals / Groups
-        </p>
+  <script src="hubIndex.js?v=666"></script>
+  <script>
+    /* ===== STORAGE CONSTANTS ===== */
+    const STORAGE_VERSION = "v666";
+    const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
+    const STATS_KEY = `stats_${STORAGE_VERSION}`;
+    const RESET_FLAG = "APP_RESET_DONE_v666";
 
-        <p>
-          Fun & Interesting lessons<br />
-          I love languages and I love teaching
-        </p>
+    // Scroll restore fix (Android & iOS)
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
 
-        <p>
-          Lets go on adventure..<br />
-          Cake Eat Easy<br />
-          Take care – Take air
-        </p>
-      </div>
+    /* ===== DOM ===== */
 
-      <div class="contact-links">
-        <a
-          class="facebook"
-          href="https://www.facebook.com/share/1D6uJLL5nK/"
-          target="_blank"
-        >
-          Facebook
-        </a>
+    const topicSelect = document.getElementById("topicSelect");
+    const bankTopicSelect = document.getElementById("bankTopicSelect");
+    const bankListTopicSelect = document.getElementById(
+      "bankListTopicSelect",
+    );
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const wordList = document.getElementById("wordList");
+    const addTopicSelect = document.getElementById("addTopicSelect");
+    const learnInput = document.getElementById("learnInput");
+    const translationInput = document.getElementById("translationInput");
+    const newTopicInput = document.getElementById("newTopicInput");
+    const importFile = document.getElementById("importFile");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const card = document.getElementById("card");
+    const statsContent = document.getElementById("statsContent");
+    const deleteTopicBtn = document.getElementById("deleteTopicBtn");
 
-        <a
-          class="instagram"
-          href="https://www.instagram.com/hebrew_with_motivation"
-          target="_blank"
-        >
-          Instagram
-        </a>
+    /* ===== SOUND ===== */
 
-        <a class="email" href="mailto:mottex@gmail.com"> Email </a>
+    let soundOn = JSON.parse(localStorage.getItem("soundOn")) ?? true;
 
-        <a class="whatsapp" href="https://wa.me/48604726360" target="_blank">
-          WhatsApp
-        </a>
-      </div>
+    const flipSound = new Audio(
+      "https://actions.google.com/sounds/v1/impacts/metal_parts_cling.ogg",
+    );
+    const correctSound = new Audio(
+      "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg",
+    );
 
-      <button onclick="goHome()" class="back">Back</button>
-    </div>
+    flipSound.volume = 0.2;
+    correctSound.volume = 0.07;
 
-    <input type="file" id="importFile" accept=".csv" class="hidden" />
+    function updateSoundIcon() {
+      const el = document.getElementById("soundIcon");
+      if (el) el.textContent = soundOn ? "🔊" : "🔇";
+    }
 
+    /* ===== DATA ===== */
 
-    
-    <script src="hubIndex.js?v=666"></script>
-    <script>
-      /* ===== STORAGE CONSTANTS ===== */
-      const STORAGE_VERSION = "v666";
-      const FLASH_KEY = `flashData_${STORAGE_VERSION}`;
-      const STATS_KEY = `stats_${STORAGE_VERSION}`;
-      const RESET_FLAG = "APP_RESET_DONE_v666";
+    let returnToTopicAfterSave = null;
 
-      // Scroll restore fix (Android & iOS)
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
+    function uuid() {
+      // Use crypto.randomUUID when available, otherwise fallback.
+      if (typeof crypto !== "undefined" && crypto.randomUUID) {
+        return crypto.randomUUID();
       }
+      return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
 
-      /* ===== DOM ===== */
-
-      const topicSelect = document.getElementById("topicSelect");
-      const bankTopicSelect = document.getElementById("bankTopicSelect");
-      const bankListTopicSelect = document.getElementById("bankListTopicSelect");
-      const searchInput = document.getElementById("searchInput");
-      const sortSelect = document.getElementById("sortSelect");
-      const wordList = document.getElementById("wordList");
-      const addTopicSelect = document.getElementById("addTopicSelect");
-      const learnInput = document.getElementById("learnInput");
-      const translationInput = document.getElementById("translationInput");
-      const newTopicInput = document.getElementById("newTopicInput");
-      const importFile = document.getElementById("importFile");
-      const shuffleBtn = document.getElementById("shuffleBtn");
-      const card = document.getElementById("card");
-      const statsContent = document.getElementById("statsContent");
-      const deleteTopicBtn = document.getElementById("deleteTopicBtn");
-
-      /* ===== SOUND ===== */
-
-      let soundOn = JSON.parse(localStorage.getItem("soundOn")) ?? true;
-
-      const flipSound = new Audio(
-        "https://actions.google.com/sounds/v1/impacts/metal_parts_cling.ogg",
-      );
-      const correctSound = new Audio(
-        "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg",
-      );
-
-      flipSound.volume = 0.2;
-      correctSound.volume = 0.07;
-
-      function updateSoundIcon() {
-        const el = document.getElementById("soundIcon");
-        if (el) el.textContent = soundOn ? "🔊" : "🔇";
-      }
-
-      /* ===== DATA ===== */
-
-let returnToTopicAfterSave = null;
-
-function uuid() {
-  // Use crypto.randomUUID when available, otherwise fallback.
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
-function createTopic(title, source = "local", hubMeta = null) {
-  return {
-    id: uuid(),
-    title,
-    source,
-    hubMeta,
-    words: []
-  };
-}
-
-let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
-  topics: {} // topicId -> { id, title, source, hubMeta, words }
-};
-
-      let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
-        sessions: 0,
-        history: [],
-        perTopic: {},
-        hardWords: {},
+    function createTopic(title, source = "local", hubMeta = null) {
+      return {
+        id: uuid(),
+        title,
+        source,
+        hubMeta,
+        words: [],
       };
+    }
 
+    let data = JSON.parse(localStorage.getItem(FLASH_KEY)) || {
+      topics: {}, // topicId -> { id, title, source, hubMeta, words }
+    };
 
-      topicSelect.onchange = function () {
-        setCurrentTopic(this.value);
-      };
+    let stats = JSON.parse(localStorage.getItem(STATS_KEY)) || {
+      sessions: 0,
+      history: [],
+      perTopic: {},
+      hardWords: {},
+    };
 
-      
-      bankListTopicSelect.onchange = switchBankListTopic;let lastAddTopic = null;
+    topicSelect.onchange = function () {
+      setCurrentTopic(this.value);
+    };
 
+    bankListTopicSelect.onchange = switchBankListTopic;
+    let lastAddTopic = null;
 
-      /* ===== HUB INDEX ===== */
+    /* ===== HUB INDEX ===== */
 
-      // state (HUB is read-only)
-      let hubIndex = null;
-      let currentTopic = null;
+    // state (HUB is read-only)
+    let hubIndex = null;
+    let currentTopic = null;
 
-      /*
+    /*
 Expected structure:
 {
-  version: number,
-  languages: [{ id, title }],
-  branches: [{ id, title }],
-  entries: [
-    {
-      branch: string,
-      group: string,
-      files: { [lang]: string[] }
-    }
-  ]
+version: number,
+languages: [{ id, title }],
+branches: [{ id, title }],
+entries: [
+  {
+    branch: string,
+    group: string,
+    files: { [lang]: string[] }
+  }
+]
 }
 */
 
-      function loadHubIndex() {
-        if (!window.HUB_INDEX) {
-          console.warn("HUB_INDEX is missing.");
-          alert("Word Library is not available right now.");
-          return false;
-        }
-
-        const idx = window.HUB_INDEX;
-
-        // basic shape validation
-        if (
-          typeof idx !== "object" ||
-          !Array.isArray(idx.languages) ||
-          !Array.isArray(idx.branches) ||
-          !Array.isArray(idx.entries)
-        ) {
-          console.warn("HUB_INDEX has an invalid structure.");
-          alert("Word Library is corrupted.");
-          return false;
-        }
-
-        hubIndex = idx;
-        return true;
+    function loadHubIndex() {
+      if (!window.HUB_INDEX) {
+        console.warn("HUB_INDEX is missing.");
+        alert("Word Library is not available right now.");
+        return false;
       }
 
-function buildDownloadLangSelect() {
-  const select = document.getElementById("downloadLangSelect");
-  if (!select || !hubIndex) return;
+      const idx = window.HUB_INDEX;
 
-  select.innerHTML = `<option value="" hidden>Choose language pair</option>`;
-
-  hubIndex.languages.forEach((lang) => {
-    const opt = document.createElement("option");
-    opt.value = lang.id;
-    opt.textContent = lang.title;
-    select.appendChild(opt);
-  });
-}
-
-
-      /* ===== UTIL ===== */
-
-      function saveData() {
-        localStorage.setItem(FLASH_KEY, JSON.stringify(data));
+      // basic shape validation
+      if (
+        typeof idx !== "object" ||
+        !Array.isArray(idx.languages) ||
+        !Array.isArray(idx.branches) ||
+        !Array.isArray(idx.entries)
+      ) {
+        console.warn("HUB_INDEX has an invalid structure.");
+        alert("Word Library is corrupted.");
+        return false;
       }
 
-      function saveStats() {
-        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-      }
+      hubIndex = idx;
+      return true;
+    }
 
-      function setCurrentTopic(topicId) {
-  currentTopic = topicId || null;
+    function buildDownloadLangSelect() {
+      const select = document.getElementById("downloadLangSelect");
+      if (!select || !hubIndex) return;
 
-  if (topicSelect) topicSelect.value = topicId || "";
-  if (bankTopicSelect) bankTopicSelect.value = topicId || "";
-  if (bankListTopicSelect) bankListTopicSelect.value = topicId || "";
-}
+      select.innerHTML = `<option value="" hidden>Choose language pair</option>`;
 
+      hubIndex.languages.forEach((lang) => {
+        const opt = document.createElement("option");
+        opt.value = lang.id;
+        opt.textContent = lang.title;
+        select.appendChild(opt);
+      });
+    }
 
-      /* ===== TOPIC NAME GATE ===== */
+    /* ===== UTIL ===== */
 
-      function normalizeTopicName(name) {
-        return name
-          .trim()
-          .replace(/\s+/g, " ") // רווחים כפולים → רווח אחד
-          .toLowerCase(); // בלי הבדל אותיות
-      }
+    function saveData() {
+      localStorage.setItem(FLASH_KEY, JSON.stringify(data));
+    }
 
-      function isTopicTitleAvailable(title, excludeId = null) {
-        const norm = normalizeTopicName(title);
+    function saveStats() {
+      localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+    }
 
-        return !Object.values(data.topics).some((t) => {
-          if (excludeId && t.id === excludeId) return false;
-          return normalizeTopicName(t.title) === norm;
-        });
-      }
+    function setCurrentTopic(topicId) {
+      currentTopic = topicId || null;
 
-      /*
+      if (topicSelect) topicSelect.value = topicId || "";
+      if (bankTopicSelect) bankTopicSelect.value = topicId || "";
+      if (bankListTopicSelect) bankListTopicSelect.value = topicId || "";
+    }
+
+    /* ===== TOPIC NAME GATE ===== */
+
+    function normalizeTopicName(name) {
+      return name
+        .trim()
+        .replace(/\s+/g, " ") // רווחים כפולים → רווח אחד
+        .toLowerCase(); // בלי הבדל אותיות
+    }
+
+    function isTopicTitleAvailable(title, excludeId = null) {
+      const norm = normalizeTopicName(title);
+
+      return !Object.values(data.topics).some((t) => {
+        if (excludeId && t.id === excludeId) return false;
+        return normalizeTopicName(t.title) === norm;
+      });
+    }
+
+    /*
 mode:
 - "create"  → יצירת טופיק חדש (ADD / IMPORT / DOWNLOAD)
 - "rename"  → שינוי שם טופיק
 */
 
-      function allWords() {
-  let a = [];
-  Object.values(data.topics).forEach((topic) => {
-    a.push(...topic.words);
-  });
-  return a;
-}
-
-
-      /* ===== LIBRARY → FC TOPIC ===== */
-      function saveCSVAsTopic(csvText, topicTitle, source = "hub", hubMeta = null) {
-  // יצירת topic חדש
-  const topic = createTopic(topicTitle, source, hubMeta);
-
-  const rows = csvText.split(/\r?\n/);
-
-  rows.forEach((line) => {
-    if (!line.trim()) return;
-
-    const p = line.split(",");
-    if (p.length >= 2) {
-      topic.words.push({
-        id: uuid(),
-        learn: p[0].replace(/"/g, "").trim(),
-        tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+    function allWords() {
+      let a = [];
+      Object.values(data.topics).forEach((topic) => {
+        a.push(...topic.words);
       });
+      return a;
     }
-  });
 
-  if (topic.words.length === 0) {
-    alert("File contains no valid words");
-    return false;
-  }
+    /* ===== LIBRARY → FC TOPIC ===== */
+    function saveCSVAsTopic(
+      csvText,
+      topicTitle,
+      source = "hub",
+      hubMeta = null,
+    ) {
+      // יצירת topic חדש
+      const topic = createTopic(topicTitle, source, hubMeta);
 
-  data.topics[topic.id] = topic;
+      const rows = csvText.split(/\r?\n/);
 
-  saveData();
-  loadTopics();
+      rows.forEach((line) => {
+        if (!line.trim()) return;
 
-  return topic.id;
-}
-
-      /* ===== NAV ===== */
-      function show(id) {
-        document
-          .querySelectorAll(".screen")
-          .forEach((s) => s.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-      }
-
-      function showBank() {
-        resetBankSearch();
-        loadTopics();
-        show("bank");
-      }
-
-      function showStats() {
-        renderStats();
-        show("stats");
-      }
-      function showContact() {
-        show("contact");
-      }
-
-      function showDownload() {
-        if (stats.current) {
-          exitSessionSafe("download");
-          return;
+        const p = line.split(",");
+        if (p.length >= 2) {
+          topic.words.push({
+            id: uuid(),
+            learn: p[0].replace(/"/g, "").trim(),
+            tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+          });
         }
+      });
 
-        if (!hubIndex) return;
+      if (topic.words.length === 0) {
+        alert("File contains no valid words");
+        return false;
+      }
+
+      data.topics[topic.id] = topic;
+
+      saveData();
+      loadTopics();
+
+      return topic.id;
+    }
+
+    /* ===== NAV ===== */
+    function show(id) {
+      document
+        .querySelectorAll(".screen")
+        .forEach((s) => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function showBank() {
+      resetBankSearch();
+      loadTopics();
+      show("bank");
+    }
+
+    function showStats() {
+      renderStats();
+      show("stats");
+    }
+    function showContact() {
+      show("contact");
+    }
+
+    function showDownload() {
+      if (stats.current) {
+        exitSessionSafe("download");
+        return;
+      }
+
+      if (!hubIndex) return;
 
       if (downloadLangSelect && currentDownloadLang) {
-  downloadLangSelect.value = currentDownloadLang;
-}
+        downloadLangSelect.value = currentDownloadLang;
+      }
 
       const acc = document.getElementById("downloadAccordions");
 
-if (currentDownloadLang) {
-  buildDownloadUI();
-  if (acc) acc.classList.remove("lang-not-selected");
-} else {
-  if (acc) {
-    acc.innerHTML = "";
-    acc.classList.add("lang-not-selected");
-  }
-}
-
-
-        closeAllAccordions();
-
-        show("download");
+      if (currentDownloadLang) {
+        buildDownloadUI();
+        if (acc) acc.classList.remove("lang-not-selected");
+      } else {
+        if (acc) {
+          acc.innerHTML = "";
+          acc.classList.add("lang-not-selected");
+        }
       }
 
-      function goHome() {
-        resetBankSearch();
-        exitSessionSafe("home");
-        loadTopics();
-        updateInstructions();
+      closeAllAccordions();
+
+      show("download");
+    }
+
+    function goHome() {
+      resetBankSearch();
+      exitSessionSafe("home");
+      loadTopics();
+      updateInstructions();
+    }
+
+    /* ===== HOME LOGIC ===== */
+
+    function updateInstructions() {
+      document
+        .getElementById("instructions")
+        .classList.toggle("hidden", allWords().length > 0);
+    }
+
+    /* ===== TOPICS ===== */
+
+    function loadTopics() {
+      const hardLabel = "Hard Words";
+      const topics = Object.values(data.topics);
+      const isBankEmpty = topics.length === 0;
+
+      topicSelect.innerHTML = '<option value="">Select topic</option>';
+      topicSelect.innerHTML += `<option>${hardLabel}</option>`;
+      topics.forEach((t) => {
+        topicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+      });
+
+      bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
+      topics.forEach((t) => {
+        bankTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+      });
+
+      bankListTopicSelect.innerHTML = "";
+      topics.forEach((t) => {
+        bankListTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+      });
+
+      if (currentTopic && data.topics[currentTopic]) {
+        bankListTopicSelect.value = currentTopic;
       }
 
-      /* ===== HOME LOGIC ===== */
-
-      function updateInstructions() {
-        document.getElementById("instructions").classList.toggle(
-          "hidden",
-          allWords().length > 0,
-        );
-      }
-
-      /* ===== TOPICS ===== */
-
-      function loadTopics() {
-        const hardLabel = "Hard Words";
-        const topics = Object.values(data.topics);
-        const isBankEmpty = topics.length === 0;
-
-        topicSelect.innerHTML = '<option value="">Select topic</option>';
-        topicSelect.innerHTML += `<option>${hardLabel}</option>`;
-        topics.forEach((t) => {
-          topicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
-        });
-
-        bankTopicSelect.innerHTML = '<option value="">Select topic</option>';
-        topics.forEach((t) => {
-          bankTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
-        });
-
+      if (isBankEmpty) {
+        topicSelect.disabled = true;
+        bankTopicSelect.disabled = true;
         bankListTopicSelect.innerHTML = "";
-        topics.forEach((t) => {
-          bankListTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
-        });
-
-        if (currentTopic && data.topics[currentTopic]) {
-          bankListTopicSelect.value = currentTopic;
-        }
-
-        if (isBankEmpty) {
-          topicSelect.disabled = true;
-          bankTopicSelect.disabled = true;
-          bankListTopicSelect.innerHTML = "";
-        } else {
-          topicSelect.disabled = false;
-          bankTopicSelect.disabled = false;
-        }
+      } else {
+        topicSelect.disabled = false;
+        bankTopicSelect.disabled = false;
       }
+    }
 
-      /* ===== REAL BANK ===== */
+    /* ===== REAL BANK ===== */
 
-      function resetBankSearch() {
-        searchInput.value = "";
-        sortSelect.value = "";
-      }
+    function resetBankSearch() {
+      searchInput.value = "";
+      sortSelect.value = "";
+    }
 
-      function switchBankListTopic() {
-        const topicId = bankListTopicSelect.value;
-        if (!topicId) return;
+    function switchBankListTopic() {
+      const topicId = bankListTopicSelect.value;
+      if (!topicId) return;
 
-        setCurrentTopic(topicId);
+      setCurrentTopic(topicId);
 
-        if (topicId === "Hard Words") {
-          renderHardWordsList();
-          show("bankList");
-          return;
-        }
-
-        renderWordList();
+      if (topicId === "Hard Words") {
+        renderHardWordsList();
         show("bankList");
+        return;
       }
 
-      function renderHardWordsList() {
-        wordList.innerHTML = "";
+      renderWordList();
+      show("bankList");
+    }
 
-        const entries = Object.entries(stats.hardWords)
-          .filter((e) => e[1] >= 2)
-          .sort((a, b) => b[1] - a[1]);
+    function renderHardWordsList() {
+      wordList.innerHTML = "";
 
-        if (!entries.length) {
-          wordList.innerHTML = "<p>No hard words.</p>";
-          return;
-        }
+      const entries = Object.entries(stats.hardWords)
+        .filter((e) => e[1] >= 2)
+        .sort((a, b) => b[1] - a[1]);
 
-        entries.forEach(([key, count], i) => {
-          const [learn, tr] = key.split("||");
+      if (!entries.length) {
+        wordList.innerHTML = "<p>No hard words.</p>";
+        return;
+      }
 
-          wordList.innerHTML += `
+      entries.forEach(([key, count], i) => {
+        const [learn, tr] = key.split("||");
+
+        wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${learn} – ${tr}
@@ -1390,93 +1391,91 @@ if (currentDownloadLang) {
           <span style="opacity:.6;font-size:12px;">${count}×</span>
         </div>
       </div>`;
-        });
+      });
+    }
+
+    function removeHardWord(key) {
+      if (!stats.hardWords[key]) return;
+
+      delete stats.hardWords[key];
+      saveStats();
+
+      if (document.getElementById("stats")?.classList.contains("active")) {
+        renderStats();
+      } else {
+        renderHardWordsList();
+      }
+    }
+
+    function renameCurrentTopic() {
+      if (!currentTopic || currentTopic === "Hard Words") return;
+
+      const topic = data.topics[currentTopic];
+      if (!topic) return;
+
+      const input = prompt("New topic name:", topic.title);
+      if (!input) return;
+
+      const newTitle = input.trim();
+      if (!newTitle) return;
+
+      if (!isTopicTitleAvailable(newTitle, topic.id)) {
+        alert("Topic with this name already exists.");
+        return;
       }
 
-      function removeHardWord(key) {
-  if (!stats.hardWords[key]) return;
+      topic.title = newTitle;
 
-  delete stats.hardWords[key];
-  saveStats();
+      saveData();
+      loadTopics();
+      renderWordList();
+    }
 
-  if (document.getElementById("stats")?.classList.contains("active")) {
-    renderStats();
-  } else {
-    renderHardWordsList();
-  }
-}
+    function addWordToCurrentTopic() {
+      if (!currentTopic) return;
 
+      lastAddTopic = currentTopic;
+      showAdd();
+    }
 
-      function renameCurrentTopic() {
-  if (!currentTopic || currentTopic === "Hard Words") return;
+    bankTopicSelect.onchange = () => {
+      if (!bankTopicSelect.value) return;
+      setCurrentTopic(bankTopicSelect.value);
+      deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
 
-  const topic = data.topics[currentTopic];
-  if (!topic) return;
+      resetBankSearch();
+      renderWordList();
+      show("bankList");
+    };
 
-  const input = prompt("New topic name:", topic.title);
-  if (!input) return;
+    function renderWordList() {
+      const topic = data.topics[currentTopic];
+      if (!topic) return;
 
-  const newTitle = input.trim();
-  if (!newTitle) return;
+      let q = searchInput.value.toLowerCase();
+      let sort = sortSelect.value;
 
-  if (!isTopicTitleAvailable(newTitle, topic.id)) {
-    alert("Topic with this name already exists.");
-    return;
-  }
+      wordList.innerHTML = "";
 
-  topic.title = newTitle;
+      let arr = [...topic.words];
 
-  saveData();
-  loadTopics();
-  renderWordList();
-}
-
-
-      function addWordToCurrentTopic() {
-        if (!currentTopic) return;
-
-        lastAddTopic = currentTopic;
-        showAdd();
+      if (q) {
+        arr = arr.filter(
+          (w) =>
+            w.learn.toLowerCase().includes(q) ||
+            w.tr.toLowerCase().includes(q),
+        );
       }
 
-      bankTopicSelect.onchange = () => {
-        if (!bankTopicSelect.value) return;
-        setCurrentTopic(bankTopicSelect.value);
-        deleteTopicBtn.classList.toggle("hidden", currentTopic === "All words");
+      if (sort === "learn") {
+        arr.sort((a, b) => a.learn.localeCompare(b.learn));
+      }
+      if (sort === "tr") {
+        arr.sort((a, b) => a.tr.localeCompare(b.tr));
+      }
 
-        resetBankSearch();
-        renderWordList();
-        show("bankList");
-      };
-
-      function renderWordList() {
-  const topic = data.topics[currentTopic];
-  if (!topic) return;
-
-  let q = searchInput.value.toLowerCase();
-  let sort = sortSelect.value;
-
-  wordList.innerHTML = "";
-
-  let arr = [...topic.words];
-
-  if (q) {
-    arr = arr.filter(
-      (w) =>
-        w.learn.toLowerCase().includes(q) ||
-        w.tr.toLowerCase().includes(q),
-    );
-  }
-
-  if (sort === "learn") {
-    arr.sort((a, b) => a.learn.localeCompare(b.learn));
-  }
-  if (sort === "tr") {
-    arr.sort((a, b) => a.tr.localeCompare(b.tr));
-  }
-
-  arr.forEach((w, i) => {
-    wordList.innerHTML += `
+      arr.forEach((w, i) => {
+        wordList.innerHTML += `
       <div class="list-item">
         <div class="word-line">
           ${i + 1}. ${w.learn} – ${w.tr}
@@ -1486,520 +1485,504 @@ if (currentDownloadLang) {
           <button style="font-size:12px;padding:6px;" onclick="deleteWord('${w.id}')">Delete</button>
         </div>
       </div>`;
-  });
-}
-
-      function exportCurrentTopic() {
-        let rows = ["Learning language,Translation"];
-        data.topics[currentTopic].forEach((w) =>
-          rows.push(`"${w.learn}","${w.tr}"`),
-        );
-        let blob = new Blob([rows.join("\n")], { type: "text/csv" });
-        let a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `${currentTopic}.csv`;
-        a.click();
-      }
-
-      function deleteCurrentTopic() {
-  if (!currentTopic || currentTopic === "Hard Words") return;
-
-  if (!confirm("Delete this topic and all its words?")) return;
-
-  const topicId = currentTopic;
-
-  // מחיקת הטופיק
-  delete data.topics[topicId];
-  saveData();
-
-  // מחיקת הסטטיסטיקה של הטופיק בלבד
-  if (stats.perTopic[topicId]) {
-    delete stats.perTopic[topicId];
-    saveStats();
-  }
-
-  // איפוס בחירה נוכחית
-  currentTopic = null;
-
-  // רענון UI
-  loadTopics();
-  showBank();
-}
-
-
-
-      function deleteWord(id) {
-  const topic = data.topics[currentTopic];
-  if (!topic) {
-    console.warn("No topic found for deleteWord.");
-    return;
-  }
-
-  topic.words = topic.words.filter((w) => w.id !== id);
-  saveData();
-  renderWordList();
-}
-
-
-   function editWord(id) {
-  const topic = data.topics[currentTopic];
-  if (!topic) {
-    console.warn("No topic found for editWord.");
-    return;
-  }
-
-  // זוכרים לאן לחזור
-  returnToTopicAfterSave = currentTopic;
-
-  const w = topic.words.find((x) => x.id === id);
-  if (!w) return;
-
-  // מסירים זמנית
-  topic.words = topic.words.filter((x) => x.id !== id);
-
-  showAdd();
-  addTopicSelect.value = currentTopic;
-  onAddTopicChange();
-
-  learnInput.value = w.learn;
-  translationInput.value = w.tr;
-
-  saveData();
-}
-
-
-
-  /* ===== ADD WORD ===== */
-
-      function showAdd() {
-        resetBankSearch();
-
-        learnInput.value = "";
-        translationInput.value = "";
-        newTopicInput.value = "";
-        newTopicInput.disabled = true;
-        newTopicInput.classList.add("hidden");
-
-        loadAddTopics();
-        show("add");
-      }
-
-      function loadAddTopics() {
-        addTopicSelect.innerHTML = "";
-
-        addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
-        addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
-
-        Object.values(data.topics).forEach((t) => {
-  addTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
-});
-
-
-        if (lastAddTopic && data.topics[lastAddTopic]) {
-          addTopicSelect.value = lastAddTopic;
-     
-   } else {
-          addTopicSelect.value = "";
-        }
-
-        onAddTopicChange();
-      }
-
-      function onAddTopicChange() {
-        const isNew = addTopicSelect.value === "_new";
-
-        newTopicInput.disabled = !isNew;
-        newTopicInput.classList.toggle("hidden", !isNew);
-
-        if (!isNew) {
-          newTopicInput.value = "";
-        }
-      }
-
-  function saveWord() {
-  const isNewTopic = addTopicSelect.value === "_new";
-
-  const topicTitle = isNewTopic
-    ? newTopicInput.value.trim()
-    : data.topics[addTopicSelect.value]?.title;
-
-  if (!topicTitle) {
-    console.warn("Missing topic title for saveWord.");
-    return;
-  }
-  if (!learnInput.value || !translationInput.value) {
-    console.warn("Missing learn/translation value for saveWord.");
-    return;
-  }
-
-  let topicId;
-
-  // ----- יצירת Topic חדש -----
-  if (isNewTopic) {
-    if (!isTopicTitleAvailable(topicTitle)) {
-      alert("Topic with this name already exists.");
-      return;
+      });
     }
 
-    const topic = createTopic(topicTitle, "local");
-    data.topics[topic.id] = topic;
-    topicId = topic.id;
-  } 
-  // ----- Topic קיים -----
-  else {
-    topicId = addTopicSelect.value;
-  }
-
-  const topic = data.topics[topicId];
-  if (!topic) {
-    console.warn("No topic found for saveWord.");
-    return;
-  }
-
-  // הוספת מילה
-  topic.words.push({
-    id: uuid(),
-    learn: learnInput.value,
-    tr: translationInput.value,
-  });
-
-  saveData();
-  loadTopics();
-  updateInstructions();
-
-  // ניקוי שדות
-  learnInput.value = "";
-  translationInput.value = "";
-  newTopicInput.value = "";
-
-  // ----- חזרה לרשימה אחרי עריכה -----
-  if (returnToTopicAfterSave) {
-    setCurrentTopic(returnToTopicAfterSave);
-    returnToTopicAfterSave = null;
-    show("bankList");
-    renderWordList();
-    return;
-  }
-
-  // ----- מצב רגיל: נשארים ב-ADD -----
-  setCurrentTopic(topicId);
-  loadAddTopics();
-  addTopicSelect.value = topicId;
-  onAddTopicChange();
-}
-
-
-
-      /* ===== IMPORT ===== */
-
-      function triggerImport() {
-        importFile.click();
-      }
-
-      importFile.onchange = (e) => {
-  const file = e.target.files[0];
-  if (!file) {
-    importFile.value = "";
-    return;
-  }
-
-  const baseTitle = file.name.replace(/\.[^/.]+$/, "").trim();
-  if (!baseTitle) {
-    alert("Invalid file name");
-    importFile.value = "";
-    return;
-  }
-
-  if (!isTopicTitleAvailable(baseTitle)) {
-    alert("Topic with this name already exists.");
-    importFile.value = "";
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    const csvText = ev.target.result;
-
-    const topic = createTopic(baseTitle, "local");
-    const rows = csvText.split(/\r?\n/);
-
-    rows.forEach((line, i) => {
-      if (!line.trim()) return;
-
-      const p = line.split(",");
-      if (p.length >= 2) {
-        topic.words.push({
-          id: uuid(),
-          learn: p[0].replace(/"/g, "").trim(),
-          tr: p.slice(1).join(",").replace(/"/g, "").trim(),
-        });
-      }
-    });
-
-    if (topic.words.length === 0) {
-      alert("File contains no valid words");
-      importFile.value = "";
-      return;
+    function exportCurrentTopic() {
+      let rows = ["Learning language,Translation"];
+      data.topics[currentTopic].forEach((w) =>
+        rows.push(`"${w.learn}","${w.tr}"`),
+      );
+      let blob = new Blob([rows.join("\n")], { type: "text/csv" });
+      let a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `${currentTopic}.csv`;
+      a.click();
     }
 
-    data.topics[topic.id] = topic;
+    function deleteCurrentTopic() {
+      if (!currentTopic || currentTopic === "Hard Words") return;
 
-    saveData();
-    loadTopics();
-    updateInstructions();
+      if (!confirm("Delete this topic and all its words?")) return;
 
-    setCurrentTopic(topic.id);
-    importFile.value = "";
+      const topicId = currentTopic;
 
-    startSessionSafe(topic.id);
-  };
+      // מחיקת הטופיק
+      delete data.topics[topicId];
+      saveData();
 
-  reader.readAsText(file, "UTF-8");
-};
+      // מחיקת הסטטיסטיקה של הטופיק בלבד
+      if (stats.perTopic[topicId]) {
+        delete stats.perTopic[topicId];
+        saveStats();
+      }
 
-      /* ===== SESSION ===== */
+      // איפוס בחירה נוכחית
+      currentTopic = null;
 
-      // session state (single source of truth)
-      let session = [];
-      let cardFlipped = false;
-      let sessionDefaultDirection = "A";
+      // רענון UI
+      loadTopics();
+      showBank();
+    }
 
+    function deleteWord(id) {
+      const topic = data.topics[currentTopic];
+      if (!topic) {
+        console.warn("No topic found for deleteWord.");
+        return;
+      }
 
-function finalizeSession(showEndScreen = false) {
-  if (!stats.current) return;
+      topic.words = topic.words.filter((w) => w.id !== id);
+      saveData();
+      renderWordList();
+    }
 
-  stats.history.push(stats.current);
-  stats.history = stats.history.slice(-10);
+    function editWord(id) {
+      const topic = data.topics[currentTopic];
+      if (!topic) {
+        console.warn("No topic found for editWord.");
+        return;
+      }
 
-  const t = stats.current.topic;
-  if (!stats.perTopic[t]) {
-    stats.perTopic[t] = { correct: 0, wrong: 0 };
-  }
+      // זוכרים לאן לחזור
+      returnToTopicAfterSave = currentTopic;
 
-  stats.perTopic[t].correct += stats.current.correct;
-  stats.perTopic[t].wrong += stats.current.wrong;
+      const w = topic.words.find((x) => x.id === id);
+      if (!w) return;
 
-  stats.current = null;
-  saveStats();
+      // מסירים זמנית
+      topic.words = topic.words.filter((x) => x.id !== id);
 
-  if (showEndScreen) show("sessionEnd");
-}
+      showAdd();
+      addTopicSelect.value = currentTopic;
+      onAddTopicChange();
 
-     function exitSessionSafe(nextScreen) {
-  finishSessionIfActive();
+      learnInput.value = w.learn;
+      translationInput.value = w.tr;
 
-  if (nextScreen) {
-    show(nextScreen);
-  } else {
-    show("home");
-  }
-}
+      saveData();
+    }
 
-function startSessionSafe(topicName) {
-  finishSessionIfActive();
-  setCurrentTopic(topicName);
-  startSession();
-}
+    /* ===== ADD WORD ===== */
 
+    function showAdd() {
+      resetBankSearch();
 
-      function startSession() {
-  if (!currentTopic) return;
+      learnInput.value = "";
+      translationInput.value = "";
+      newTopicInput.value = "";
+      newTopicInput.disabled = true;
+      newTopicInput.classList.add("hidden");
 
-  // reset session state
-  session = [];
-  current = null;
-  cardFlipped = false;
-  shuffleUsed = false;
-  sessionDefaultDirection = "A";
+      loadAddTopics();
+      show("add");
+    }
 
-  // ----- HARD WORDS -----
-  if (currentTopic === "Hard Words") {
-    session = Object.entries(stats.hardWords)
-      .filter((e) => e[1] >= 2)
-      .map((e) => {
-        const [learn, tr] = e[0].split("||");
-        return { learn, tr };
+    function loadAddTopics() {
+      addTopicSelect.innerHTML = "";
+
+      addTopicSelect.innerHTML += `<option value="">Select topic</option>`;
+      addTopicSelect.innerHTML += `<option value="_new">+ New topic</option>`;
+
+      Object.values(data.topics).forEach((t) => {
+        addTopicSelect.innerHTML += `<option value="${t.id}">${t.title}</option>`;
       });
 
-    if (session.length === 0) {
-      alert("No hard words to practice yet.");
-      show("home");
-      return;
-    }
-  }
-  // ----- NORMAL TOPIC -----
-  else {
-    const topic = data.topics[currentTopic];
-    if (!topic) {
-      alert("Topic not found.");
-      return;
+      if (lastAddTopic && data.topics[lastAddTopic]) {
+        addTopicSelect.value = lastAddTopic;
+      } else {
+        addTopicSelect.value = "";
+      }
+
+      onAddTopicChange();
     }
 
-    session = [...topic.words];
+    function onAddTopicChange() {
+      const isNew = addTopicSelect.value === "_new";
 
-    const sort = sortSelect.value;
-    if (sort === "learn") {
-      session.sort((a, b) => a.learn.localeCompare(b.learn));
+      newTopicInput.disabled = !isNew;
+      newTopicInput.classList.toggle("hidden", !isNew);
+
+      if (!isNew) {
+        newTopicInput.value = "";
+      }
     }
-    if (sort === "tr") {
-      session.sort((a, b) => a.tr.localeCompare(b.tr));
+
+    function saveWord() {
+      const isNewTopic = addTopicSelect.value === "_new";
+
+      const topicTitle = isNewTopic
+        ? newTopicInput.value.trim()
+        : data.topics[addTopicSelect.value]?.title;
+
+      if (!topicTitle) {
+        console.warn("Missing topic title for saveWord.");
+        return;
+      }
+      if (!learnInput.value || !translationInput.value) {
+        console.warn("Missing learn/translation value for saveWord.");
+        return;
+      }
+
+      let topicId;
+
+      // ----- יצירת Topic חדש -----
+      if (isNewTopic) {
+        if (!isTopicTitleAvailable(topicTitle)) {
+          alert("Topic with this name already exists.");
+          return;
+        }
+
+        const topic = createTopic(topicTitle, "local");
+        data.topics[topic.id] = topic;
+        topicId = topic.id;
+      }
+      // ----- Topic קיים -----
+      else {
+        topicId = addTopicSelect.value;
+      }
+
+      const topic = data.topics[topicId];
+      if (!topic) {
+        console.warn("No topic found for saveWord.");
+        return;
+      }
+
+      // הוספת מילה
+      topic.words.push({
+        id: uuid(),
+        learn: learnInput.value,
+        tr: translationInput.value,
+      });
+
+      saveData();
+      loadTopics();
+      updateInstructions();
+
+      // ניקוי שדות
+      learnInput.value = "";
+      translationInput.value = "";
+      newTopicInput.value = "";
+
+      // ----- חזרה לרשימה אחרי עריכה -----
+      if (returnToTopicAfterSave) {
+        setCurrentTopic(returnToTopicAfterSave);
+        returnToTopicAfterSave = null;
+        show("bankList");
+        renderWordList();
+        return;
+      }
+
+      // ----- מצב רגיל: נשארים ב-ADD -----
+      setCurrentTopic(topicId);
+      loadAddTopics();
+      addTopicSelect.value = topicId;
+      onAddTopicChange();
     }
 
-    if (session.length === 0) {
-      alert("This topic has no words.");
-      show("bank");
-      return;
+    /* ===== IMPORT ===== */
+
+    function triggerImport() {
+      importFile.click();
     }
-  }
 
-  // ----- START SESSION -----
-  shuffleBtn.classList.remove("hidden");
+    importFile.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) {
+        importFile.value = "";
+        return;
+      }
 
-  stats.sessions++;
-  stats.current = {
-    topic: currentTopic,
-    correct: 0,
-    wrong: 0,
-  };
+      const baseTitle = file.name.replace(/\.[^/.]+$/, "").trim();
+      if (!baseTitle) {
+        alert("Invalid file name");
+        importFile.value = "";
+        return;
+      }
 
-  nextCard();
-}
+      if (!isTopicTitleAvailable(baseTitle)) {
+        alert("Topic with this name already exists.");
+        importFile.value = "";
+        return;
+      }
 
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const csvText = ev.target.result;
 
-function nextCard() {
-  if (session.length === 0) {
-    finalizeSession(true);
-    return;
-  }
+        const topic = createTopic(baseTitle, "local");
+        const rows = csvText.split(/\r?\n/);
 
-  cardFlipped = false;
-  renderCard();
-  show("session");
-}
+        rows.forEach((line, i) => {
+          if (!line.trim()) return;
 
-
-
-      function renderCard() {
-        let side = cardFlipped
-          ? sessionDefaultDirection === "A"
-            ? "B"
-            : "A"
-          : sessionDefaultDirection;
-
-        const text = side === "A" ? session[0].learn : session[0].tr;
-
-        card.textContent = text;
-
-        requestAnimationFrame(() => {
-          autoFitCardText();
+          const p = line.split(",");
+          if (p.length >= 2) {
+            topic.words.push({
+              id: uuid(),
+              learn: p[0].replace(/"/g, "").trim(),
+              tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+            });
+          }
         });
 
-        document.getElementById("remainingCount").textContent = session.length;
+        if (topic.words.length === 0) {
+          alert("File contains no valid words");
+          importFile.value = "";
+          return;
+        }
+
+        data.topics[topic.id] = topic;
+
+        saveData();
+        loadTopics();
+        updateInstructions();
+
+        setCurrentTopic(topic.id);
+        importFile.value = "";
+
+        startSessionSafe(topic.id);
+      };
+
+      reader.readAsText(file, "UTF-8");
+    };
+
+    /* ===== SESSION ===== */
+
+    // session state (single source of truth)
+    let session = [];
+    let cardFlipped = false;
+    let sessionDefaultDirection = "A";
+
+    function finalizeSession(showEndScreen = false) {
+      if (!stats.current) return;
+
+      stats.history.push(stats.current);
+      stats.history = stats.history.slice(-10);
+
+      const t = stats.current.topic;
+      if (!stats.perTopic[t]) {
+        stats.perTopic[t] = { correct: 0, wrong: 0 };
       }
 
-      function autoFitCardText() {
-  const maxFont = 72;   // תקרה סבירה
-  const minFont = 16;
+      stats.perTopic[t].correct += stats.current.correct;
+      stats.perTopic[t].wrong += stats.current.wrong;
 
-  let size = maxFont;
-  card.style.fontSize = size + "px";
+      stats.current = null;
+      saveStats();
 
-  while (size > minFont) {
-    card.style.fontSize = size + "px";
-
-    if (
-      card.scrollHeight > card.clientHeight ||
-      card.scrollWidth > card.clientWidth
-    ) {
-      size -= 2;
-    } else {
-      break;
+      if (showEndScreen) show("sessionEnd");
     }
-  }
-}
 
-      function flipCard() {
-        cardFlipped = !cardFlipped;
-        if (soundOn) {
-          flipSound.currentTime = 0;
-          flipSound.play();
+    function exitSessionSafe(nextScreen) {
+      finishSessionIfActive();
+
+      if (nextScreen) {
+        show(nextScreen);
+      } else {
+        show("home");
+      }
+    }
+
+    function startSessionSafe(topicName) {
+      finishSessionIfActive();
+      setCurrentTopic(topicName);
+      startSession();
+    }
+
+    function startSession() {
+      if (!currentTopic) return;
+
+      // reset session state
+      session = [];
+      current = null;
+      cardFlipped = false;
+      shuffleUsed = false;
+      sessionDefaultDirection = "A";
+
+      // ----- HARD WORDS -----
+      if (currentTopic === "Hard Words") {
+        session = Object.entries(stats.hardWords)
+          .filter((e) => e[1] >= 2)
+          .map((e) => {
+            const [learn, tr] = e[0].split("||");
+            return { learn, tr };
+          });
+
+        if (session.length === 0) {
+          alert("No hard words to practice yet.");
+          show("home");
+          return;
         }
-        renderCard();
       }
-
-      function flipDirection() {
-        sessionDefaultDirection = sessionDefaultDirection === "A" ? "B" : "A";
-        cardFlipped = false;
-        renderCard();
-      }
-
-      function shuffleSession() {
-  shuffleBtn.classList.add("hidden");
-  session.sort(() => Math.random() - 0.5);
-  cardFlipped = false;
-  renderCard();
-}
-
-      function markKnown() {
-        if (soundOn) {
-          correctSound.currentTime = 0;
-          correctSound.play();
+      // ----- NORMAL TOPIC -----
+      else {
+        const topic = data.topics[currentTopic];
+        if (!topic) {
+          alert("Topic not found.");
+          return;
         }
-        stats.current.correct++;
-        session.shift();
-        nextCard();
+
+        session = [...topic.words];
+
+        const sort = sortSelect.value;
+        if (sort === "learn") {
+          session.sort((a, b) => a.learn.localeCompare(b.learn));
+        }
+        if (sort === "tr") {
+          session.sort((a, b) => a.tr.localeCompare(b.tr));
+        }
+
+        if (session.length === 0) {
+          alert("This topic has no words.");
+          show("bank");
+          return;
+        }
       }
 
-      function markUnknown() {
-        stats.current.wrong++;
-        let key = session[0].learn + "||" + session[0].tr;
-        stats.hardWords[key] = (stats.hardWords[key] || 0) + 1;
-        session.push(session.shift());
-        nextCard();
+      // ----- START SESSION -----
+      shuffleBtn.classList.remove("hidden");
+
+      stats.sessions++;
+      stats.current = {
+        topic: currentTopic,
+        correct: 0,
+        wrong: 0,
+      };
+
+      nextCard();
+    }
+
+    function nextCard() {
+      if (session.length === 0) {
+        finalizeSession(true);
+        return;
       }
 
-      function finishSessionIfActive() {
-        if (!stats.current) return;
+      cardFlipped = false;
+      renderCard();
+      show("session");
+    }
 
-        finalizeSession(false);}
+    function renderCard() {
+      let side = cardFlipped
+        ? sessionDefaultDirection === "A"
+          ? "B"
+          : "A"
+        : sessionDefaultDirection;
 
+      const text = side === "A" ? session[0].learn : session[0].tr;
 
-      /* ===== STATS ===== */
-     
+      card.textContent = text;
 
- function renderStats() {
+      requestAnimationFrame(() => {
+        autoFitCardText();
+      });
 
-// ניקוי סטטיסטיקות של טופיקים שלא קיימים יותר
-Object.keys(stats.perTopic).forEach((id) => {
-  if (!data.topics[id]) {
-    delete stats.perTopic[id];
-  }
-});
-saveStats();
+      document.getElementById("remainingCount").textContent = session.length;
+    }
 
-        let topics = Object.values(data.topics).length;
-        let words = allWords().length;
+    function autoFitCardText() {
+      const maxFont = 72; // תקרה סבירה
+      const minFont = 16;
 
-        let topicStats = "";
-        Object.keys(stats.perTopic).forEach((t) => {
-          let c = stats.perTopic[t].correct;
-          let w = stats.perTopic[t].wrong;
-          let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
-          topicStats += `
+      let size = maxFont;
+      card.style.fontSize = size + "px";
+
+      while (size > minFont) {
+        card.style.fontSize = size + "px";
+
+        if (
+          card.scrollHeight > card.clientHeight ||
+          card.scrollWidth > card.clientWidth
+        ) {
+          size -= 2;
+        } else {
+          break;
+        }
+      }
+    }
+
+    function flipCard() {
+      cardFlipped = !cardFlipped;
+      if (soundOn) {
+        flipSound.currentTime = 0;
+        flipSound.play();
+      }
+      renderCard();
+    }
+
+    function flipDirection() {
+      sessionDefaultDirection = sessionDefaultDirection === "A" ? "B" : "A";
+      cardFlipped = false;
+      renderCard();
+    }
+
+    function shuffleSession() {
+      shuffleBtn.classList.add("hidden");
+      session.sort(() => Math.random() - 0.5);
+      cardFlipped = false;
+      renderCard();
+    }
+
+    function markKnown() {
+      if (soundOn) {
+        correctSound.currentTime = 0;
+        correctSound.play();
+      }
+      stats.current.correct++;
+      session.shift();
+      nextCard();
+    }
+
+    function markUnknown() {
+      stats.current.wrong++;
+      let key = session[0].learn + "||" + session[0].tr;
+      stats.hardWords[key] = (stats.hardWords[key] || 0) + 1;
+      session.push(session.shift());
+      nextCard();
+    }
+
+    function finishSessionIfActive() {
+      if (!stats.current) return;
+
+      finalizeSession(false);
+    }
+
+    /* ===== STATS ===== */
+
+    function renderStats() {
+      // ניקוי סטטיסטיקות של טופיקים שלא קיימים יותר
+      Object.keys(stats.perTopic).forEach((id) => {
+        if (!data.topics[id]) {
+          delete stats.perTopic[id];
+        }
+      });
+      saveStats();
+
+      let topics = Object.values(data.topics).length;
+      let words = allWords().length;
+
+      let topicStats = "";
+      Object.keys(stats.perTopic).forEach((t) => {
+        let c = stats.perTopic[t].correct;
+        let w = stats.perTopic[t].wrong;
+        let acc = c + w > 0 ? Math.round((c / (c + w)) * 100) : 0;
+        topicStats += `
       <div class="stat-block">
         <strong>Topic: ${data.topics[t]?.title || t}</strong><br>
         Correct: ${c}<br>
         Wrong: ${w}<br>
         Accuracy: ${acc}%
       </div>`;
-        });
+      });
 
-        const hardEntries = Object.entries(stats.hardWords)
-          .filter((e) => e[1] >= 2)
-          .sort((a, b) => b[1] - a[1]);
+      const hardEntries = Object.entries(stats.hardWords)
+        .filter((e) => e[1] >= 2)
+        .sort((a, b) => b[1] - a[1]);
 
-        const hardTable = hardEntries.length
-          ? `
+      const hardTable = hardEntries.length
+        ? `
       <h3>Hard Words</h3>
       <table class="hard-table">
         <thead>
@@ -2012,10 +1995,10 @@ saveStats();
         </thead>
         <tbody>
           ${hardEntries
-            .map(([key, count]) => {
-              const [learn, tr] = key.split("||");
-              const safeKey = key.replace(/'/g, "\\'");
-              return `
+          .map(([key, count]) => {
+            const [learn, tr] = key.split("||");
+            const safeKey = key.replace(/'/g, "\\'");
+            return `
                 <tr>
                   <td class="hard-word">${learn} – ${tr}</td>
                   <td class="hard-count">${count}</td>
@@ -2028,13 +2011,13 @@ saveStats();
                     </button>
                   </td>
                 </tr>`;
-            })
-            .join("")}
+          })
+          .join("")}
         </tbody>
       </table>`
-          : `<h3>Hard Words</h3><p>No hard words</p>`;
+        : `<h3>Hard Words</h3><p>No hard words</p>`;
 
-        statsContent.innerHTML = `
+      statsContent.innerHTML = `
     <p>Topics: ${topics}</p>
     <p>Words: ${words}</p>
     <p>Sessions started: ${stats.sessions}</p>
@@ -2044,325 +2027,322 @@ saveStats();
     <hr>
     ${hardTable}
   `;
+    }
+
+    function resetStats() {
+      if (!confirm("Reset ALL statistics?")) return;
+
+      // שומרים את המילים הקשות
+      const hardWordsBackup = stats.hardWords || {};
+
+      stats = {
+        sessions: 0,
+        history: [],
+        perTopic: {},
+        hardWords: hardWordsBackup, // לא נמחק
+      };
+
+      localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
+      renderStats();
+    }
+
+    /* ===== MISC ===== */
+
+    /* == reset == */
+    async function hardReset() {
+      localStorage.clear();
+
+      if ("caches" in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
       }
 
-    
-      function resetStats() {
-  if (!confirm("Reset ALL statistics?")) return;
+      if ("serviceWorker" in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+      }
 
-  // שומרים את המילים הקשות
-  const hardWordsBackup = stats.hardWords || {};
+      localStorage.setItem(RESET_FLAG, "1");
+      location.reload();
+    }
 
-  stats = {
-    sessions: 0,
-    history: [],
-    perTopic: {},
-    hardWords: hardWordsBackup, // לא נמחק
-  };
+    function toggleAccordion(header) {
+      const acc = header.parentElement;
+      const container = acc.parentElement; // #downloadAccordions או #bank (אם בעתיד)
 
-  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+      // סגירת כל האקורדיונים באותו מסך
+      container.querySelectorAll(".accordion.open").forEach((a) => {
+        if (a !== acc) a.classList.remove("open");
+      });
 
-  renderStats();
-}
+      // toggle רק של הנוכחי
+      acc.classList.toggle("open");
+    }
 
-      /* ===== MISC ===== */
+    const restartBtn = document.getElementById("restartSessionBtn");
+    if (restartBtn) {
+      restartBtn.onclick = () => {
+        shuffleUsed = false;
+        startSession();
+      };
+    }
 
-      /* == reset == */
-      async function hardReset() {
-        localStorage.clear();
+    const backBtn = document.getElementById("backHomeBtn");
+    if (backBtn) {
+      backBtn.onclick = () => {
+        goHome();
+      };
+    }
 
-        if ("caches" in window) {
-          const keys = await caches.keys();
-          await Promise.all(keys.map((k) => caches.delete(k)));
+    /* ===== HUB → DOWNLOAD ADAPTER ===== */
+
+    function getDownloadTree(lang) {
+      if (!hubIndex || !lang) return [];
+
+      const tree = {};
+
+      hubIndex.entries.forEach((entry) => {
+        const { branch, group, files } = entry;
+        const langFiles = files?.[lang];
+        if (!langFiles || !langFiles.length) return;
+
+        if (!tree[branch]) {
+          tree[branch] = {};
+        }
+        if (!tree[branch][group]) {
+          tree[branch][group] = [];
         }
 
-        if ("serviceWorker" in navigator) {
-          const regs = await navigator.serviceWorker.getRegistrations();
-          await Promise.all(regs.map((r) => r.unregister()));
-        }
-
-        localStorage.setItem(RESET_FLAG, "1");
-        location.reload();
-      }
-
-      function toggleAccordion(header) {
-        const acc = header.parentElement;
-        const container = acc.parentElement; // #downloadAccordions או #bank (אם בעתיד)
-
-        // סגירת כל האקורדיונים באותו מסך
-        container.querySelectorAll(".accordion.open").forEach((a) => {
-          if (a !== acc) a.classList.remove("open");
+        langFiles.forEach((f) => {
+          tree[branch][group].push(f);
         });
+      });
 
-        // toggle רק של הנוכחי
-        acc.classList.toggle("open");
-      }
+      return tree;
+    }
 
-      const restartBtn = document.getElementById("restartSessionBtn");
-      if (restartBtn) {
-        restartBtn.onclick = () => {
-          shuffleUsed = false;
-          startSession();
-        };
-      }
+    /* ===== DOWNLOAD ===== */
 
-      const backBtn = document.getElementById("backHomeBtn");
-      if (backBtn) {
-        backBtn.onclick = () => {
-          goHome();
-        };
-      }
+    async function buildDownloadUI() {
+      if (!hubIndex || !currentDownloadLang) return;
 
-      /* ===== HUB → DOWNLOAD ADAPTER ===== */
+      const tree = getDownloadTree(currentDownloadLang);
+      const container = document.getElementById("downloadAccordions");
+      container.innerHTML = "";
 
-      function getDownloadTree(lang) {
-        if (!hubIndex || !lang) return [];
+      Object.keys(tree).forEach((branchId) => {
+        const acc = document.createElement("div");
+        acc.className = "accordion";
 
-        const tree = {};
-
-        hubIndex.entries.forEach((entry) => {
-          const { branch, group, files } = entry;
-          const langFiles = files?.[lang];
-          if (!langFiles || !langFiles.length) return;
-
-          if (!tree[branch]) {
-            tree[branch] = {};
-          }
-          if (!tree[branch][group]) {
-            tree[branch][group] = [];
-          }
-
-          langFiles.forEach((f) => {
-            tree[branch][group].push(f);
-          });
-        });
-
-        return tree;
-      }
-
-      /* ===== DOWNLOAD ===== */
-
-      async function buildDownloadUI() {
-        if (!hubIndex || !currentDownloadLang) return;
-
-
-        const tree = getDownloadTree(currentDownloadLang);
-        const container = document.getElementById("downloadAccordions");
-        container.innerHTML = "";
-
-        Object.keys(tree).forEach((branchId) => {
-          const acc = document.createElement("div");
-          acc.className = "accordion";
-
-          acc.innerHTML = `
+        acc.innerHTML = `
       <div class="accordion-header" onclick="toggleAccordion(this)">
         ${branchId} <span>▶</span>
       </div>
       <div class="accordion-content"></div>
     `;
 
-          const content = acc.querySelector(".accordion-content");
+        const content = acc.querySelector(".accordion-content");
 
-          Object.keys(tree[branchId]).forEach((groupId) => {
-            const groupDiv = document.createElement("div");
-            groupDiv.className = "download-group";
-            groupDiv.innerHTML = `<strong>${groupId}</strong>`;
+        Object.keys(tree[branchId]).forEach((groupId) => {
+          const groupDiv = document.createElement("div");
+          groupDiv.className = "download-group";
+          groupDiv.innerHTML = `<strong>${groupId}</strong>`;
 
-            const ul = document.createElement("ul");
+          const ul = document.createElement("ul");
 
-            tree[branchId][groupId].forEach((fileName) => {
-              const li = document.createElement("li");
-              li.className = "li-available";
-              li.textContent = fileName.replace(/\.csv$/i, "");
+          tree[branchId][groupId].forEach((fileName) => {
+            const li = document.createElement("li");
+            li.className = "li-available";
+            li.textContent = fileName.replace(/\.csv$/i, "");
 
-              li.onclick = () => {
-                const path = `hub/${currentDownloadLang}/${branchId}/${groupId}/${fileName}`;
-                onDownloadFile(path, `${groupId}`, fileName);
-              };
+            li.onclick = () => {
+              const path = `hub/${currentDownloadLang}/${branchId}/${groupId}/${fileName}`;
+              onDownloadFile(path, `${groupId}`, fileName);
+            };
 
-              ul.appendChild(li);
-            });
-
-            groupDiv.appendChild(ul);
-            content.appendChild(groupDiv);
+            ul.appendChild(li);
           });
 
-          container.appendChild(acc);
+          groupDiv.appendChild(ul);
+          content.appendChild(groupDiv);
         });
-      }
 
-      async function onDownloadFile(path, groupId, fileName) {
-  if (!currentDownloadLang) {
-    alert("Please choose language first");
-    return;
-  }
-
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-  try {
-    const res = await fetch(path, { signal: controller.signal });
-    if (!res.ok) {
-      alert("File not found");
-      return;
+        container.appendChild(acc);
+      });
     }
 
-    const csvText = await res.text();
-
-    const baseName = fileName.replace(/\.csv$/i, "");
-    const topicTitle = `${groupId} · ${baseName} (${fileName})`;
-
-    // בדיקה אם כבר קיים topic מה-HUB עם אותו קובץ
-    const existing = Object.values(data.topics).find(
-      (t) =>
-        t.source === "hub" &&
-        t.hubMeta &&
-        t.hubMeta.fileName === fileName &&
-        t.hubMeta.groupId === groupId &&
-        t.hubMeta.lang === currentDownloadLang
-    );
-
-    let topicId;
-
-    if (existing) {
-      // ריענון התוכן
-      const rows = csvText.split(/\r?\n/);
-      const newWords = [];
-
-      rows.forEach((line) => {
-        if (!line.trim()) return;
-
-        const p = line.split(",");
-        if (p.length >= 2) {
-          newWords.push({
-            id: uuid(),
-            learn: p[0].replace(/"/g, "").trim(),
-            tr: p.slice(1).join(",").replace(/"/g, "").trim(),
-          });
-        }
-      });
-
-      if (newWords.length === 0) {
-        alert("File contains no valid words");
+    async function onDownloadFile(path, groupId, fileName) {
+      if (!currentDownloadLang) {
+        alert("Please choose language first");
         return;
       }
 
-      existing.words = newWords;
-      existing.title = topicTitle;
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-      saveData();
-      loadTopics();
+      try {
+        const res = await fetch(path, { signal: controller.signal });
+        if (!res.ok) {
+          alert("File not found");
+          return;
+        }
 
-      topicId = existing.id;
-    } else {
-      topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
-        path,
-        groupId,
-        fileName,
-        lang: currentDownloadLang,
+        const csvText = await res.text();
+
+        const baseName = fileName.replace(/\.csv$/i, "");
+        const topicTitle = `${groupId} · ${baseName} (${fileName})`;
+
+        // בדיקה אם כבר קיים topic מה-HUB עם אותו קובץ
+        const existing = Object.values(data.topics).find(
+          (t) =>
+            t.source === "hub" &&
+            t.hubMeta &&
+            t.hubMeta.fileName === fileName &&
+            t.hubMeta.groupId === groupId &&
+            t.hubMeta.lang === currentDownloadLang,
+        );
+
+        let topicId;
+
+        if (existing) {
+          // ריענון התוכן
+          const rows = csvText.split(/\r?\n/);
+          const newWords = [];
+
+          rows.forEach((line) => {
+            if (!line.trim()) return;
+
+            const p = line.split(",");
+            if (p.length >= 2) {
+              newWords.push({
+                id: uuid(),
+                learn: p[0].replace(/"/g, "").trim(),
+                tr: p.slice(1).join(",").replace(/"/g, "").trim(),
+              });
+            }
+          });
+
+          if (newWords.length === 0) {
+            alert("File contains no valid words");
+            return;
+          }
+
+          existing.words = newWords;
+          existing.title = topicTitle;
+
+          saveData();
+          loadTopics();
+
+          topicId = existing.id;
+        } else {
+          topicId = saveCSVAsTopic(csvText, topicTitle, "hub", {
+            path,
+            groupId,
+            fileName,
+            lang: currentDownloadLang,
+          });
+        }
+
+        if (!topicId) return;
+
+        setCurrentTopic(topicId);
+        startSessionSafe(topicId);
+      } catch (e) {
+        alert("Download failed or timed out.");
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    /* ===== DOWNLOAD LANGUAGE SELECTION ===== */
+
+    let currentDownloadLang = null;
+    const downloadLangSelect = document.getElementById("downloadLangSelect");
+
+    if (downloadLangSelect) {
+      downloadLangSelect.addEventListener("change", () => {
+        currentDownloadLang = downloadLangSelect.value || null;
+        buildDownloadUI();
+        closeAllAccordions();
       });
     }
 
-    if (!topicId) return;
+    const acc = document.getElementById("downloadAccordions");
 
-    setCurrentTopic(topicId);
-    startSessionSafe(topicId);
-  } catch (e) {
-    alert("Download failed or timed out.");
-  } finally {
-    clearTimeout(timeoutId);
-  }
-}
+    if (currentDownloadLang) {
+      downloadLangSelect.classList.add("lang-" + currentDownloadLang);
+      if (acc) acc.classList.remove("lang-not-selected");
+    } else {
+      if (acc) acc.classList.add("lang-not-selected");
+    }
 
-      /* ===== DOWNLOAD LANGUAGE SELECTION ===== */
+    function closeAllAccordions() {
+      document
+        .querySelectorAll("#download .accordion.open")
+        .forEach((acc) => acc.classList.remove("open"));
+    }
 
-      let currentDownloadLang = null;
-      const downloadLangSelect = document.getElementById("downloadLangSelect");
-
-      if (downloadLangSelect) {
-        downloadLangSelect.addEventListener("change", () => {
-          currentDownloadLang = downloadLangSelect.value || null;
-          buildDownloadUI();
-          closeAllAccordions();
-        });
+    function exitApp() {
+      // PWA / Mobile
+      if (navigator.userAgent.includes("Android")) {
+        navigator.app?.exitApp?.();
       }
 
+      // דפדפן רגיל – חזרה אחורה
+      window.history.back();
+    }
 
-        const acc = document.getElementById("downloadAccordions");
+    function gateUntilReset() {
+      if (localStorage.getItem(RESET_FLAG)) return;
 
-        if (currentDownloadLang) {
-          downloadLangSelect.classList.add("lang-" + currentDownloadLang);
-          if (acc) acc.classList.remove("lang-not-selected");
-        } else {
-          if (acc) acc.classList.add("lang-not-selected");
-        }
+      document
+        .querySelectorAll(".screen")
+        .forEach((s) => s.classList.remove("active"));
 
-      function closeAllAccordions() {
-        document
-          .querySelectorAll("#download .accordion.open")
-          .forEach((acc) => acc.classList.remove("open"));
+      document.getElementById("resetGate").classList.add("active");
+    }
+
+    /* ===== GLOBAL EXPORTS (for inline onclick) ===== */
+
+    window.startSessionSafe = startSessionSafe;
+    window.showStats = showStats;
+    window.showBank = showBank;
+    window.showDownload = showDownload;
+    window.goHome = goHome;
+
+    window.flipCard = flipCard;
+    window.markKnown = markKnown;
+    window.markUnknown = markUnknown;
+    window.shuffleSession = shuffleSession;
+
+    window.toggleAccordion = toggleAccordion;
+    window.removeHardWord = removeHardWord;
+    window.exitApp = exitApp;
+
+    /* ===== INIT (SAFE) ===== */
+
+    const APP_VERSION = 666;
+    const APP_VERSION_KEY = "app_version";
+
+    (function bootstrapVersionGate() {
+      const stored = Number(localStorage.getItem(APP_VERSION_KEY));
+
+      if (stored !== APP_VERSION) {
+        localStorage.clear();
+        localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
+        localStorage.setItem(RESET_FLAG, "1");
       }
+    })();
 
-      function exitApp() {
-        // PWA / Mobile
-        if (navigator.userAgent.includes("Android")) {
-          navigator.app?.exitApp?.();
-        }
+    (function startApp() {
+      gateUntilReset();
+      loadHubIndex();
+      buildDownloadLangSelect();
+      loadTopics();
+      updateInstructions();
+    })();
+  </script>
+</body>
 
-        // דפדפן רגיל – חזרה אחורה
-        window.history.back();
-      }
-
-      function gateUntilReset() {
-        if (localStorage.getItem(RESET_FLAG)) return;
-
-        document
-          .querySelectorAll(".screen")
-          .forEach((s) => s.classList.remove("active"));
-
-        document.getElementById("resetGate").classList.add("active");
-      }
-
-      /* ===== GLOBAL EXPORTS (for inline onclick) ===== */
-
-      window.startSessionSafe = startSessionSafe;
-      window.showStats = showStats;
-      window.showBank = showBank;
-      window.showDownload = showDownload;
-      window.goHome = goHome;
-
-      window.flipCard = flipCard;
-      window.markKnown = markKnown;
-      window.markUnknown = markUnknown;
-      window.shuffleSession = shuffleSession;
-
-      window.toggleAccordion = toggleAccordion;
-      window.removeHardWord = removeHardWord;
-      window.exitApp = exitApp;
-
-      /* ===== INIT (SAFE) ===== */
-
-const APP_VERSION = 666;
-const APP_VERSION_KEY = "app_version";
-
-(function bootstrapVersionGate() {
-  const stored = Number(localStorage.getItem(APP_VERSION_KEY));
-
-  if (stored !== APP_VERSION) {
-    localStorage.clear();
-    localStorage.setItem(APP_VERSION_KEY, APP_VERSION);
-    localStorage.setItem(RESET_FLAG, "1");
-  }
-})();
-
-(function startApp() {
-  gateUntilReset();
-  loadHubIndex();
- buildDownloadLangSelect();
-  loadTopics();
-  updateInstructions();
-})();
-
-    </script>
-  </body>
 </html>
