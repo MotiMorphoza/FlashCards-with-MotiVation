@@ -238,7 +238,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 004</div>
+        <div class="main-title">TEST - 005</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -583,6 +583,9 @@
     !allWrongCounted
   ) {
     currentWrongAttempts += 1;
+playSound("error");
+allWrongCounted = true;
+
     allWrongCounted = true;
 
     if (currentWrongAttempts > 2 && !isHardMode) {
@@ -680,8 +683,17 @@
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         const filter = audioCtx.createBiquadFilter();
-        osc.type = type === "success" ? "triangle" : "sine";
-        osc.frequency.setValueAtTime(type === "success" ? 720 : 420, now);
+        if (type === "success") {
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(720, now);
+} else if (type === "error") {
+  osc.type = "sawtooth";
+  osc.frequency.setValueAtTime(220, now);
+} else {
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(420, now);
+}
+
         filter.type = "lowpass";
         filter.frequency.value = 1200;
         gain.gain.setValueAtTime(0, now);
