@@ -490,9 +490,12 @@
       }
 
       function refreshHardButtons() {
-        const hasHard = getHardSentences().length > 0;
-        hardSessionBtn.classList.toggle("hidden", !selectedSource || !hasHard);
-      }
+  const hasHard = getHardSentences().length > 0;
+
+  hardSessionBtn.classList.toggle("hidden", !selectedSource || !hasHard);
+  manageHardBtn.classList.toggle("hidden", !hasHard);
+}
+
 
       function getHardStorageKey() {
         return selectedSource
@@ -560,19 +563,13 @@
       }
 
       function startHardSession() {
-  const hard = getHardSentences();
-
-  if (!hard.length) {
-    alert("No hard sentences yet.");
-    return;
-  }
-
-  startSession(
-    hard.map((h) => ({ source: h.source, translation: h.translation })),
-    true,
-  );
-}
-
+        const hard = getHardSentences();
+        if (!hard.length) return;
+        startSession(
+          hard.map((h) => ({ source: h.source, translation: h.translation })),
+          true,
+        );
+      }
 
       function startSession(sentences, hardMode) {
         isHardMode = hardMode;
