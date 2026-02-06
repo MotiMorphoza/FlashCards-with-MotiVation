@@ -320,7 +320,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 015</div>
+        <div class="main-title">TEST - 016</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -331,9 +331,10 @@
         <button id="hardSessionBtn" class="hidden">
           Hard Sentences Session 🔥
         </button>
-        <button id="manageHardBtn" class="secondary">
-          Hard Sentences Manager
-        </button>
+        <button id="manageHardBtn" class="secondary hidden">
+  Hard Sentences Manager
+</button>
+
       </div>
 
       <div id="gameScreen" class="hidden">
@@ -491,10 +492,12 @@
 
       function refreshHardButtons() {
   const hasHard = getHardSentences().length > 0;
+  const show = selectedSource && hasHard;
 
-  hardSessionBtn.classList.toggle("hidden", !selectedSource || !hasHard);
-  manageHardBtn.classList.toggle("hidden", !hasHard);
+  hardSessionBtn.classList.toggle("hidden", !show);
+  manageHardBtn.classList.toggle("hidden", !show);
 }
+
 
 
       function getHardStorageKey() {
