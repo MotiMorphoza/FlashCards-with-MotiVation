@@ -225,7 +225,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 000</div>
+        <div class="main-title">TEST - 001</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -248,10 +248,6 @@
           <div id="speaker" class="hidden" style="cursor: pointer">🔊</div>
         </div>
 
-        <div class="card-box">
-          <div class="label">Sentence</div>
-          <div id="promptText" class="sentence-view"></div>
-        </div>
         <div class="card-box">
           <div class="label">Translation</div>
           <div id="translationText" class="translation-view"></div>
@@ -484,11 +480,10 @@
         const row = sessionSentences[currentIndex];
         if (!row) return endSession();
 
-        const promptText = document.getElementById("promptText");
         const translationText = document.getElementById("translationText");
-        promptText.textContent = "";
         translationText.textContent = row.translation;
-         translationText.dir = isRTL(row.translation) ? "rtl" : "ltr";
+        translationText.dir = isRTL(row.translation) ? "rtl" : "ltr";
+
 
 
         currentTokens = tokenizeSentence(row.source);
