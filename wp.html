@@ -320,7 +320,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 013</div>
+        <div class="main-title">TEST - 014</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -664,6 +664,7 @@ if (!audioUnlocked) {
           builtTokens.push(bankTokens[idx]);
           bankTokens.splice(idx, 1);
         }
+allWrongCounted = false;
         renderTokens();
       }
 
