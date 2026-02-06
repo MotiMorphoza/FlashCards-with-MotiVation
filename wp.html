@@ -238,7 +238,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 006</div>
+        <div class="main-title">TEST - 007</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -576,16 +576,24 @@ bankTokens = shuffle(
         renderTokens();
       }
 
-      function checkSentenceState() {
+function checkSentenceState() {
   const built = builtTokens.map((t) => t.text).join(" ");
   const target = currentTokens.join(" ");
   const isCorrect = built === target;
 
-  document.getElementById("nextBtn").disabled = !isCorrect;
+  const nextBtn = document.getElementById("nextBtn");
+  const wasDisabled = nextBtn.disabled;
+
+  nextBtn.disabled = !isCorrect;
+
+  if (isCorrect && wasDisabled) {
+    playSound("success");
+  }
 
   document
     .getElementById("speakerBox")
     .classList.toggle("hidden", !isCorrect);
+
 
   if (
     builtTokens.length === currentTokens.length &&
@@ -610,8 +618,7 @@ allWrongCounted = true;
 
       function nextSentence() {
         if (document.getElementById("nextBtn").disabled) return;
-        playSound("success");
-        currentIndex += 1;
+               currentIndex += 1;
         if (currentIndex >= sessionSentences.length) endSession();
         else loadCurrentSentence();
       }
