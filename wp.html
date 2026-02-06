@@ -330,7 +330,7 @@
       <div id="startScreen">
         <div class="main-title">WORD PUZZLE</div>
         <div class="subtitle">Choose language · Pick sentence file · Start</div>
-        <div class="main-title">TEST - 020</div>
+        <div class="main-title">TEST - 021</div>
 
         <select id="langSelect">
           <option value="">Select language…</option>
@@ -421,6 +421,7 @@
       let soundEnabled = true;
       let audioCtx = null;
       let audioUnlocked = false;
+let lastMoveTime = 0;
 
 
       const langSelect = document.getElementById("langSelect");
@@ -673,6 +674,10 @@ bankTokens = shuffle(
 }
 
       function moveToken(id, fromSentence) {
+const now = Date.now();
+if (now - lastMoveTime < 60) return;
+lastMoveTime = now;
+
 if (!audioUnlocked) {
   ensureAudio();
   audioUnlocked = true;
