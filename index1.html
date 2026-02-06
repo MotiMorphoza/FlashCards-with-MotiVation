@@ -771,7 +771,7 @@ body {
       <button onclick="exitApp()" class="back">Exit</button>
 
       <div class="title-bottom">Hebrew with MotiVation</div>
-      <div style="text-align: center; opacity: 0.4">TEST - 100</div>
+      <div style="text-align: center; opacity: 0.4">TEST - 101</div>
 
       <div
         id="cacheVersion"
@@ -1502,22 +1502,30 @@ if (currentDownloadLang) {
       }
 
       function deleteCurrentTopic() {
-  if (confirm("Delete this topic and all its words?")) {
-    const topicId = currentTopic;
+  if (!currentTopic || currentTopic === "Hard Words") return;
 
-    // מחיקת הטופיק
-    delete data.topics[topicId];
-    saveData();
+  if (!confirm("Delete this topic and all its words?")) return;
 
-    // מחיקת הסטטיסטיקה שלו
-    if (stats.perTopic[topicId]) {
-      delete stats.perTopic[topicId];
-      saveStats();
-    }
+  const topicId = currentTopic;
 
-    showBank();
+  // מחיקת הטופיק
+  delete data.topics[topicId];
+  saveData();
+
+  // מחיקת הסטטיסטיקה של הטופיק בלבד
+  if (stats.perTopic[topicId]) {
+    delete stats.perTopic[topicId];
+    saveStats();
   }
+
+  // איפוס בחירה נוכחית
+  currentTopic = null;
+
+  // רענון UI
+  loadTopics();
+  showBank();
 }
+
 
 
       function deleteWord(id) {
@@ -2040,19 +2048,22 @@ saveStats();
 
     
       function resetStats() {
-        if (!confirm("Reset ALL statistics?")) return;
+  if (!confirm("Reset ALL statistics?")) return;
 
-        stats = {
-          sessions: 0,
-          history: [],
-          perTopic: {},
-          hardWords: {},
-        };
+  // שומרים את המילים הקשות
+  const hardWordsBackup = stats.hardWords || {};
 
-        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  stats = {
+    sessions: 0,
+    history: [],
+    perTopic: {},
+    hardWords: hardWordsBackup, // לא נמחק
+  };
 
-        renderStats();
-      }
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+
+  renderStats();
+}
 
       /* ===== MISC ===== */
 
