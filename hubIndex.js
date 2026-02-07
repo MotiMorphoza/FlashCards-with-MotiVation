@@ -7,7 +7,7 @@ window.HUB_INDEX = {
     },
     {
       "id": "en-pl",
-      "title": "en-pl"
+      "title": "English → Polish"
     },
     {
       "id": "es-he",
@@ -76,7 +76,8 @@ window.HUB_INDEX = {
         ],
         "en-pl": [
           "sentences 000.csv",
-          "testojewski.csv"
+          "testojewski.csv",
+          "toto.csv"
         ],
         "es-he": [
           "000.csv",
