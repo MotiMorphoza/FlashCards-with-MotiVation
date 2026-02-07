@@ -3,23 +3,23 @@ window.HUB_INDEX = {
   "languages": [
     {
       "id": "ar-he",
-      "title": "ar-he"
+      "title": "Arabic → Hebrew"
     },
     {
       "id": "en-pl",
-      "title": "en-pl"
+      "title": "English → Polish"
     },
     {
       "id": "es-he",
-      "title": "es-he"
+      "title": "Spanish → Hebrew"
     },
     {
       "id": "he-en",
-      "title": "he-en"
+      "title": "Hebrew → English"
     },
     {
       "id": "he-pl",
-      "title": "he-pl"
+      "title": "Hebrew → Polish"
     }
   ],
   "branches": [
@@ -116,7 +116,23 @@ window.HUB_INDEX = {
     {
       "branch": "misc",
       "group": "test",
-      "files": {}
+      "files": {
+        "ar-he": [
+          "333.csv"
+        ],
+        "he-en": [
+          "333.csv"
+        ],
+        "en-pl": [
+          "333.csv"
+        ],
+        "es-he": [
+          "333.csv"
+        ],
+        "he-pl": [
+          "333.csv"
+        ]
+      }
     }
   ]
 };
