@@ -7,7 +7,7 @@ window.HUB_INDEX = {
     },
     {
       "id": "en-pl",
-      "title": "English → Polish"
+      "title": "en-pl"
     },
     {
       "id": "es-he",
@@ -30,6 +30,10 @@ window.HUB_INDEX = {
     {
       "id": "vocabulary",
       "title": "vocabulary"
+    },
+    {
+      "id": "vocabulary - Copy",
+      "title": "vocabulary - Copy"
     }
   ],
   "entries": [
@@ -71,27 +75,48 @@ window.HUB_INDEX = {
       "files": {
         "ar-he": [
           "000.csv",
-          "test.csv",
-          "testojewski.csv"
+          "test.csv"
         ],
         "en-pl": [
-          "sentences 000.csv",
-          "testojewski.csv",
-          "toto.csv"
+          "sentences 000.csv"
         ],
         "es-he": [
-          "000.csv",
-          "testojewski.csv"
+          "000.csv"
         ],
         "he-en": [
           "sentences 000 - Copy.csv",
-          "sentences 000.csv",
-          "testojewski.csv"
-        ],
-        "he-pl": [
-          "testojewski.csv"
+          "sentences 000.csv"
         ]
       }
+    },
+    {
+      "branch": "vocabulary - Copy",
+      "group": "sentences",
+      "files": {
+        "en-pl": [
+          "sentences 000.csv"
+        ],
+        "es-he": [
+          "000.csv"
+        ]
+      }
+    },
+    {
+      "branch": "vocabulary - Copy",
+      "group": "daily_use",
+      "files": {
+        "es-he": [
+          "daily000.csv"
+        ],
+        "he-pl": [
+          "daily000.csv"
+        ]
+      }
+    },
+    {
+      "branch": "misc",
+      "group": "test",
+      "files": {}
     }
   ]
 };
