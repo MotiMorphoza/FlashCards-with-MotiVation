@@ -6,14 +6,6 @@ INDEX_FILE = Path("hubIndex.js")
 
 VERSION = 2
 
-LANGUAGE_TITLES = {
-    "ar-he": "Arabic → Hebrew",
-    "he-en": "Hebrew → English",
-    "en-pl": "English → Polish",
-    "es-he": "Spanish → Hebrew",
-    "he-pl": "Hebrew → Polish",
-}
-
 # -------- helpers --------
 
 def write_index(index):
@@ -82,10 +74,9 @@ def scan_hub():
 
     # finalize languages
     for lid in sorted(languages_seen):
-        title = LANGUAGE_TITLES.get(lid, lid)
         index["languages"].append({
             "id": lid,
-            "title": title
+            "title": lid
         })
 
     # finalize branches

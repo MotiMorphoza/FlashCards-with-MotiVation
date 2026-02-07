@@ -21,7 +21,8 @@ window.HUB_INDEX = {
       "id": "he-pl",
       "title": "Hebrew → Polish"
     }
-  ],  "branches": [
+  ],
+  "branches": [
     {
       "id": "misc",
       "title": "misc"
