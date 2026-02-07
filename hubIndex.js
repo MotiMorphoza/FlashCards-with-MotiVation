@@ -3,23 +3,23 @@ window.HUB_INDEX = {
   "languages": [
     {
       "id": "ar-he",
-      "title": "Arabic → Hebrew"
+      "title": "ar-he"
     },
     {
       "id": "en-pl",
-      "title": "English → Polish"
+      "title": "en-pl"
     },
     {
       "id": "es-he",
-      "title": "Spanish → Hebrew"
+      "title": "es-he"
     },
     {
       "id": "he-en",
-      "title": "Hebrew → English"
+      "title": "he-en"
     },
     {
       "id": "he-pl",
-      "title": "Hebrew → Polish"
+      "title": "he-pl"
     }
   ],
   "branches": [
@@ -30,10 +30,6 @@ window.HUB_INDEX = {
     {
       "id": "vocabulary",
       "title": "vocabulary"
-    },
-    {
-      "id": "vocabulary - Copy",
-      "title": "vocabulary - Copy"
     }
   ],
   "entries": [
@@ -55,8 +51,7 @@ window.HUB_INDEX = {
       "group": "daily_use",
       "files": {
         "ar-he": [
-          "daily000.csv",
-          "test.csv"
+          "daily000.csv"
         ],
         "es-he": [
           "daily000.csv"
@@ -74,8 +69,7 @@ window.HUB_INDEX = {
       "group": "sentences",
       "files": {
         "ar-he": [
-          "000.csv",
-          "test.csv"
+          "000.csv"
         ],
         "en-pl": [
           "sentences 000.csv"
@@ -84,53 +78,8 @@ window.HUB_INDEX = {
           "000.csv"
         ],
         "he-en": [
-          "sentences 000 - Copy.csv",
-          "sentences 000.csv"
-        ]
-      }
-    },
-    {
-      "branch": "vocabulary - Copy",
-      "group": "sentences",
-      "files": {
-        "en-pl": [
-          "sentences 000.csv"
-        ],
-        "es-he": [
-          "000.csv"
-        ]
-      }
-    },
-    {
-      "branch": "vocabulary - Copy",
-      "group": "daily_use",
-      "files": {
-        "es-he": [
-          "daily000.csv"
-        ],
-        "he-pl": [
-          "daily000.csv"
-        ]
-      }
-    },
-    {
-      "branch": "misc",
-      "group": "test",
-      "files": {
-        "ar-he": [
-          "333.csv"
-        ],
-        "he-en": [
-          "333.csv"
-        ],
-        "en-pl": [
-          "333.csv"
-        ],
-        "es-he": [
-          "333.csv"
-        ],
-        "he-pl": [
-          "333.csv"
+          "sentences 000.csv",
+          "sentences 001.csv"
         ]
       }
     }
