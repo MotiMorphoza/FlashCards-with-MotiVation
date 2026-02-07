@@ -71,17 +71,24 @@ window.HUB_INDEX = {
       "files": {
         "ar-he": [
           "000.csv",
-          "test.csv"
+          "test.csv",
+          "testojewski.csv"
         ],
         "en-pl": [
-          "sentences 000.csv"
+          "sentences 000.csv",
+          "testojewski.csv"
         ],
         "es-he": [
-          "000.csv"
+          "000.csv",
+          "testojewski.csv"
         ],
         "he-en": [
           "sentences 000 - Copy.csv",
-          "sentences 000.csv"
+          "sentences 000.csv",
+          "testojewski.csv"
+        ],
+        "he-pl": [
+          "testojewski.csv"
         ]
       }
     }
