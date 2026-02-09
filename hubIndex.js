@@ -78,6 +78,7 @@ window.HUB_INDEX = {
           "000.csv"
         ],
         "he-en": [
+          "sentences 001.csv",
           "to_leave_or_not.csv"
         ]
       }
