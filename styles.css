@@ -165,6 +165,12 @@ select {
   color: var(--text);
 }
 
+select option,
+select optgroup {
+  color: #101826;
+  background: #f4f7fb;
+}
+
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -391,6 +397,10 @@ select {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.button-row--single {
+  grid-template-columns: 1fr;
 }
 
 .match-board {
