@@ -13,6 +13,32 @@ function createTimeoutSignal(timeoutMs) {
   };
 }
 
+function ensureTreeBranch(tree, branchName, groupName) {
+  if (!tree[branchName]) {
+    tree[branchName] = {};
+  }
+
+  if (!tree[branchName][groupName]) {
+    tree[branchName][groupName] = [];
+  }
+}
+
+function inferCategory(entryGroup, topic = {}) {
+  if (topic.category) {
+    return topic.category;
+  }
+
+  return entryGroup === "sentences" ? "sentences" : "vocabulary";
+}
+
+function inferAllowedGames(category, topic = {}) {
+  if (Array.isArray(topic.allowedGames) && topic.allowedGames.length > 0) {
+    return topic.allowedGames;
+  }
+
+  return category === "sentences" ? ["wordpuzzle"] : ["flashcards", "wordmatch"];
+}
+
 export const HubAdapter = {
   index: null,
 
@@ -43,44 +69,12 @@ export const HubAdapter = {
     const { gameId = null } = options;
     const tree = {};
 
-    (this.index?.entries || []).forEach((entry) => {
-      if (category && entry.group !== category) {
-        return;
-      }
-
-      const files = entry.files?.[lang];
-      if (!files || files.length === 0) {
-        return;
-      }
-
-      if (!tree[entry.branch]) {
-        tree[entry.branch] = {};
-      }
-
-      if (!tree[entry.branch][entry.group]) {
-        tree[entry.branch][entry.group] = [];
-      }
-
-      files.forEach((fileName) => {
-        const path = `hub/${lang}/${entry.branch}/${entry.group}/${fileName}`;
-        tree[entry.branch][entry.group].push({
-          id: path,
-          name: fileName.replace(/\.csv$/i, ""),
-          file: fileName,
-          path,
-          lang,
-          branch: entry.branch,
-          group: entry.group,
-        });
-      });
-    });
-
-    Storage.getImportedTopics().forEach((topic) => {
+    Storage.getLibraryTopics().forEach((topic) => {
       if (topic.lang !== lang) {
         return;
       }
 
-      if (category && topic.category && topic.category !== category) {
+      if (category && topic.category !== category) {
         return;
       }
 
@@ -93,17 +87,10 @@ export const HubAdapter = {
         return;
       }
 
-      const branch = topic.branch || "imports";
-      const group = topic.group || "my_files";
+      const branch = topic.branch || "my library";
+      const group = topic.group || (topic.category === "sentences" ? "sentences" : "my files");
 
-      if (!tree[branch]) {
-        tree[branch] = {};
-      }
-
-      if (!tree[branch][group]) {
-        tree[branch][group] = [];
-      }
-
+      ensureTreeBranch(tree, branch, group);
       tree[branch][group].push({
         id: topic.id,
         name: topic.name,
@@ -112,7 +99,40 @@ export const HubAdapter = {
         lang: topic.lang,
         branch,
         group,
-        source: "import",
+        source: topic.source || "local",
+        category: topic.category,
+        allowedGames: topic.allowedGames,
+        originPath: topic.originPath || null,
+        localId: topic.id,
+      });
+    });
+
+    (this.index?.entries || []).forEach((entry) => {
+      if (category && entry.group !== category) {
+        return;
+      }
+
+      const files = entry.files?.[lang];
+      if (!files || files.length === 0) {
+        return;
+      }
+
+      ensureTreeBranch(tree, entry.branch, entry.group);
+
+      files.forEach((fileName) => {
+        const path = `hub/${lang}/${entry.branch}/${entry.group}/${fileName}`;
+        tree[entry.branch][entry.group].push({
+          id: path,
+          name: fileName.replace(/\.csv$/i, ""),
+          file: fileName,
+          path,
+          lang,
+          branch: entry.branch,
+          group: entry.group,
+          source: "hub",
+          category: inferCategory(entry.group),
+          allowedGames: inferAllowedGames(inferCategory(entry.group)),
+        });
       });
     });
 
@@ -121,13 +141,20 @@ export const HubAdapter = {
 
   async loadTopic(fileRecord, options = {}) {
     const record = typeof fileRecord === "string" ? { path: fileRecord } : fileRecord;
-    if (record.source === "import" || String(record.path || "").startsWith("import:")) {
-      const imported = Storage.getImportedTopic(record.id || record.path);
-      if (!imported) {
-        throw new Error("Imported topic not found in local library.");
+    const localId = record.localId || record.id;
+
+    if (
+      localId &&
+      (record.source !== "hub" ||
+        String(record.path || "").startsWith("library:") ||
+        String(localId).startsWith("library:"))
+    ) {
+      const localTopic = Storage.getLibraryTopic(localId);
+      if (!localTopic) {
+        throw new Error("Local topic not found in the library.");
       }
 
-      return imported.rows || [];
+      return localTopic.rows || [];
     }
 
     const path = record.path;
@@ -148,6 +175,39 @@ export const HubAdapter = {
     }
   },
 
+  ensureLocalTopic(topicMeta, rows, options = {}) {
+    const existingByOrigin =
+      topicMeta.originPath || topicMeta.path
+        ? Storage.findLibraryTopicByOrigin(topicMeta.originPath || topicMeta.path)
+        : null;
+
+    if (existingByOrigin) {
+      return existingByOrigin;
+    }
+
+    const category = options.category || inferCategory(topicMeta.group, topicMeta);
+    const allowedGames = options.allowedGames || inferAllowedGames(category, topicMeta);
+    const nextTopic = Storage.createLibraryTopic({
+      name: topicMeta.name,
+      fileName: topicMeta.file || topicMeta.fileName || `${topicMeta.name}.csv`,
+      lang: topicMeta.lang,
+      branch: "my library",
+      group: topicMeta.group || (category === "sentences" ? "sentences" : "my files"),
+      source: topicMeta.source === "hub" ? "hub-copy" : topicMeta.source || "local",
+      category,
+      allowedGames,
+      rows,
+      originPath: topicMeta.originPath || topicMeta.path || null,
+      originMeta: {
+        branch: topicMeta.branch || null,
+        group: topicMeta.group || null,
+        file: topicMeta.file || topicMeta.fileName || null,
+      },
+    });
+
+    return nextTopic;
+  },
+
   countFiles(lang = null) {
     let count = 0;
 
@@ -162,7 +222,7 @@ export const HubAdapter = {
       });
     });
 
-    Storage.getImportedTopics().forEach((topic) => {
+    Storage.getLibraryTopics().forEach((topic) => {
       if (!lang || topic.lang === lang) {
         count += 1;
       }

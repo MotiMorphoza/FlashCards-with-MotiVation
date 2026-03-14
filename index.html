@@ -106,6 +106,9 @@
           </section>
 
           <div class="home-actions">
+            <button type="button" class="button button-success" id="openLibraryButton">
+              Local library
+            </button>
             <button type="button" class="button button-secondary" id="openStatsButton">
               View statistics
             </button>
@@ -113,6 +116,95 @@
               Contact
             </button>
           </div>
+        </section>
+
+        <section class="screen" id="screen-library">
+          <section class="panel">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Internal library</p>
+                <h2>Manage local lists</h2>
+              </div>
+              <p class="support-text">
+                Created, imported, and hub-based files all live here and stay editable locally.
+              </p>
+            </div>
+
+            <label class="field-label" for="libraryLangSelect">Language pair</label>
+            <select id="libraryLangSelect"></select>
+
+            <label class="field-label" for="libraryCategorySelect">List type</label>
+            <select id="libraryCategorySelect">
+              <option value="vocabulary">Vocabulary</option>
+              <option value="sentences">Sentences</option>
+            </select>
+
+            <label class="field-label" for="libraryTopicNameInput">New list name</label>
+            <input id="libraryTopicNameInput" type="text" placeholder="My new topic" />
+
+            <div class="button-row">
+              <button type="button" class="button button-success" id="createLibraryTopicButton">
+                Create list
+              </button>
+              <button type="button" class="button button-primary" id="importLibraryFileButton">
+                Import CSV to library
+              </button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Saved locally</p>
+                <h2>Your lists</h2>
+              </div>
+            </div>
+
+            <div id="libraryTopicsMount" class="library-topics"></div>
+
+            <button type="button" class="button button-secondary" id="backFromLibraryButton">
+              Back to home
+            </button>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-library-editor">
+          <section class="panel">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">List editor</p>
+                <h2 id="libraryEditorTitle">Topic</h2>
+              </div>
+              <p class="support-text" id="libraryEditorMeta"></p>
+            </div>
+
+            <div class="button-row">
+              <button type="button" class="button button-success" id="addLibraryRowButton">
+                Add row
+              </button>
+              <button type="button" class="button button-primary" id="exportLibraryTopicButton">
+                Export CSV
+              </button>
+            </div>
+
+            <div class="button-row">
+              <button type="button" class="button button-secondary" id="renameLibraryTopicButton">
+                Rename
+              </button>
+              <button type="button" class="button button-danger" id="deleteLibraryTopicButton">
+                Delete
+              </button>
+            </div>
+
+            <label class="field-label" for="librarySearchInput">Search rows</label>
+            <input id="librarySearchInput" type="text" placeholder="Search source or translation" />
+
+            <div id="libraryRowsMount" class="library-rows"></div>
+
+            <button type="button" class="button button-secondary" id="backFromLibraryEditorButton">
+              Back to library
+            </button>
+          </section>
         </section>
 
         <section class="screen" id="screen-game">

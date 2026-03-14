@@ -1,5 +1,9 @@
+import { uid } from "../utils/helpers.js";
+import { normalizeWhitespace } from "../utils/text.js";
+
 const VERSION = "v4";
 const PREFIX = "LLH";
+const LIBRARY_KEY = `${PREFIX}_${VERSION}_library_topics_global`;
 
 function keyPart(value) {
   return encodeURIComponent(value ?? "global");
@@ -26,6 +30,98 @@ function safeSet(key, value) {
     console.error("Storage write failed", error);
     return false;
   }
+}
+
+function inferCategory(category, allowedGames = []) {
+  if (category === "sentences") {
+    return "sentences";
+  }
+
+  return allowedGames.includes("wordpuzzle") && allowedGames.length === 1
+    ? "sentences"
+    : "vocabulary";
+}
+
+function inferAllowedGames(category, allowedGames = null) {
+  if (Array.isArray(allowedGames) && allowedGames.length > 0) {
+    return [...new Set(allowedGames)];
+  }
+
+  return category === "sentences" ? ["wordpuzzle"] : ["flashcards", "wordmatch"];
+}
+
+function sanitizeRow(row = {}, fallbackPrefix = "row") {
+  const source = normalizeWhitespace(row.source ?? row.learn ?? "");
+  const target = normalizeWhitespace(row.target ?? row.tr ?? "");
+
+  if (!source || !target) {
+    return null;
+  }
+
+  return {
+    id: row.id || uid(fallbackPrefix),
+    source,
+    target,
+  };
+}
+
+function sanitizeRows(rows = [], fallbackPrefix = "row") {
+  return rows
+    .map((row, index) => sanitizeRow(row, `${fallbackPrefix}-${index}`))
+    .filter(Boolean);
+}
+
+function sanitizeTopic(topic = {}, existing = null) {
+  const topicId = topic.id || existing?.id || `library:${uid("topic")}`;
+  const category = inferCategory(topic.category, topic.allowedGames || existing?.allowedGames);
+  const allowedGames = inferAllowedGames(category, topic.allowedGames || existing?.allowedGames);
+  const rows = sanitizeRows(
+    topic.rows ?? existing?.rows ?? [],
+    topicId,
+  );
+  const name = normalizeWhitespace(topic.name ?? topic.title ?? existing?.name ?? "Untitled");
+  const branch = topic.branch ?? existing?.branch ?? "my library";
+  const group =
+    topic.group ?? existing?.group ?? (category === "sentences" ? "sentences" : "my files");
+  const source = topic.source ?? existing?.source ?? "local";
+  const createdAt = existing?.createdAt ?? topic.createdAt ?? Date.now();
+  const updatedAt = topic.updatedAt ?? existing?.updatedAt ?? Date.now();
+
+  return {
+    id: topicId,
+    name,
+    fileName: topic.fileName || existing?.fileName || `${name}.csv`,
+    path: topic.path || existing?.path || topicId,
+    lang: topic.lang || existing?.lang || "",
+    branch,
+    group,
+    source,
+    category,
+    allowedGames,
+    rows,
+    createdAt,
+    updatedAt,
+    originPath: topic.originPath ?? existing?.originPath ?? null,
+    originMeta: topic.originMeta ?? existing?.originMeta ?? null,
+  };
+}
+
+function updateTopicInCollection(topicId, updater) {
+  const topics = Storage.getLibraryTopics();
+  const index = topics.findIndex((topic) => topic.id === topicId);
+
+  if (index < 0) {
+    return null;
+  }
+
+  const updated = updater(topics[index]);
+  if (!updated) {
+    return null;
+  }
+
+  topics[index] = sanitizeTopic(updated, topics[index]);
+  safeSet(LIBRARY_KEY, topics);
+  return topics[index];
 }
 
 export const Storage = {
@@ -58,35 +154,135 @@ export const Storage = {
     return safeSet(buildKey("preferences"), preferences);
   },
 
-  getImportedTopics() {
-    return safeGet(buildKey("library", "imports"), []);
+  getLibraryTopics() {
+    return safeGet(LIBRARY_KEY, []).map((topic) => sanitizeTopic(topic));
   },
 
-  saveImportedTopic(topicMeta, rows) {
-    const topics = this.getImportedTopics();
-    const nextTopic = {
-      ...topicMeta,
-      rows,
-      updatedAt: Date.now(),
-    };
+  getLibraryTopic(topicId) {
+    return this.getLibraryTopics().find((topic) => topic.id === topicId) || null;
+  },
 
+  topicTitleExists(name, options = {}) {
+    const normalized = normalizeWhitespace(name).toLowerCase();
+    const { lang = null, category = null, excludeId = null } = options;
+
+    return this.getLibraryTopics().some((topic) => {
+      if (excludeId && topic.id === excludeId) {
+        return false;
+      }
+
+      if (lang && topic.lang !== lang) {
+        return false;
+      }
+
+      if (category && topic.category !== category) {
+        return false;
+      }
+
+      return normalizeWhitespace(topic.name).toLowerCase() === normalized;
+    });
+  },
+
+  saveLibraryTopic(topicMeta, rows = null) {
+    const topics = this.getLibraryTopics();
     const existingIndex = topics.findIndex((topic) => topic.id === topicMeta.id);
+    const existing = existingIndex >= 0 ? topics[existingIndex] : null;
+    const nextTopic = sanitizeTopic(
+      {
+        ...existing,
+        ...topicMeta,
+        rows: rows ?? topicMeta.rows ?? existing?.rows ?? [],
+        updatedAt: Date.now(),
+      },
+      existing,
+    );
+
     if (existingIndex >= 0) {
       topics[existingIndex] = nextTopic;
     } else {
       topics.push(nextTopic);
     }
 
-    return safeSet(buildKey("library", "imports"), topics);
+    return safeSet(LIBRARY_KEY, topics);
+  },
+
+  createLibraryTopic(topicMeta) {
+    const nextTopic = sanitizeTopic(topicMeta);
+    const saved = this.saveLibraryTopic(nextTopic, nextTopic.rows);
+    return saved ? this.getLibraryTopic(nextTopic.id) : null;
+  },
+
+  renameLibraryTopic(topicId, name) {
+    return updateTopicInCollection(topicId, (topic) => ({
+      ...topic,
+      name,
+      fileName: `${normalizeWhitespace(name)}.csv`,
+    }));
+  },
+
+  setLibraryTopicRows(topicId, rows) {
+    return updateTopicInCollection(topicId, (topic) => ({
+      ...topic,
+      rows: sanitizeRows(rows, topicId),
+    }));
+  },
+
+  addLibraryRow(topicId, row) {
+    return updateTopicInCollection(topicId, (topic) => {
+      const nextRow = sanitizeRow(row, `${topicId}-row`);
+      if (!nextRow) {
+        return null;
+      }
+
+      return {
+        ...topic,
+        rows: [...topic.rows, nextRow],
+      };
+    });
+  },
+
+  updateLibraryRow(topicId, rowId, changes) {
+    return updateTopicInCollection(topicId, (topic) => ({
+      ...topic,
+      rows: topic.rows.map((row) =>
+        row.id === rowId ? sanitizeRow({ ...row, ...changes }, `${topicId}-row`) : row,
+      ),
+    }));
+  },
+
+  removeLibraryRow(topicId, rowId) {
+    return updateTopicInCollection(topicId, (topic) => ({
+      ...topic,
+      rows: topic.rows.filter((row) => row.id !== rowId),
+    }));
+  },
+
+  removeLibraryTopic(topicId) {
+    const topics = this.getLibraryTopics().filter((topic) => topic.id !== topicId);
+    return safeSet(LIBRARY_KEY, topics);
+  },
+
+  findLibraryTopicByOrigin(originPath) {
+    return (
+      this.getLibraryTopics().find((topic) => topic.originPath && topic.originPath === originPath) ||
+      null
+    );
+  },
+
+  getImportedTopics() {
+    return this.getLibraryTopics();
+  },
+
+  saveImportedTopic(topicMeta, rows) {
+    return this.saveLibraryTopic(topicMeta, rows);
   },
 
   getImportedTopic(topicId) {
-    return this.getImportedTopics().find((topic) => topic.id === topicId) || null;
+    return this.getLibraryTopic(topicId);
   },
 
   removeImportedTopic(topicId) {
-    const topics = this.getImportedTopics().filter((topic) => topic.id !== topicId);
-    return safeSet(buildKey("library", "imports"), topics);
+    return this.removeLibraryTopic(topicId);
   },
 
   saveGameSession(game, topicMeta, stats) {
@@ -196,9 +392,7 @@ export const Storage = {
   },
 
   clearNamespace(type = null) {
-    const prefix = type
-      ? `${PREFIX}_${VERSION}_${type}_`
-      : `${PREFIX}_${VERSION}_`;
+    const prefix = type ? `${PREFIX}_${VERSION}_${type}_` : `${PREFIX}_${VERSION}_`;
 
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith(prefix)) {
