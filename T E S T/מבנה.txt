@@ -1,0 +1,33 @@
+project/
+│
+├── index.html                    # Entry point
+│
+├── core/                         # 🧠 Core Engine
+│   ├── engine.js                 # Session lifecycle manager
+│   ├── router.js                 # Navigation manager
+│   ├── storage.js                # Unified storage API
+│   ├── hubAdapter.js             # HUB_INDEX interface
+│   ├── audio.js                  # Sound engine
+│   ├── speech.js                 # TTS engine
+│   └── eventBus.js               # Event system
+│
+├── games/                        # 🎮 Game Modules
+│   ├── gameInterface.js          # Abstract game class
+│   ├── flashcards.js             # FlashCards implementation
+│   ├── wordmatch.js              # WordMatch implementation
+│   └── wordpuzzle.js             # WordPuzzle implementation
+│
+├── ui/                           # 🎨 UI Components
+│   ├── accordion.js              # Reusable accordion
+│   ├── stats.js                  # Stats screen
+│   └── modals.js                 # Modal system
+│
+├── utils/                        # 🛠️ Utilities
+│   ├── csv.js                    # CSV parser
+│   ├── text.js                   # RTL, sanitize, tokenize
+│   └── helpers.js                # General utilities
+│
+├── styles.css                    # Global styles
+├── hubIndex.js                   # Data index (unchanged)
+├── manifest.json                 # PWA manifest
+└── sw.js                         # Service Worker

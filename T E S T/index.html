@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hebrew Learning Hub</title>
+  <link rel="stylesheet" href="shared-styles.css">
+</head>
+<body>
+  <div id="hub">
+    <h1>🎮 Hebrew Learning Hub</h1>
+    
+    <!-- Language Selection -->
+    <select id="langSelect"></select>
+    
+    <!-- Game Selection -->
+    <div class="game-grid">
+      <div class="game-card" data-game="flashcards">
+        <div class="game-icon">🎴</div>
+        <h2>Flash Cards</h2>
+        <p>Classic memory practice</p>
+      </div>
+      
+      <div class="game-card" data-game="wordmatch">
+        <div class="game-icon">🧩</div>
+        <h2>Word Match</h2>
+        <p>Fast-paced matching</p>
+      </div>
+      
+      <div class="game-card" data-game="wordpuzzle">
+        <div class="game-icon">🔤</div>
+        <h2>Word Puzzle</h2>
+        <p>Build sentences</p>
+      </div>
+    </div>
+    
+    <!-- Topic Selection (appears after game selected) -->
+    <div id="topicSelect" class="hidden"></div>
+  </div>
+  
+  <!-- Game Containers (loaded dynamically) -->
+  <div id="game-container"></div>
+  
+  <script src="hubIndex.js"></script>
+  <script src="lib.js"></script>
+  <script src="hub.js"></script>
+</body>
+</html>

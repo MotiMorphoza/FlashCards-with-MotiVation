@@ -1,0 +1,35 @@
+/* ===== Variables ===== */
+:root {
+  --bg-dark: #111;
+  --bg-card: #020617;
+  --accent-blue: #6fa8ff;
+  --accent-green: #22c55e;
+  --accent-peach: #ffb4a2;
+  --text-light: #fff;
+}
+
+/* ===== Game Grid ===== */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.game-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+}
+
+.game-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
