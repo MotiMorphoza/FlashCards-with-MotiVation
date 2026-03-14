@@ -12,8 +12,8 @@
     <div class="app-shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">ONE SOURCE</p>
-          <h1>Core Platform</h1>
+          <p class="eyebrow">Hebrew with Motivation</p>
+          <h1>ONE SOURCE</h1>
         </div>
         <div class="toggle-row">
           <button type="button" class="icon-button" id="toggleSound">Sound on</button>
@@ -31,26 +31,17 @@
         </section>
 
         <section class="screen active" id="screen-home">
-          <section class="panel hero-panel">
-            <p class="eyebrow">Single platform</p>
-            <h2>Pick a language, game, and topic.</h2>
-            <p class="support-text">
-              This root now runs only on the new core architecture and the shared hub content.
-            </p>
-          </section>
-
           <section class="panel">
-            <label class="field-label" for="languageSelect">Language pair</label>
+            <label class="field-label" for="languageSelect">Choose a language pair to unlock the games.</label>
             <select id="languageSelect"></select>
           </section>
 
           <section class="panel">
             <div class="section-header">
               <div>
-                <p class="eyebrow">Training modes</p>
-                <h2>Choose your game</h2>
+                <h2>Choose a game</h2>
               </div>
-              <p class="support-text" id="gameHint">Choose a language pair to unlock the games.</p>
+              <p class="support-text" id="gameHint"></p>
             </div>
 
             <div class="choice-grid">
@@ -84,25 +75,6 @@
             <button type="button" class="button button-primary" id="startTopicButton" disabled>
               Select a topic first
             </button>
-          </section>
-
-          <section class="panel">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Manual source</p>
-                <h2>Import a CSV file</h2>
-              </div>
-              <p class="support-text">
-                Pick a language pair and a game first, then load a CSV from your computer.
-              </p>
-            </div>
-
-            <input type="file" id="importFileInput" accept=".csv,text/csv" hidden />
-            <div class="button-row">
-              <button type="button" class="button button-secondary" id="importFileButton">
-                Import CSV file
-              </button>
-            </div>
           </section>
 
           <div class="home-actions">
@@ -282,13 +254,16 @@
           </section>
         </section>
       </main>
+
+      <input type="file" id="importFileInput" accept=".csv,text/csv" hidden />
     </div>
 
     <script src="hubIndex.js"></script>
     <script>
-      if (location.protocol === "file:") {
-        const warning = document.getElementById("runtimeWarning");
-        if (warning) {
+      const warning = document.getElementById("runtimeWarning");
+      if (warning) {
+        warning.hidden = true;
+        if (location.protocol === "file:") {
           warning.hidden = false;
         }
       }

@@ -128,7 +128,6 @@ class HubManager {
       resetStatsButton: document.getElementById("resetStatsButton"),
       toggleSound: document.getElementById("toggleSound"),
       toggleSpeech: document.getElementById("toggleSpeech"),
-      importFileButton: document.getElementById("importFileButton"),
       importFileInput: document.getElementById("importFileInput"),
     };
   }
@@ -254,10 +253,6 @@ class HubManager {
       this.updateToggleLabels();
     });
 
-    this.dom.importFileButton.addEventListener("click", () => {
-      this.triggerHomeImport();
-    });
-
     this.dom.importFileInput.addEventListener("change", async (event) => {
       await this.handleImportedFile(event.target.files?.[0] || null);
       event.target.value = "";
@@ -321,9 +316,7 @@ class HubManager {
     this.dom.startButton.disabled = true;
     this.dom.startButton.textContent = "Select a topic first";
     this.dom.topicTree.innerHTML = "";
-    this.dom.gameHint.textContent = this.selectedLang
-      ? "Select one of the training modes below."
-      : "Choose a language pair to unlock the games.";
+    this.dom.gameHint.textContent = this.selectedLang ? "Choose one of the games below." : "";
 
     this.dom.gameButtons.forEach((button) => {
       button.classList.remove("is-selected");

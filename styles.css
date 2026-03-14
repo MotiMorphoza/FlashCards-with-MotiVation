@@ -70,7 +70,7 @@ p {
 }
 
 h1 {
-  font-size: clamp(3rem, 8vw, 4.25rem);
+  font-size: clamp(3.2rem, 6vw, 5.2rem);
   line-height: 1.05;
 }
 
@@ -80,9 +80,9 @@ h2 {
 }
 
 .app-shell {
-  width: min(460px, calc(100vw - 24px));
+  width: min(1180px, calc(100vw - 48px));
   margin: 0 auto;
-  padding: 18px 0 34px;
+  padding: 24px 0 40px;
 }
 
 .topbar {
@@ -176,6 +176,10 @@ h2 {
   display: block;
 }
 
+.runtime-warning[hidden] {
+  display: none !important;
+}
+
 .runtime-warning {
   display: grid;
   gap: 4px;
@@ -244,8 +248,8 @@ select optgroup {
 
 .choice-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .choice-card {
@@ -347,7 +351,8 @@ select optgroup {
 
 .home-actions {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .topic-tree {
@@ -772,7 +777,7 @@ select optgroup {
   background: #6b7280;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .topbar,
   .section-header,
   .game-header {
@@ -788,7 +793,9 @@ select optgroup {
   .button-row,
   .match-board,
   .results-grid,
-  .stats-grid {
+  .stats-grid,
+  .choice-grid,
+  .home-actions {
     grid-template-columns: 1fr;
   }
 
