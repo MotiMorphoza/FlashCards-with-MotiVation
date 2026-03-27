@@ -4,6 +4,7 @@ import { normalizeWhitespace } from "../utils/text.js";
 const VERSION = "v4";
 const PREFIX = "LLH";
 const LIBRARY_KEY = `${PREFIX}_${VERSION}_library_topics_global`;
+const HIDDEN_ORIGINS_KEY = `${PREFIX}_${VERSION}_hidden_hub_origins`;
 const LOCAL_TOPIC_NAME = "grammer";
 const SENTENCE_TOPIC_NAME = "sentences";
 const STANDARD_GAMES = ["flashcards", "wordmatch"];
@@ -34,6 +35,14 @@ function safeSet(key, value) {
     console.error("Storage write failed", error);
     return false;
   }
+}
+
+function getHiddenOrigins() {
+  return safeGet(HIDDEN_ORIGINS_KEY, []);
+}
+
+function setHiddenOrigins(origins) {
+  return safeSet(HIDDEN_ORIGINS_KEY, [...new Set(origins.filter(Boolean))]);
 }
 
 function normalizeTopicName(topicName, fallback = LOCAL_TOPIC_NAME) {
@@ -276,6 +285,10 @@ export const Storage = {
       existing,
     );
 
+    if (nextTopic.originPath) {
+      this.unhideOrigin(nextTopic.originPath);
+    }
+
     if (existingIndex >= 0) {
       topics[existingIndex] = nextTopic;
     } else {
@@ -355,6 +368,9 @@ export const Storage = {
     }
 
     if (nextRows.length === 0) {
+      if (topic.originPath) {
+        this.hideOrigin(topic.originPath);
+      }
       topics.splice(index, 1);
       safeSet(LIBRARY_KEY, topics);
       return null;
@@ -373,8 +389,15 @@ export const Storage = {
   },
 
   removeLibraryTopic(topicId) {
-    const topics = this.getLibraryTopics().filter((topic) => topic.id !== topicId);
-    return safeSet(LIBRARY_KEY, topics);
+    const topics = this.getLibraryTopics();
+    const topic = topics.find((entry) => entry.id === topicId) || null;
+
+    if (topic?.originPath) {
+      this.hideOrigin(topic.originPath);
+    }
+
+    const nextTopics = topics.filter((entry) => entry.id !== topicId);
+    return safeSet(LIBRARY_KEY, nextTopics);
   },
 
   findLibraryTopicByOrigin(originPath) {
@@ -382,6 +405,30 @@ export const Storage = {
       this.getLibraryTopics().find((topic) => topic.originPath && topic.originPath === originPath) ||
       null
     );
+  },
+
+  getHiddenOrigins() {
+    return getHiddenOrigins();
+  },
+
+  isOriginHidden(originPath) {
+    return Boolean(originPath) && getHiddenOrigins().includes(originPath);
+  },
+
+  hideOrigin(originPath) {
+    if (!originPath) {
+      return false;
+    }
+
+    return setHiddenOrigins([...getHiddenOrigins(), originPath]);
+  },
+
+  unhideOrigin(originPath) {
+    if (!originPath) {
+      return false;
+    }
+
+    return setHiddenOrigins(getHiddenOrigins().filter((entry) => entry !== originPath));
   },
 
   getImportedTopics() {

@@ -228,6 +228,10 @@ export const HubAdapter = {
       files.forEach((fileName) => {
         const path = `hub/${lang}/${entry.folder}/${fileName}`;
 
+        if (Storage.isOriginHidden(path)) {
+          return;
+        }
+
         if (Storage.findLibraryTopicByOrigin(path)) {
           return;
         }
