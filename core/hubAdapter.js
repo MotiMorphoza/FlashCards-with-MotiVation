@@ -325,25 +325,22 @@ export const HubAdapter = {
   },
 
   countFiles(lang = null) {
-    let count = 0;
+    const languages = lang ? [lang] : this.getLanguages().map((language) => language.id);
+    const seen = new Set();
 
-    (this.index?.entries || []).forEach((entry) => {
-      if (lang) {
-        count += entry.files?.[lang]?.length || 0;
-        return;
-      }
+    languages.forEach((languageId) => {
+      const tree = this.buildTree(languageId);
 
-      Object.values(entry.files || {}).forEach((files) => {
-        count += files.length;
+      Object.values(tree).forEach((topics) => {
+        Object.values(topics).forEach((files) => {
+          files.forEach((fileMeta) => {
+            const key = fileMeta.originPath || fileMeta.path || fileMeta.id;
+            seen.add(key);
+          });
+        });
       });
     });
 
-    Storage.getLibraryTopics().forEach((topic) => {
-      if (!lang || topic.lang === lang) {
-        count += 1;
-      }
-    });
-
-    return count;
+    return seen.size;
   },
 };
