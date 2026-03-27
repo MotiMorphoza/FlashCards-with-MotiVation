@@ -51,6 +51,7 @@ body {
   letter-spacing: 0.3px;
   overflow-y: auto;
   overscroll-behavior: none;
+  text-align: center;
 }
 
 button,
@@ -111,7 +112,7 @@ h2 {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .icon-button,
@@ -200,12 +201,13 @@ h2 {
   margin-bottom: 8px;
   color: var(--muted);
   font-size: 15px;
+  text-align: center;
 }
 
 select,
 input,
 textarea {
-  width: 100%;
+  width: min(100%, 19rem);
   padding: 13px;
   margin: 8px 0 0;
   font-size: 17px;
@@ -214,6 +216,7 @@ textarea {
   box-sizing: border-box;
   background: #f6f7fb;
   color: #222222;
+  margin-inline: auto;
 }
 
 select option,
@@ -224,8 +227,9 @@ select optgroup {
 
 .section-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   gap: 14px;
   margin-bottom: 12px;
 }
@@ -241,7 +245,7 @@ select optgroup {
   display: grid;
   gap: 8px;
   width: 100%;
-  text-align: left;
+  text-align: center;
   padding: 18px;
   border-radius: var(--radius-md);
   color: #222222;
@@ -340,6 +344,7 @@ select optgroup {
 .home-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -361,7 +366,7 @@ select optgroup {
 .accordion__header {
   width: 100%;
   padding: 14px 16px;
-  text-align: left;
+  text-align: center;
   font-weight: 700;
   background: linear-gradient(180deg, var(--blue), var(--blue-strong));
   color: var(--blue-deep);
@@ -387,11 +392,12 @@ select optgroup {
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .topic-button {
   width: 100%;
-  text-align: left;
+  text-align: center;
   padding: 12px 14px;
   margin-top: 8px;
   border-radius: var(--radius-sm);
@@ -433,9 +439,9 @@ select optgroup {
 
 .game-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 14px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .game-label {
@@ -450,7 +456,7 @@ select optgroup {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .metric-pill {
@@ -639,7 +645,7 @@ select optgroup {
 
 .stat-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 16px;
   padding: 12px 14px;
   border-radius: var(--radius-sm);
@@ -666,9 +672,9 @@ select optgroup {
 .library-topic-card__title-row,
 .library-row-card {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .library-topic-card__title-row h3 {
@@ -679,6 +685,7 @@ select optgroup {
 .library-row-card__actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin-top: 14px;
 }
@@ -697,6 +704,7 @@ select optgroup {
   display: grid;
   gap: 8px;
   flex: 1;
+  justify-items: center;
 }
 
 .library-row-card__source {
@@ -791,7 +799,7 @@ select optgroup {
   .toggle-row,
   .game-metrics {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .button-row,
