@@ -940,7 +940,12 @@ class HubManager {
       return;
     }
 
-    Storage.removeLibraryTopic(topic.id);
+    const removed = Storage.removeLibraryTopic(topic.id);
+
+    if (!removed) {
+      Modal.error("The list could not be deleted.");
+      return;
+    }
 
     if (this.selectedTopic?.id === topic.id) {
       this.selectedTopic = null;

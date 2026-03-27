@@ -392,6 +392,10 @@ export const Storage = {
     const topics = this.getLibraryTopics();
     const topic = topics.find((entry) => entry.id === topicId) || null;
 
+    if (!topic) {
+      return false;
+    }
+
     if (topic?.originPath) {
       this.hideOrigin(topic.originPath);
     }
