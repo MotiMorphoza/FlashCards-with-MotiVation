@@ -508,6 +508,7 @@ select optgroup {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  margin-top: 16px;
 }
 
 .button-row--single {
