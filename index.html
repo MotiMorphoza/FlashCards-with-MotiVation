@@ -22,14 +22,6 @@
       </header>
 
       <main>
-        <section class="runtime-warning" id="runtimeWarning" hidden>
-          <strong>ONE SOURCE needs a local server.</strong>
-          <span>
-            Open this folder in a terminal and run <code>node server.js</code>, then open
-            <code>http://localhost:4173</code>.
-          </span>
-        </section>
-
         <section class="screen active" id="screen-home">
           <section class="panel">
             <select id="languageSelect"></select>
@@ -257,15 +249,6 @@
     </div>
 
     <script src="hubIndex.js"></script>
-    <script>
-      const warning = document.getElementById("runtimeWarning");
-      if (warning) {
-        warning.hidden = true;
-        if (location.protocol === "file:") {
-          warning.hidden = false;
-        }
-      }
-    </script>
     <script type="module" src="core/hubManager.js"></script>
   </body>
 </html>

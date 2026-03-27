@@ -28,6 +28,8 @@
   --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 10px;
+  --control-min-width: 12rem;
+  --control-min-width-small: 8.5rem;
 }
 
 * {
@@ -131,6 +133,9 @@ h2 {
 
 .icon-button,
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 14px;
   font-size: 17px;
   font-weight: 600;
@@ -164,8 +169,8 @@ h2 {
 }
 
 .icon-button {
-  width: auto;
   padding-inline: 18px;
+  min-inline-size: var(--control-min-width-small);
 }
 
 .screen {
@@ -174,27 +179,6 @@ h2 {
 
 .screen.active {
   display: block;
-}
-
-.runtime-warning[hidden] {
-  display: none !important;
-}
-
-.runtime-warning {
-  display: grid;
-  gap: 4px;
-  margin-bottom: 16px;
-  padding: 14px 16px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(255, 154, 162, 0.25), rgba(255, 111, 111, 0.18));
-  border: 1px solid rgba(255, 154, 162, 0.45);
-  color: #ffe1de;
-}
-
-.runtime-warning code {
-  padding: 2px 6px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.22);
 }
 
 .panel {
@@ -295,7 +279,9 @@ select optgroup {
 }
 
 .button {
-  width: 100%;
+  width: auto;
+  min-inline-size: var(--control-min-width);
+  max-inline-size: 100%;
 }
 
 .button:disabled {
@@ -337,6 +323,7 @@ select optgroup {
 .button-small {
   width: auto;
   padding-inline: 14px;
+  min-inline-size: var(--control-min-width-small);
 }
 
 #openStatsButton {
@@ -350,8 +337,8 @@ select optgroup {
 }
 
 .home-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -495,13 +482,13 @@ select optgroup {
 }
 
 .button-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .button-row--single {
-  grid-template-columns: 1fr;
+  justify-content: flex-start;
 }
 
 .match-board {
@@ -791,11 +778,13 @@ select optgroup {
   }
 
   .button-row,
-  .match-board,
   .results-grid,
   .stats-grid,
-  .choice-grid,
-  .home-actions {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .match-board {
     grid-template-columns: 1fr;
   }
 
