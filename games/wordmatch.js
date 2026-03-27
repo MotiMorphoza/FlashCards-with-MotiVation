@@ -231,7 +231,7 @@ export class WordMatchGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : "Keep pushing for a faster clear."}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="matchRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="matchBackHome">Back home</button>
+          <button type="button" class="button button-secondary" id="matchBackHome">Home</button>
         </div>
       </section>
     `;

@@ -223,7 +223,7 @@ export class WordPuzzleGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : "You can replay to improve your pace."}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="puzzleRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="puzzleBackHome">Back home</button>
+          <button type="button" class="button button-secondary" id="puzzleBackHome">Home</button>
         </div>
       </section>
     `;

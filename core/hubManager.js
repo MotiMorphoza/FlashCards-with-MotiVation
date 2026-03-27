@@ -210,7 +210,7 @@ class HubManager {
     });
 
     this.dom.backFromLibraryEditorButton.addEventListener("click", () => {
-      this.showLibrary();
+      this.showHome();
     });
 
     this.dom.librarySearchInput.addEventListener("input", () => {

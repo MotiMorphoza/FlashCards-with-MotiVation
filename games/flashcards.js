@@ -191,7 +191,7 @@ export class FlashCardsGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : `Best time: ${formatTime(bestTime)}`}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="flashRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="flashBackHome">Back home</button>
+          <button type="button" class="button button-secondary" id="flashBackHome">Home</button>
         </div>
       </section>
     `;
