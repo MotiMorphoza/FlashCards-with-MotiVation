@@ -7,24 +7,6 @@ function createButton(label, className, onClick) {
   return button;
 }
 
-function formatSourceLabel(topic) {
-  const source = topic.source || "local";
-
-  if (source === "hub") {
-    return "Hub file";
-  }
-
-  if (source === "hub-copy") {
-    return "Saved from hub";
-  }
-
-  if (source === "import") {
-    return "Imported file";
-  }
-
-  return "Created locally";
-}
-
 function formatGameLabel(gameId) {
   const labels = {
     flashcards: "Flash Cards",
@@ -56,28 +38,26 @@ export function renderLibraryTopics(mount, options = {}) {
     const card = document.createElement("article");
     card.className = "library-topic-card";
 
-    const titleRow = document.createElement("div");
-    titleRow.className = "library-topic-card__title-row";
+    const path = document.createElement("p");
+    path.className = "library-topic-card__path";
 
-    const titleBlock = document.createElement("div");
-    const title = document.createElement("h3");
-    title.textContent = topic.name;
-    const meta = document.createElement("p");
-    meta.className = "support-text";
-    const rowCount =
-      typeof topic.rowsCount === "number"
-        ? `${topic.rowsCount} rows`
-        : topic.source === "hub"
-          ? "Hub file"
-          : "Rows unavailable";
-    meta.textContent = `${topic.lang} | ${topic.topicName} | ${rowCount} | ${formatSourceLabel(topic)}`;
-    titleBlock.append(title, meta);
+    const lang = document.createElement("span");
+    lang.textContent = topic.lang;
 
-    const count = document.createElement("span");
-    count.className = "library-count-pill";
-    count.textContent = typeof topic.rowsCount === "number" ? `${topic.rowsCount}` : "HUB";
+    const topicName = document.createElement("span");
+    topicName.textContent = topic.topicName;
 
-    titleRow.append(titleBlock, count);
+    const name = document.createElement("span");
+    name.className = "library-topic-card__name";
+    name.textContent = topic.name;
+
+    path.append(
+      lang,
+      document.createTextNode(" | "),
+      topicName,
+      document.createTextNode(" | "),
+      name,
+    );
 
     const actionRow = document.createElement("div");
     actionRow.className = "library-topic-card__actions";
@@ -99,7 +79,7 @@ export function renderLibraryTopics(mount, options = {}) {
       );
     });
 
-    card.append(titleRow, actionRow);
+    card.append(path, actionRow);
     mount.appendChild(card);
   });
 }

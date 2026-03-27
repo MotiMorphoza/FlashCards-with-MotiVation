@@ -137,9 +137,10 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: 10px 14px;
   font-size: 17px;
   font-weight: 600;
+  line-height: 1.2;
   letter-spacing: 0.3px;
   border-radius: 14px;
   background: linear-gradient(180deg, var(--gray-top), var(--gray-bottom));
@@ -170,7 +171,7 @@ h2 {
 }
 
 .icon-button {
-  padding-inline: 18px;
+  padding-inline: 16px;
   min-inline-size: var(--control-min-width-small);
 }
 
@@ -243,10 +244,10 @@ select optgroup {
 
 .choice-card {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
   text-align: center;
-  padding: 18px;
+  padding: 14px 16px;
   border-radius: var(--radius-md);
   color: #222222;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
@@ -327,7 +328,7 @@ select optgroup {
 
 .button-small {
   width: auto;
-  padding-inline: 14px;
+  padding: 9px 14px;
   min-inline-size: var(--control-min-width-small);
 }
 
@@ -365,7 +366,7 @@ select optgroup {
 
 .accordion__header {
   width: 100%;
-  padding: 14px 16px;
+  padding: 11px 14px;
   text-align: center;
   font-weight: 700;
   background: linear-gradient(180deg, var(--blue), var(--blue-strong));
@@ -398,7 +399,7 @@ select optgroup {
 .topic-button {
   width: 100%;
   text-align: center;
-  padding: 12px 14px;
+  padding: 10px 12px;
   margin-top: 8px;
   border-radius: var(--radius-sm);
   background: linear-gradient(180deg, var(--gray-top), var(--gray-bottom));
@@ -528,8 +529,8 @@ select optgroup {
 
 .match-card {
   width: 100%;
-  min-height: 78px;
-  padding: 14px;
+  min-height: 72px;
+  padding: 12px;
   border-radius: var(--radius-sm);
   background: linear-gradient(180deg, var(--gray-top), var(--gray-bottom));
   color: #222222;
@@ -589,7 +590,7 @@ select optgroup {
 }
 
 .token-button {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 999px;
   background: linear-gradient(180deg, var(--gray-top), var(--gray-bottom));
   color: #222222;
@@ -677,7 +678,6 @@ select optgroup {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
-.library-topic-card__title-row,
 .library-row-card {
   display: flex;
   justify-content: center;
@@ -685,8 +685,17 @@ select optgroup {
   align-items: center;
 }
 
-.library-topic-card__title-row h3 {
-  margin-bottom: 6px;
+.library-topic-card__path {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.library-topic-card__name {
+  color: var(--amber);
+  font-size: 1.08rem;
+  font-weight: 700;
 }
 
 .library-topic-card__actions,
@@ -695,17 +704,7 @@ select optgroup {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  margin-top: 14px;
-}
-
-.library-count-pill {
-  min-width: 46px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--blue), var(--blue-strong));
-  color: var(--blue-deep);
-  font-weight: 800;
-  text-align: center;
+  margin-top: 10px;
 }
 
 .library-row-card__values {
@@ -754,13 +753,19 @@ select optgroup {
 .contact-links {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   margin: 16px 0;
 }
 
 .contact-links a {
-  display: block;
-  padding: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-inline-size: var(--control-min-width);
+  max-inline-size: 100%;
+  padding: 10px 14px;
   border-radius: 14px;
   text-align: center;
   font-size: 16px;
@@ -821,7 +826,6 @@ select optgroup {
     grid-template-columns: 1fr;
   }
 
-  .library-topic-card__title-row,
   .library-row-card {
     flex-direction: column;
   }
