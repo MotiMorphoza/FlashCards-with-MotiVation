@@ -387,6 +387,7 @@ class HubManager {
     const localTree = HubAdapter.buildTree(this.selectedLang, {
       gameId: this.selectedGame,
       sourceScope: "local",
+      includeGeneratedHardLists: true,
     });
     const tree = {};
 
@@ -521,6 +522,8 @@ class HubManager {
       path: topicMeta.path,
       lang: topicMeta.lang,
       topicName: topicMeta.topicName,
+      category: topicMeta.category,
+      allowedGames: topicMeta.allowedGames,
     });
 
     this.activeGame = new GameModule();
@@ -1097,9 +1100,11 @@ class HubManager {
 
   showStats() {
     this.destroyActiveGame();
+    const hardSummary = Storage.getHardListSummary();
     renderStats(this.dom.statsMount, {
       sessions: Storage.getAllSessions(),
       hardItems: Storage.getAllHardItems(),
+      hardSummary,
       fileCount: HubAdapter.countFiles(),
       languageCount: HubAdapter.getLanguages().length,
       storageUsage: Storage.getUsage(),

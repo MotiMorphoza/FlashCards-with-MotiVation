@@ -111,7 +111,7 @@ export class FlashCardsGame extends GameInterface {
         return;
       }
 
-      this.engine.recordWrong(current.id);
+      this.engine.recordWrong(current);
       this.deck.push(current);
       this.currentIndex += 1;
       this.flipped = false;

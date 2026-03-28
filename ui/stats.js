@@ -55,6 +55,7 @@ export function renderStats(container, summary) {
   const {
     sessions,
     hardItems,
+    hardSummary,
     fileCount,
     languageCount,
     storageUsage,
@@ -81,6 +82,7 @@ export function renderStats(container, summary) {
     createStatTile("Study time", formatTime(totalTime)),
     createStatTile("Library", `${languageCount} pairs / ${fileCount} files`),
     createStatTile("Hard marks", String(hardCount)),
+    createStatTile("Hard list items", String(hardSummary?.total || 0)),
   );
   container.appendChild(grid);
 
@@ -124,6 +126,10 @@ export function renderStats(container, summary) {
     createListSection("By game", byGame),
     createListSection("By language", byLanguage),
     createListSection("Recent sessions", recentSessions),
+    createListSection("Hard lists", [
+      { label: "Hard words", value: String(hardSummary?.words || 0) },
+      { label: "Hard sentences", value: String(hardSummary?.sentences || 0) },
+    ]),
     createListSection("Storage", [
       { label: "Estimated usage", value: `${storageUsage.kb} KB` },
       { label: "Overall accuracy", value: `${safePercent(totalCorrect, totalAttempts)}%` },

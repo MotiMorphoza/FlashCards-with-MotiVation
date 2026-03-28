@@ -31,7 +31,9 @@ Important: this repo does **not** currently ship a live `index.json`. The app re
 3. Starting a bundled HUB file fetches its CSV and also stores a local cached copy so it becomes available in the Library.
 4. A HUB list that was only started is still treated as HUB content in the Library.
 5. The first real edit to that cached HUB list promotes it into a local editable list (`MINE`).
-6. Games run through a shared `SessionEngine`.
+6. Hard items are tracked across play sessions.
+7. `My lists` can now auto-generate `Hard words` and `Hard sentences` when an item was answered wrong at least twice.
+8. Games run through a shared `SessionEngine`.
 
 ## Bundled Hub Layout
 
@@ -74,6 +76,14 @@ UI meaning:
 
 - `HUB` badge: `hub` and `hub-cache`
 - `MINE` badge: `hub-copy`, `local`, and `import`
+
+## Hard Lists
+
+- A row becomes part of the hard lists after 2 wrong answers.
+- Hard rows are aggregated across all lists for the same language pair.
+- Non-sentence content becomes `Hard words`.
+- Sentence content becomes `Hard sentences`.
+- These lists are generated automatically under `My lists`.
 
 ## Content Rules In Code
 

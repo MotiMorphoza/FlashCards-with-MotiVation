@@ -56,6 +56,10 @@ Malformed rows now raise explicit validation errors instead of being silently ac
 
 `sw.js` uses network-first for shell files and bundled HUB assets, which reduces stale-shell behavior.
 
+### Hard lists can now be generated from real mistake data
+
+Wrong answers are now stored with stable row signatures, and Home can generate `Hard words` and `Hard sentences` under `My lists` once an item reaches 2 mistakes.
+
 ## Partially Verified
 
 ### Library and editor state drift was reduced

@@ -165,6 +165,44 @@ export const HubAdapter = {
     return [...topics.values()];
   },
 
+  getHardListTopics(lang) {
+    const topics = [];
+    const hardWordRows = Storage.getHardListRows(lang, "vocabulary");
+    const hardSentenceRows = Storage.getHardListRows(lang, SENTENCE_TOPIC);
+
+    if (hardWordRows.length > 0) {
+      topics.push({
+        id: `virtual:hard:words:${lang}`,
+        name: "Hard words",
+        file: "Hard words",
+        path: `virtual:hard:words:${lang}`,
+        lang,
+        topicName: "hard",
+        source: "hard-list",
+        category: "vocabulary",
+        allowedGames: [...STANDARD_GAMES],
+        rowsCount: hardWordRows.length,
+      });
+    }
+
+    if (hardSentenceRows.length > 0) {
+      topics.push({
+        id: `virtual:hard:sentences:${lang}`,
+        name: "Hard sentences",
+        file: "Hard sentences",
+        path: `virtual:hard:sentences:${lang}`,
+        lang,
+        topicName: "hard",
+        source: "hard-list",
+        category: SENTENCE_TOPIC,
+        allowedGames: [...SENTENCE_GAMES],
+        rowsCount: hardSentenceRows.length,
+      });
+    }
+
+    return topics;
+  },
+
   buildTree(lang, options = {}) {
     const {
       gameId = null,
@@ -172,6 +210,7 @@ export const HubAdapter = {
       preferManagedCopies = true,
       includeManagedHubCopies = true,
       sourceScope = "all",
+      includeGeneratedHardLists = false,
     } = options;
     const tree = {};
     const rootTitle = this.getRootTitle();
@@ -219,6 +258,29 @@ export const HubAdapter = {
           rowsCount: topic.rows.length,
         });
       });
+
+      if (includeGeneratedHardLists) {
+        this.getHardListTopics(lang).forEach((topic) => {
+          const normalizedTopicName = resolveTopicName(topic);
+          const category = inferCategory(normalizedTopicName, topic);
+          const allowedGames = inferAllowedGames(category, topic);
+
+          if (normalizedTopicFilter && normalizedTopicName !== normalizedTopicFilter) {
+            return;
+          }
+
+          if (gameId && !allowedGames.includes(gameId)) {
+            return;
+          }
+
+          ensureRootTopic(tree, rootTitle, normalizedTopicName);
+          tree[rootTitle][normalizedTopicName].push({
+            ...topic,
+            category,
+            allowedGames,
+          });
+        });
+      }
     }
 
     if (sourceScope !== "local") {
@@ -275,6 +337,10 @@ export const HubAdapter = {
   async loadTopic(fileRecord, options = {}) {
     const record = typeof fileRecord === "string" ? { path: fileRecord } : fileRecord;
     const localId = record.localId || record.id;
+
+    if (record.source === "hard-list") {
+      return Storage.getHardListRows(record.lang, record.category);
+    }
 
     if (
       localId &&

@@ -90,6 +90,7 @@ Current `source` values:
 - `hub-copy`
 - `local`
 - `import`
+- `hard-list`
 
 Meaning:
 
@@ -98,6 +99,7 @@ Meaning:
 - `hub-copy`: edited HUB-derived local list
 - `local`: user-created local list
 - `import`: imported local list
+- `hard-list`: generated virtual list based on accumulated hard marks
 
 ## Category Rules In Code
 
@@ -115,6 +117,17 @@ These are used for different UI scopes:
 
 - bundled tree visibility
 - Library-only visibility
+
+## Hard Item Encoding
+
+Hard marks are now recorded with a stable encoded signature based on:
+
+- language pair
+- category
+- source text
+- target text
+
+That allows the app to generate stable hard lists even for bundled HUB content.
 
 ## Important Compatibility Note
 

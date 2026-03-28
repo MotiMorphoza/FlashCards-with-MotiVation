@@ -199,7 +199,7 @@ export class WordPuzzleGame extends GameInterface {
       this.canCountWrong
     ) {
       this.canCountWrong = false;
-      this.engine.recordWrong(this.currentSentence.id);
+      this.engine.recordWrong(this.currentSentence);
       this.builtZone.classList.add("token-zone--error");
       window.setTimeout(() => {
         this.builtZone?.classList.remove("token-zone--error");

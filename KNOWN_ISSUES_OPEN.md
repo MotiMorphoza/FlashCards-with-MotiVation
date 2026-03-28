@@ -22,6 +22,10 @@ Library row search has no debounce and rerenders the editor immediately on each 
 
 The code now separates Home roots, Library removal semantics, and HUB-to-local promotion more cleanly, but these flows should still be validated interactively across refreshes and PWA sessions.
 
-### 5. Legacy hidden-origin storage paths remain in code
+### 5. Hard-list generation needs live verification across old stored data
+
+New hard marks are now stored with stable signatures and can generate hard lists correctly. Older pre-change hard marks may still exist in storage and are not guaranteed to map cleanly into generated lists.
+
+### 6. Legacy hidden-origin storage paths remain in code
 
 The repo now uses separate hide semantics for bundled-tree visibility and Library-only visibility. The old hide API should be cleaned up carefully later, not aggressively removed without migration thought.

@@ -51,6 +51,11 @@ Meaning:
 
 Bundled content is not supposed to move into `My lists` until it becomes a real local editable copy.
 
+Generated content may also appear in `My lists`:
+
+- `Hard words`
+- `Hard sentences`
+
 ## Library Integration Rule
 
 The Library is broader than Home and may show:
@@ -97,6 +102,7 @@ UI badge semantics:
 - Starting a HUB list from Home also creates a local cached record so it becomes editable through the Library later.
 - Simply starting a HUB list does not yet make it part of the Home `My lists` root.
 - The first real edit promotes the cached HUB record into a local editable list.
+- Hard lists are generated from accumulated wrong-answer marks and appear under topic `hard`.
 
 ## Automation
 

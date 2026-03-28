@@ -70,11 +70,11 @@ export class SessionEngine {
     AudioEngine.play("success");
   }
 
-  recordWrong(itemId) {
+  recordWrong(item) {
     this.stats.wrong += 1;
     this.stats.attempts += 1;
-    this.stats.itemsSeen.add(itemId);
-    Storage.addHardItem(this.gameType, this.topicMeta.id, itemId);
+    this.stats.itemsSeen.add(item?.id || item);
+    Storage.addHardItem(this.gameType, this.topicMeta, item);
     AudioEngine.play("error");
   }
 

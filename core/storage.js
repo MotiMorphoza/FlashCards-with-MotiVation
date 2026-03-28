@@ -54,6 +54,56 @@ function setHiddenLibraryHubOrigins(origins) {
   return safeSet(HIDDEN_LIBRARY_HUB_ORIGINS_KEY, [...new Set(origins.filter(Boolean))]);
 }
 
+function buildHardItemSignature(topicMeta = {}, item = null) {
+  if (!item || typeof item !== "object") {
+    return typeof item === "string" ? item : "";
+  }
+
+  const lang = normalizeWhitespace(topicMeta.lang || "");
+  const source = normalizeWhitespace(item.source ?? item.learn ?? "");
+  const target = normalizeWhitespace(item.target ?? item.tr ?? "");
+  const topicName = resolveTopicName(topicMeta, null);
+  const category = inferCategory(
+    topicName,
+    topicMeta.category,
+    topicMeta.allowedGames || [],
+  );
+
+  if (!lang || !source || !target) {
+    return item.id || "";
+  }
+
+  return [
+    "hard",
+    encodeURIComponent(lang),
+    encodeURIComponent(category),
+    encodeURIComponent(source),
+    encodeURIComponent(target),
+  ].join("|");
+}
+
+function parseHardItemSignature(signature) {
+  if (typeof signature !== "string" || !signature.startsWith("hard|")) {
+    return null;
+  }
+
+  const parts = signature.split("|");
+  if (parts.length !== 5) {
+    return null;
+  }
+
+  try {
+    return {
+      lang: decodeURIComponent(parts[1]),
+      category: decodeURIComponent(parts[2]),
+      source: decodeURIComponent(parts[3]),
+      target: decodeURIComponent(parts[4]),
+    };
+  } catch {
+    return null;
+  }
+}
+
 function normalizeTopicName(topicName, fallback = LOCAL_TOPIC_NAME) {
   const normalized = normalizeWhitespace(String(topicName || ""))
     .replace(/_/g, " ")
@@ -545,9 +595,24 @@ export const Storage = {
     return safeGet(buildKey("best", game, topicId), 0);
   },
 
-  addHardItem(game, topicId, itemId) {
+  addHardItem(game, topicMeta, item) {
+    const topicId =
+      typeof topicMeta === "string"
+        ? topicMeta
+        : topicMeta?.id || topicMeta?.path || "global";
     const key = buildKey("hard", game, topicId);
     const items = safeGet(key, {});
+    const itemId =
+      typeof topicMeta === "string"
+        ? typeof item === "string"
+          ? item
+          : item?.id || ""
+        : buildHardItemSignature(topicMeta, item) || item?.id || "";
+
+    if (!itemId) {
+      return;
+    }
+
     items[itemId] = (items[itemId] || 0) + 1;
     safeSet(key, items);
   },
@@ -558,7 +623,7 @@ export const Storage = {
 
   getAllHardItems() {
     const prefix = `${PREFIX}_${VERSION}_hard_`;
-    const result = [];
+    const result = new Map();
 
     Object.keys(localStorage).forEach((key) => {
       if (!key.startsWith(prefix)) {
@@ -567,11 +632,78 @@ export const Storage = {
 
       const raw = safeGet(key, {});
       Object.entries(raw).forEach(([itemId, count]) => {
-        result.push({ key, itemId, count });
+        const parsed = parseHardItemSignature(itemId);
+        const existing = result.get(itemId) || {
+          itemId,
+          count: 0,
+          lang: parsed?.lang || null,
+          category: parsed?.category || null,
+          source: parsed?.source || null,
+          target: parsed?.target || null,
+        };
+
+        existing.count += Number(count) || 0;
+        result.set(itemId, existing);
       });
     });
 
-    return result;
+    return [...result.values()];
+  },
+
+  getHardListRows(lang, category) {
+    return this.getAllHardItems()
+      .filter((item) => {
+        if (!item.lang || !item.source || !item.target) {
+          return false;
+        }
+
+        if (lang && item.lang !== lang) {
+          return false;
+        }
+
+        if (category && item.category !== category) {
+          return false;
+        }
+
+        return item.count >= 2;
+      })
+      .sort((left, right) => {
+        if (right.count !== left.count) {
+          return right.count - left.count;
+        }
+
+        return `${left.source}|${left.target}`.localeCompare(
+          `${right.source}|${right.target}`,
+        );
+      })
+      .map((item) => ({
+        id: item.itemId,
+        source: item.source,
+        target: item.target,
+      }));
+  },
+
+  getHardListSummary(lang = null) {
+    const items = this.getAllHardItems().filter((item) => {
+      if (!item.lang || !item.source || !item.target) {
+        return false;
+      }
+
+      if (lang && item.lang !== lang) {
+        return false;
+      }
+
+      return item.count >= 2;
+    });
+
+    const words = items.filter((item) => item.category !== SENTENCE_TOPIC_NAME).length;
+    const sentences = items.filter((item) => item.category === SENTENCE_TOPIC_NAME).length;
+
+    return {
+      words,
+      sentences,
+      total: words + sentences,
+    };
   },
 
   removeHardItem(game, topicId, itemId) {

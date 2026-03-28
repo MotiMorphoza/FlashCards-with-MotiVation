@@ -28,6 +28,15 @@
 - verify the editor has a top `Back to library` button near `Export CSV`
 - search rows
 
+## Hard Lists
+
+- answer the same word wrong twice in Flash Cards or Word Match
+- verify `Hard words` appears under `My lists`
+- answer the same sentence wrong twice in Word Puzzle
+- verify `Hard sentences` appears under `My lists`
+- verify the generated hard lists start normally in the relevant games
+- verify the Statistics screen updates both `Hard marks` and `Hard list items`
+
 ## Games
 
 - start each game from bundled HUB content

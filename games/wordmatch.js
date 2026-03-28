@@ -173,7 +173,9 @@ export class WordMatchGame extends GameInterface {
       return;
     }
 
-    this.engine.recordWrong(this.selectedLeft?.pairId || `miss-${Date.now()}`);
+    const pair =
+      this.activePairs.find((entry) => entry.id === this.selectedLeft?.pairId) || null;
+    this.engine.recordWrong(pair || { id: this.selectedLeft?.pairId || `miss-${Date.now()}` });
     this.selectedLeft?.element?.classList.add("is-wrong");
     this.selectedRight?.element?.classList.add("is-wrong");
 

@@ -39,6 +39,7 @@ Important current source values:
 - `import`
 - `hub-cache`
 - `hub-copy`
+- `hard-list`
 
 ## Current Behavior Notes
 
@@ -46,6 +47,8 @@ Important current source values:
 - editing a cached HUB list promotes it to `hub-copy`
 - deleting a local list removes its stored topic object
 - removing a bundled HUB list from the Library uses Library-only hidden origin storage instead of deleting a bundled file
+- hard marks are recorded with stable encoded row signatures
+- generated hard lists are built from hard marks with a threshold of 2 wrong answers
 
 ## Current Good News
 
