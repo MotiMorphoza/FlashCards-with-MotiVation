@@ -5,6 +5,7 @@
 - select each language pair
 - select each game
 - verify the Home accordion appears
+- verify the topic chooser row is compact and the start button sits to the right on desktop
 - verify Home shows:
   - `Choose a topic` for bundled HUB content
   - `My lists` for local editable content
@@ -41,6 +42,9 @@
 
 - start each game from bundled HUB content
 - start each game from Library content
+- verify the Flash Cards word frame stays compact for short items and expands naturally for long sentences
+- verify the Flash Cards shuffle button label is `Shuffle`
+- verify desktop game screens fit the viewport without unnecessary page scrolling
 - restart a completed session
 - exit back to Home
 

@@ -63,7 +63,7 @@ export class FlashCardsGame extends GameInterface {
         </div>
 
         <div class="button-row">
-          <button type="button" class="button button-secondary" id="flashShuffle">Shuffle remaining</button>
+          <button type="button" class="button button-secondary" id="flashShuffle">Shuffle</button>
           <button type="button" class="button button-secondary" id="flashDirection">Flip direction</button>
         </div>
 
