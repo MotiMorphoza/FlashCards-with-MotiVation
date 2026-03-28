@@ -475,6 +475,7 @@ select optgroup {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .metric-pill {
@@ -487,6 +488,10 @@ select optgroup {
 
 .metric-pill strong {
   color: var(--text);
+}
+
+#flashHome {
+  min-inline-size: var(--control-min-width-small);
 }
 
 .flash-panel {

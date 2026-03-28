@@ -44,6 +44,8 @@
 - start each game from Library content
 - verify the Flash Cards word frame stays compact for short items and expands naturally for long sentences
 - verify the Flash Cards shuffle button label is `Shuffle`
+- verify Flash Cards shows `Home` next to `Time` and `Remaining`
+- verify Flash Cards action buttons use distinct colors
 - verify desktop game screens fit the viewport without unnecessary page scrolling
 - restart a completed session
 - exit back to Home
