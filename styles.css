@@ -422,8 +422,10 @@ select optgroup {
 }
 
 .topic-button.is-selected {
-  background: linear-gradient(180deg, var(--blue), var(--blue-strong));
-  color: var(--blue-deep);
+  background: linear-gradient(180deg, var(--amber), var(--sunset-strong));
+  color: #4a1d00;
+  outline: 2px solid #fff1bf;
+  outline-offset: 1px;
 }
 
 .empty-state {
