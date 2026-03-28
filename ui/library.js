@@ -38,7 +38,7 @@ export function renderLibraryTopics(mount, options = {}) {
   if (topics.length === 0) {
     const emptyState = document.createElement("div");
     emptyState.className = "empty-state";
-    emptyState.textContent = "No lists are available for this selection yet.";
+    emptyState.textContent = "No local lists are available yet.";
     mount.appendChild(emptyState);
     return;
   }

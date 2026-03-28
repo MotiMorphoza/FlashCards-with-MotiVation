@@ -20,9 +20,21 @@ The physical `hub/` layout and generated `hubIndex.js` match that simplified top
 
 Home renders bundled HUB content under `Choose a topic` and local editable content under `My lists`.
 
+### Home navigation is now centralized in the top bar
+
+The shell now uses one shared `Home` button near `Sound` and `Speech` instead of repeating `Home` buttons on most screens. The Library editor remains the one screen that stays library-scoped.
+
+### The start button now sits below the accordion
+
+Home no longer keeps the start action beside the topic chooser.
+
 ### Starting a HUB file now makes it available in the Library
 
 Playing a bundled HUB file creates a local cached record so the user can later edit it from the Library.
+
+### The Library now shows touched local content instead of the full bundled HUB
+
+The Library list view now focuses on cached, edited, created, and imported lists rather than every bundled HUB file across all languages.
 
 ### Editing a cached HUB list promotes it into local editable content
 

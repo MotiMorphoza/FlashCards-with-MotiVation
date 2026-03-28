@@ -113,6 +113,7 @@ class HubManager {
       game: document.getElementById("screen-game"),
       stats: document.getElementById("screen-stats"),
       contact: document.getElementById("screen-contact"),
+      openHomeTopButton: document.getElementById("openHomeTopButton"),
       languageSelect: document.getElementById("languageSelect"),
       gameButtons: [...document.querySelectorAll("[data-game]")],
       topicPanel: document.getElementById("topicPanel"),
@@ -126,7 +127,6 @@ class HubManager {
       createLibraryTopicButton: document.getElementById("createLibraryTopicButton"),
       importLibraryFileButton: document.getElementById("importLibraryFileButton"),
       libraryTopicsMount: document.getElementById("libraryTopicsMount"),
-      backFromLibraryButton: document.getElementById("backFromLibraryButton"),
       libraryEditorMeta: document.getElementById("libraryEditorMeta"),
       addLibraryRowButton: document.getElementById("addLibraryRowButton"),
       exportLibraryTopicButton: document.getElementById("exportLibraryTopicButton"),
@@ -138,9 +138,7 @@ class HubManager {
       openStatsButton: document.getElementById("openStatsButton"),
       gameMount: document.getElementById("gameMount"),
       statsMount: document.getElementById("statsMount"),
-      backFromStatsButton: document.getElementById("backFromStatsButton"),
       openContactButton: document.getElementById("openContactButton"),
-      backFromContactButton: document.getElementById("backFromContactButton"),
       resetStatsButton: document.getElementById("resetStatsButton"),
       toggleSound: document.getElementById("toggleSound"),
       toggleSpeech: document.getElementById("toggleSpeech"),
@@ -178,6 +176,10 @@ class HubManager {
       this.startSelectedTopic();
     });
 
+    this.dom.openHomeTopButton.addEventListener("click", () => {
+      this.showHome();
+    });
+
     this.dom.openLibraryButton.addEventListener("click", () => {
       this.showLibrary();
     });
@@ -188,10 +190,6 @@ class HubManager {
 
     this.dom.importLibraryFileButton.addEventListener("click", () => {
       this.triggerLibraryImport();
-    });
-
-    this.dom.backFromLibraryButton.addEventListener("click", () => {
-      this.showHome();
     });
 
     this.dom.backFromLibraryEditorTopButton.addEventListener("click", () => {
@@ -225,16 +223,8 @@ class HubManager {
       this.showStats();
     });
 
-    this.dom.backFromStatsButton.addEventListener("click", () => {
-      this.showHome();
-    });
-
     this.dom.openContactButton.addEventListener("click", () => {
       this.showContact();
-    });
-
-    this.dom.backFromContactButton.addEventListener("click", () => {
-      this.showHome();
     });
 
     this.dom.resetStatsButton.addEventListener("click", async () => {
@@ -278,6 +268,10 @@ class HubManager {
     EventBus.on("app:restart-topic", () => {
       this.restartTopic();
     });
+
+    EventBus.on("route:change", ({ name }) => {
+      this.updateTopbarState(name);
+    });
   }
 
   updateToggleLabels() {
@@ -285,6 +279,11 @@ class HubManager {
     this.dom.toggleSpeech.textContent = SpeechEngine.enabled
       ? "Speech on"
       : "Speech off";
+  }
+
+  updateTopbarState(screenName = this.router.currentScreen) {
+    const showHomeButton = screenName !== "home" && screenName !== "libraryEditor";
+    this.dom.openHomeTopButton.hidden = !showHomeButton;
   }
 
   handleStorageFailure(message) {
@@ -679,14 +678,11 @@ class HubManager {
       .flatMap((languageId) =>
         flattenTopicTree(
           HubAdapter.buildTree(languageId, {
+            sourceScope: "local",
           }),
         ),
       )
       .filter((topic) => {
-        if (topic.source === "hub" && Storage.isLibraryOriginHidden(topic.path)) {
-          return false;
-        }
-
         const key = topic.originPath || topic.path || topic.id;
         if (seen.has(key)) {
           return false;
@@ -1195,9 +1191,7 @@ class HubManager {
     const hardSummary = Storage.getHardListSummary();
     renderStats(this.dom.statsMount, {
       sessions: Storage.getAllSessions(),
-      hardItems: Storage.getAllHardItems(),
       hardSummary,
-      fileCount: HubAdapter.countFiles(),
       storageUsage: Storage.getUsage(),
     });
     this.router.navigate("stats");

@@ -43,7 +43,6 @@ export class WordPuzzleGame extends GameInterface {
           <div class="game-metrics">
             <span class="metric-pill">Time <strong id="puzzleTimer">0s</strong></span>
             <span class="metric-pill">Progress <strong id="puzzleProgress">0 / 0</strong></span>
-            <button type="button" class="button button-ghost button-small" id="puzzleHome">Home</button>
           </div>
         </header>
 
@@ -71,7 +70,6 @@ export class WordPuzzleGame extends GameInterface {
     this.bankZone = this.container.querySelector("#puzzleBank");
     this.speakButton = this.container.querySelector("#puzzleSpeak");
     this.nextButton = this.container.querySelector("#puzzleNext");
-    this.exitButton = this.container.querySelector("#puzzleHome");
     this.topicTitle.textContent = this.context.topic.name;
 
     this.handleSpeak = () => {
@@ -85,13 +83,8 @@ export class WordPuzzleGame extends GameInterface {
       this.loadSentence();
     };
 
-    this.handleExit = () => {
-      this.emit("app:show-home");
-    };
-
     this.speakButton.addEventListener("click", this.handleSpeak);
     this.nextButton.addEventListener("click", this.handleNext);
-    this.exitButton.addEventListener("click", this.handleExit);
   }
 
   loadSentence() {
@@ -221,7 +214,6 @@ export class WordPuzzleGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : "You can replay to improve your pace."}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="puzzleRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="puzzleBackHome">Home</button>
         </div>
       </section>
     `;
@@ -229,15 +221,11 @@ export class WordPuzzleGame extends GameInterface {
     this.container
       .querySelector("#puzzleRestart")
       .addEventListener("click", () => this.emit("app:restart-topic"));
-    this.container
-      .querySelector("#puzzleBackHome")
-      .addEventListener("click", () => this.emit("app:show-home"));
   }
 
   onDestroy() {
     this.speakButton?.removeEventListener("click", this.handleSpeak);
     this.nextButton?.removeEventListener("click", this.handleNext);
-    this.exitButton?.removeEventListener("click", this.handleExit);
     SpeechEngine.stop();
   }
 }

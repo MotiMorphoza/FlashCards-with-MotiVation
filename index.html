@@ -22,8 +22,9 @@
           <h1>ONE SOURCE</h1>
         </div>
         <div class="toggle-row">
-          <button type="button" class="icon-button" id="toggleSound">Sound on</button>
-          <button type="button" class="icon-button" id="toggleSpeech">Speech on</button>
+          <button type="button" class="icon-button icon-button--home" id="openHomeTopButton" hidden>Home</button>
+          <button type="button" class="icon-button icon-button--sound" id="toggleSound">Sound on</button>
+          <button type="button" class="icon-button icon-button--speech" id="toggleSpeech">Speech on</button>
         </div>
       </header>
 
@@ -59,9 +60,8 @@
           </section>
 
           <section class="panel" id="topicPanel" hidden>
-            <div class="topic-panel-layout">
-              <div id="topicTree" class="topic-tree"></div>
-
+            <div id="topicTree" class="topic-tree"></div>
+            <div class="button-row topic-panel-actions">
               <button type="button" class="button button-primary" id="startTopicButton" disabled>
                 Select a topic first
               </button>
@@ -108,19 +108,13 @@
                   Import list
                 </button>
               </div>
-
-              <div class="button-row">
-                <button type="button" class="button button-secondary" id="backFromLibraryButton">
-                  Home
-                </button>
-              </div>
             </section>
 
             <section class="panel">
               <div class="section-header">
                 <div>
                   <h2>Lists</h2>
-                  <p class="support-text">Lists you create, edit, or import will appear under the My lists category.</p>
+                  <p class="support-text">Lists you start, create, edit, or import will appear under the My lists category.</p>
                 </div>
               </div>
 
@@ -179,9 +173,6 @@
                 <button type="button" class="button button-danger button-small" id="resetStatsButton">
                   Reset stats
                 </button>
-                <button type="button" class="button button-secondary button-small" id="backFromStatsButton">
-                  Home
-                </button>
               </div>
             </div>
 
@@ -233,10 +224,6 @@
                 WhatsApp
               </a>
             </div>
-
-            <button type="button" class="button button-secondary" id="backFromContactButton">
-              Home
-            </button>
           </section>
         </section>
       </main>

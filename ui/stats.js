@@ -54,9 +54,7 @@ function createListSection(title, rows) {
 export function renderStats(container, summary) {
   const {
     sessions,
-    hardItems,
     hardSummary,
-    fileCount,
     storageUsage,
   } = summary;
 
@@ -72,16 +70,13 @@ export function renderStats(container, summary) {
     (sum, session) => sum + (session.attempts || 0),
     0,
   );
-  const hardCount = hardItems.reduce((sum, item) => sum + (item.count || 0), 0);
 
   const grid = document.createElement("div");
   grid.className = "stats-grid";
   grid.append(
     createStatTile("Sessions", String(totalSessions)),
     createStatTile("Study time", formatTime(totalTime)),
-    createStatTile("Library", `${fileCount} files`),
-    createStatTile("Hard marks", String(hardCount)),
-    createStatTile("Hard list items", String(hardSummary?.total || 0)),
+    createStatTile("Accuracy", `${safePercent(totalCorrect, totalAttempts)}%`),
   );
   container.appendChild(grid);
 
@@ -131,7 +126,6 @@ export function renderStats(container, summary) {
     ]),
     createListSection("Storage", [
       { label: "Estimated usage", value: `${storageUsage.kb} KB` },
-      { label: "Overall accuracy", value: `${safePercent(totalCorrect, totalAttempts)}%` },
     ]),
   );
 }

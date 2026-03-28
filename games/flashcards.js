@@ -47,7 +47,6 @@ export class FlashCardsGame extends GameInterface {
           <div class="game-metrics">
             <span class="metric-pill">Time <strong id="flashTimer">0s</strong></span>
             <span class="metric-pill">Remaining <strong id="flashRemaining">0</strong></span>
-            <button type="button" class="button button-ghost button-small" id="flashHome">Home</button>
           </div>
         </header>
 
@@ -79,7 +78,6 @@ export class FlashCardsGame extends GameInterface {
     this.unknownButton = this.container.querySelector("#flashUnknown");
     this.shuffleButton = this.container.querySelector("#flashShuffle");
     this.directionButton = this.container.querySelector("#flashDirection");
-    this.homeButton = this.container.querySelector("#flashHome");
     this.topicTitle.textContent = this.context.topic.name;
   }
 
@@ -135,16 +133,11 @@ export class FlashCardsGame extends GameInterface {
       this.updateCard();
     };
 
-    this.handleHome = () => {
-      this.emit("app:show-home");
-    };
-
     this.cardButton.addEventListener("click", this.handleFlip);
     this.knownButton.addEventListener("click", this.handleKnown);
     this.unknownButton.addEventListener("click", this.handleUnknown);
     this.shuffleButton.addEventListener("click", this.handleShuffle);
     this.directionButton.addEventListener("click", this.handleDirection);
-    this.homeButton.addEventListener("click", this.handleHome);
   }
 
   loadCard() {
@@ -188,7 +181,6 @@ export class FlashCardsGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : `Best time: ${formatTime(bestTime)}`}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="flashRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="flashBackHome">Home</button>
         </div>
       </section>
     `;
@@ -196,9 +188,6 @@ export class FlashCardsGame extends GameInterface {
     this.container
       .querySelector("#flashRestart")
       .addEventListener("click", () => this.emit("app:restart-topic"));
-    this.container
-      .querySelector("#flashBackHome")
-      .addEventListener("click", () => this.emit("app:show-home"));
   }
 
   onDestroy() {
@@ -207,6 +196,5 @@ export class FlashCardsGame extends GameInterface {
     this.unknownButton?.removeEventListener("click", this.handleUnknown);
     this.shuffleButton?.removeEventListener("click", this.handleShuffle);
     this.directionButton?.removeEventListener("click", this.handleDirection);
-    this.homeButton?.removeEventListener("click", this.handleHome);
   }
 }

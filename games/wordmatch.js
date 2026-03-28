@@ -44,7 +44,6 @@ export class WordMatchGame extends GameInterface {
           <div class="game-metrics">
             <span class="metric-pill">Time <strong id="matchTimer">0s</strong></span>
             <span class="metric-pill">Pairs left <strong id="matchRemaining">${this.remaining}</strong></span>
-            <button type="button" class="button button-ghost button-small" id="matchHome">Home</button>
           </div>
         </header>
 
@@ -59,10 +58,7 @@ export class WordMatchGame extends GameInterface {
     this.timerValue = this.container.querySelector("#matchTimer");
     this.remainingValue = this.container.querySelector("#matchRemaining");
     this.board = this.container.querySelector("#matchBoard");
-    this.exitButton = this.container.querySelector("#matchHome");
     this.topicTitle.textContent = this.context.topic.name;
-    this.handleExit = () => this.emit("app:show-home");
-    this.exitButton.addEventListener("click", this.handleExit);
   }
 
   renderBoard() {
@@ -235,7 +231,6 @@ export class WordMatchGame extends GameInterface {
         <p class="support-text">${isBest ? "New best time." : "Keep pushing for a faster clear."}</p>
         <div class="button-row">
           <button type="button" class="button button-success" id="matchRestart">Restart</button>
-          <button type="button" class="button button-secondary" id="matchBackHome">Home</button>
         </div>
       </section>
     `;
@@ -243,13 +238,9 @@ export class WordMatchGame extends GameInterface {
     this.container
       .querySelector("#matchRestart")
       .addEventListener("click", () => this.emit("app:restart-topic"));
-    this.container
-      .querySelector("#matchBackHome")
-      .addEventListener("click", () => this.emit("app:show-home"));
   }
 
   onDestroy() {
     window.clearTimeout(this.pendingTimeout);
-    this.exitButton?.removeEventListener("click", this.handleExit);
   }
 }

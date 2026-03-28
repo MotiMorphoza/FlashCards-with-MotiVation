@@ -30,8 +30,8 @@ Important: this repo does **not** currently ship a live `index.json`. The app re
 2. The home accordion renders as two roots:
    - `Choose a topic` for bundled HUB content
    - `My lists` for editable local content
-3. Starting a bundled HUB file fetches its CSV and also stores a local cached copy so it becomes available in the Library.
-4. A HUB list that was only started is still treated as HUB content in the Library.
+3. The `Start` button now sits below the topic accordion instead of beside it.
+4. Starting a bundled HUB file fetches its CSV and also stores a local cached copy so it becomes available in the Library.
 5. The first real edit to that cached HUB list promotes it into a local editable list (`MINE`).
 6. Hard items are tracked across play sessions.
 7. `My lists` can now auto-generate `Hard words` and `Hard sentences` when an item was answered wrong at least twice.
@@ -57,7 +57,8 @@ hub/he-en/misc/more-less-too-very-most.csv
 
 ## Library Behavior
 
-- The Library is a management surface for both bundled and local lists.
+- The Library now focuses on lists the user actually touched locally.
+- It shows cached HUB lists, edited HUB-derived lists, user-created lists, and imported lists.
 - Every card in the Library now uses `Edit`.
 - Library cards can be removed directly from the Library screen.
 - Removing a HUB list from the Library now hides it from the Library only.

@@ -88,9 +88,8 @@ This separation is intentional. Bundled hub content is no longer visually mixed 
 
 ### Library
 
-The Library is broader than the home accordion. It shows:
+The Library now focuses on user-managed content. It shows:
 
-- bundled HUB lists
 - locally cached HUB lists
 - local editable lists
 - imported lists
@@ -114,7 +113,8 @@ Editing prompts and confirmations now run through in-app modal UI instead of nat
    - local editable entries for `My lists`
 5. Starting a HUB list fetches CSV data from `hub/` and also creates a local cached record for the Library.
 6. Editing that cached record promotes it into a local editable record.
-7. Games receive normalized data and a shared `SessionEngine`.
+7. A global top-bar `Home` action is available on all screens except the Library editor.
+8. Games receive normalized data and a shared `SessionEngine`.
 
 ## Current Source Lifecycle
 

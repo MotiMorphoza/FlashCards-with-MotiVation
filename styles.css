@@ -185,6 +185,21 @@ h2 {
   min-inline-size: var(--control-min-width-small);
 }
 
+.icon-button--home {
+  background: linear-gradient(180deg, var(--amber), var(--sunset-strong));
+  color: #4a1d00;
+}
+
+.icon-button--sound {
+  background: linear-gradient(180deg, var(--blue), var(--blue-strong));
+  color: var(--blue-deep);
+}
+
+.icon-button--speech {
+  background: linear-gradient(180deg, var(--green), var(--green-strong));
+  color: #103b24;
+}
+
 .screen {
   display: none;
 }
@@ -360,17 +375,20 @@ select optgroup {
   gap: 10px;
 }
 
-.topic-panel-layout {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 14px;
-}
-
 .topic-tree {
   display: grid;
   gap: 12px;
   width: min(100%, 34rem);
+  margin-inline: auto;
+}
+
+#topicPanel {
+  display: grid;
+  justify-items: center;
+}
+
+.topic-panel-actions {
+  margin-top: 12px;
 }
 
 .accordion {
@@ -499,15 +517,6 @@ select optgroup {
 
 .metric-pill strong {
   color: var(--text);
-}
-
-#flashHome {
-  min-inline-size: var(--control-min-width-small);
-}
-
-#matchHome,
-#puzzleHome {
-  min-inline-size: var(--control-min-width-small);
 }
 
 .flash-panel {
@@ -1136,12 +1145,6 @@ select optgroup {
 
   .library-layout {
     grid-template-columns: 1fr;
-  }
-
-  .topic-panel-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
   }
 
   .home-actions,

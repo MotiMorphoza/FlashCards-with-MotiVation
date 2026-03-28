@@ -5,10 +5,11 @@
 - select each language pair
 - select each game
 - verify the Home accordion appears
-- verify the topic chooser row is compact and the start button sits to the right on desktop
+- verify the topic chooser is compact and the start button sits below it
 - verify Home shows:
   - `Choose a topic` for bundled HUB content
   - `My lists` for local editable content
+- verify the shared top-bar `Home` button appears on non-editor screens only
 - verify sentence content appears for Word Puzzle only
 - verify non-sentence topics appear for Flash Cards and Word Match
 
@@ -17,6 +18,7 @@
 - create a local list
 - import a valid CSV
 - verify the new list appears in the Library
+- verify the Library list view shows only touched local lists, not the entire bundled HUB
 - verify the Library list section title is `Lists`
 - start a bundled HUB list from Home and verify it appears in the Library with `HUB`
 - open that cached HUB list and make a real edit
@@ -41,7 +43,7 @@
 - answer the same sentence wrong twice in Word Puzzle
 - verify `Hard sentences` appears under `My lists`
 - verify the generated hard lists start normally in the relevant games
-- verify the Statistics screen updates both `Hard marks` and `Hard list items`
+- verify the Statistics screen updates the `Hard lists` breakdown
 
 ## Games
 
@@ -50,11 +52,8 @@
 - start a HUB list, edit it into `MINE`, and verify best-time continuity still behaves as one topic identity
 - verify the Flash Cards word frame stays compact for short items and expands naturally for long sentences
 - verify the Flash Cards shuffle button label is `Shuffle`
-- verify Flash Cards shows `Home` next to `Time` and `Remaining`
 - verify Flash Cards action buttons use distinct colors
 - verify desktop game screens fit the viewport without unnecessary page scrolling
-- verify Word Match and Word Puzzle use `Home` instead of `Exit`
-- verify Word Match and Word Puzzle keep `Home` in the top metrics row
 - verify long game content stays reachable and does not get visually clipped on desktop
 - restart a completed session
 - exit back to Home
@@ -92,5 +91,5 @@
 
 ## Statistics
 
-- verify the `Library` stat shows only the file count
-- verify `Hard marks` and `Hard list items` both update correctly
+- verify the top stat tiles show `Sessions`, `Study time`, and `Accuracy`
+- verify the `Hard lists` section updates correctly
