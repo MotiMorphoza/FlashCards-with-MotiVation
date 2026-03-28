@@ -1159,17 +1159,21 @@ select optgroup {
     grid-template-columns: 1fr;
   }
 
-  .home-actions,
-  .button-row {
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-  }
-
   .button,
   .button-small,
   .icon-button {
     min-inline-size: 0;
+  }
+
+  .home-actions,
+  .button-row,
+  .library-topic-card__main-actions,
+  .library-row-card__actions {
+    display: grid;
+    grid-template-columns: max-content;
+    justify-content: center;
+    justify-items: stretch;
+    width: 100%;
   }
 
   .toggle-row > .icon-button,
@@ -1180,19 +1184,19 @@ select optgroup {
   .library-row-card__actions > .button,
   #startTopicButton,
   #backFromLibraryEditorButton {
-    width: fit-content;
-    inline-size: auto;
+    width: 100%;
+    inline-size: 100%;
     min-width: 0;
     max-width: 100%;
   }
 
-  .library-topic-card__actions {
-    justify-content: center;
+  .toggle-row > .icon-button {
+    min-inline-size: 8rem;
+    width: auto;
+    inline-size: auto;
   }
 
-  .library-topic-card__main-actions,
-  .library-row-card__actions {
-    width: 100%;
+  .library-topic-card__actions {
     justify-content: center;
   }
 

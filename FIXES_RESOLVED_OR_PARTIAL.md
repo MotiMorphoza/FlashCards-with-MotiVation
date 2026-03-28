@@ -36,6 +36,10 @@ Coming back to the Home screen now resets the accordion to a collapsed state ins
 
 On narrow screens, shared action buttons and top-bar controls now prefer content width instead of stretching like full-width bars.
 
+### Nearby mobile button groups now keep a more uniform width
+
+Stacked button groups on narrow screens now align to the widest label inside each local group instead of looking uneven or stretching to the full shell width.
+
 ### Starting a HUB file now makes it available in the Library
 
 Playing a bundled HUB file creates a local cached record so the user can later edit it from the Library.

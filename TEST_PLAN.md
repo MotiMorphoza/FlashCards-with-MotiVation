@@ -65,6 +65,7 @@
 - open Home on a narrow phone viewport and verify the shell keeps useful width
 - verify Home button rows stack cleanly without clipped labels
 - verify mobile buttons shrink to fit their text instead of keeping oversized fixed widths
+- verify nearby stacked button groups use a consistent local width instead of mismatched button lengths
 - verify the shared top-bar puts `Home` above `Sound` and `Speech` when one row is too tight
 - verify Library create controls fill the width cleanly and do not overflow
 - verify Library action buttons stack into comfortable tap targets
