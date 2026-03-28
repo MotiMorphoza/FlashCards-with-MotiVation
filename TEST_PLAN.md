@@ -4,25 +4,34 @@
 
 - select each language pair
 - select each game
-- verify the topic tree appears
-- verify bundled vocabulary content appears for Flash Cards and Word Match after the hub filtering bug is fixed
-- verify sentence content appears for Word Puzzle
+- verify the Home accordion appears
+- verify Home shows:
+  - `Choose a topic` for bundled HUB content
+  - `My lists` for local editable content
+- verify sentence content appears for Word Puzzle only
+- verify non-sentence topics appear for Flash Cards and Word Match
 
 ## Library
 
-- create a local topic
+- create a local list
 - import a valid CSV
-- rename a topic
+- verify the new list appears in the Library
+- start a bundled HUB list from Home and verify it appears in the Library with `HUB`
+- open that cached HUB list and make a real edit
+- verify it becomes `MINE`
+- delete a local list from the Library card
+- remove a bundled HUB list from the Library card and verify it still exists on Home
+- rename a list
 - delete rows until empty and verify topic deletion behavior
-- export a topic
+- export a list
 - search rows
 
 ## Games
 
-- start each game from bundled hub content
-- start each game from local library content
+- start each game from bundled HUB content
+- start each game from Library content
 - restart a completed session
-- exit back to home
+- exit back to Home
 
 ## Security
 
@@ -36,3 +45,4 @@
 - verify service worker registration
 - hard refresh after asset changes
 - verify relative paths still resolve
+- verify a new `hub/` file appears after the GitHub Action rebuilds `hubIndex.js`

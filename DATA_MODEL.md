@@ -23,12 +23,12 @@ The parser now:
 
 - supports quoted values
 - skips blank lines
-- skips two known header styles
+- skips known header rows
 - requires exactly two columns
 - rejects malformed non-empty rows
 - throws validation errors for unclosed quotes or missing cells
 
-## Bundled Hub Metadata Shape
+## Bundled HUB Metadata Shape
 
 The live bundled registry is `window.HUB_INDEX` from `hubIndex.js`.
 
@@ -38,7 +38,7 @@ Physical source layout:
 hub/<language-pair>/<topic>/<file>.csv
 ```
 
-Current shape:
+Current generated shape:
 
 ```js
 {
@@ -81,11 +81,41 @@ Current shape:
 }
 ```
 
+## Source Values In Use
+
+Current `source` values:
+
+- `hub`
+- `hub-cache`
+- `hub-copy`
+- `local`
+- `import`
+
+Meaning:
+
+- `hub`: bundled only
+- `hub-cache`: bundled file cached locally for Library access
+- `hub-copy`: edited HUB-derived local list
+- `local`: user-created local list
+- `import`: imported local list
+
 ## Category Rules In Code
 
 - topic `sentences` -> `flashcards`, `wordmatch`, `wordpuzzle`
 - any other topic -> `flashcards`, `wordmatch`
 
-## Important Repo Fact
+## Hidden Origin Keys
 
-The current bundled hub now behaves as `language -> topic -> files`, while still allowing legacy local records with old `branch/group` fields to migrate forward through `core/storage.js`.
+Current storage also tracks hidden bundled origins:
+
+- `LLH_v4_hidden_hub_origins`
+- `LLH_v4_hidden_library_hub_origins`
+
+These are used for different UI scopes:
+
+- bundled tree visibility
+- Library-only visibility
+
+## Important Compatibility Note
+
+The current bundled hub behaves as `language -> topic -> files`, while still allowing legacy local records with old `branch/group` fields to migrate forward through `core/storage.js`.

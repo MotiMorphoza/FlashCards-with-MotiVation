@@ -6,33 +6,36 @@ ONE SOURCE is a static browser app that unifies three language-learning modes be
 - Word Match
 - Word Puzzle
 
-The repo is plain HTML/CSS/JavaScript. It is designed to run without a product backend and stay compatible with GitHub Pages style hosting.
+The repo is plain HTML, CSS, and JavaScript. It is designed to stay GitHub Pages friendly and not depend on a product backend.
 
 ## Current Repo Reality
 
 - Entry point: `index.html`
 - Main app controller: `core/hubManager.js`
-- Content registry shipped in repo: `hubIndex.js`
+- Bundled content registry: `hubIndex.js`
 - Shared data loader: `core/hubAdapter.js`
 - Shared storage: `core/storage.js`
 - Shared session logic: `core/engine.js`
 - Games: `games/flashcards.js`, `games/wordmatch.js`, `games/wordpuzzle.js`
-- Local content lives in browser `localStorage`
 - Bundled hub content lives in `hub/`
+- Local user content lives in browser `localStorage`
 
-Important: this repo does **not** currently ship an `index.json` file. The app currently reads `window.HUB_INDEX` from `hubIndex.js`.
+Important: this repo does **not** currently ship a live `index.json`. The app reads `window.HUB_INDEX` from `hubIndex.js`.
 
 ## How The App Works Today
 
-1. The home screen lets the user choose a language pair.
-2. The user chooses a game.
-3. The HUB tree is built as `Choose a topic -> topic -> files`, using bundled hub content plus local library topics.
-4. When a hub file is started for the first time, the app saves a local copy in the library.
-5. Games run through a shared `SessionEngine`.
+1. The home screen lets the user choose a language pair and a game.
+2. The home accordion renders as two roots:
+   - `Choose a topic` for bundled HUB content
+   - `My lists` for editable local content
+3. Starting a bundled HUB file fetches its CSV and also stores a local cached copy so it becomes available in the Library.
+4. A HUB list that was only started is still treated as HUB content in the Library.
+5. The first real edit to that cached HUB list promotes it into a local editable list (`MINE`).
+6. Games run through a shared `SessionEngine`.
 
 ## Bundled Hub Layout
 
-Bundled hub content now lives in a flat physical structure:
+Bundled hub content lives in this physical structure:
 
 ```text
 hub/<language-pair>/<topic>/<file>.csv
@@ -48,14 +51,38 @@ hub/he-en/misc/more-less-too-very-most.csv
 
 `hubIndex.js` is generated from that folder structure by `scripts/build_hub_index.py`.
 
+## Library Behavior
+
+- The Library is a management surface for both bundled and local lists.
+- Every card in the Library now uses `Edit`.
+- Library cards can be removed directly from the Library screen.
+- Removing a HUB list from the Library does **not** remove it from Home or from `hub/`.
+- Local lists can be deleted from the Library.
+- The editor screen no longer owns list deletion.
+
+## Source Status Model
+
+Current source states in code:
+
+- `hub`: bundled file from `hub/`
+- `hub-cache`: a bundled file that was started or opened and cached locally for Library access
+- `hub-copy`: a former HUB file that was actually edited and is now part of local editable content
+- `local`: user-created list
+- `import`: CSV-imported list
+
+UI meaning:
+
+- `HUB` badge: `hub` and `hub-cache`
+- `MINE` badge: `hub-copy`, `local`, and `import`
+
 ## Content Rules In Code
 
 - Topic `sentences` is available to Flash Cards, Word Match, and Word Puzzle.
 - All other topics are available to Flash Cards and Word Match.
 - Word Puzzle can use only the `sentences` topic.
 - Rows are normalized to `{ id, source, target }`.
-- Imported and edited lists are stored locally and stay editable.
-- Users can create their own topics from the library UI.
+- Users can create their own topics from the Library UI.
+- Duplicate list names are blocked within the same language pair and topic.
 
 ## Local Development
 
@@ -75,7 +102,7 @@ python scripts/build_hub_index.py
 
 ## GitHub Automation
 
-The repo now includes `.github/workflows/rebuild-hub-index.yml`.
+The repo includes `.github/workflows/rebuild-hub-index.yml`.
 
 When you push changes under `hub/`, GitHub Actions:
 
@@ -83,20 +110,21 @@ When you push changes under `hub/`, GitHub Actions:
 2. rebuilds `hubIndex.js`
 3. commits the updated index back to `main`
 
-That means your normal flow can be:
+Normal content flow:
 
 1. add a new topic folder under `hub/<language-pair>/`
 2. add one or more `.csv` files
 3. push to GitHub
 
-After the workflow finishes, the new content is reflected on the site.
+After the workflow finishes, the new bundled content is reflected on the site.
 
-## Current Gaps Confirmed In Repo
+## Current Gaps Still Confirmed
 
-- `hubIndex.js` is still the live source of hub content metadata.
+- `hubIndex.js` is still the live metadata source
 - there is still no live `index.json`
-- `sw.js` uses a manual asset list that can drift from the actual import graph
+- `sw.js` still uses a manual precache asset list that can drift
+- Library row search still rerenders on every keystroke
 
-## Scope Notes
+## Scope Note
 
 `server.js` is only a local static file server for development. It is not a product backend.

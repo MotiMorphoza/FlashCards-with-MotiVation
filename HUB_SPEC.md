@@ -6,15 +6,16 @@
 - `core/hubAdapter.js`
 - `core/hubManager.js`
 - `ui/accordion.js`
+- `scripts/build_hub_index.py`
 
 ## Current HUB Responsibilities
 
 - expose bundled language pairs
-- merge bundled hub files with local library topics
+- expose bundled topic folders
 - filter topic tree by selected game
-- load local topics from storage
 - fetch bundled CSV files from `hub/`
-- create a local editable copy of a hub topic on first use
+- keep bundled HUB content separate from local editable content on Home
+- support Library access to HUB lists without mutating bundled files
 
 ## Current Source Of Truth
 
@@ -36,7 +37,48 @@ Generated registry shape:
 - `topic`
 - `files`
 
-The UI tree is rendered as one accordion root, `Choose a topic`, and then topic buckets under it.
+## Home Rendering Rule
+
+The Home accordion is intentionally split into two roots:
+
+- `Choose a topic`
+- `My lists`
+
+Meaning:
+
+- `Choose a topic` shows bundled HUB content
+- `My lists` shows local editable content
+
+Bundled content is not supposed to move into `My lists` until it becomes a real local editable copy.
+
+## Library Integration Rule
+
+The Library is broader than Home and may show:
+
+- raw bundled HUB entries
+- cached HUB entries that were started or opened
+- local editable copies
+- imported lists
+- user-created lists
+
+Library removal rules:
+
+- deleting a bundled HUB entry from the Library removes it from the Library only
+- it does not remove it from Home
+- it does not remove it from `hub/`
+
+## Source State Semantics
+
+- `hub`: bundled file from `hub/`
+- `hub-cache`: bundled file fetched and stored locally for Library availability
+- `hub-copy`: edited former HUB file that now behaves as local editable content
+- `local`: user-created list
+- `import`: CSV-imported list
+
+UI badge semantics:
+
+- `HUB` -> `hub`, `hub-cache`
+- `MINE` -> `hub-copy`, `local`, `import`
 
 ## Current Filtering Rule
 
@@ -50,13 +92,11 @@ The UI tree is rendered as one accordion root, `Choose a topic`, and then topic 
   - available to `wordmatch`
   - not available to `wordpuzzle`
 
-## Local Library Integration
+## Important Current Behavior
 
-Local topics are mixed into the HUB tree with:
-
-- free-form `topicName` chosen by the user
-- default local topic suggestion: `grammer`
-- source types such as `local`, `import`, and `hub-copy`
+- Starting a HUB list from Home also creates a local cached record so it becomes editable through the Library later.
+- Simply starting a HUB list does not yet make it part of the Home `My lists` root.
+- The first real edit promotes the cached HUB record into a local editable list.
 
 ## Automation
 

@@ -30,22 +30,45 @@ Do not redesign the project as if it were a greenfield app.
 5. Patch in place before proposing a deep refactor.
 6. Do not assume docs are correct if code disagrees.
 
-## Known Current Risks
+## Current Intentional Structure
 
-- HUB filtering mismatch for vocabulary content
+- One app shell
+- One bundled HUB root on Home: `Choose a topic`
+- One local root on Home: `My lists`
+- One Library management screen for both bundled and local list records
+- One shared storage namespace prefix: `LLH_v4_*`
+- One shared session engine
+
+## Current Source States
+
+- `hub`
+- `hub-cache`
+- `hub-copy`
+- `local`
+- `import`
+
+Meaning:
+
+- starting a HUB file can create `hub-cache`
+- editing that cached HUB file promotes it to `hub-copy`
+- `hub-copy`, `local`, and `import` behave as local editable content
+
+## Current Known Risks
+
 - no live `index.json`
-- weak CSV validation
-- empty-topic auto-delete not implemented
-- topic names rendered into game template strings
-- service worker cache list is easy to drift
+- service worker precache list is manual
+- Library row search has no debounce
+- recent Library/HUB state fixes still need live regression coverage
+- legacy hide-origin storage APIs still exist for cleanup
 
 ## What To Verify Before Editing
 
-1. Whether the change touches home shell, library, or a game runtime
-2. Whether the change affects bundled hub content, local library content, or both
+1. Whether the change touches Home, Library, Library Editor, or a game runtime
+2. Whether the change affects bundled HUB content, local Library content, or both
 3. Whether the affected text reaches the DOM through `innerHTML`
 4. Whether the change impacts GitHub Pages style relative paths
 5. Whether the storage shape in `core/storage.js` must stay backward compatible
+6. Whether the change touches the `hub -> hub-cache -> hub-copy` lifecycle
 
 ## Preferred Work Style
 
@@ -53,15 +76,7 @@ Do not redesign the project as if it were a greenfield app.
 - keep behavior stable
 - use existing shared utilities when possible
 - call out dead code and drift explicitly
-- separate "current fact" from "future target"
-
-## Current Intentional Structure
-
-- One app shell
-- One local library
-- One shared storage namespace prefix: `LLH_v4_*`
-- One shared session engine
-- Bundled hub content plus local editable copies
+- separate current fact from future target
 
 ## Important Accuracy Note
 

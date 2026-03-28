@@ -11,6 +11,8 @@ LLH_v4_
 ## Main Key Families
 
 - library topics: `LLH_v4_library_topics_global`
+- hidden bundled origins: `LLH_v4_hidden_hub_origins`
+- hidden Library-only bundled origins: `LLH_v4_hidden_library_hub_origins`
 - preferences
 - sessions
 - best times
@@ -20,7 +22,8 @@ LLH_v4_
 
 - local library topics
 - imported topics
-- hub-derived local copies
+- HUB-derived cached topics
+- HUB-derived editable local copies
 - user preferences for audio and speech
 - session history
 - best times
@@ -30,11 +33,28 @@ LLH_v4_
 
 Library topics are stored as sanitized topic objects with embedded row arrays.
 
+Important current source values:
+
+- `local`
+- `import`
+- `hub-cache`
+- `hub-copy`
+
+## Current Behavior Notes
+
+- starting a HUB list can create a `hub-cache` entry
+- editing a cached HUB list promotes it to `hub-copy`
+- deleting a local list removes its stored topic object
+- removing a bundled HUB list from the Library uses Library-only hidden origin storage instead of deleting a bundled file
+
 ## Current Good News
 
-Storage versioning already exists in code.
+- storage versioning already exists in code
+- list rename is in-place by topic id
+- deleting the last row removes the topic object
 
 ## Current Gaps
 
 - no formal migration layer beyond versioned keys
 - no storage corruption reporting beyond safe fallbacks
+- legacy hide-origin APIs still exist and should be cleaned up carefully, not blindly removed
