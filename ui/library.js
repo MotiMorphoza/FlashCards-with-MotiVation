@@ -76,21 +76,13 @@ export function renderLibraryTopics(mount, options = {}) {
 
     const actionRow = document.createElement("div");
     actionRow.className = "library-topic-card__actions";
-    const mainActions = document.createElement("div");
-    mainActions.className = "library-topic-card__main-actions";
-    const deleteAction = document.createElement("div");
-    deleteAction.className = "library-topic-card__delete";
-
-    mainActions.appendChild(
-      createButton(
-        "Edit",
-        "button button-secondary button-small",
-        () => onEdit(topic),
-      ),
-    );
+    const gameActions = document.createElement("div");
+    gameActions.className = "library-topic-card__games";
+    const manageActions = document.createElement("div");
+    manageActions.className = "library-topic-card__manage";
 
     (topic.allowedGames || []).forEach((gameId) => {
-      mainActions.appendChild(
+      gameActions.appendChild(
         createButton(
           formatGameLabel(gameId),
           "button button-primary button-small",
@@ -99,7 +91,15 @@ export function renderLibraryTopics(mount, options = {}) {
       );
     });
 
-    deleteAction.appendChild(
+    manageActions.appendChild(
+      createButton(
+        "Edit",
+        "button button-secondary button-small",
+        () => onEdit(topic),
+      ),
+    );
+
+    manageActions.appendChild(
       createButton(
         "Delete",
         "button button-danger button-small",
@@ -107,7 +107,11 @@ export function renderLibraryTopics(mount, options = {}) {
       ),
     );
 
-    actionRow.append(mainActions, deleteAction);
+    if (gameActions.childElementCount > 0) {
+      actionRow.appendChild(gameActions);
+    }
+
+    actionRow.appendChild(manageActions);
 
     card.append(path, actionRow);
     mount.appendChild(card);

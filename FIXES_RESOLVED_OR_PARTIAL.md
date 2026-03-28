@@ -120,6 +120,10 @@ The editor search now uses a short debounce, and the create-form inputs no longe
 
 The editor now uses in-app modal dialogs for add, edit, rename, alert, and confirm flows, which is a better fit for PWA and mobile usage.
 
+### Editor modals now use a consistent action order
+
+Add-row, edit-row, and rename flows now keep `Save` on the left and `Cancel` on the right as a shared modal standard.
+
 ### Global mobile layout is now tighter and more touch-safe
 
 The shell now uses smaller side margins on narrow screens, form controls expand to safe widths, button rows stack more predictably, and core tap targets such as topic buttons and puzzle tokens keep a safer minimum height.
@@ -131,6 +135,10 @@ If the top controls cannot sit comfortably on one row, the `Home` button moves t
 ### Home action buttons and key mobile action rows are tighter again
 
 On narrow screens, the Home shortcuts, list creation actions, list editor actions, and stats summary row now stay denser and closer to single-row layouts where requested instead of expanding into oversized stacked controls.
+
+### Library cards now separate game actions from list management more clearly
+
+Library topic cards now place their game buttons on one row and keep `Edit` / `Delete` together on a separate row beneath them, which is easier to scan on phone screens.
 
 ### The Home game cards now show titles only
 

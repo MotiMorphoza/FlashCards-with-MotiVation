@@ -37,6 +37,7 @@
 - verify the editor has a top `Back to library` button near `Export CSV`
 - search rows
 - verify add/edit/rename/delete flows use in-app modal dialogs instead of browser-native prompts
+- verify row/edit/rename modal actions keep `Save` on the left and `Cancel` on the right
 
 ## Hard Lists
 
@@ -73,6 +74,8 @@
 - verify `Create list` and `Import list` stay on one row on phone
 - verify Library action buttons stack into comfortable tap targets
 - verify list game buttons stay on one row on phone
+- verify each Library list card shows game buttons on one row and `Edit` / `Delete` on the row below
+- verify row-level `Edit` / `Delete` buttons stay on one row on phone
 - verify the editor modal flows stay usable above the mobile keyboard
 - verify modal action buttons no longer stretch to full width on phone
 - verify Add row / Rename stay on one row in the editor on phone

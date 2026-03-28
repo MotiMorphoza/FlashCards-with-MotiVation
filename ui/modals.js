@@ -77,15 +77,6 @@ function createModalShell(options) {
   const actions = document.createElement("div");
   actions.className = "app-modal__actions";
 
-  let cancelButton = null;
-  if (options.showCancel !== false) {
-    cancelButton = document.createElement("button");
-    cancelButton.type = "button";
-    cancelButton.className = "button button-secondary";
-    cancelButton.textContent = options.cancelLabel || "Cancel";
-    actions.appendChild(cancelButton);
-  }
-
   const confirmButton = document.createElement("button");
   confirmButton.type = "button";
   confirmButton.className =
@@ -94,6 +85,15 @@ function createModalShell(options) {
       : "button button-primary";
   confirmButton.textContent = options.confirmLabel || "OK";
   actions.appendChild(confirmButton);
+
+  let cancelButton = null;
+  if (options.showCancel !== false) {
+    cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.className = "button button-secondary";
+    cancelButton.textContent = options.cancelLabel || "Cancel";
+    actions.appendChild(cancelButton);
+  }
 
   dialog.appendChild(actions);
   backdrop.appendChild(dialog);
