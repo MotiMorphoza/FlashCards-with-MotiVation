@@ -457,6 +457,8 @@ select optgroup {
 #startTopicButton {
   align-self: flex-start;
   margin-top: 0;
+  background: linear-gradient(180deg, #93c5fd, var(--blue-strong));
+  color: var(--blue-deep);
 }
 
 #languageSelect {
@@ -473,9 +475,9 @@ select optgroup {
 }
 
 .topic-button.is-selected {
-  background: linear-gradient(180deg, var(--amber), var(--sunset-strong));
-  color: #4a1d00;
-  outline: 2px solid #fff1bf;
+  background: linear-gradient(180deg, var(--lavender), var(--lavender-strong));
+  color: #2e1065;
+  outline: 2px solid rgba(216, 180, 254, 0.9);
   outline-offset: 1px;
 }
 
@@ -1112,12 +1114,12 @@ select optgroup {
 }
 
 #screen-library .panel:first-child .field-label:not(:first-of-type) {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 #screen-library .panel:first-child select,
 #screen-library .panel:first-child input {
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 @media (max-width: 900px) {
@@ -1198,8 +1200,8 @@ select optgroup {
   }
 
   .home-actions {
-    grid-template-columns: repeat(3, max-content);
-    gap: 6px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .library-topic-card__games,
@@ -1246,6 +1248,8 @@ select optgroup {
   }
 
   .home-actions > .button {
+    width: 100%;
+    inline-size: 100%;
     padding: 8px 10px;
     font-size: 0.92rem;
   }

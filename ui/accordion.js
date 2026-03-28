@@ -1,5 +1,10 @@
 export function renderAccordionTree(tree, options = {}) {
-  const { onSelect = () => {}, selectedId = null, openFirstRoot = true } = options;
+  const {
+    onSelect = () => {},
+    selectedId = null,
+    openFirstRoot = true,
+    openBranchName = "",
+  } = options;
   const fragment = document.createDocumentFragment();
   const branches = Object.keys(tree);
 
@@ -14,7 +19,13 @@ export function renderAccordionTree(tree, options = {}) {
   branches.forEach((branchName, branchIndex) => {
     const accordion = document.createElement("section");
     accordion.className = "accordion";
-    accordion.classList.toggle("open", openFirstRoot && branchIndex === 0);
+    accordion.classList.toggle(
+      "open",
+      openFirstRoot && (
+        (openBranchName && branchName === openBranchName) ||
+        (!openBranchName && branchIndex === 0)
+      ),
+    );
     accordion.classList.add(
       branchName.trim().toLowerCase() === "my lists"
         ? "accordion--mine"
@@ -48,7 +59,7 @@ export function renderAccordionTree(tree, options = {}) {
         button.textContent = fileMeta.name;
         button.classList.toggle("is-selected", fileMeta.id === selectedId);
         button.addEventListener("click", () => {
-          onSelect(fileMeta);
+          onSelect(fileMeta, branchName);
         });
         group.appendChild(button);
       });

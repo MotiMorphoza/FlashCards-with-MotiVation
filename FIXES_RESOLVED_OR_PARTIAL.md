@@ -136,6 +136,10 @@ If the top controls cannot sit comfortably on one row, the `Home` button moves t
 
 On narrow screens, the Home shortcuts, list creation actions, list editor actions, and stats summary row now stay denser and closer to single-row layouts where requested instead of expanding into oversized stacked controls.
 
+### Accordion selection now keeps the current root open
+
+Selecting a topic from `My lists` no longer snaps the accordion back to the bundled HUB root on the next rerender.
+
 ### Library cards now separate game actions from list management more clearly
 
 Library topic cards now place their game buttons on one row and keep `Edit` / `Delete` together on a separate row beneath them, which is easier to scan on phone screens.

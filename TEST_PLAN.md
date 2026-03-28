@@ -7,6 +7,7 @@
 - verify the Home accordion appears
 - verify the topic chooser is compact and the start button sits below it
 - leave Home and return to it, then verify the accordion is collapsed again
+- select a topic under `My lists` and verify the `My lists` accordion stays open after selection
 - verify Home shows:
   - `Choose a topic` for bundled HUB content
   - `My lists` for local editable content
@@ -71,6 +72,7 @@
 - verify nearby stacked button groups use a consistent local width instead of mismatched button lengths
 - verify the shared top-bar puts `Home` above `Sound` and `Speech` when one row is too tight
 - verify Home / Statistics / Contact stay on one row on phone
+- verify the three Home shortcut buttons share equal width and together use most of the row
 - verify Library create controls fill the width cleanly and do not overflow
 - verify `Create list` and `Import list` stay on one row on phone
 - verify Library action buttons stack into comfortable tap targets
