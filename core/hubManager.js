@@ -90,6 +90,10 @@ class HubManager {
     this.cacheDom();
     this.registerScreens();
     this.restorePreferences();
+    const hiddenOriginMigration = Storage.migrateLegacyHiddenOrigins();
+    if (hiddenOriginMigration.failed) {
+      console.warn("Legacy hidden HUB origins could not be migrated.");
+    }
     HubAdapter.init();
     this.populateLanguages();
     this.populateLibraryLanguages();
@@ -660,7 +664,7 @@ class HubManager {
     }
   }
 
-  showLibrary(options = {}) {
+  showLibrary() {
     this.destroyActiveGame();
     this.populateLibraryTopicOptions();
     this.renderLibraryTopicList();
@@ -1194,7 +1198,6 @@ class HubManager {
       hardItems: Storage.getAllHardItems(),
       hardSummary,
       fileCount: HubAdapter.countFiles(),
-      languageCount: HubAdapter.getLanguages().length,
       storageUsage: Storage.getUsage(),
     });
     this.router.navigate("stats");

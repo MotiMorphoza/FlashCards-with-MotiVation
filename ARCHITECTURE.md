@@ -139,10 +139,8 @@ Other local sources:
 
 Storage is versioned under the `LLH_v4_*` namespace.
 
-There are currently two separate hide concepts:
-
-- hide a bundled HUB origin from the home/library merged tree
-- hide a bundled HUB origin from the Library only
+Bundled HUB removal from the Library is now Library-only state.
+Legacy hidden-HUB storage is migrated on startup so Home continues to reflect the physical bundled HUB tree.
 
 ## What Is Already Unified
 
@@ -156,6 +154,6 @@ There are currently two separate hide concepts:
 ## What Is Still Not Fully Unified
 
 - live metadata source is still `hubIndex.js`, not `index.json`
-- service worker precache list is still manual
-- Library row search still has no debounce
-- some legacy storage hide APIs remain in code for backward compatibility and cleanup
+- Library/HUB flows still need live browser and PWA regression coverage
+- older hard-mark data may still need migration if users carry storage from older builds
+- some legacy storage compatibility APIs still remain and should be trimmed carefully later

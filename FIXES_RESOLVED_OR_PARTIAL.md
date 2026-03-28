@@ -36,6 +36,10 @@ Users no longer depend on the editor screen to remove whole lists.
 
 Removing a bundled HUB list from the Library does not remove it from Home or from `hub/`.
 
+### Legacy bundled-hide state no longer suppresses Home HUB content
+
+Older hidden-origin entries are now migrated into Library-only hide state, and the Home accordion no longer filters bundled HUB files through that legacy key.
+
 ### Rename is in-place in current storage code
 
 `Storage.renameLibraryTopic()` updates an existing topic object by id instead of creating a new one.
@@ -87,6 +91,14 @@ The editor search now uses a short debounce, and the create-form inputs no longe
 ### Library editing no longer depends on native browser dialogs
 
 The editor now uses in-app modal dialogs for add, edit, rename, alert, and confirm flows, which is a better fit for PWA and mobile usage.
+
+### Global mobile layout is now tighter and more touch-safe
+
+The shell now uses smaller side margins on narrow screens, form controls expand to safe widths, button rows stack more predictably, and core tap targets such as topic buttons and puzzle tokens keep a safer minimum height.
+
+### Word Match and Word Puzzle mobile wrapping is less fragile
+
+Word Match now keeps its two-column structure longer before collapsing, and long match/token text can wrap instead of forcing awkward overflow.
 
 ### Hard lists can now be generated from real mistake data
 

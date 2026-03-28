@@ -22,6 +22,6 @@ The code now separates Home roots, Library removal semantics, and HUB-to-local p
 
 New hard marks are now stored with stable signatures and can generate hard lists correctly. Older pre-change hard marks may still exist in storage and are not guaranteed to map cleanly into generated lists.
 
-### 5. Legacy hidden-origin storage paths remain in code
+### 5. Mobile behavior still needs live phone verification
 
-The repo now uses separate hide semantics for bundled-tree visibility and Library-only visibility. The old hide API should be cleaned up carefully later, not aggressively removed without migration thought.
+The narrow-screen CSS is now tighter and more touch-safe, but Home, Library, FC, WM, WP, and standalone PWA reopen behavior still need real device testing before production confidence is justified.

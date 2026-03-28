@@ -57,7 +57,6 @@ export function renderStats(container, summary) {
     hardItems,
     hardSummary,
     fileCount,
-    languageCount,
     storageUsage,
   } = summary;
 

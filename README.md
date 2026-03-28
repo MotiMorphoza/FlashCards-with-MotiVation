@@ -60,7 +60,8 @@ hub/he-en/misc/more-less-too-very-most.csv
 - The Library is a management surface for both bundled and local lists.
 - Every card in the Library now uses `Edit`.
 - Library cards can be removed directly from the Library screen.
-- Removing a HUB list from the Library does **not** remove it from Home or from `hub/`.
+- Removing a HUB list from the Library now hides it from the Library only.
+- Home still reflects the physical bundled HUB and does **not** remove that list from `Choose a topic`.
 - Local lists can be deleted from the Library.
 - The editor screen no longer owns list deletion.
 

@@ -61,11 +61,23 @@ function safeSet(key, value) {
   }
 }
 
-function getHiddenOrigins() {
+function safeRemove(key) {
+  try {
+    localStorage.removeItem(key);
+    lastStorageError = null;
+    return true;
+  } catch (error) {
+    lastStorageError = error;
+    console.error("Storage remove failed", error);
+    return false;
+  }
+}
+
+function getLegacyHiddenOrigins() {
   return safeGet(HIDDEN_ORIGINS_KEY, []);
 }
 
-function setHiddenOrigins(origins) {
+function setLegacyHiddenOrigins(origins) {
   return safeSet(HIDDEN_ORIGINS_KEY, [...new Set(origins.filter(Boolean))]);
 }
 
@@ -489,12 +501,31 @@ export const Storage = {
     );
   },
 
+  migrateLegacyHiddenOrigins() {
+    const legacyOrigins = getLegacyHiddenOrigins();
+
+    if (!legacyOrigins.length) {
+      return { moved: 0, failed: false };
+    }
+
+    const mergedOrigins = [...new Set([...getHiddenLibraryHubOrigins(), ...legacyOrigins])];
+    if (!setHiddenLibraryHubOrigins(mergedOrigins)) {
+      return { moved: 0, failed: true };
+    }
+
+    if (!safeRemove(HIDDEN_ORIGINS_KEY) && !setLegacyHiddenOrigins([])) {
+      return { moved: legacyOrigins.length, failed: true };
+    }
+
+    return { moved: legacyOrigins.length, failed: false };
+  },
+
   getHiddenOrigins() {
-    return getHiddenOrigins();
+    return getHiddenLibraryHubOrigins();
   },
 
   isOriginHidden(originPath) {
-    return Boolean(originPath) && getHiddenOrigins().includes(originPath);
+    return this.isLibraryOriginHidden(originPath);
   },
 
   getHiddenLibraryHubOrigins() {
@@ -524,19 +555,11 @@ export const Storage = {
   },
 
   hideOrigin(originPath) {
-    if (!originPath) {
-      return false;
-    }
-
-    return setHiddenOrigins([...getHiddenOrigins(), originPath]);
+    return this.hideLibraryOrigin(originPath);
   },
 
   unhideOrigin(originPath) {
-    if (!originPath) {
-      return false;
-    }
-
-    return setHiddenOrigins(getHiddenOrigins().filter((entry) => entry !== originPath));
+    return this.unhideLibraryOrigin(originPath);
   },
 
   getImportedTopics() {

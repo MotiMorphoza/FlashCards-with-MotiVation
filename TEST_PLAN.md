@@ -24,6 +24,7 @@
 - verify quota / storage failure paths surface a visible error instead of silently failing
 - delete a local list from the Library card
 - remove a bundled HUB list from the Library card and verify it still exists on Home
+- seed legacy `LLH_v4_hidden_hub_origins` data, reload, and verify the list is hidden only from Library while still present on Home
 - rename a list
 - delete rows until empty and verify topic deletion behavior
 - export a list
@@ -55,6 +56,18 @@
 - verify long game content stays reachable and does not get visually clipped on desktop
 - restart a completed session
 - exit back to Home
+
+## Mobile
+
+- open Home on a narrow phone viewport and verify the shell keeps useful width
+- verify Home button rows stack cleanly without clipped labels
+- verify Library create controls fill the width cleanly and do not overflow
+- verify Library action buttons stack into comfortable tap targets
+- verify the editor modal flows stay usable above the mobile keyboard
+- verify Flash Cards text stays readable on short and long items
+- verify Word Match keeps usable tap targets and only collapses to one column on very narrow widths
+- verify Word Puzzle tokens wrap cleanly for long sentences without forcing horizontal scrolling
+- verify reopening the installed PWA on mobile still picks up the current shell after an update
 
 ## Security
 
