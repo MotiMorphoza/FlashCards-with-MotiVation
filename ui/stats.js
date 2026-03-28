@@ -80,7 +80,7 @@ export function renderStats(container, summary) {
   grid.append(
     createStatTile("Sessions", String(totalSessions)),
     createStatTile("Study time", formatTime(totalTime)),
-    createStatTile("Library", `${languageCount} pairs / ${fileCount} files`),
+    createStatTile("Library", `${fileCount} files`),
     createStatTile("Hard marks", String(hardCount)),
     createStatTile("Hard list items", String(hardSummary?.total || 0)),
   );

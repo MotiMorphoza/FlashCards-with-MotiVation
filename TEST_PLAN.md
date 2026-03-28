@@ -57,3 +57,8 @@
 - hard refresh after asset changes
 - verify relative paths still resolve
 - verify a new `hub/` file appears after the GitHub Action rebuilds `hubIndex.js`
+
+## Statistics
+
+- verify the `Library` stat shows only the file count
+- verify `Hard marks` and `Hard list items` both update correctly
