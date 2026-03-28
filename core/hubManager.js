@@ -128,6 +128,7 @@ class HubManager {
       renameLibraryTopicButton: document.getElementById("renameLibraryTopicButton"),
       librarySearchInput: document.getElementById("librarySearchInput"),
       libraryRowsMount: document.getElementById("libraryRowsMount"),
+      backFromLibraryEditorTopButton: document.getElementById("backFromLibraryEditorTopButton"),
       backFromLibraryEditorButton: document.getElementById("backFromLibraryEditorButton"),
       openStatsButton: document.getElementById("openStatsButton"),
       gameMount: document.getElementById("gameMount"),
@@ -194,6 +195,10 @@ class HubManager {
 
     this.dom.backFromLibraryButton.addEventListener("click", () => {
       this.showHome();
+    });
+
+    this.dom.backFromLibraryEditorTopButton.addEventListener("click", () => {
+      this.showLibrary();
     });
 
     this.dom.backFromLibraryEditorButton.addEventListener("click", () => {

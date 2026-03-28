@@ -16,6 +16,7 @@
 - create a local list
 - import a valid CSV
 - verify the new list appears in the Library
+- verify the Library list section title is `Lists`
 - start a bundled HUB list from Home and verify it appears in the Library with `HUB`
 - open that cached HUB list and make a real edit
 - verify it becomes `MINE`
@@ -24,6 +25,7 @@
 - rename a list
 - delete rows until empty and verify topic deletion behavior
 - export a list
+- verify the editor has a top `Back to library` button near `Export CSV`
 - search rows
 
 ## Games
