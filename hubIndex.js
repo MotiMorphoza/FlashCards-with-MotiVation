@@ -15,10 +15,6 @@ window.HUB_INDEX = {
       "title": "Spanish -> Hebrew"
     },
     {
-      "id": "he-en",
-      "title": "Hebrew -> English"
-    },
-    {
       "id": "he-pl",
       "title": "Hebrew -> Polish"
     }
@@ -45,9 +41,6 @@ window.HUB_INDEX = {
         "ar-he": [
           "full_house.csv",
           "political.csv"
-        ],
-        "he-en": [
-          "more-less-too-very-most.csv"
         ]
       }
     },
@@ -59,9 +52,6 @@ window.HUB_INDEX = {
           "daily000.csv"
         ],
         "es-he": [
-          "daily000.csv"
-        ],
-        "he-en": [
           "daily000.csv"
         ],
         "he-pl": [
@@ -81,10 +71,6 @@ window.HUB_INDEX = {
         ],
         "es-he": [
           "000.csv"
-        ],
-        "he-en": [
-          "sentences 001.csv",
-          "to_leave_or_not.csv"
         ]
       }
     }
