@@ -166,90 +166,104 @@ export const HubAdapter = {
   },
 
   buildTree(lang, options = {}) {
-    const { gameId = null, topicName = null } = options;
+    const {
+      gameId = null,
+      topicName = null,
+      preferManagedCopies = true,
+      includeManagedHubCopies = true,
+      sourceScope = "all",
+    } = options;
     const tree = {};
     const rootTitle = this.getRootTitle();
     const normalizedTopicFilter = normalizeTopicName(topicName, "");
 
-    Storage.getLibraryTopics().forEach((topic) => {
-      if (topic.lang !== lang) {
-        return;
-      }
-
-      const normalizedTopicName = resolveTopicName(topic);
-      const category = inferCategory(normalizedTopicName, topic);
-      const allowedGames = inferAllowedGames(category, topic);
-
-      if (normalizedTopicFilter && normalizedTopicName !== normalizedTopicFilter) {
-        return;
-      }
-
-      if (gameId && !allowedGames.includes(gameId)) {
-        return;
-      }
-
-      ensureRootTopic(tree, rootTitle, normalizedTopicName);
-      tree[rootTitle][normalizedTopicName].push({
-        id: topic.id,
-        name: topic.name,
-        file: topic.fileName || topic.name,
-        path: topic.path,
-        lang: topic.lang,
-        topicName: normalizedTopicName,
-        source: topic.source || "local",
-        category,
-        allowedGames,
-        originPath: topic.originPath || null,
-        localId: topic.id,
-        rowsCount: topic.rows.length,
-      });
-    });
-
-    (this.index?.entries || []).forEach((entry) => {
-      const normalizedTopicName = resolveTopicName(entry);
-      const category = inferCategory(normalizedTopicName, entry);
-      const allowedGames = inferAllowedGames(category, entry);
-
-      if (normalizedTopicFilter && normalizedTopicName !== normalizedTopicFilter) {
-        return;
-      }
-
-      if (gameId && !allowedGames.includes(gameId)) {
-        return;
-      }
-
-      const files = entry.files?.[lang];
-      if (!files || files.length === 0) {
-        return;
-      }
-
-      ensureRootTopic(tree, rootTitle, normalizedTopicName);
-
-      files.forEach((fileName) => {
-        const path = `hub/${lang}/${entry.folder}/${fileName}`;
-
-        if (Storage.isOriginHidden(path)) {
+    if (sourceScope !== "hub") {
+      Storage.getLibraryTopics().forEach((topic) => {
+        if (topic.lang !== lang) {
           return;
         }
 
-        if (Storage.findLibraryTopicByOrigin(path)) {
+        const normalizedTopicName = resolveTopicName(topic);
+        const category = inferCategory(normalizedTopicName, topic);
+        const allowedGames = inferAllowedGames(category, topic);
+
+        if (normalizedTopicFilter && normalizedTopicName !== normalizedTopicFilter) {
           return;
         }
 
+        if (gameId && !allowedGames.includes(gameId)) {
+          return;
+        }
+
+        if (topic.source === "hub-copy" && !includeManagedHubCopies) {
+          return;
+        }
+
+        ensureRootTopic(tree, rootTitle, normalizedTopicName);
         tree[rootTitle][normalizedTopicName].push({
-          id: path,
-          name: fileName.replace(/\.csv$/i, ""),
-          file: fileName,
-          path,
-          lang,
+          id: topic.id,
+          name: topic.name,
+          file: topic.fileName || topic.name,
+          path: topic.path,
+          lang: topic.lang,
           topicName: normalizedTopicName,
-          source: "hub",
+          source: topic.source || "local",
           category,
           allowedGames,
-          folder: entry.folder,
+          originPath: topic.originPath || null,
+          localId: topic.id,
+          rowsCount: topic.rows.length,
         });
       });
-    });
+    }
+
+    if (sourceScope !== "local") {
+      (this.index?.entries || []).forEach((entry) => {
+        const normalizedTopicName = resolveTopicName(entry);
+        const category = inferCategory(normalizedTopicName, entry);
+        const allowedGames = inferAllowedGames(category, entry);
+
+        if (normalizedTopicFilter && normalizedTopicName !== normalizedTopicFilter) {
+          return;
+        }
+
+        if (gameId && !allowedGames.includes(gameId)) {
+          return;
+        }
+
+        const files = entry.files?.[lang];
+        if (!files || files.length === 0) {
+          return;
+        }
+
+        ensureRootTopic(tree, rootTitle, normalizedTopicName);
+
+        files.forEach((fileName) => {
+          const path = `hub/${lang}/${entry.folder}/${fileName}`;
+
+          if (Storage.isOriginHidden(path)) {
+            return;
+          }
+
+          if (preferManagedCopies && Storage.findLibraryTopicByOrigin(path)) {
+            return;
+          }
+
+          tree[rootTitle][normalizedTopicName].push({
+            id: path,
+            name: fileName.replace(/\.csv$/i, ""),
+            file: fileName,
+            path,
+            lang,
+            topicName: normalizedTopicName,
+            source: "hub",
+            category,
+            allowedGames,
+            folder: entry.folder,
+          });
+        });
+      });
+    }
 
     return tree;
   },

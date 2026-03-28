@@ -285,10 +285,6 @@ export const Storage = {
       existing,
     );
 
-    if (nextTopic.originPath) {
-      this.unhideOrigin(nextTopic.originPath);
-    }
-
     if (existingIndex >= 0) {
       topics[existingIndex] = nextTopic;
     } else {
@@ -368,9 +364,6 @@ export const Storage = {
     }
 
     if (nextRows.length === 0) {
-      if (topic.originPath) {
-        this.hideOrigin(topic.originPath);
-      }
       topics.splice(index, 1);
       safeSet(LIBRARY_KEY, topics);
       return null;
@@ -394,10 +387,6 @@ export const Storage = {
 
     if (!topic) {
       return false;
-    }
-
-    if (topic?.originPath) {
-      this.hideOrigin(topic.originPath);
     }
 
     const nextTopics = topics.filter((entry) => entry.id !== topicId);

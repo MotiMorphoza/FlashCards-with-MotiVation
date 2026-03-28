@@ -20,6 +20,7 @@ const GAME_REGISTRY = {
   wordmatch: WordMatchGame,
   wordpuzzle: WordPuzzleGame,
 };
+const LOCAL_LISTS_TITLE = "הרשימות שלי";
 
 function getCategoryForTopic(topicName, record = {}) {
   return HubAdapter.inferCategory(topicName, record);
@@ -380,9 +381,42 @@ class HubManager {
       return;
     }
 
-    const tree = HubAdapter.buildTree(this.selectedLang, {
+    const hubTree = HubAdapter.buildTree(this.selectedLang, {
       gameId: this.selectedGame,
+      preferManagedCopies: false,
+      includeManagedHubCopies: false,
+      sourceScope: "hub",
     });
+    const localTree = HubAdapter.buildTree(this.selectedLang, {
+      gameId: this.selectedGame,
+      sourceScope: "local",
+    });
+    const tree = {};
+
+    if (hubTree[HubAdapter.getRootTitle()]) {
+      tree[HubAdapter.getRootTitle()] = hubTree[HubAdapter.getRootTitle()];
+    }
+
+    if (localTree[HubAdapter.getRootTitle()]) {
+      tree[LOCAL_LISTS_TITLE] = localTree[HubAdapter.getRootTitle()];
+    }
+
+    const availableTopics = flattenTopicTree(tree);
+    const selectedStillVisible =
+      this.selectedTopic &&
+      availableTopics.some((topic) => {
+        if (this.selectedTopic.source === "hub" && topic.source === "hub") {
+          return topic.path === this.selectedTopic.path;
+        }
+
+        return topic.id === this.selectedTopic.id;
+      });
+
+    if (!selectedStillVisible) {
+      this.selectedTopic = null;
+      this.dom.startButton.disabled = true;
+      this.dom.startButton.textContent = "Select a topic first";
+    }
 
     this.dom.topicPanel.hidden = false;
     this.dom.topicTree.innerHTML = "";
@@ -438,47 +472,12 @@ class HubManager {
   }
 
   async prepareTopicForLaunch(gameId, topicMeta) {
-    const topicName = topicMeta.topicName || HubAdapter.normalizeTopicName(topicMeta.topic);
-    const category = topicMeta.category || getCategoryForTopic(topicName, topicMeta);
-    const allowedGames = topicMeta.allowedGames || getAllowedGamesForTopic(topicName, topicMeta);
-
     if (topicMeta.source === "hub") {
-      const localCopy = Storage.findLibraryTopicByOrigin(topicMeta.path);
-
-      if (localCopy) {
-        return {
-          topicMeta: {
-            ...localCopy,
-            localId: localCopy.id,
-          },
-          data: localCopy.rows,
-        };
-      }
-
       const rows = await HubAdapter.loadTopic(topicMeta);
-      const localizedName = this.createUniqueTopicName(
-        topicMeta.name,
-        topicMeta.lang,
-        topicName,
-      );
-      const localTopic = HubAdapter.ensureLocalTopic(
-        {
-          ...topicMeta,
-          name: localizedName,
-        },
-        rows,
-        {
-          category,
-          allowedGames,
-        },
-      );
 
       return {
-        topicMeta: {
-          ...localTopic,
-          localId: localTopic.id,
-        },
-        data: localTopic.rows,
+        topicMeta,
+        data: rows,
       };
     }
 
@@ -783,6 +782,8 @@ class HubManager {
       onEdit: (rowId) => this.editLibraryRow(rowId),
       onDelete: (rowId) => this.deleteLibraryRow(rowId),
     });
+
+    this.dom.deleteLibraryTopicButton.hidden = topic.source === "hub";
   }
 
   addLibraryRow() {
