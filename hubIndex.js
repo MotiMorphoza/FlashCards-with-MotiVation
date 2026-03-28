@@ -15,6 +15,10 @@ window.HUB_INDEX = {
       "title": "Spanish -> Hebrew"
     },
     {
+      "id": "he-en",
+      "title": "Hebrew -> English"
+    },
+    {
       "id": "he-pl",
       "title": "Hebrew -> Polish"
     }
@@ -53,6 +57,9 @@ window.HUB_INDEX = {
         ],
         "es-he": [
           "daily000.csv"
+        ],
+        "he-en": [
+          "TEST.csv"
         ],
         "he-pl": [
           "daily000.csv"
