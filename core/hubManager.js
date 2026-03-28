@@ -114,6 +114,7 @@ class HubManager {
       game: document.getElementById("screen-game"),
       stats: document.getElementById("screen-stats"),
       contact: document.getElementById("screen-contact"),
+      topbarControls: document.getElementById("topbarControls"),
       openHomeTopButton: document.getElementById("openHomeTopButton"),
       languageSelect: document.getElementById("languageSelect"),
       gameButtons: [...document.querySelectorAll("[data-game]")],
@@ -284,7 +285,11 @@ class HubManager {
 
   updateTopbarState(screenName = this.router.currentScreen) {
     const showHomeButton = screenName !== "home" && screenName !== "libraryEditor";
+    const showAudioButtons = screenName === "game";
     this.dom.openHomeTopButton.hidden = !showHomeButton;
+    this.dom.toggleSound.hidden = !showAudioButtons;
+    this.dom.toggleSpeech.hidden = !showAudioButtons;
+    this.dom.topbarControls.hidden = !showHomeButton && !showAudioButtons;
   }
 
   handleStorageFailure(message) {

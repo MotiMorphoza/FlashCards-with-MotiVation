@@ -15,6 +15,11 @@ export function renderAccordionTree(tree, options = {}) {
     const accordion = document.createElement("section");
     accordion.className = "accordion";
     accordion.classList.toggle("open", openFirstRoot && branchIndex === 0);
+    accordion.classList.add(
+      branchName.trim().toLowerCase() === "my lists"
+        ? "accordion--mine"
+        : "accordion--hub",
+    );
 
     const header = document.createElement("button");
     header.type = "button";

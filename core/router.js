@@ -32,6 +32,9 @@ export class Router {
     }
 
     this.currentScreen = name;
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     EventBus.emit("route:change", { name });
 
     return true;

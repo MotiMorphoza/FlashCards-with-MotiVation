@@ -22,7 +22,7 @@ Home renders bundled HUB content under `Choose a topic` and local editable conte
 
 ### Home navigation is now centralized in the top bar
 
-The shell now uses one shared `Home` button near `Sound` and `Speech` instead of repeating `Home` buttons on most screens. The Library editor remains the one screen that stays library-scoped.
+The shell now uses one shared `Home` button near `Sound` and `Speech` instead of repeating `Home` buttons on most screens. The Library editor remains the one screen that stays library-scoped, and `Sound` / `Speech` are now shown only on game screens.
 
 ### The start button now sits below the accordion
 
@@ -127,6 +127,14 @@ The shell now uses smaller side margins on narrow screens, form controls expand 
 ### The shared top bar now stacks `Home` above `Sound` and `Speech` on narrow screens
 
 If the top controls cannot sit comfortably on one row, the `Home` button moves to a centered row above the other two instead of forcing awkward wrapping.
+
+### Home action buttons and key mobile action rows are tighter again
+
+On narrow screens, the Home shortcuts, list creation actions, list editor actions, and stats summary row now stay denser and closer to single-row layouts where requested instead of expanding into oversized stacked controls.
+
+### The Home game cards now show titles only
+
+The game chooser no longer shows the old descriptive subtitles under each game title, while preserving the card footprint and giving the game names a larger font.
 
 ### Word Match and Word Puzzle mobile wrapping is less fragile
 

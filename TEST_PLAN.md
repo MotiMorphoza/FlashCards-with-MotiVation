@@ -11,6 +11,7 @@
   - `Choose a topic` for bundled HUB content
   - `My lists` for local editable content
 - verify the shared top-bar `Home` button appears on non-editor screens only
+- verify `Sound` and `Speech` appear only on the game screen
 - verify sentence content appears for Word Puzzle only
 - verify non-sentence topics appear for Flash Cards and Word Match
 
@@ -67,9 +68,15 @@
 - verify mobile buttons shrink to fit their text instead of keeping oversized fixed widths
 - verify nearby stacked button groups use a consistent local width instead of mismatched button lengths
 - verify the shared top-bar puts `Home` above `Sound` and `Speech` when one row is too tight
+- verify Home / Statistics / Contact stay on one row on phone
 - verify Library create controls fill the width cleanly and do not overflow
+- verify `Create list` and `Import list` stay on one row on phone
 - verify Library action buttons stack into comfortable tap targets
+- verify list game buttons stay on one row on phone
 - verify the editor modal flows stay usable above the mobile keyboard
+- verify modal action buttons no longer stretch to full width on phone
+- verify Add row / Rename stay on one row in the editor on phone
+- verify list row text is much larger in the editor on phone
 - verify Flash Cards text stays readable on short and long items
 - verify Word Match keeps usable tap targets and remains in two columns on phone
 - verify Word Puzzle tokens wrap cleanly for long sentences without forcing horizontal scrolling
@@ -97,4 +104,5 @@
 ## Statistics
 
 - verify the top stat tiles show `Sessions`, `Study time`, and `Accuracy`
+- verify the three top stat tiles stay on one row on phone
 - verify the `Hard lists` section updates correctly

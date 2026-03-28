@@ -272,6 +272,8 @@ select optgroup {
   display: grid;
   gap: 6px;
   width: 100%;
+  min-height: 116px;
+  align-content: center;
   text-align: center;
   padding: 14px 16px;
   border-radius: var(--radius-md);
@@ -300,7 +302,7 @@ select optgroup {
 }
 
 .choice-card__title {
-  font-size: 1.05rem;
+  font-size: 1.32rem;
   font-weight: 800;
 }
 
@@ -350,6 +352,11 @@ select optgroup {
 .button-ghost {
   background: linear-gradient(180deg, #e0e0e0, #cfcfcf);
   color: #222222;
+}
+
+.button-violet {
+  background: linear-gradient(180deg, var(--lavender), var(--lavender-strong));
+  color: #2e1065;
 }
 
 .button-small {
@@ -406,6 +413,11 @@ select optgroup {
   background: linear-gradient(180deg, var(--blue), var(--blue-strong));
   color: var(--blue-deep);
   box-shadow: none;
+}
+
+.accordion--mine .accordion__header {
+  background: linear-gradient(180deg, var(--amber), var(--sunset-strong));
+  color: #4a1d00;
 }
 
 .accordion__content {
@@ -866,6 +878,11 @@ select optgroup {
   line-height: 1.4;
 }
 
+.library-row-card__source,
+.library-row-card__target {
+  margin: 0;
+}
+
 .library-topic-card__name {
   color: var(--amber);
   font-size: 1.08rem;
@@ -1102,6 +1119,15 @@ select optgroup {
   gap: 10px;
 }
 
+#screen-library .panel:first-child .field-label:not(:first-of-type) {
+  margin-top: 16px;
+}
+
+#screen-library .panel:first-child select,
+#screen-library .panel:first-child input {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 900px) {
   body {
     font-size: 16px;
@@ -1141,9 +1167,13 @@ select optgroup {
   }
 
   .results-grid,
-  .stats-grid,
   .choice-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .match-board {
@@ -1167,7 +1197,6 @@ select optgroup {
 
   .home-actions,
   .button-row,
-  .library-topic-card__main-actions,
   .library-row-card__actions {
     display: grid;
     grid-template-columns: max-content;
@@ -1176,10 +1205,22 @@ select optgroup {
     width: 100%;
   }
 
+  .home-actions {
+    grid-template-columns: repeat(3, max-content);
+    gap: 6px;
+  }
+
+  .library-topic-card__main-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+  }
+
   .toggle-row > .icon-button,
   .home-actions > .button,
   .button-row > .button,
-  .library-topic-card__main-actions > .button,
   .library-topic-card__delete > .button,
   .library-row-card__actions > .button,
   #startTopicButton,
@@ -1191,9 +1232,26 @@ select optgroup {
   }
 
   .toggle-row > .icon-button {
-    min-inline-size: 8rem;
+    min-inline-size: 8.35rem;
+  }
+
+  .home-actions > .button,
+  .library-topic-card__main-actions > .button {
     width: auto;
     inline-size: auto;
+    min-inline-size: 0;
+  }
+
+  .home-actions > .button {
+    padding: 8px 10px;
+    font-size: 0.92rem;
+  }
+
+  .library-topic-card__main-actions > .button,
+  .library-topic-card__delete > .button,
+  .library-row-card__actions > .button {
+    padding: 7px 9px;
+    font-size: 0.82rem;
   }
 
   .library-topic-card__actions {
@@ -1206,6 +1264,8 @@ select optgroup {
 
   .library-topic-card__delete > .button {
     align-self: center;
+    width: auto;
+    inline-size: auto;
   }
 
   .topic-tree,
@@ -1245,6 +1305,20 @@ select optgroup {
   .metric-pill {
     padding: 8px 12px;
     font-size: 0.95rem;
+  }
+
+  .stat-tile {
+    padding: 10px 8px;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .stat-tile strong {
+    font-size: 1rem;
+  }
+
+  .stat-tile span {
+    font-size: 0.72rem;
   }
 
   .flash-panel {
@@ -1303,11 +1377,34 @@ select optgroup {
   }
 
   .app-modal__actions {
-    flex-direction: column-reverse;
+    flex-direction: row;
+    justify-content: center;
   }
 
   .app-modal__actions .button {
-    width: 100%;
+    width: auto;
+    inline-size: auto;
     min-inline-size: 0;
+  }
+
+  #screen-library .panel:first-child .button-row {
+    grid-template-columns: repeat(2, max-content);
+    gap: 8px;
+  }
+
+  .library-editor-actions {
+    grid-template-columns: repeat(2, max-content);
+    gap: 8px;
+  }
+
+  .library-editor-export {
+    grid-template-columns: repeat(2, max-content);
+    gap: 8px;
+  }
+
+  .library-row-card__source,
+  .library-row-card__target {
+    font-size: clamp(1.85rem, 7vw, 2.8rem);
+    line-height: 1.15;
   }
 }

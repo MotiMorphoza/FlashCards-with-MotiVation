@@ -21,7 +21,7 @@
           <p class="eyebrow">Language Game Platform</p>
           <h1>ONE SOURCE</h1>
         </div>
-        <div class="toggle-row">
+        <div class="toggle-row" id="topbarControls">
           <button type="button" class="icon-button icon-button--home" id="openHomeTopButton" hidden>Home</button>
           <button type="button" class="icon-button icon-button--sound" id="toggleSound">Sound on</button>
           <button type="button" class="icon-button icon-button--speech" id="toggleSpeech">Speech on</button>
@@ -44,17 +44,14 @@
             <div class="choice-grid">
               <button type="button" class="choice-card" data-game="flashcards">
                 <span class="choice-card__title">Flash Cards</span>
-                <span class="choice-card__description">Classic repetition and direction switching.</span>
               </button>
 
               <button type="button" class="choice-card" data-game="wordmatch">
                 <span class="choice-card__title">Word Match</span>
-                <span class="choice-card__description">Fast pairing of source words and translations.</span>
               </button>
 
               <button type="button" class="choice-card" data-game="wordpuzzle">
                 <span class="choice-card__title">Word Puzzle</span>
-                <span class="choice-card__description">Build full sentences from shuffled tokens.</span>
               </button>
             </div>
           </section>
@@ -114,7 +111,7 @@
               <div class="section-header">
                 <div>
                   <h2>Lists</h2>
-                  <p class="support-text">Lists you start, create, edit, or import will appear under the My lists category.</p>
+                  <p class="support-text">Lists you open, create, edit, or import will appear under the My lists category.</p>
                 </div>
               </div>
 
@@ -135,7 +132,7 @@
               <button type="button" class="button button-success" id="addLibraryRowButton">
                 Add row
               </button>
-              <button type="button" class="button button-secondary" id="renameLibraryTopicButton">
+              <button type="button" class="button button-violet" id="renameLibraryTopicButton">
                 Rename
               </button>
             </div>
