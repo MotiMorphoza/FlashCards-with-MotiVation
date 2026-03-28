@@ -569,6 +569,7 @@ select optgroup {
 .match-column {
   display: grid;
   gap: 10px;
+  min-width: 0;
 }
 
 .match-card {
@@ -1275,11 +1276,5 @@ select optgroup {
   .app-modal__actions .button {
     width: 100%;
     min-inline-size: 0;
-  }
-}
-
-@media (max-width: 560px) {
-  .match-board {
-    grid-template-columns: 1fr;
   }
 }

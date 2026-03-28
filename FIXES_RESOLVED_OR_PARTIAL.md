@@ -104,6 +104,10 @@ The shell now uses smaller side margins on narrow screens, form controls expand 
 
 Word Match now keeps its two-column structure longer before collapsing, and long match/token text can wrap instead of forcing awkward overflow.
 
+### Word Match no longer collapses into one long column on phone
+
+The mobile CSS now preserves the left/right board layout instead of forcing the entire match board into a single vertical stack.
+
 ### Word Match wrong attempts now keep the real pair identity more reliably
 
 The mismatch path now carries the underlying pair object forward, which reduces fallback timestamp-only hard-mark records.

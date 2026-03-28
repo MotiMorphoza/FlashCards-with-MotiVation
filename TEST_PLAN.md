@@ -67,7 +67,7 @@
 - verify Library action buttons stack into comfortable tap targets
 - verify the editor modal flows stay usable above the mobile keyboard
 - verify Flash Cards text stays readable on short and long items
-- verify Word Match keeps usable tap targets and only collapses to one column on very narrow widths
+- verify Word Match keeps usable tap targets and remains in two columns on phone
 - verify Word Puzzle tokens wrap cleanly for long sentences without forcing horizontal scrolling
 - verify reopening the installed PWA on mobile still picks up the current shell after an update
 - verify iPhone-style safe areas do not crop the top or bottom UI when opened as a standalone app
