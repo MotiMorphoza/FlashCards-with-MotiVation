@@ -152,6 +152,10 @@ Word and sentence rows in the editor now render as a single line with a dash bet
 
 List paths now keep the topic segment muted while the list name itself stands out more clearly with a deeper purple accent, including the editor path.
 
+### Library paths now end with the highlighted list name
+
+The visible path order now keeps the highlighted name segment at the end of the path instead of showing the topic/name pair in the wrong order.
+
 ### Library editor buttons are shorter and cleaner on phone
 
 The editor now uses `Export` and `Back`, and nearby editor/list-card button groups keep a more even shared width on mobile.

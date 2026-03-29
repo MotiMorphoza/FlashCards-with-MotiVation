@@ -81,6 +81,7 @@
 - verify the mobile game / edit / delete buttons on Library list cards stay the same size and feel slightly larger without affecting other buttons
 - verify the Library editor uses `Export` and `Back` instead of `Export CSV` and `Back to library`
 - verify nearby button groups in the Library editor and list cards keep a uniform size within each group
+- verify the path order ends with the highlighted list name instead of the topic name
 - verify row-level `Edit` / `Delete` buttons stay on one row on phone
 - verify row-level `Edit` / `Delete` buttons use the same size and feel slightly larger
 - verify each library row shows source and target on one line with a dash between them
