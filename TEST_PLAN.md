@@ -55,6 +55,7 @@
 - verify Flash Cards desktop actions also render as two equal-width rectangular pairs
 - verify selected topics use the same wine-purple accent family as the highlighted list-name path segment
 - verify the `Choose a topic` root header uses the new deep vivid purple accent
+- verify choosing a game leaves both accordion roots closed by default until the user opens one
 - start a `hub-cache` list from Library in Word Match and verify it no longer fails with `topicMeta is null`
 - verify Word Puzzle no longer shows the extra instruction sentence and that the translation text is larger
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`

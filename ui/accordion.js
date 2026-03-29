@@ -2,7 +2,7 @@ export function renderAccordionTree(tree, options = {}) {
   const {
     onSelect = () => {},
     selectedId = null,
-    openFirstRoot = true,
+    openFirstRoot = false,
     openBranchName = "",
   } = options;
   const fragment = document.createDocumentFragment();
@@ -21,10 +21,9 @@ export function renderAccordionTree(tree, options = {}) {
     accordion.className = "accordion";
     accordion.classList.toggle(
       "open",
-      openFirstRoot && (
-        (openBranchName && branchName === openBranchName) ||
-        (!openBranchName && branchIndex === 0)
-      ),
+      openBranchName
+        ? branchName === openBranchName
+        : openFirstRoot && branchIndex === 0,
     );
     accordion.classList.add(
       branchName.trim().toLowerCase() === "my lists"

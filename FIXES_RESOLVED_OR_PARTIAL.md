@@ -216,6 +216,10 @@ The selected topic state in the accordion now matches the same wine-purple famil
 
 The `Choose a topic` accordion header now uses a darker, more saturated purple gradient so it stands apart more clearly from the local `My lists` root.
 
+### Topic roots now stay collapsed by default after game selection
+
+Choosing a game no longer auto-opens the bundled HUB accordion by default; topic roots stay closed unless the user explicitly opens one or a specific root is already being preserved as open.
+
 ### Starting a Library list no longer loses the topic before launch
 
 Library start now keeps a stable copy of the selected topic while the Home tree rerenders, so `hub-cache` items do not get nulled out and fail with `topicMeta is null` when starting a game such as Word Match.
