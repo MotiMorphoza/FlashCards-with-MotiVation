@@ -54,6 +54,7 @@
 - verify the Flash Cards `I knew it` button uses the lavender action color
 - verify Flash Cards desktop actions also render as two equal-width rectangular pairs
 - verify selected topics use the same wine-purple accent family as the highlighted list-name path segment
+- start a `hub-cache` list from Library in Word Match and verify it no longer fails with `topicMeta is null`
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`
 
 ## Hard Lists

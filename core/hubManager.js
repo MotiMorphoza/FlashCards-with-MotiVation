@@ -1165,10 +1165,11 @@ class HubManager {
 
     this.selectedLang = topic.lang;
     this.selectedGame = gameId;
-    this.selectedTopic = {
+    const launchTopic = {
       ...topic,
       localId: topic.source === "hub" ? null : topic.id,
     };
+    this.selectedTopic = launchTopic;
     this.dom.languageSelect.value = topic.lang;
     this.dom.gameButtons.forEach((button) => {
       button.classList.toggle("is-selected", button.dataset.game === gameId);
@@ -1176,7 +1177,7 @@ class HubManager {
     this.renderTopicTree();
 
     try {
-      await this.launchGame(gameId, this.selectedTopic);
+      await this.launchGame(gameId, launchTopic);
     } catch (error) {
       Modal.error(`Could not start the session: ${error.message}`);
     }

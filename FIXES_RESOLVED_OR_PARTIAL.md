@@ -212,6 +212,10 @@ The same two Flash Cards action rows now render as equal-width rectangular pairs
 
 The selected topic state in the accordion now matches the same wine-purple family used for the highlighted list name in Library paths, instead of using a separate lavender accent.
 
+### Starting a Library list no longer loses the topic before launch
+
+Library start now keeps a stable copy of the selected topic while the Home tree rerenders, so `hub-cache` items do not get nulled out and fail with `topicMeta is null` when starting a game such as Word Match.
+
 ### Library and row-level `Edit` buttons now use a blue action style
 
 `Edit` is now visually separated from neutral gray actions by a dedicated blue button style in list cards and row actions.
