@@ -184,6 +184,10 @@ The Library and Library Editor now use flexible two-column mobile button grids i
 
 The Library mobile fix was tightened so the key button groups keep their stable `max-content` layout again, while the screen itself clips horizontal overflow and long path text can wrap instead of pushing the whole view sideways.
 
+### Global mobile shell overflow is now stricter for Firefox-style layout parsing
+
+The document root now blocks horizontal overflow, and the mobile shell width uses an explicit `calc()` inside `min(...)` so Firefox mobile does not misparse the shell width and create side-to-side scrolling across the whole app.
+
 ### Contact title now stays on two lines again
 
 The Contact header is now rendered as two explicit lines, `Hebrew` and `With Moti Vation`, so it no longer depends on natural wrapping and remains stable on mobile.
