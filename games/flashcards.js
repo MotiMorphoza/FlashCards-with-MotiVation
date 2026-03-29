@@ -57,12 +57,12 @@ export class FlashCardsGame extends GameInterface {
           <p class="support-text">Tap the card to flip it.</p>
         </div>
 
-        <div class="button-row">
+        <div class="button-row flash-actions">
           <button type="button" class="button button-success" id="flashKnown">I knew it</button>
           <button type="button" class="button button-danger" id="flashUnknown">Another round</button>
         </div>
 
-        <div class="button-row">
+        <div class="button-row flash-actions">
           <button type="button" class="button button-forest" id="flashShuffle">Shuffle</button>
           <button type="button" class="button button-secondary" id="flashDirection">Flip direction</button>
         </div>

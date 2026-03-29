@@ -196,6 +196,10 @@ The extra explanatory line above the Word Match board has been removed, leaving 
 
 The rename flow no longer shows the extra `Rename this list.` message, and the main mobile button groups now use equal-width layouts so nearby controls sit on cleaner shared rows instead of drifting or protruding sideways.
 
+### Flash Cards mobile actions now stay in two even rectangular rows
+
+The two Flash Cards action rows now use a dedicated mobile grid so `I knew it` / `Another round` and `Shuffle` / `Flip direction` stay the same size, form clear rectangular pairs, and do not drift off the screen.
+
 ### Contact title now stays on two lines again
 
 The Contact header is now rendered as two explicit lines, `Hebrew` and `With Moti Vation`, so it no longer depends on natural wrapping and remains stable on mobile.
