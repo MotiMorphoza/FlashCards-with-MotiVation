@@ -44,6 +44,11 @@
 - verify the Library screen opens on mobile without horizontal side-to-side scrolling
 - verify the Library mobile fix does not collapse or overlap its internal sections while removing horizontal scrolling
 - verify Firefox mobile does not show side-to-side scrolling on Home, Library, Editor, Stats, Contact, or Games
+- verify Word Match no longer shows the extra instruction sentence above the board
+- verify the Rename modal shows no helper sentence under the title
+- verify the mobile top-bar buttons stay aligned and within the viewport
+- verify Library card game buttons and `Edit` / `Delete` align cleanly without protruding sideways
+- verify editor action groups (`Add row / Rename`, `Export / Back`) align as equal-width pairs on mobile
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`
 
 ## Hard Lists

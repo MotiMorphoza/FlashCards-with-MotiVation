@@ -48,7 +48,6 @@ export class WordMatchGame extends GameInterface {
         </header>
 
         <div class="panel">
-          <p class="support-text match-instructions">Match the words on the left with their translations on the right.</p>
           <div class="match-board" id="matchBoard"></div>
         </div>
       </section>

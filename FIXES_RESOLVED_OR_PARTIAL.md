@@ -188,6 +188,14 @@ The Library mobile fix was tightened so the key button groups keep their stable 
 
 The document root now blocks horizontal overflow, and the mobile shell width uses an explicit `calc()` inside `min(...)` so Firefox mobile does not misparse the shell width and create side-to-side scrolling across the whole app.
 
+### Word Match no longer shows the extra instruction sentence
+
+The extra explanatory line above the Word Match board has been removed, leaving the game header and board closer together.
+
+### Rename modal and mobile button groups are tighter and more aligned
+
+The rename flow no longer shows the extra `Rename this list.` message, and the main mobile button groups now use equal-width layouts so nearby controls sit on cleaner shared rows instead of drifting or protruding sideways.
+
 ### Contact title now stays on two lines again
 
 The Contact header is now rendered as two explicit lines, `Hebrew` and `With Moti Vation`, so it no longer depends on natural wrapping and remains stable on mobile.

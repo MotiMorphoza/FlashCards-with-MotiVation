@@ -1205,10 +1205,12 @@ body.app-booting .app-shell {
 
   .toggle-row {
     display: grid;
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: center;
     justify-items: center;
     gap: 8px;
+    width: min(100%, 21rem);
+    margin-inline: auto;
   }
 
   #openHomeTopButton:not([hidden]) {
@@ -1278,20 +1280,12 @@ body.app-booting .app-shell {
   .library-topic-card__games,
   .library-topic-card__manage,
   .library-row-card__actions {
-    display: grid;
-    justify-content: center;
-    justify-items: stretch;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-wrap: nowrap;
     gap: 6px;
     width: 100%;
-  }
-
-  .library-topic-card__games {
-    grid-template-columns: repeat(3, max-content);
-  }
-
-  .library-topic-card__manage,
-  .library-row-card__actions {
-    grid-template-columns: repeat(2, max-content);
   }
 
   .toggle-row > .icon-button,
@@ -1307,14 +1301,16 @@ body.app-booting .app-shell {
   }
 
   .toggle-row > .icon-button {
-    min-inline-size: 8.35rem;
+    min-inline-size: 0;
+    width: 100%;
+    inline-size: 100%;
   }
 
   .home-actions > .button,
   .library-topic-card__games > .button,
   .library-topic-card__manage > .button {
-    width: auto;
-    inline-size: auto;
+    width: 100%;
+    inline-size: 100%;
     min-inline-size: 0;
   }
 
@@ -1328,16 +1324,17 @@ body.app-booting .app-shell {
   .library-topic-card__games > .button,
   .library-topic-card__manage > .button,
   .library-row-card__actions > .button {
+    flex: 1 1 0;
     padding: 8px 12px;
     font-size: 0.9rem;
-    min-inline-size: 6.5rem;
+    min-inline-size: 0;
   }
 
   .library-topic-card__games > .button,
   .library-topic-card__manage > .button {
     padding: 8px 13px;
     font-size: 0.95rem;
-    min-inline-size: 7.25rem;
+    min-inline-size: 0;
   }
 
   .library-editor-actions > .button,
@@ -1348,7 +1345,7 @@ body.app-booting .app-shell {
   }
 
   .library-topic-card__actions {
-    justify-content: center;
+    justify-items: stretch;
   }
 
   .topic-tree,
@@ -1462,27 +1459,40 @@ body.app-booting .app-shell {
   .app-modal__actions {
     flex-direction: row;
     justify-content: center;
+    flex-wrap: nowrap;
   }
 
   .app-modal__actions .button {
-    width: auto;
-    inline-size: auto;
-    min-inline-size: 8.5rem;
+    width: 100%;
+    inline-size: 100%;
+    min-inline-size: 0;
+    flex: 1 1 0;
   }
 
   #screen-library .panel:first-child .button-row {
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+    justify-items: stretch;
   }
 
   .library-editor-actions {
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+    justify-items: stretch;
   }
 
   .library-editor-export {
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+    justify-items: stretch;
+  }
+
+  #screen-library .panel:first-child .button-row > .button,
+  .library-editor-actions > .button,
+  .library-editor-export > .button {
+    width: 100%;
+    inline-size: 100%;
+    min-inline-size: 0;
   }
 
   .library-row-card__line {

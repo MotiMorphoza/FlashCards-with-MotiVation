@@ -1019,7 +1019,7 @@ class HubManager {
       return;
     }
 
-    const nextName = await Modal.prompt("Rename this list.", topic.name, {
+    const nextName = await Modal.prompt("", topic.name, {
       title: "Rename list",
       label: "List name",
       confirmLabel: "Save name",
