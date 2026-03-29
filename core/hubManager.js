@@ -1022,7 +1022,7 @@ class HubManager {
     const nextName = await Modal.prompt("", topic.name, {
       title: "Rename list",
       label: "List name",
-      confirmLabel: "Save name",
+      confirmLabel: "Save",
       placeholder: "List name",
       validate: (values) => (
         !normalizeWhitespace(values.value) ? "List name is required." : ""
