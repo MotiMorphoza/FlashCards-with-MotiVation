@@ -418,8 +418,8 @@ select optgroup {
   padding: 9px 12px;
   text-align: center;
   font-weight: 700;
-  background: linear-gradient(180deg, var(--blue), var(--blue-strong));
-  color: var(--blue-deep);
+  background: linear-gradient(180deg, #6d28d9, #4c1d95);
+  color: #f5f3ff;
   box-shadow: none;
 }
 
