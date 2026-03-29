@@ -52,6 +52,8 @@
 - verify Flash Cards mobile actions render as two equal-width button pairs instead of one long vertical column
 - verify `Edit` buttons in Library cards and row actions use the blue action style
 - verify the Flash Cards `I knew it` button uses the lavender action color
+- verify Flash Cards desktop actions also render as two equal-width rectangular pairs
+- verify selected topics use the same wine-purple accent family as the highlighted list-name path segment
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`
 
 ## Hard Lists

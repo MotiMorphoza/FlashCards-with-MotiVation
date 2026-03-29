@@ -204,6 +204,14 @@ The two Flash Cards action rows now use a dedicated mobile grid so `I knew it` /
 
 The positive answer button in Flash Cards now uses the lavender action style instead of the green success style.
 
+### Flash Cards desktop actions now use the same rectangular pairing
+
+The same two Flash Cards action rows now render as equal-width rectangular pairs on desktop as well, instead of falling back to a narrow single-column stack.
+
+### Selected topics now use the same wine-purple accent as the list-name highlight
+
+The selected topic state in the accordion now matches the same wine-purple family used for the highlighted list name in Library paths, instead of using a separate lavender accent.
+
 ### Library and row-level `Edit` buttons now use a blue action style
 
 `Edit` is now visually separated from neutral gray actions by a dedicated blue button style in list cards and row actions.

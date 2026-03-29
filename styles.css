@@ -483,9 +483,9 @@ select optgroup {
 }
 
 .topic-button.is-selected {
-  background: linear-gradient(180deg, var(--lavender), var(--lavender-strong));
-  color: #2e1065;
-  outline: 2px solid rgba(216, 180, 254, 0.9);
+  background: linear-gradient(180deg, #f3d7e8, #d9a6c3);
+  color: #7c1f59;
+  outline: 2px solid rgba(124, 31, 89, 0.35);
   outline-offset: 1px;
 }
 
@@ -586,6 +586,10 @@ select optgroup {
 .flash-actions {
   width: min(100%, 22rem);
   margin-inline: auto;
+}
+
+.flash-actions > .button {
+  flex: 1 1 0;
 }
 
 .library-editor-actions {
@@ -756,6 +760,21 @@ select optgroup {
   .button-row {
     gap: 8px;
     margin-top: 10px;
+  }
+
+  .flash-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: stretch;
+    gap: 10px;
+    width: min(100%, 28rem);
+  }
+
+  .flash-actions > .button {
+    width: 100%;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-height: 3.2rem;
   }
 
   .flash-panel {
