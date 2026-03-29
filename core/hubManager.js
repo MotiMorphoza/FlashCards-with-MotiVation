@@ -872,7 +872,7 @@ class HubManager {
     const rowValues = await Modal.form({
       title: topic.category === "sentences" ? "Add sentence" : "Add row",
       message: "Add a new source and translation pair.",
-      confirmLabel: "Save row",
+      confirmLabel: "Save",
       fields: [
         {
           id: "source",
