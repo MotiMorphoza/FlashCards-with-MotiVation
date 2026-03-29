@@ -655,6 +655,13 @@ select optgroup {
   letter-spacing: 0.08em;
 }
 
+#puzzleTranslation {
+  margin: 0;
+  font-size: clamp(1.3rem, 3.2vw, 1.8rem);
+  line-height: 1.45;
+  font-weight: 600;
+}
+
 .token-zone {
   min-height: 90px;
   display: flex;
@@ -1463,6 +1470,10 @@ body.app-booting .app-shell {
 
   .translation-card {
     padding: 12px;
+  }
+
+  #puzzleTranslation {
+    font-size: clamp(1.2rem, 5vw, 1.55rem);
   }
 
   .token-zone {

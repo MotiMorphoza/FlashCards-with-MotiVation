@@ -47,7 +47,6 @@ export class WordPuzzleGame extends GameInterface {
         </header>
 
         <div class="panel">
-          <p class="support-text">Rebuild the source sentence from the word bank.</p>
           <div class="translation-card">
             <span class="translation-label">Translation</span>
             <p id="puzzleTranslation"></p>
