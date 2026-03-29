@@ -878,6 +878,8 @@ select optgroup {
   gap: 0.35rem;
   direction: ltr;
   unicode-bidi: isolate;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .library-path__lang,
@@ -909,6 +911,8 @@ select optgroup {
   gap: 0.35rem;
   direction: ltr;
   unicode-bidi: isolate;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .library-row-card__line {
@@ -1240,6 +1244,12 @@ body.app-booting .app-shell {
     min-width: 0;
   }
 
+  #screen-library,
+  #screen-library-editor,
+  .library-layout {
+    overflow-x: clip;
+  }
+
   .button,
   .button-small,
   .icon-button {
@@ -1272,12 +1282,12 @@ body.app-booting .app-shell {
   }
 
   .library-topic-card__games {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, max-content);
   }
 
   .library-topic-card__manage,
   .library-row-card__actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, max-content);
   }
 
   .toggle-row > .icon-button,
@@ -1457,17 +1467,17 @@ body.app-booting .app-shell {
   }
 
   #screen-library .panel:first-child .button-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, max-content);
     gap: 8px;
   }
 
   .library-editor-actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, max-content);
     gap: 8px;
   }
 
   .library-editor-export {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, max-content);
     gap: 8px;
   }
 

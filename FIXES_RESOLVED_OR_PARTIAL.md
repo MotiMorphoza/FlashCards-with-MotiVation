@@ -180,6 +180,10 @@ The document starts in a short `app-booting` state and only reveals the shell af
 
 The Library and Library Editor now use flexible two-column mobile button grids instead of `max-content` sizing in the key action rows, which prevents the screen from starting with unwanted side-to-side scrolling.
 
+### Mobile Library overflow is now handled without collapsing the layout
+
+The Library mobile fix was tightened so the key button groups keep their stable `max-content` layout again, while the screen itself clips horizontal overflow and long path text can wrap instead of pushing the whole view sideways.
+
 ### Contact title now stays on two lines again
 
 The Contact header is now rendered as two explicit lines, `Hebrew` and `With Moti Vation`, so it no longer depends on natural wrapping and remains stable on mobile.

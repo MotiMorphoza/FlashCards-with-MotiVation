@@ -42,6 +42,7 @@
 - verify row/edit/rename modal actions keep `Save` on the left and `Cancel` on the right
 - verify the Add-row modal uses `Save` and keeps `Save` / `Cancel` at the same width
 - verify the Library screen opens on mobile without horizontal side-to-side scrolling
+- verify the Library mobile fix does not collapse or overlap its internal sections while removing horizontal scrolling
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`
 
 ## Hard Lists
