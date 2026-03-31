@@ -29,11 +29,17 @@ TOPIC_ALIASES = {
     "daily use": "daily use",
     "daily": "daily use",
     "na co dzień": "daily use",
+    "يومي": "daily use",
+    "يَومِيّ": "daily use",
     "grammer": "grammer",
     "grammar": "grammer",
     "gramatyka": "grammer",
+    "قواعد": "grammer",
+    "قَواعِد": "grammer",
     "sentences": "sentences",
     "zdania": "sentences",
+    "جمل": "sentences",
+    "جُمَل": "sentences",
 }
 
 

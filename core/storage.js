@@ -160,6 +160,10 @@ function normalizeTopicName(topicName, fallback = LOCAL_TOPIC_NAME) {
     return "daily";
   }
 
+  if (normalized === "يومي" || normalized === "يَومِيّ") {
+    return "daily";
+  }
+
   if (normalized === "important words") {
     return "misc";
   }
@@ -168,7 +172,15 @@ function normalizeTopicName(topicName, fallback = LOCAL_TOPIC_NAME) {
     return LOCAL_TOPIC_NAME;
   }
 
+  if (normalized === "قواعد" || normalized === "قَواعِد") {
+    return LOCAL_TOPIC_NAME;
+  }
+
   if (normalized === "zdania") {
+    return SENTENCE_TOPIC_NAME;
+  }
+
+  if (normalized === "جمل" || normalized === "جُمَل") {
     return SENTENCE_TOPIC_NAME;
   }
 

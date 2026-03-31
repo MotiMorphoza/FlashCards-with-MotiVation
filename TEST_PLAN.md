@@ -65,6 +65,8 @@
 - verify the Contact title stays on two lines: `Hebrew` and `With Moti Vation`
 - verify localized physical topic folders still resolve correctly, for example `he-en/Daily Use` and `he-pl/Na co dzień`
 - verify only language pairs with real CSV content appear in the Home language selector
+- verify `ar-he` appears as `Arabic -> Hebrew` and loads Arabic folder/file names correctly from the localized physical HUB paths
+- verify `ar-he` rows open in games as `Arabic -> Hebrew` data rather than the older copied Polish content
 
 ## Hard Lists
 

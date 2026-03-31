@@ -32,19 +32,19 @@ window.HUB_INDEX = {
   "entries": [
     {
       "topic": "grammer",
-      "folder": "Gramatyka",
+      "folder": "قَواعِد",
       "folders": {
-        "ar-he": "Gramatyka",
+        "ar-he": "قَواعِد",
         "he-en": "Grammer",
         "he-pl": "Gramatyka"
       },
       "files": {
         "ar-he": [
-          "Mniej więcej A.csv",
-          "Mniej więcej B.csv",
-          "Teraz.csv",
-          "Zrobię.csv",
-          "Zrobiłem.csv"
+          "أَكْتَر أَو أَقَلّ A.csv",
+          "أَكْتَر أَو أَقَلّ B.csv",
+          "دِلْوَقْتي.csv",
+          "عَمِلت.csv",
+          "هَعمَل.csv"
         ],
         "he-en": [
           "I did.csv",
@@ -54,27 +54,27 @@ window.HUB_INDEX = {
           "Now.csv"
         ],
         "he-pl": [
-          "Mniej więcej A.csv",
-          "Mniej więcej B.csv",
+          "Mniej wiÄ™cej A.csv",
+          "Mniej wiÄ™cej B.csv",
           "Teraz.csv",
-          "Zrobię.csv",
-          "Zrobiłem.csv"
+          "ZrobiÄ™.csv",
+          "ZrobiÅ‚em.csv"
         ]
       }
     },
     {
       "topic": "sentences",
-      "folder": "Zdania",
+      "folder": "جُمَل",
       "folders": {
-        "ar-he": "Zdania",
+        "ar-he": "جُمَل",
         "he-en": "Sentences",
         "he-pl": "Zdania"
       },
       "files": {
         "ar-he": [
-          "Głęboka podróż.csv",
-          "Proste.csv",
-          "Wyjechać czy nie.csv"
+          "أَسافِر وِلّا لأ.csv",
+          "بَسيطة.csv",
+          "رِحلِة عَمِيقة.csv"
         ],
         "he-en": [
           "Deep ride.csv",
@@ -82,25 +82,25 @@ window.HUB_INDEX = {
           "To leave or not.csv"
         ],
         "he-pl": [
-          "Głęboka podróż.csv",
+          "GÅ‚Ä™boka podrÃ³Å¼.csv",
           "Proste.csv",
-          "Wyjechać czy nie.csv"
+          "WyjechaÄ‡ czy nie.csv"
         ]
       }
     },
     {
       "topic": "daily use",
-      "folder": "Na co dzień",
+      "folder": "يَومِيّ",
       "folders": {
-        "ar-he": "Na co dzień",
+        "ar-he": "يَومِيّ",
         "he-en": "Daily Use",
-        "he-pl": "Na co dzień"
+        "he-pl": "Na co dzieÅ„"
       },
       "files": {
         "ar-he": [
-          "Biuro.csv",
-          "Podstawy.csv",
-          "W drodze.csv"
+          "أَساسِيّات.csv",
+          "المَكتَب.csv",
+          "في الطَّريق.csv"
         ],
         "he-en": [
           "Basic.csv",

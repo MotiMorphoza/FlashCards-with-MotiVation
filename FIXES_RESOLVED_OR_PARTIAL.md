@@ -24,6 +24,10 @@ The physical `hub/` layout and generated `hubIndex.js` match that simplified top
 
 `scripts/build_hub_index.py` now emits only language pairs that actually contain at least one CSV file, instead of exposing empty placeholder folders in the language selector.
 
+### `ar-he` now exists as a localized Arabic -> Hebrew HUB pair
+
+The bundled HUB now includes an `ar-he` set with Arabic folder names, Arabic file names, and Arabic-to-Hebrew CSV rows instead of copied Polish placeholders.
+
 ### Home now separates bundled HUB and local editable content
 
 Home renders bundled HUB content under `Choose a topic` and local editable content under `My lists`.
