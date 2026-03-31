@@ -29,7 +29,8 @@ window.HUB_INDEX = {
         "he-pl": [
           "I will.csv",
           "More or less A.csv",
-          "More or less B.csv"
+          "More or less B.csv",
+          "Now.csv"
         ]
       }
     },
