@@ -41,8 +41,16 @@ window.HUB_INDEX = {
       "title": "sentences"
     },
     {
+      "id": "daily use",
+      "title": "daily use"
+    },
+    {
       "id": "test",
       "title": "test"
+    },
+    {
+      "id": "xxx",
+      "title": "xxx"
     }
   ],
   "entries": [
@@ -72,10 +80,6 @@ window.HUB_INDEX = {
           "Test (2).csv",
           "Test Misc 01.csv",
           "Test.csv"
-        ],
-        "he-pl": [
-          "Test G1.csv",
-          "Test M2.csv"
         ]
       }
     },
@@ -94,10 +98,6 @@ window.HUB_INDEX = {
         ],
         "he-en": [
           "TEST.csv"
-        ],
-        "he-pl": [
-          "Test G1.csv",
-          "Test M2.csv"
         ]
       }
     },
@@ -117,6 +117,16 @@ window.HUB_INDEX = {
       }
     },
     {
+      "topic": "daily use",
+      "folder": "Daily Use",
+      "files": {
+        "he-pl": [
+          "Test G1.csv",
+          "Test M2.csv"
+        ]
+      }
+    },
+    {
       "topic": "test",
       "folder": "TEST",
       "files": {
@@ -124,6 +134,16 @@ window.HUB_INDEX = {
           "Test (2).csv",
           "Test Misc 01.csv",
           "Test.csv"
+        ]
+      }
+    },
+    {
+      "topic": "xxx",
+      "folder": "XXX",
+      "files": {
+        "he-pl": [
+          "Test G1.csv",
+          "Test M2.csv"
         ]
       }
     }
