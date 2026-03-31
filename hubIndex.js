@@ -42,11 +42,11 @@ window.HUB_INDEX = {
           "Now.csv"
         ],
         "he-pl": [
-          "Mniej wiÄ™cej A.csv",
-          "Mniej wiÄ™cej B.csv",
+          "Mniej więcej A.csv",
+          "Mniej więcej B.csv",
           "Teraz.csv",
-          "ZrobiÄ™.csv",
-          "ZrobiÅ‚em.csv"
+          "Zrobię.csv",
+          "Zrobiłem.csv"
         ]
       }
     },
@@ -64,9 +64,9 @@ window.HUB_INDEX = {
           "To leave or not.csv"
         ],
         "he-pl": [
-          "GÅ‚Ä™boka podrÃ³Å¼.csv",
+          "Głęboka podróż.csv",
           "Proste.csv",
-          "WyjechaÄ‡ czy nie.csv"
+          "Wyjechać czy nie.csv"
         ]
       }
     },
@@ -75,7 +75,7 @@ window.HUB_INDEX = {
       "folder": "Daily Use",
       "folders": {
         "he-en": "Daily Use",
-        "he-pl": "Na co dzieÅ„"
+        "he-pl": "Na co dzień"
       },
       "files": {
         "he-en": [
