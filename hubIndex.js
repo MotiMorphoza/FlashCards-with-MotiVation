@@ -74,9 +74,8 @@ window.HUB_INDEX = {
           "Test.csv"
         ],
         "he-pl": [
-          "Test (2).csv",
-          "Test Misc 01.csv",
-          "Test.csv"
+          "Test G1.csv",
+          "Test M2.csv"
         ]
       }
     },
@@ -97,7 +96,8 @@ window.HUB_INDEX = {
           "TEST.csv"
         ],
         "he-pl": [
-          "Test.csv"
+          "Test G1.csv",
+          "Test M2.csv"
         ]
       }
     },
