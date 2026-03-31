@@ -25,6 +25,10 @@ window.HUB_INDEX = {
   ],
   "topics": [
     {
+      "id": "grammer",
+      "title": "grammer"
+    },
+    {
       "id": "misc",
       "title": "misc"
     },
@@ -35,9 +39,27 @@ window.HUB_INDEX = {
     {
       "id": "sentences",
       "title": "sentences"
+    },
+    {
+      "id": "test",
+      "title": "test"
     }
   ],
   "entries": [
+    {
+      "topic": "grammer",
+      "folder": "Grammer",
+      "files": {
+        "he-en": [
+          "Test G1.csv",
+          "TestG2.csv"
+        ],
+        "he-pl": [
+          "Test G1.csv",
+          "TestG2.csv"
+        ]
+      }
+    },
     {
       "topic": "misc",
       "folder": "misc",
@@ -45,6 +67,16 @@ window.HUB_INDEX = {
         "ar-he": [
           "full_house.csv",
           "political.csv"
+        ],
+        "he-en": [
+          "Test (2).csv",
+          "Test Misc 01.csv",
+          "Test.csv"
+        ],
+        "he-pl": [
+          "Test (2).csv",
+          "Test Misc 01.csv",
+          "Test.csv"
         ]
       }
     },
@@ -56,13 +88,16 @@ window.HUB_INDEX = {
           "daily000.csv"
         ],
         "es-he": [
+          "Test G1.csv",
+          "TEST.csv",
+          "TestG2.csv",
           "daily000.csv"
         ],
         "he-en": [
           "TEST.csv"
         ],
         "he-pl": [
-          "daily000.csv"
+          "Test.csv"
         ]
       }
     },
@@ -78,6 +113,17 @@ window.HUB_INDEX = {
         ],
         "es-he": [
           "000.csv"
+        ]
+      }
+    },
+    {
+      "topic": "test",
+      "folder": "TEST",
+      "files": {
+        "es-he": [
+          "Test (2).csv",
+          "Test Misc 01.csv",
+          "Test.csv"
         ]
       }
     }
