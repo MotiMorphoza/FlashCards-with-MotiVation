@@ -335,12 +335,15 @@ function createSelectControl(options, selectedValue) {
   return select;
 }
 
-function createCheckboxOption(value, labelText, checked = false) {
+function createChoiceOption(value, labelText, inputType = "radio", inputName = "", checked = false) {
   const wrapper = document.createElement("label");
   wrapper.className = "app-modal__chip-option";
 
   const input = document.createElement("input");
-  input.type = "checkbox";
+  input.type = inputType;
+  if (inputName) {
+    input.name = inputName;
+  }
   input.value = value;
   input.checked = checked;
   input.className = "app-modal__chip-input";
@@ -361,7 +364,7 @@ function buildAiPromptText(state) {
     `Source type: ${state.sourceTypeLabel}`,
     `Learning language: ${state.learningLanguage}`,
     `User language: ${state.userLanguage}`,
-    `Output types: ${state.outputTypes.join(", ")}`,
+    `Output type: ${state.outputType}`,
     `Quantity: ${state.quantity} total rows`,
     `Difficulty: ${state.difficulty}`,
   ];
@@ -370,7 +373,7 @@ function buildAiPromptText(state) {
     lines.push(`Text mode: ${state.textModeLabel}`);
   }
 
-  if (state.outputTypes.includes("full sentences")) {
+  if (state.outputType === "full sentences") {
     lines.push(`Sentence length: ${state.sentenceLength}`);
   }
 
@@ -390,8 +393,8 @@ function buildAiPromptText(state) {
     if (state.textMode === "exact-extraction") {
       lines.push(
         "- Use only content explicitly present in the source.",
-        "- Extract words, short phrases, and full sentences directly from the source.",
-        "- Do not invent new sentences.",
+        `- Extract ${state.outputType} directly from the source.`,
+        "- Do not invent new content.",
         "- Do not summarize the source.",
         "- Preserve the source tone, meaning, and colloquial style when useful and study-safe.",
         "- Allow only minimal cleanup for clarity, punctuation, or study safety.",
@@ -400,7 +403,7 @@ function buildAiPromptText(state) {
     } else {
       lines.push(
         "- Stay anchored to the source topic, vocabulary, tone, and meaning.",
-        "- Lightly adapt the source into study-ready units.",
+        `- Lightly adapt the source into study-ready ${state.outputType}.`,
         "- Avoid heavy paraphrase or invention.",
         "- Do not drift into unrelated generic examples.",
         "- Keep the source flavor when possible.",
@@ -411,14 +414,14 @@ function buildAiPromptText(state) {
       "- After this prompt, I will upload the image directly into the AI tool.",
       "- Use only clearly visible elements.",
       "- Do not hallucinate uncertain details.",
-      "- Derive simple, useful learning units from the visible content.",
+      `- Derive simple, useful ${state.outputType} from the visible content.`,
     );
   } else {
     lines.push(
       `- Topic / need / scenario: ${state.freeTextRequest}`,
       "- Create original content from scratch based on this request.",
       "- This is not source extraction.",
-      "- Keep the output practical, focused, and study-ready.",
+      `- Create practical, focused, study-ready ${state.outputType}.`,
     );
   }
 
@@ -439,25 +442,14 @@ function buildAiPromptText(state) {
     "- Use exactly one | per line.",
     "- Never use | inside content.",
     "- If | would appear inside content, replace it with -.",
-    "- Use only the selected output types.",
-    "- Quantity means total rows, not rows per type.",
-  );
-
-  if (state.outputTypes.length > 1) {
-    lines.push(
-      "- Produce a balanced mix across the selected output types.",
-      "- Interleave the selected types naturally.",
-      "- Do not cluster all items of one type together.",
-    );
-  }
-
-  lines.push(
+    `- Use only this output type: ${state.outputType}.`,
+    "- Quantity means total rows.",
     "- Keep the content natural, useful, and ready for study.",
     "- Keep the difficulty aligned with the selected level.",
     "- Do not output duplicate rows.",
   );
 
-  if (state.outputTypes.includes("full sentences")) {
+  if (state.outputType === "full sentences") {
     lines.push(`- Keep full sentences ${state.sentenceLength}.`);
   }
 
@@ -507,31 +499,20 @@ function createAiPromptGenerator(defaults = {}) {
     { value: "exact-extraction", label: "Exact extraction" },
     { value: "source-based-adaptive", label: "Source-based adaptive" },
   ], defaults.textMode || "exact-extraction");
-  const textModeHelp = document.createElement("div");
-  textModeHelp.className = "app-modal__helper-stack";
-  [
-    "Exact extraction: extract only from the source.",
-    "Source-based adaptive: lightly adapt the source into study-ready units.",
-  ].forEach((line) => {
-    const note = document.createElement("p");
-    note.className = "app-modal__field-help";
-    note.textContent = line;
-    textModeHelp.appendChild(note);
-  });
-  textModeField.append(textModeLabel, textModeSelect, textModeHelp);
+  textModeField.append(textModeLabel, textModeSelect);
   grid.appendChild(textModeField);
 
   const outputField = document.createElement("div");
   outputField.className = "app-modal__field";
   const outputLabel = document.createElement("span");
   outputLabel.className = "app-modal__field-label";
-  outputLabel.textContent = "Output types";
+  outputLabel.textContent = "Output type";
   const outputGrid = document.createElement("div");
-  outputGrid.className = "app-modal__chip-row app-modal__chip-row--scroll";
+  outputGrid.className = "app-modal__choice-strip app-modal__chip-row app-modal__chip-row--scroll";
   const outputOptions = [
-    createCheckboxOption("words", "Words", true),
-    createCheckboxOption("short phrases", "Short phrases", false),
-    createCheckboxOption("full sentences", "Full sentences", false),
+    createChoiceOption("words", "Words", "radio", "about-output-type", true),
+    createChoiceOption("short phrases", "Short phrases", "radio", "about-output-type", false),
+    createChoiceOption("full sentences", "Full sentences", "radio", "about-output-type", false),
   ];
   outputOptions.forEach((option) => outputGrid.appendChild(option.wrapper));
   outputField.append(outputLabel, outputGrid);
@@ -656,9 +637,7 @@ function createAiPromptGenerator(defaults = {}) {
   };
 
   const updateGenerator = () => {
-    const selectedOutputTypes = outputOptions
-      .filter((option) => option.input.checked)
-      .map((option) => option.input.value);
+    const selectedOutputType = outputOptions.find((option) => option.input.checked)?.input.value || "";
     const quantity = Number.parseInt(quantityInput.value, 10);
     const normalizedQuantity = Number.isNaN(quantity)
       ? 10
@@ -669,7 +648,7 @@ function createAiPromptGenerator(defaults = {}) {
     const userLanguage = userLanguageInput.value.trim();
     const freeTextRequest = freeTextInput.value.trim();
     const fileName = sanitizeFileBaseName(fileNameInput.value);
-    const showSentenceLength = selectedOutputTypes.includes("full sentences");
+    const showSentenceLength = selectedOutputType === "full sentences";
     const showDiacriticsControl = supportsOptionalDiacritics(learningLanguage);
     const showTextMode = sourceType === "text";
     const showFreeText = sourceType === "free-text";
@@ -692,27 +671,23 @@ function createAiPromptGenerator(defaults = {}) {
     filePreview.textContent = `Output file: ${fileName}.txt`;
 
     const issues = [];
-    const notices = [];
     if (!learningLanguage || !userLanguage) {
       issues.push("Add both language labels to generate the prompt.");
     }
-    if (selectedOutputTypes.length === 0) {
-      issues.push("Select at least one output type.");
+    if (!selectedOutputType) {
+      issues.push("Select one output type.");
     }
     if (showFreeText && !freeTextRequest) {
       issues.push("Add a topic, need, or scenario.");
     }
-    if (selectedOutputTypes.length > 1 && normalizedQuantity <= 6) {
-      notices.push("Small totals may reduce mix quality.");
-    }
 
-    warning.hidden = issues.length === 0 && notices.length === 0;
-    warning.textContent = [...issues, ...notices].join(" ");
+    warning.hidden = issues.length === 0;
+    warning.textContent = issues.join(" ");
 
     const isValid = Boolean(
       learningLanguage
       && userLanguage
-      && selectedOutputTypes.length > 0
+      && selectedOutputType
       && (!showFreeText || freeTextRequest),
     );
     copyButton.disabled = !isValid;
@@ -725,7 +700,7 @@ function createAiPromptGenerator(defaults = {}) {
         textModeLabel: textModeSelect.options[textModeSelect.selectedIndex].text,
         learningLanguage,
         userLanguage,
-        outputTypes: selectedOutputTypes,
+        outputType: selectedOutputType,
         quantity: normalizedQuantity,
         difficulty: difficultySelect.value,
         sentenceLength: sentenceLengthSelect.value,
