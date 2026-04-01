@@ -406,15 +406,6 @@ function createAboutModal() {
   header.append(title, closeButton);
   dialog.appendChild(header);
 
-  const intro = document.createElement("div");
-  intro.className = "app-modal__intro";
-  introLines.forEach((line) => {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = line;
-    intro.appendChild(paragraph);
-  });
-  dialog.appendChild(intro);
-
   const toc = document.createElement("nav");
   toc.className = "app-modal__toc";
   toc.setAttribute("aria-label", "About sections");
@@ -423,6 +414,15 @@ function createAboutModal() {
   const viewport = document.createElement("div");
   viewport.className = "app-modal__viewport";
   dialog.appendChild(viewport);
+
+  const intro = document.createElement("div");
+  intro.className = "app-modal__intro";
+  introLines.forEach((line) => {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = line;
+    intro.appendChild(paragraph);
+  });
+  viewport.appendChild(intro);
 
   const sectionList = document.createElement("div");
   sectionList.className = "app-modal__section-list";
