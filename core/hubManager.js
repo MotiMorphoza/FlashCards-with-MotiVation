@@ -1617,7 +1617,7 @@ class HubManager {
 
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("./sw.js", { updateViaCache: "none" })
+        .register("./sw.js?v=20260401-1", { updateViaCache: "none" })
         .then((registration) => registration.update().catch(() => {}))
         .catch((error) => {
           console.warn("Service worker registration failed", error);

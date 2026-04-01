@@ -9,6 +9,48 @@ const DEFAULT_TOPICS = ["vocabulary", "grammer", "misc", "daily", "kitchen", "se
 const STANDARD_GAMES = ["flashcards", "wordmatch"];
 const SENTENCE_GAMES = ["flashcards", "wordmatch", "wordpuzzle"];
 
+function formatLanguageTitle(languageId) {
+  const [source = "", target = ""] = String(languageId || "").split("-");
+  const cleanSource = normalizeWhitespace(source);
+  const cleanTarget = normalizeWhitespace(target);
+
+  if (cleanSource && cleanTarget) {
+    return `${cleanSource} -> ${cleanTarget}`;
+  }
+
+  return normalizeWhitespace(String(languageId || "")) || "Language pair";
+}
+
+function buildLanguageRecords(index = {}) {
+  const records = [];
+  const seenIds = new Set();
+
+  const pushRecord = (id, title = "") => {
+    const normalizedId = normalizeWhitespace(id);
+    if (!normalizedId || seenIds.has(normalizedId)) {
+      return;
+    }
+
+    seenIds.add(normalizedId);
+    records.push({
+      id: normalizedId,
+      title: normalizeWhitespace(title) || formatLanguageTitle(normalizedId),
+    });
+  };
+
+  (Array.isArray(index.languages) ? index.languages : []).forEach((language) => {
+    pushRecord(language?.id, language?.title);
+  });
+
+  (Array.isArray(index.entries) ? index.entries : []).forEach((entry) => {
+    Object.keys(entry?.files || {}).forEach((languageId) => {
+      pushRecord(languageId);
+    });
+  });
+
+  return records;
+}
+
 function createTimeoutSignal(timeoutMs) {
   const controller = new AbortController();
   const timerId = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -143,11 +185,14 @@ export const HubAdapter = {
   init() {
     const index = window.HUB_INDEX;
 
-    if (!index || !Array.isArray(index.languages) || !Array.isArray(index.entries)) {
+    if (!index || !Array.isArray(index.entries)) {
       throw new Error("HUB_INDEX is missing or invalid");
     }
 
-    this.index = index;
+    this.index = {
+      ...index,
+      languages: buildLanguageRecords(index),
+    };
   },
 
   getRootTitle() {
