@@ -469,6 +469,20 @@ function createAiPromptGenerator(defaults = {}) {
   ], defaults.sourceType || "text");
   grid.appendChild(createLabeledInput("Source type", sourceTypeSelect));
 
+  const learningLanguageInput = document.createElement("input");
+  learningLanguageInput.className = "app-modal__input";
+  learningLanguageInput.type = "text";
+  learningLanguageInput.placeholder = "Learning language";
+  learningLanguageInput.value = defaults.learningLanguage || "";
+  grid.appendChild(createLabeledInput("Learning language", learningLanguageInput));
+
+  const userLanguageInput = document.createElement("input");
+  userLanguageInput.className = "app-modal__input";
+  userLanguageInput.type = "text";
+  userLanguageInput.placeholder = "User language";
+  userLanguageInput.value = defaults.userLanguage || "";
+  grid.appendChild(createLabeledInput("User language", userLanguageInput));
+
   const textModeField = document.createElement("div");
   textModeField.className = "app-modal__field";
   const textModeLabel = document.createElement("span");
@@ -493,20 +507,6 @@ function createAiPromptGenerator(defaults = {}) {
   ], defaults.outputType || "words");
   outputField.append(outputLabel, outputTypeSelect);
   grid.appendChild(outputField);
-
-  const learningLanguageInput = document.createElement("input");
-  learningLanguageInput.className = "app-modal__input";
-  learningLanguageInput.type = "text";
-  learningLanguageInput.placeholder = "Learning language";
-  learningLanguageInput.value = defaults.learningLanguage || "";
-  grid.appendChild(createLabeledInput("Learning language", learningLanguageInput));
-
-  const userLanguageInput = document.createElement("input");
-  userLanguageInput.className = "app-modal__input";
-  userLanguageInput.type = "text";
-  userLanguageInput.placeholder = "User language";
-  userLanguageInput.value = defaults.userLanguage || "";
-  grid.appendChild(createLabeledInput("User language", userLanguageInput));
 
   const quantityInput = document.createElement("input");
   quantityInput.className = "app-modal__input";
