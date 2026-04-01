@@ -435,6 +435,23 @@ class HubManager {
     this.updateCustomLanguagePairFields();
   }
 
+  isMobileViewport() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  scrollHomeToTopicPanel() {
+    if (!this.isMobileViewport() || this.dom.topicPanel.hidden) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      this.dom.topicPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+
   setHomeTopicIdleState() {
     if (!this.dom.startButton) {
       return;
@@ -492,6 +509,7 @@ class HubManager {
     });
 
     this.renderTopicTree();
+    this.scrollHomeToTopicPanel();
   }
 
   renderTopicTree() {
