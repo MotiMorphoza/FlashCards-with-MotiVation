@@ -335,27 +335,6 @@ function createSelectControl(options, selectedValue) {
   return select;
 }
 
-function createChoiceOption(value, labelText, inputType = "radio", inputName = "", checked = false) {
-  const wrapper = document.createElement("label");
-  wrapper.className = "app-modal__chip-option";
-
-  const input = document.createElement("input");
-  input.type = inputType;
-  if (inputName) {
-    input.name = inputName;
-  }
-  input.value = value;
-  input.checked = checked;
-  input.className = "app-modal__chip-input";
-
-  const text = document.createElement("span");
-  text.className = "app-modal__chip-label";
-  text.textContent = labelText;
-
-  wrapper.append(input, text);
-  return { wrapper, input };
-}
-
 function buildAiPromptText(state) {
   const lines = [
     "Create a plain-text learning file for a language-learning app.",
@@ -507,15 +486,12 @@ function createAiPromptGenerator(defaults = {}) {
   const outputLabel = document.createElement("span");
   outputLabel.className = "app-modal__field-label";
   outputLabel.textContent = "Output type";
-  const outputGrid = document.createElement("div");
-  outputGrid.className = "app-modal__choice-strip app-modal__chip-row app-modal__chip-row--scroll";
-  const outputOptions = [
-    createChoiceOption("words", "Words", "radio", "about-output-type", true),
-    createChoiceOption("short phrases", "Short phrases", "radio", "about-output-type", false),
-    createChoiceOption("full sentences", "Full sentences", "radio", "about-output-type", false),
-  ];
-  outputOptions.forEach((option) => outputGrid.appendChild(option.wrapper));
-  outputField.append(outputLabel, outputGrid);
+  const outputTypeSelect = createSelectControl([
+    { value: "words", label: "Words" },
+    { value: "short phrases", label: "Short phrases" },
+    { value: "full sentences", label: "Full sentences" },
+  ], defaults.outputType || "words");
+  outputField.append(outputLabel, outputTypeSelect);
   grid.appendChild(outputField);
 
   const learningLanguageInput = document.createElement("input");
@@ -636,7 +612,7 @@ function createAiPromptGenerator(defaults = {}) {
   };
 
   const updateGenerator = () => {
-    const selectedOutputType = outputOptions.find((option) => option.input.checked)?.input.value || "";
+    const selectedOutputType = outputTypeSelect.value;
     const quantity = Number.parseInt(quantityInput.value, 10);
     const normalizedQuantity = Number.isNaN(quantity)
       ? 10
@@ -657,10 +633,6 @@ function createAiPromptGenerator(defaults = {}) {
     textModeField.hidden = !showTextMode;
     freeTextField.hidden = !showFreeText;
     freeTextInput.disabled = !showFreeText;
-
-    outputOptions.forEach((option) => {
-      option.wrapper.classList.toggle("is-selected", option.input.checked);
-    });
 
     manualSourceNote.textContent = sourceType === "free-text"
       ? "Copy the prompt and paste it directly into the AI tool."
@@ -713,6 +685,7 @@ function createAiPromptGenerator(defaults = {}) {
     fileNameInput,
     sourceTypeSelect,
     textModeSelect,
+    outputTypeSelect,
     learningLanguageInput,
     userLanguageInput,
     freeTextInput,
@@ -720,7 +693,6 @@ function createAiPromptGenerator(defaults = {}) {
     difficultySelect,
     sentenceLengthSelect,
     diacriticsCheckbox,
-    ...outputOptions.map((option) => option.input),
   ].forEach((control) => {
     control.addEventListener("input", updateGenerator);
     control.addEventListener("change", updateGenerator);

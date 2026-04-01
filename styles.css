@@ -1369,67 +1369,6 @@ body.app-booting .app-shell {
   font-size: 0.95rem;
 }
 
-.app-modal__chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.app-modal__chip-row--scroll {
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
-  padding-bottom: 2px;
-}
-
-.app-modal__choice-strip {
-  min-height: 2.4rem;
-  align-items: center;
-  padding: 0.2rem 0.28rem;
-  border: 1px solid #d7deea;
-  border-radius: 10px;
-  background: #f6f7fb;
-}
-
-.app-modal__chip-option {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4em;
-  flex: 0 0 auto;
-  padding: 0.18rem 0.54rem;
-  border: 1px solid #2b2b2b;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.025);
-  cursor: pointer;
-  text-align: left;
-  font-size: 0.9rem;
-  line-height: 1.05;
-  color: #222222;
-  transition:
-    border-color 0.18s,
-    background 0.18s,
-    opacity 0.18s;
-}
-
-.app-modal__chip-option.is-selected {
-  border-color: rgba(138, 158, 196, 0.7);
-  background: rgba(159, 197, 255, 0.22);
-}
-
-.app-modal__chip-input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.app-modal__chip-label {
-  font-size: inherit;
-  line-height: inherit;
-}
-
 .app-modal__check-option {
   display: flex;
   align-items: center;

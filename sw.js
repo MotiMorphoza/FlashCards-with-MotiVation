@@ -4,7 +4,7 @@ try {
   console.warn("Generated service-worker asset manifest could not be loaded.", error);
 }
 
-const CACHE_NAME = "llh-core-v13";
+const CACHE_NAME = "llh-core-v14";
 const ASSETS = Array.isArray(self.APP_SHELL_ASSETS) && self.APP_SHELL_ASSETS.length > 0
   ? self.APP_SHELL_ASSETS
   : [
