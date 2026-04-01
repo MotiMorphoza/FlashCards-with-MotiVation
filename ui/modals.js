@@ -595,7 +595,6 @@ function createAiPromptGenerator(defaults = {}) {
 
   const formatRuleNote = document.createElement("p");
   formatRuleNote.className = "app-modal__generator-note";
-  formatRuleNote.textContent = "Format rule: each output line must contain the learning-language content first, the user-language content second, and exactly one vertical bar separator between them.";
   generator.appendChild(formatRuleNote);
 
   const filePreview = document.createElement("p");
@@ -663,11 +662,10 @@ function createAiPromptGenerator(defaults = {}) {
       option.wrapper.classList.toggle("is-selected", option.input.checked);
     });
 
-    manualSourceNote.textContent = sourceType === "text"
-      ? "Text source: copy the prompt, then paste the source text directly into the AI tool. The app does not send the source automatically."
-      : sourceType === "image"
-        ? "Image source: copy the prompt, then upload the image directly in the AI tool. The app does not send the image automatically."
-        : "Free text: enter a topic, need, or scenario. This creates new content from scratch, not from source extraction.";
+    manualSourceNote.textContent = sourceType === "free-text"
+      ? "Copy the prompt and paste it directly into the AI tool."
+      : "Copy the prompt, paste it directly into the AI tool, and add your source there.";
+    formatRuleNote.hidden = true;
     filePreview.textContent = `Output file: ${fileName}.txt`;
 
     const issues = [];
