@@ -1403,21 +1403,14 @@ body.app-booting .app-shell {
   line-height: 1.35;
 }
 
-.app-modal__generator-note,
-.app-modal__generator-file,
-.app-modal__generator-warning {
+.app-modal__generator-note {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.45;
 }
 
-.app-modal__generator-note,
-.app-modal__generator-file {
+.app-modal__generator-note {
   color: var(--muted);
-}
-
-.app-modal__generator-warning {
-  color: var(--amber);
 }
 
 .app-modal__subheading {

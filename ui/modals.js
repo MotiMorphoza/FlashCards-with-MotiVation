@@ -573,27 +573,21 @@ function createAiPromptGenerator(defaults = {}) {
   formatRuleNote.className = "app-modal__generator-note";
   generator.appendChild(formatRuleNote);
 
-  const filePreview = document.createElement("p");
-  filePreview.className = "app-modal__generator-file";
-  generator.appendChild(filePreview);
-
-  const warning = document.createElement("p");
-  warning.className = "app-modal__generator-warning";
-  warning.hidden = true;
-  generator.appendChild(warning);
-
   const promptLabel = document.createElement("h4");
   promptLabel.className = "app-modal__subheading";
   promptLabel.textContent = "Generated prompt";
+  promptLabel.hidden = true;
   generator.appendChild(promptLabel);
 
   const promptArea = document.createElement("textarea");
   promptArea.className = "app-modal__input app-modal__prompt";
   promptArea.readOnly = true;
+  promptArea.hidden = true;
   generator.appendChild(promptArea);
 
   const promptActions = document.createElement("div");
   promptActions.className = "app-modal__prompt-actions";
+  promptActions.hidden = true;
   const copyButton = document.createElement("button");
   copyButton.type = "button";
   copyButton.className = "button button-primary button-small";
@@ -638,21 +632,6 @@ function createAiPromptGenerator(defaults = {}) {
       ? "Copy the prompt and paste it directly into the AI tool."
       : "Copy the prompt, paste it directly into the AI tool, and add your source there.";
     formatRuleNote.hidden = true;
-    filePreview.textContent = `Output file: ${fileName}.txt`;
-
-    const issues = [];
-    if (!learningLanguage || !userLanguage) {
-      issues.push("Add both language labels to generate the prompt.");
-    }
-    if (!selectedOutputType) {
-      issues.push("Select one output type.");
-    }
-    if (showFreeText && !freeTextRequest) {
-      issues.push("Add a topic, need, or scenario.");
-    }
-
-    warning.hidden = issues.length === 0;
-    warning.textContent = issues.join(" ");
 
     const isValid = Boolean(
       learningLanguage
@@ -660,6 +639,10 @@ function createAiPromptGenerator(defaults = {}) {
       && selectedOutputType
       && (!showFreeText || freeTextRequest),
     );
+
+    promptLabel.hidden = !isValid;
+    promptArea.hidden = !isValid;
+    promptActions.hidden = !isValid;
     copyButton.disabled = !isValid;
     promptArea.value = isValid
       ? buildAiPromptText({
@@ -678,7 +661,7 @@ function createAiPromptGenerator(defaults = {}) {
         includeDiacritics: diacriticsCheckbox.checked,
         freeTextRequest,
       })
-      : "Complete the form to generate the prompt.";
+      : "";
   };
 
   [
