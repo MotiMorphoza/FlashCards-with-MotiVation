@@ -22,6 +22,7 @@
 - `index.html` links a favicon, PNG fallback, and Apple touch icon from `assets/icons/`
 - `index.html` now includes Open Graph and Twitter share-preview metadata that points at the default GitHub Pages URL for this repo
 - the share-preview image is `assets/social/share-card.png`
+- the current default GitHub Pages URL for this repo is `https://motimorphoza.github.io/One-Source/`
 - `index.html` now uses `viewport-fit=cover` and Apple standalone meta tags for safer mobile/PWA framing
 - `manifest.json` now ships 192px and 512px app icons
 - `core/hubManager.js` registers `./sw.js` with `updateViaCache: "none"`

@@ -34,7 +34,7 @@ Home renders bundled HUB content under `Choose a topic` and local editable conte
 
 ### Home navigation is now centralized in the top bar
 
-The shell now uses one shared `Home` button near `Sound` and `Speech` instead of repeating `Home` buttons on most screens. The Library editor remains the one screen that stays library-scoped, and `Sound` / `Speech` are now shown only on game screens.
+The shell now uses one shared `Home` button near `Sound` and `Speech` on non-home screens instead of repeating `Home` buttons across the app. The Library editor remains the one screen that stays library-scoped, and `Sound` / `Speech` are now shown only on game screens.
 
 ### Home topics now launch directly on click
 

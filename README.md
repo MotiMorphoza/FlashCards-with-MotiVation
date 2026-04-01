@@ -181,7 +181,7 @@ git config rebase.autoStash true
 
 - Link previews now use `index.html` metadata for title, description, and image.
 - The current share card asset is `assets/social/share-card.png`.
-- The metadata currently targets the default GitHub Pages deployment URL for this repo: `https://motimorphoza.github.io/ONE-SOURCE/`.
+- The metadata currently targets the default GitHub Pages deployment URL for this repo: `https://motimorphoza.github.io/One-Source/`.
 - If the app later moves to a custom domain, update `og:url`, `og:image`, `twitter:image`, and the canonical link in `index.html`.
 
 ## Scope Note

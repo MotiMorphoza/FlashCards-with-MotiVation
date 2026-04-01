@@ -12,7 +12,7 @@
 - verify Home shows:
   - `Choose a topic` for bundled HUB content
   - `My lists` for local editable content
-- verify the shared top-bar `Home` button appears on non-editor screens only
+- verify the shared top-bar `Home` button stays hidden on Home and appears on non-home screens only
 - verify `Sound` and `Speech` appear only on the game screen
 - verify sentence content appears for Word Puzzle only
 - verify non-sentence topics appear for Flash Cards and Word Match

@@ -1,7 +1,7 @@
 {
   "name": "ONE SOURCE",
   "short_name": "ONE SOURCE",
-  "description": "Open language-learning platform for any language pair.",
+  "description": "Open language-learning platform for any language pair with independent or A.I-assisted study content creation.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
