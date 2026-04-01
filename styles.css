@@ -1359,13 +1359,15 @@ body.app-booting .app-shell {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 11px;
+  gap: 0.45em;
+  padding: 0.42em 0.78em;
   border: 1px solid #2d2d2d;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.035);
   cursor: pointer;
   text-align: left;
+  font-size: 0.96rem;
+  line-height: 1.15;
   transition:
     border-color 0.18s,
     background 0.18s,
@@ -1384,20 +1386,21 @@ body.app-booting .app-shell {
 }
 
 .app-modal__chip-label {
-  font-size: 0.94rem;
-  line-height: 1.2;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .app-modal__check-option {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
-  padding: 9px 11px;
+  gap: 0.55em;
+  padding: 0.48em 0.72em;
   border: 1px solid #303030;
   border-radius: 12px;
   background: #1a1a1a;
   text-align: left;
+  line-height: 1.2;
 }
 
 .app-modal__check-option input {

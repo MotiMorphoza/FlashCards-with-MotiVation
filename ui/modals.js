@@ -284,10 +284,17 @@ function sanitizeFileBaseName(value) {
 function supportsOptionalDiacritics(languageLabel = "") {
   const value = String(languageLabel || "");
   const normalized = value.toLowerCase();
+  const compact = normalized.replace(/\s+/g, "");
 
   return (
     /hebrew/.test(normalized)
     || /arabic/.test(normalized)
+    || /(^|[^a-z])he([^a-z]|$)/.test(normalized)
+    || /(^|[^a-z])ar([^a-z]|$)/.test(normalized)
+    || compact === "he"
+    || compact === "ar"
+    || compact.startsWith("he-")
+    || compact.startsWith("ar-")
     || /\u05e2\u05d1\u05e8\u05d9\u05ea/.test(value)
     || /[\u0590-\u05FF]/.test(value)
     || /\u0627\u0644\u0639\u0631\u0628\u064a\u0629|\u0639\u0631\u0628\u064a|\u0639\u0631\u0628\u064a\u0629/.test(value)
@@ -669,6 +676,7 @@ function createAiPromptGenerator(defaults = {}) {
     diacriticsField.hidden = !showDiacriticsControl;
     textModeField.hidden = !showTextMode;
     freeTextField.hidden = !showFreeText;
+    freeTextInput.disabled = !showFreeText;
 
     outputOptions.forEach((option) => {
       option.wrapper.classList.toggle("is-selected", option.input.checked);
