@@ -770,27 +770,6 @@ function createAboutModal(options = {}) {
       ],
     },
     {
-      id: "about-csv-rules",
-      title: "CSV Rules",
-      items: [
-        "Use exactly: learning,translation",
-        "Keep exactly 2 columns per row.",
-        "Both sides are required.",
-        "Quote any field that contains a comma.",
-        "Do not add notes, tags, or extra columns.",
-      ],
-    },
-    {
-      id: "about-local-data",
-      title: "Your Data Is Local",
-      items: [
-        "Lists and progress stay in this browser on this device.",
-        "Clearing browser data can remove them.",
-        "Private or incognito mode may not keep them.",
-        "Export important lists as backup.",
-      ],
-    },
-    {
       id: "about-install-app",
       title: "Install as App",
       items: [
