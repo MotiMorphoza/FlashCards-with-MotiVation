@@ -1336,9 +1336,9 @@ body.app-booting .app-shell {
 
 .app-modal__fieldset {
   margin: 0;
-  padding: 12px;
-  border: 1px solid #353535;
-  border-radius: 14px;
+  padding: 10px 11px;
+  border: 1px solid #2f2f2f;
+  border-radius: 13px;
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -1348,10 +1348,44 @@ body.app-booting .app-shell {
   font-size: 0.95rem;
 }
 
-.app-modal__check-grid {
-  display: grid;
+.app-modal__chip-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.app-modal__chip-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid #2d2d2d;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.18s,
+    background 0.18s,
+    opacity 0.18s;
+}
+
+.app-modal__chip-option.is-selected {
+  border-color: rgba(255, 217, 102, 0.5);
+  background: rgba(255, 217, 102, 0.1);
+}
+
+.app-modal__chip-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-modal__chip-label {
+  font-size: 0.94rem;
+  line-height: 1.2;
 }
 
 .app-modal__check-option {
@@ -1359,8 +1393,8 @@ body.app-booting .app-shell {
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid #343434;
+  padding: 9px 11px;
+  border: 1px solid #303030;
   border-radius: 12px;
   background: #1a1a1a;
   text-align: left;
@@ -1371,6 +1405,19 @@ body.app-booting .app-shell {
   min-width: 0;
   margin: 0;
   accent-color: var(--amber);
+}
+
+.app-modal__helper-stack {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.app-modal__field-help {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
 }
 
 .app-modal__generator-note,
@@ -1731,8 +1778,7 @@ body.app-booting .app-shell {
     justify-content: flex-start;
   }
 
-  .app-modal__generator-grid,
-  .app-modal__check-grid {
+  .app-modal__generator-grid {
     grid-template-columns: 1fr;
   }
 

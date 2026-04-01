@@ -288,9 +288,9 @@ function supportsOptionalDiacritics(languageLabel = "") {
   return (
     /hebrew/.test(normalized)
     || /arabic/.test(normalized)
-    || /עברית/.test(value)
+    || /\u05e2\u05d1\u05e8\u05d9\u05ea/.test(value)
     || /[\u0590-\u05FF]/.test(value)
-    || /العربية|عربي|عربية/.test(value)
+    || /\u0627\u0644\u0639\u0631\u0628\u064a\u0629|\u0639\u0631\u0628\u064a|\u0639\u0631\u0628\u064a\u0629/.test(value)
     || /[\u0600-\u06FF]/.test(value)
   );
 }
@@ -330,14 +330,16 @@ function createSelectControl(options, selectedValue) {
 
 function createCheckboxOption(value, labelText, checked = false) {
   const wrapper = document.createElement("label");
-  wrapper.className = "app-modal__check-option";
+  wrapper.className = "app-modal__chip-option";
 
   const input = document.createElement("input");
   input.type = "checkbox";
   input.value = value;
   input.checked = checked;
+  input.className = "app-modal__chip-input";
 
   const text = document.createElement("span");
+  text.className = "app-modal__chip-label";
   text.textContent = labelText;
 
   wrapper.append(input, text);
@@ -349,12 +351,17 @@ function buildAiPromptText(state) {
     "Create a plain-text learning file for a language-learning app.",
     `The result must be ready to save as "${state.fileName}.txt".`,
     "",
+    `Source type: ${state.sourceTypeLabel}`,
     `Learning language: ${state.learningLanguage}`,
     `User language: ${state.userLanguage}`,
     `Output types: ${state.outputTypes.join(", ")}`,
     `Quantity: ${state.quantity} total rows`,
     `Difficulty: ${state.difficulty}`,
   ];
+
+  if (state.sourceType === "text") {
+    lines.push(`Text mode: ${state.textModeLabel}`);
+  }
 
   if (state.outputTypes.includes("full sentences")) {
     lines.push(`Sentence length: ${state.sentenceLength}`);
@@ -371,17 +378,40 @@ function buildAiPromptText(state) {
   lines.push("", "Source handling:");
 
   if (state.sourceType === "text") {
-    lines.push(
-      "- After this prompt, I will paste the source text directly into the AI tool.",
-      "- Extract key vocabulary and meaningful sentences from the source.",
-      "- Do not summarize the source.",
-    );
-  } else {
+    lines.push("- After this prompt, I will paste the source text directly into the AI tool.");
+
+    if (state.textMode === "exact-extraction") {
+      lines.push(
+        "- Use only content explicitly present in the source.",
+        "- Extract words, short phrases, and full sentences directly from the source.",
+        "- Do not invent new sentences.",
+        "- Do not summarize the source.",
+        "- Preserve the source tone, meaning, and colloquial style when useful and study-safe.",
+        "- Allow only minimal cleanup for clarity, punctuation, or study safety.",
+        "- Prefer lightly cleaned source-based units over rewritten ones.",
+      );
+    } else {
+      lines.push(
+        "- Stay anchored to the source topic, vocabulary, tone, and meaning.",
+        "- Lightly adapt the source into study-ready units.",
+        "- Avoid heavy paraphrase or invention.",
+        "- Do not drift into unrelated generic examples.",
+        "- Keep the source flavor when possible.",
+      );
+    }
+  } else if (state.sourceType === "image") {
     lines.push(
       "- After this prompt, I will upload the image directly into the AI tool.",
       "- Use only clearly visible elements.",
       "- Do not hallucinate uncertain details.",
       "- Derive simple, useful learning units from the visible content.",
+    );
+  } else {
+    lines.push(
+      `- Topic / need / scenario: ${state.freeTextRequest}`,
+      "- Create original content from scratch based on this request.",
+      "- This is not source extraction.",
+      "- Keep the output practical, focused, and study-ready.",
     );
   }
 
@@ -457,8 +487,32 @@ function createAiPromptGenerator(defaults = {}) {
   const sourceTypeSelect = createSelectControl([
     { value: "text", label: "Text" },
     { value: "image", label: "Image" },
+    { value: "free-text", label: "Free text" },
   ], defaults.sourceType || "text");
   grid.appendChild(createLabeledInput("Source type", sourceTypeSelect));
+
+  const textModeField = document.createElement("div");
+  textModeField.className = "app-modal__field app-modal__field--full";
+  const textModeLabel = document.createElement("span");
+  textModeLabel.className = "app-modal__field-label";
+  textModeLabel.textContent = "Text mode";
+  const textModeSelect = createSelectControl([
+    { value: "exact-extraction", label: "Exact extraction" },
+    { value: "source-based-adaptive", label: "Source-based adaptive" },
+  ], defaults.textMode || "exact-extraction");
+  const textModeHelp = document.createElement("div");
+  textModeHelp.className = "app-modal__helper-stack";
+  [
+    "Exact extraction: extract only from the source.",
+    "Source-based adaptive: lightly adapt the source into study-ready units.",
+  ].forEach((line) => {
+    const note = document.createElement("p");
+    note.className = "app-modal__field-help";
+    note.textContent = line;
+    textModeHelp.appendChild(note);
+  });
+  textModeField.append(textModeLabel, textModeSelect, textModeHelp);
+  grid.appendChild(textModeField);
 
   const learningLanguageInput = document.createElement("input");
   learningLanguageInput.className = "app-modal__input";
@@ -489,6 +543,20 @@ function createAiPromptGenerator(defaults = {}) {
     { value: "advanced", label: "Advanced" },
   ], defaults.difficulty || "beginner");
   grid.appendChild(createLabeledInput("Difficulty", difficultySelect));
+
+  const freeTextInput = document.createElement("textarea");
+  freeTextInput.className = "app-modal__input";
+  freeTextInput.rows = 3;
+  freeTextInput.placeholder = "Example: restaurant conversation, airport phrases, basic dog commands";
+  freeTextInput.value = defaults.freeTextRequest || "";
+  const freeTextField = createLabeledInput("Topic, need, or scenario", freeTextInput, {
+    fullWidth: true,
+  });
+  const freeTextHelp = document.createElement("p");
+  freeTextHelp.className = "app-modal__field-help";
+  freeTextHelp.textContent = "Use this for original AI-generated content from scratch, not source extraction.";
+  freeTextField.appendChild(freeTextHelp);
+  grid.appendChild(freeTextField);
 
   const sentenceLengthField = document.createElement("div");
   sentenceLengthField.className = "app-modal__field";
@@ -521,7 +589,7 @@ function createAiPromptGenerator(defaults = {}) {
   outputField.appendChild(outputLegend);
 
   const outputGrid = document.createElement("div");
-  outputGrid.className = "app-modal__check-grid";
+  outputGrid.className = "app-modal__chip-row";
   const outputOptions = [
     createCheckboxOption("words", "Words", true),
     createCheckboxOption("short phrases", "Short phrases", false),
@@ -586,40 +654,65 @@ function createAiPromptGenerator(defaults = {}) {
     const normalizedQuantity = Number.isNaN(quantity)
       ? 10
       : Math.min(30, Math.max(5, quantity));
+    const sourceType = sourceTypeSelect.value;
+    const textMode = textModeSelect.value;
     const learningLanguage = learningLanguageInput.value.trim();
     const userLanguage = userLanguageInput.value.trim();
+    const freeTextRequest = freeTextInput.value.trim();
     const fileName = sanitizeFileBaseName(fileNameInput.value);
     const showSentenceLength = selectedOutputTypes.includes("full sentences");
     const showDiacriticsControl = supportsOptionalDiacritics(learningLanguage);
+    const showTextMode = sourceType === "text";
+    const showFreeText = sourceType === "free-text";
 
     sentenceLengthField.hidden = !showSentenceLength;
     diacriticsField.hidden = !showDiacriticsControl;
+    textModeField.hidden = !showTextMode;
+    freeTextField.hidden = !showFreeText;
 
-    manualSourceNote.textContent = sourceTypeSelect.value === "text"
+    outputOptions.forEach((option) => {
+      option.wrapper.classList.toggle("is-selected", option.input.checked);
+    });
+
+    manualSourceNote.textContent = sourceType === "text"
       ? "Text source: copy the prompt, then paste the source text directly into the AI tool. The app does not send the source automatically."
-      : "Image source: copy the prompt, then upload the image directly in the AI tool. The app does not send the image automatically.";
+      : sourceType === "image"
+        ? "Image source: copy the prompt, then upload the image directly in the AI tool. The app does not send the image automatically."
+        : "Free text: enter a topic, need, or scenario. This creates new content from scratch, not from source extraction.";
     filePreview.textContent = `Output file: ${fileName}.txt`;
 
     const issues = [];
+    const notices = [];
     if (!learningLanguage || !userLanguage) {
       issues.push("Add both language labels to generate the prompt.");
     }
     if (selectedOutputTypes.length === 0) {
       issues.push("Select at least one output type.");
     }
-    if (selectedOutputTypes.length > 1 && normalizedQuantity < selectedOutputTypes.length) {
-      issues.push("Quantity is smaller than the number of selected types, so the mix may be uneven.");
+    if (showFreeText && !freeTextRequest) {
+      issues.push("Add a topic, need, or scenario.");
+    }
+    if (selectedOutputTypes.length > 1 && normalizedQuantity <= 6) {
+      notices.push("Small totals may reduce mix quality.");
     }
 
-    warning.hidden = issues.length === 0;
-    warning.textContent = issues.join(" ");
+    warning.hidden = issues.length === 0 && notices.length === 0;
+    warning.textContent = [...issues, ...notices].join(" ");
 
-    const isValid = Boolean(learningLanguage && userLanguage && selectedOutputTypes.length > 0);
+    const isValid = Boolean(
+      learningLanguage
+      && userLanguage
+      && selectedOutputTypes.length > 0
+      && (!showFreeText || freeTextRequest),
+    );
     copyButton.disabled = !isValid;
     promptArea.value = isValid
       ? buildAiPromptText({
         fileName,
-        sourceType: sourceTypeSelect.value,
+        sourceType,
+        sourceTypeLabel: sourceTypeSelect.options[sourceTypeSelect.selectedIndex].text,
+        textMode,
+        textModeLabel: textModeSelect.options[textModeSelect.selectedIndex].text,
         learningLanguage,
         userLanguage,
         outputTypes: selectedOutputTypes,
@@ -628,6 +721,7 @@ function createAiPromptGenerator(defaults = {}) {
         sentenceLength: sentenceLengthSelect.value,
         showDiacriticsControl,
         includeDiacritics: diacriticsCheckbox.checked,
+        freeTextRequest,
       })
       : "Complete the form to generate the prompt.";
   };
@@ -635,8 +729,10 @@ function createAiPromptGenerator(defaults = {}) {
   [
     fileNameInput,
     sourceTypeSelect,
+    textModeSelect,
     learningLanguageInput,
     userLanguageInput,
+    freeTextInput,
     quantityInput,
     difficultySelect,
     sentenceLengthSelect,
