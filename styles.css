@@ -1428,7 +1428,7 @@ body.app-booting .app-shell {
 .app-modal__prompt-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #screen-library .panel:first-child .field-label:not(:first-of-type) {

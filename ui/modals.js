@@ -593,12 +593,6 @@ function createAiPromptGenerator(defaults = {}) {
   promptLabel.hidden = true;
   generator.appendChild(promptLabel);
 
-  const promptArea = document.createElement("textarea");
-  promptArea.className = "app-modal__input app-modal__prompt";
-  promptArea.readOnly = true;
-  promptArea.hidden = true;
-  generator.appendChild(promptArea);
-
   const promptActions = document.createElement("div");
   promptActions.className = "app-modal__prompt-actions";
   promptActions.hidden = true;
@@ -608,6 +602,12 @@ function createAiPromptGenerator(defaults = {}) {
   copyButton.textContent = "Copy prompt";
   promptActions.appendChild(copyButton);
   generator.appendChild(promptActions);
+
+  const promptArea = document.createElement("textarea");
+  promptArea.className = "app-modal__input app-modal__prompt";
+  promptArea.readOnly = true;
+  promptArea.hidden = true;
+  generator.appendChild(promptArea);
 
   const normalizeQuantityDisplay = () => {
     const parsed = Number.parseInt(quantityInput.value, 10);
