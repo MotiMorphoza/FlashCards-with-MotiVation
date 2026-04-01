@@ -499,7 +499,7 @@ function createAiPromptGenerator(defaults = {}) {
   grid.appendChild(createLabeledInput("Source type", sourceTypeSelect));
 
   const textModeField = document.createElement("div");
-  textModeField.className = "app-modal__field app-modal__field--full";
+  textModeField.className = "app-modal__field";
   const textModeLabel = document.createElement("span");
   textModeLabel.className = "app-modal__field-label";
   textModeLabel.textContent = "Text mode";
@@ -520,6 +520,22 @@ function createAiPromptGenerator(defaults = {}) {
   });
   textModeField.append(textModeLabel, textModeSelect, textModeHelp);
   grid.appendChild(textModeField);
+
+  const outputField = document.createElement("div");
+  outputField.className = "app-modal__field";
+  const outputLabel = document.createElement("span");
+  outputLabel.className = "app-modal__field-label";
+  outputLabel.textContent = "Output types";
+  const outputGrid = document.createElement("div");
+  outputGrid.className = "app-modal__chip-row app-modal__chip-row--scroll";
+  const outputOptions = [
+    createCheckboxOption("words", "Words", true),
+    createCheckboxOption("short phrases", "Short phrases", false),
+    createCheckboxOption("full sentences", "Full sentences", false),
+  ];
+  outputOptions.forEach((option) => outputGrid.appendChild(option.wrapper));
+  outputField.append(outputLabel, outputGrid);
+  grid.appendChild(outputField);
 
   const learningLanguageInput = document.createElement("input");
   learningLanguageInput.className = "app-modal__input";
@@ -591,24 +607,6 @@ function createAiPromptGenerator(defaults = {}) {
   diacriticsField.append(diacriticsCheckbox, diacriticsText);
   diacriticsField.hidden = true;
   grid.appendChild(diacriticsField);
-
-  const outputField = document.createElement("fieldset");
-  outputField.className = "app-modal__fieldset";
-  const outputLegend = document.createElement("legend");
-  outputLegend.className = "app-modal__legend";
-  outputLegend.textContent = "Output types";
-  outputField.appendChild(outputLegend);
-
-  const outputGrid = document.createElement("div");
-  outputGrid.className = "app-modal__chip-row";
-  const outputOptions = [
-    createCheckboxOption("words", "Words", true),
-    createCheckboxOption("short phrases", "Short phrases", false),
-    createCheckboxOption("full sentences", "Full sentences", false),
-  ];
-  outputOptions.forEach((option) => outputGrid.appendChild(option.wrapper));
-  outputField.appendChild(outputGrid);
-  generator.appendChild(outputField);
 
   const manualSourceNote = document.createElement("p");
   manualSourceNote.className = "app-modal__generator-note";
